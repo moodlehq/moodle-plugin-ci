@@ -86,10 +86,15 @@
     </target>
 
     <target name="behatDependencies" if="BEHAT_ENABLED">
+        <echo message="Downloading Selenium JAR file"/>
         <httpget dir="${BUILD_DIR}" url="http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" filename="selenium.jar"/>
-        <exec command="phantomjs --webdriver=4445" spawn="true" level="info"/>
+        <echo message="Starting Selenium server"/>
         <exec command="xvfb-run -a --server-args=&quot;-screen 0 1024x768x24&quot; java -jar selenium.jar" spawn="true" level="info"/>
+        <echo message="Starting PhantomJS"/>
+        <exec command="phantomjs --webdriver=4445" spawn="true" level="info"/>
+        <echo message="Starting PHP server"/>
         <exec command="php -S localhost:8000" spawn="true" level="info"/>
+        <echo message="Initialize Behat in Moodle"/>
         <exec command="php ${BUILD_DIR}/moodle/admin/tool/behat/cli/init.php" passthru="true" level="info"/>
     </target>
 
@@ -98,6 +103,7 @@
     </target>
 
     <target name="phpunitDependencies" if="PHPUNIT_ENABLED">
+        <echo message="Initialize PHPUnit in Moodle"/>
         <exec command="php ${BUILD_DIR}/moodle/admin/tool/phpunit/cli/init.php" passthru="true" level="info"/>
     </target>
 
