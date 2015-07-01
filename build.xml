@@ -113,6 +113,6 @@
     </target>
 
     <target name="phpunit" if="PHPUNIT_ENABLED">
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite '${COMPONENT}_testsuite'" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" passthru="true" level="info" checkreturn="true"/>
     </target>
 </project>
