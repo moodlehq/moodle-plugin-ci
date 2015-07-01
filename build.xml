@@ -95,6 +95,7 @@
 
     <target name="buildMoodle">
         <echo message="Cloning Moodle"/>
+        <echo message="git clone --depth=1 --branch ${MOODLE_BRANCH} git://github.com/moodle/moodle ${BUILD_DIR}/moodle"/>
         <exec command="git clone --depth=1 --branch ${MOODLE_BRANCH} git://github.com/moodle/moodle ${BUILD_DIR}/moodle" passthru="true" checkreturn="true"/>
 
         <echo message="Creating Moodle's data directory"/>
