@@ -1,102 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="MoodleTravisPlugin" default="all">
-    <target name="initProperties">
-        <if>
-            <not>
-                <isset property="COMPONENT"/>
-            </not>
-            <then>
-                <fail unless="env.COMPONENT" message="Must set the COMPONENT env variable or pass it to phing"/>
-                <property name="COMPONENT" value="${env.COMPONENT}"/>
-            </then>
-        </if>
-        <if>
-            <not>
-                <isset property="MOODLE_BRANCH"/>
-            </not>
-            <then>
-                <fail unless="env.MOODLE_BRANCH" message="Must set the MOODLE_BRANCH env variable or pass it to phing"/>
-                <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}"/>
-            </then>
-        </if>
-        <if>
-            <not>
-                <isset property="INSTALL_DIR"/>
-            </not>
-            <then>
-                <fail unless="env.INSTALL_DIR" message="Must set the INSTALL_DIR env variable or pass it to phing"/>
-                <property name="INSTALL_DIR" value="${env.INSTALL_DIR}"/>
-            </then>
-        </if>
-        <if>
-            <not>
-                <isset property="COMPONENT_DIR"/>
-            </not>
-            <then>
-                <property name="COMPONENT_DIR" value="${application.startdir}"/>
-            </then>
-        </if>
-        <if>
-            <not>
-                <isset property="BUILD_DIR"/>
-            </not>
-            <then>
-                <resolvepath propertyName="BUILD_DIR" file="${COMPONENT_DIR}/.."/>
-            </then>
-        </if>
-        <if>
-            <not>
-                <isset property="DB"/>
-            </not>
-            <then>
-                <fail unless="env.DB" message="Must set the DB env variable or pass it to phing"/>
-                <property name="DB" value="${env.DB}"/>
-            </then>
-        </if>
+    <property name="COMPONENT" value="${env.COMPONENT}"/>
+    <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}"/>
+    <property name="INSTALL_DIR" value="${env.INSTALL_DIR}"/>
+    <property name="DB" value="${env.DB}"/>
+    <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}"/>
+    <property name="BUILD_DIR" value="${project.basedir}"/>
 
-        <if>
-            <equals arg1="${DB}" arg2="pgsql"/>
+    <if>
+        <equals arg1="${DB}" arg2="pgsql"/>
+        <then>
+            <property name="DB.USER" value="postgres"/>
+            <property name="DB.PASS" value=""/>
+        </then>
+
+        <elseif>
+            <equals arg1="${DB}" arg2="mysqli"/>
             <then>
-                <property name="DB.USER" value="postgres"/>
+                <property name="DB.USER" value="root"/>
                 <property name="DB.PASS" value=""/>
             </then>
+        </elseif>
 
-            <elseif>
-                <equals arg1="${DB}" arg2="mysqli"/>
-                <then>
-                    <property name="DB.USER" value="root"/>
-                    <property name="DB.PASS" value=""/>
-                </then>
-            </elseif>
+        <else>
+            <fail message="Unsupported ${DB} used, only supports mysqli and pgsql"/>
+        </else>
+    </if>
 
-            <else>
-                <fail message="Unsupported ${DB} used, only supports mysqli and pgsql"/>
-            </else>
-        </if>
-
+    <target name="reportProperties">
         <echo message="Build variables"/>
         <echo message="COMPONENT: ${COMPONENT}"/>
         <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
         <echo message="INSTALL_DIR: ${INSTALL_DIR}"/>
         <echo message="BUILD_DIR: ${BUILD_DIR}"/>
-        <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
         <echo message="DB: ${DB}"/>
         <echo message="DB.USER: ${DB.USER}"/>
         <echo message="DB.PASS: ${DB.PASS}"/>
-        <echo message="TRAVIS_REPO_SLUG: ${env.TRAVIS_REPO_SLUG}"/>
-        <echo message="TRAVIS_BUILD_DIR: ${env.TRAVIS_BUILD_DIR}"/>
+        <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
     </target>
 
     <target name="all">
-        <phingcall target="initProperties"/>
+        <phingcall target="reportProperties"/>
         <phingcall target="buildMoodle"/>
     </target>
 
     <target name="buildMoodle">
         <echo message="Cloning Moodle"/>
-        <echo message="git clone --depth=1 --branch ${MOODLE_BRANCH} git://github.com/moodle/moodle ${BUILD_DIR}/moodle"/>
-        <exec command="git clone --depth=1 --branch ${MOODLE_BRANCH} git://github.com/moodle/moodle ${BUILD_DIR}/moodle" passthru="true" checkreturn="true"/>
+        <exec command="git clone --depth=1 --branch ${MOODLE_BRANCH} git://github.com/moodle/moodle ${BUILD_DIR}/moodle" passthru="true" checkreturn="true" level="info"/>
 
         <echo message="Creating Moodle's data directory"/>
         <mkdir dir="${BUILD_DIR}/moodledata" mode="777"/>
@@ -122,7 +73,7 @@
 
         <echo message="Copying plugin into Moodle"/>
         <copy todir="${BUILD_DIR}/moodle/${INSTALL_DIR}">
-            <fileset dir="${COMPONENT_DIR}"/>
+            <fileset dir="${TRAVIS_BUILD_DIR}"/>
         </copy>
     </target>
 </project>
