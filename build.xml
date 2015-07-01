@@ -100,7 +100,7 @@
         <mkdir dir="${BUILD_DIR}/moodledata/phpu_moodledata" mode="777"/>
         <mkdir dir="${BUILD_DIR}/moodledata/behat_moodledata" mode="777"/>
 
-        <echo message="Creating Moodle's config file"
+        <echo message="Creating Moodle's config file"/>
         <copy file="${project.basedir}/res/template/config.php.txt" tofile="${BUILD_DIR}/moodle/config.php">
             <filterchain>
                 <replacetokens begintoken="{{" endtoken="}}">

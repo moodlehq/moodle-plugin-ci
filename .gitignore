@@ -1,0 +1,12 @@
+bin/
+vendor/
+.patches/
+.idea/
+nbproject/
+.DS_Store
+.settings/
+.project
+.buildpath
+.cache
+composer.phar
+phpunit.xml
