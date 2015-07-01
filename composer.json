@@ -1,0 +1,13 @@
+{
+  "name": "moodlerooms/TODO",
+  "description": "TODO",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": ">=5.4.0",
+    "phing/phing": "2.*"
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
+}

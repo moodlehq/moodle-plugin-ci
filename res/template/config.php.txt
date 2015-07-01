@@ -1,0 +1,59 @@
+<?php  // Moodle configuration file
+
+unset($CFG);
+global $CFG;
+$CFG = new stdClass();
+
+$CFG->dbtype    = '{{DBTYPE}}';
+$CFG->dblibrary = '{{DBLIBRARY}}';
+$CFG->dbhost    = '{{DBHOST}}';
+$CFG->dbname    = '{{DBNAME}}';
+$CFG->dbuser    = '{{DBUSER}}';
+$CFG->dbpass    = '{{DBPASS}}';
+$CFG->prefix    = 'mdl_';
+$CFG->dboptions = array();
+
+$CFG->wwwroot  = '{{WWWROOT}}';
+$CFG->dataroot = '{{DATAROOT}}';
+$CFG->admin    = 'admin';
+
+$CFG->directorypermissions = 02777;
+
+// No emails.
+$CFG->noemailever = true;
+
+// PHPUnit settings.
+$CFG->phpunit_prefix = 'phpu_';
+$CFG->phpunit_dataroot='{{DATAROOT}}/phpu_moodledata';
+
+// Behat settings.
+$CFG->behat_prefix = 'behat_';
+$CFG->behat_dataroot = '{{DATAROOT}}/behat_moodledata';
+$CFG->behat_wwwroot = '{{BEHATWWWROOT}}';
+$CFG->behat_config = array(
+    'default' => array(
+        'extensions' => array(
+            'Behat\MinkExtension\Extension' => array(
+                'selenium2' => array(
+                    'browser' => 'firefox',
+                    'wd_host' => 'http://localhost:4444/wd/hub'
+                )
+            )
+        )
+    ),
+    'phantomjs' => array(
+        'filters' => array('tags' => '~@_file_upload && ~@_alert && ~@_bug_phantomjs'),
+        'extensions' => array(
+            'Behat\MinkExtension\Extension' => array(
+                'selenium2' => array(
+                    'browser' => 'phantomjs',
+                    'wd_host' => 'http://localhost:4445/wd/hub'
+                )
+            )
+        )
+    ),
+);
+
+require_once(dirname(__FILE__) . '/lib/setup.php');
+// There is no php closing tag in this file,
+// it is intentional because it prevents trailing whitespace problems!
