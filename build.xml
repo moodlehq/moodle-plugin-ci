@@ -34,7 +34,7 @@
                 <isset property="BUILD_DIR"/>
             </not>
             <then>
-                <property name="BUILD_DIR" value="${user.home}"/>
+                <property name="BUILD_DIR" value="${env.HOME}"/>
             </then>
         </if>
         <if>
