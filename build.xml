@@ -104,7 +104,7 @@
     </target>
 
     <target name="behat" if="BEHAT_ENABLED">
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${BUILD_DIR}/moodledata/phpu_moodledata/behat/behat.yml --tags @${COMPONENT}" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${BUILD_DIR}/moodledata/phpu_moodledata/behat/behat.yml --tags @${COMPONENT}" dir="${BUILD_DIR}/moodle" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="phpunitDependencies" if="PHPUNIT_ENABLED">
@@ -113,6 +113,6 @@
     </target>
 
     <target name="phpunit" if="PHPUNIT_ENABLED">
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${BUILD_DIR}/moodle" passthru="true" level="info" checkreturn="true"/>
     </target>
 </project>
