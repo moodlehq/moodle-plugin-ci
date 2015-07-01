@@ -7,6 +7,8 @@
     <property name="DB" value="${env.DB}"/>
     <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}"/>
     <property name="BUILD_DIR" value="${project.basedir}"/>
+    <available property="PHPUNIT_ENABLED" file="${TRAVIS_BUILD_DIR}/tests"/>
+    <available property="BEHAT_ENABLED" file="${TRAVIS_BUILD_DIR}/tests/behat"/>
 
     <if>
         <equals arg1="${DB}" arg2="pgsql"/>
@@ -28,7 +30,7 @@
         </else>
     </if>
 
-    <target name="reportProperties">
+    <target name="reportProperties" if="BEHAT_ENABLED">
         <echo message="Build variables"/>
         <echo message="COMPONENT: ${COMPONENT}"/>
         <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
@@ -38,11 +40,17 @@
         <echo message="DB.USER: ${DB.USER}"/>
         <echo message="DB.PASS: ${DB.PASS}"/>
         <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
+        <echo message="PHPUNIT_ENABLED: ${PHPUNIT_ENABLED}"/>
+        <echo message="BEHAT_ENABLED: ${BEHAT_ENABLED}"/>
     </target>
 
     <target name="all">
         <phingcall target="reportProperties"/>
         <phingcall target="buildMoodle"/>
+        <phingcall target="behatDependencies"/>
+        <phingcall target="phpunitDependencies"/>
+        <phingcall target="phpunit"/>
+        <phingcall target="behat"/>
     </target>
 
     <target name="buildMoodle">
@@ -75,5 +83,25 @@
         <copy todir="${BUILD_DIR}/moodle/${INSTALL_DIR}">
             <fileset dir="${TRAVIS_BUILD_DIR}"/>
         </copy>
+    </target>
+
+    <target name="behatDependencies" if="BEHAT_ENABLED">
+        <httpget dir="${BUILD_DIR}" url="http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" filename="selenium.jar"/>
+        <exec command="phantomjs --webdriver=4445" spawn="true" level="info"/>
+        <exec command="xvfb-run -a --server-args=&quot;-screen 0 1024x768x24&quot; java -jar selenium.jar" spawn="true" level="info"/>
+        <exec command="php -S localhost:8000" spawn="true" level="info"/>
+        <exec command="php ${BUILD_DIR}/moodle/admin/tool/behat/cli/init.php" passthru="true" level="info"/>
+    </target>
+
+    <target name="behat" if="BEHAT_ENABLED">
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${BUILD_DIR}/moodledata/phpu_moodledata/behat/behat.yml --tags @${COMPONENT}" passthru="true" level="info"/>
+    </target>
+
+    <target name="phpunitDependencies" if="PHPUNIT_ENABLED">
+        <exec command="php ${BUILD_DIR}/moodle/admin/tool/phpunit/cli/init.php" passthru="true" level="info"/>
+    </target>
+
+    <target name="phpunit" if="PHPUNIT_ENABLED">
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite '${COMPONENT}_testsuite'" passthru="true" level="info"/>
     </target>
 </project>
