@@ -31,18 +31,18 @@
         </if>
         <if>
             <not>
-                <isset property="BUILD_DIR"/>
-            </not>
-            <then>
-                <property name="BUILD_DIR" value="${env.HOME}"/>
-            </then>
-        </if>
-        <if>
-            <not>
                 <isset property="COMPONENT_DIR"/>
             </not>
             <then>
                 <property name="COMPONENT_DIR" value="${application.startdir}"/>
+            </then>
+        </if>
+        <if>
+            <not>
+                <isset property="BUILD_DIR"/>
+            </not>
+            <then>
+                <resolvepath propertyName="BUILD_DIR" file="${COMPONENT_DIR}/.."/>
             </then>
         </if>
         <if>
