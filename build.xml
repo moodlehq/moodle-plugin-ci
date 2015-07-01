@@ -89,19 +89,6 @@
     <target name="all">
         <phingcall target="initProperties"/>
         <phingcall target="buildMoodle"/>
-        <echo message="${env.HOME}"/>
-        <echo message="application.startdir: ${application.startdir}"/>
-        <echo message="project.basedir: ${project.basedir}"/>
-        <echo message="COMPONENT: ${COMPONENT}"/>
-        <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
-        <echo message="INSTALL_DIR: ${INSTALL_DIR}"/>
-        <echo message="DB: ${DB}"/>
-
-        <echo message="${env.HOME}"/>
-        <echo message="COMPONENT: ${COMPONENT}"/>
-        <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
-        <echo message="INSTALL_DIR: ${INSTALL_DIR}"/>
-        <echo message="DB: ${DB}"/>
     </target>
 
     <target name="buildMoodle">
