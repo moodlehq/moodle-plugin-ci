@@ -15,6 +15,7 @@
         <then>
             <property name="DB.USER" value="postgres"/>
             <property name="DB.PASS" value=""/>
+            <property name="DB.CREATE" value="psql -c 'CREATE DATABASE moodle;' -U postgres"/>
         </then>
 
         <elseif>
@@ -22,6 +23,7 @@
             <then>
                 <property name="DB.USER" value="root"/>
                 <property name="DB.PASS" value=""/>
+                <property name="DB.CREATE" value="mysql -e 'CREATE DATABASE moodle DEFAULT CHARACTER SET UTF8 COLLATE UTF8_bin;'"/>
             </then>
         </elseif>
 
@@ -83,31 +85,34 @@
         <copy todir="${BUILD_DIR}/moodle/${INSTALL_DIR}">
             <fileset dir="${TRAVIS_BUILD_DIR}"/>
         </copy>
+
+        <echo message="Creating database for Moodle"/>
+        <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="behatDependencies" if="BEHAT_ENABLED">
         <echo message="Downloading Selenium JAR file"/>
-        <exec command="curl -o ${BUILD_DIR}/selenium.jar http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" passthru="true" level="info"/>
+        <exec command="curl -o ${BUILD_DIR}/selenium.jar http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" passthru="true" level="info" checkreturn="true"/>
         <echo message="Starting Selenium server"/>
-        <exec command="xvfb-run -a --server-args=&quot;-screen 0 1024x768x24&quot; java -jar ${BUILD_DIR}/selenium.jar" spawn="true" level="info"/>
+        <exec command="xvfb-run -a --server-args=&quot;-screen 0 1024x768x24&quot; java -jar ${BUILD_DIR}/selenium.jar" spawn="true" level="info" checkreturn="true"/>
         <echo message="Starting PhantomJS"/>
-        <exec command="phantomjs --webdriver=4445" spawn="true" level="info"/>
+        <exec command="phantomjs --webdriver=4445" spawn="true" level="info" checkreturn="true"/>
         <echo message="Starting PHP server"/>
-        <exec command="php -S localhost:8000" spawn="true" level="info"/>
+        <exec command="php -S localhost:8000" spawn="true" level="info" checkreturn="true"/>
         <echo message="Initialize Behat in Moodle"/>
-        <exec command="php ${BUILD_DIR}/moodle/admin/tool/behat/cli/init.php" passthru="true" level="info"/>
+        <exec command="php ${BUILD_DIR}/moodle/admin/tool/behat/cli/init.php" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="behat" if="BEHAT_ENABLED">
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${BUILD_DIR}/moodledata/phpu_moodledata/behat/behat.yml --tags @${COMPONENT}" passthru="true" level="info"/>
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${BUILD_DIR}/moodledata/phpu_moodledata/behat/behat.yml --tags @${COMPONENT}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="phpunitDependencies" if="PHPUNIT_ENABLED">
         <echo message="Initialize PHPUnit in Moodle"/>
-        <exec command="php ${BUILD_DIR}/moodle/admin/tool/phpunit/cli/init.php" passthru="true" level="info"/>
+        <exec command="php ${BUILD_DIR}/moodle/admin/tool/phpunit/cli/init.php" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="phpunit" if="PHPUNIT_ENABLED">
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite '${COMPONENT}_testsuite'" passthru="true" level="info"/>
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite '${COMPONENT}_testsuite'" passthru="true" level="info" checkreturn="true"/>
     </target>
 </project>
