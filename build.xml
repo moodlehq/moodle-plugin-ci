@@ -84,6 +84,8 @@
         <echo message="DB: ${DB}"/>
         <echo message="DB.USER: ${DB.USER}"/>
         <echo message="DB.PASS: ${DB.PASS}"/>
+        <echo message="TRAVIS_REPO_SLUG: ${env.TRAVIS_REPO_SLUG}"/>
+        <echo message="TRAVIS_BUILD_DIR: ${env.TRAVIS_BUILD_DIR}"/>
     </target>
 
     <target name="all">
