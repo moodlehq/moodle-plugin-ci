@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="MoodleTravisPlugin" default="all">
+<project name="MoodleTravisPluginScript" description="Use targets from this Phing file for the 'script' section of the .travis.yml file." default="all">
     <property name="COMPONENT" value="${env.COMPONENT}"/>
     <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}"/>
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.."/>
