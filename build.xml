@@ -9,6 +9,8 @@
     <property name="BUILD_DIR" value="${project.basedir}"/>
     <available property="PHPUNIT_ENABLED" file="${TRAVIS_BUILD_DIR}/tests"/>
     <available property="BEHAT_ENABLED" file="${TRAVIS_BUILD_DIR}/tests/behat"/>
+    <property name="RESULTS.PHPUNIT" value="0"/>
+    <property name="RESULTS.BEHAT" value="0"/>
 
     <if>
         <equals arg1="${DB}" arg2="pgsql"/>
@@ -53,6 +55,7 @@
         <phingcall target="phpunitDependencies"/>
         <phingcall target="phpunit"/>
         <phingcall target="behat"/>
+        <phingcall target="checkResults"/>
     </target>
 
     <target name="buildMoodle">
@@ -104,7 +107,7 @@
     </target>
 
     <target name="behat" if="BEHAT_ENABLED">
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${BUILD_DIR}/moodledata/phpu_moodledata/behat/behat.yml --tags @${COMPONENT}" dir="${BUILD_DIR}/moodle" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${BUILD_DIR}/moodledata/phpu_moodledata/behat/behat.yml --tags @${COMPONENT}" dir="${BUILD_DIR}/moodle" passthru="true" level="info" returnProperty="RESULTS.BEHAT"/>
     </target>
 
     <target name="phpunitDependencies" if="PHPUNIT_ENABLED">
@@ -113,6 +116,26 @@
     </target>
 
     <target name="phpunit" if="PHPUNIT_ENABLED">
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${BUILD_DIR}/moodle" passthru="true" level="info" checkreturn="true"/>
+        <!-- Going to have to remove checkreturn so behat and others can run.  Then later fail build if anything important fails. -->
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${BUILD_DIR}/moodle" passthru="true" level="info" returnProperty="RESULTS.PHPUNIT"/>
+    </target>
+
+    <target name="checkResults">
+        <if>
+            <not>
+                <equals arg1="${RESULTS.PHPUNIT}" arg2="0"/>
+            </not>
+            <then>
+                <fail message="PHPUnit tests failed"/>
+            </then>
+        </if>
+        <if>
+            <not>
+                <equals arg1="${RESULTS.BEHAT}" arg2="0"/>
+            </not>
+            <then>
+                <fail message="Behat tests failed"/>
+            </then>
+        </if>
     </target>
 </project>
