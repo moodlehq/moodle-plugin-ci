@@ -40,9 +40,10 @@
     <target name="install" description="Builds Moodle and detect dependencies to install" depends="reportProperties">
         <phingcall target="installMoodle"/>
 
-        <!-- Try to detect if plugin has Behat or PHPUnit tests to run. -->
+        <!-- Try to detect if plugin has Behat tests to run. -->
         <available property="BEHAT_ENABLED" file="${MOODLE_COMPONENT_DIR}/tests/behat"/>
-        <available property="PHPUNIT_ENABLED" file="${MOODLE_COMPONENT_DIR}/phpunit.xml"/>
+        <!-- Note: this is a super weak test.  Looking for better ways. -->
+        <available property="PHPUNIT_ENABLED" file="${MOODLE_COMPONENT_DIR}/tests"/>
         <if>
             <istrue value="${BEHAT_ENABLED}"/>
             <then>
@@ -126,9 +127,6 @@
 
         <echo message="Creating database for Moodle"/>
         <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
-
-        <!-- This helps us to detect if the plugin has any PHPUnit tests or not. -->
-        <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/util.php --buildcomponentconfigs" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="behatDependencies" hidden="true">
