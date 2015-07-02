@@ -142,15 +142,15 @@
         <echo message="Downloading Selenium JAR file"/>
         <exec command="curl -o ${project.basedir}/selenium.jar http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" passthru="true" level="info" checkreturn="true"/>
         <echo message="Starting Selenium server"/>
-        <exec command="xvfb-run -a --server-args=&quot;-screen 0 1024x768x24&quot; java -jar ${project.basedir}/selenium.jar" spawn="true" level="info" checkreturn="true"/>
+        <exec command="${project.basedir}/bin/start_selenium ${project.basedir}/selenium.jar" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Start PhantomJS. -->
         <echo message="Starting PhantomJS"/>
-        <exec command="phantomjs --webdriver=4445" spawn="true" level="info" checkreturn="true"/>
+        <exec command="${project.basedir}/bin/start_phantomjs" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Start PHP server. -->
         <echo message="Starting PHP server"/>
-        <exec command="php -S localhost:8000" spawn="true" level="info" checkreturn="true"/>
+        <exec command="${project.basedir}/bin/start_phpserver" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Initialize Behat. -->
         <echo message="Initialize Behat in Moodle"/>

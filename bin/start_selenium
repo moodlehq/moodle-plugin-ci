@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -ev
+xvfb-run -a --server-args="-screen 0 1024x768x24" java -jar $1 > /dev/null 2> /dev/null &

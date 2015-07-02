@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -ev
+phantomjs --webdriver=4445 > /dev/null 2> /dev/null &
