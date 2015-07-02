@@ -24,11 +24,11 @@ $CFG->noemailever = true;
 
 // PHPUnit settings.
 $CFG->phpunit_prefix = 'phpu_';
-$CFG->phpunit_dataroot='{{DATAROOT}}/phpu_moodledata';
+$CFG->phpunit_dataroot='{{PHPUNITDATAROOT}}';
 
 // Behat settings.
 $CFG->behat_prefix = 'behat_';
-$CFG->behat_dataroot = '{{DATAROOT}}/behat_moodledata';
+$CFG->behat_dataroot = '{{BEHATDATAROOT}}';
 $CFG->behat_wwwroot = '{{BEHATWWWROOT}}';
 $CFG->behat_config = array(
     'default' => array(

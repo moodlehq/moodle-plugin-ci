@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="MoodleTravisPluginInstall" default="install">
+    <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}"/>
+    <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}"/>
+    <property name="DB" value="${env.DB}"/>
+    <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}"/>
+    <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.."/>
+    <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" />
+    <property name="MOODLE_COMPONENT_DIR" value="${BUILD_DIR}/moodle/${COMPONENT_DIR}" />
+    <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" />
+    <property name="MOODLE_PHPUNIT_DATA_DIR" value="${BUILD_DIR}/moodledata/phpu_moodledata" />
+    <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/moodledata/behat_moodledata" />
+
+    <!-- Used to determine if Moodle has already installed. -->
+    <available property="MOODLE_EXISTS" file="${MOODLE_DIR}"/>
+
+    <if>
+        <equals arg1="${DB}" arg2="pgsql"/>
+        <then>
+            <property name="DB.USER" value="postgres"/>
+            <property name="DB.PASS" value=""/>
+            <property name="DB.CREATE" value="psql -c 'CREATE DATABASE moodle;' -U postgres"/>
+        </then>
+
+        <elseif>
+            <equals arg1="${DB}" arg2="mysqli"/>
+            <then>
+                <property name="DB.USER" value="root"/>
+                <property name="DB.PASS" value=""/>
+                <property name="DB.CREATE" value="mysql -e 'CREATE DATABASE moodle DEFAULT CHARACTER SET UTF8 COLLATE UTF8_bin;'"/>
+            </then>
+        </elseif>
+
+        <else>
+            <property name="UNKNOWN_DB" value="true"/>
+        </else>
+    </if>
+
+    <target name="install" description="Builds Moodle and detect dependencies to install" depends="reportProperties">
+        <phingcall target="installMoodle"/>
+
+        <!-- Try to detect if plugin has Behat or PHPUnit tests to run. -->
+        <available property="BEHAT_ENABLED" file="${MOODLE_COMPONENT_DIR}/tests/behat"/>
+        <available property="PHPUNIT_ENABLED" file="${MOODLE_COMPONENT_DIR}/phpunit.xml"/>
+        <if>
+            <istrue value="${BEHAT_ENABLED}"/>
+            <then>
+                <phingcall target="behatDependencies"/>
+            </then>
+        </if>
+        <if>
+            <istrue value="${PHPUNIT_ENABLED}"/>
+            <then>
+                <phingcall target="phpunitDependencies"/>
+            </then>
+        </if>
+    </target>
+
+    <target name="installForce" description="Builds Moodle and installs all dependencies" depends="reportProperties">
+        <phingcall target="installMoodle"/>
+        <phingcall target="behatDependencies"/>
+        <phingcall target="phpunitDependencies"/>
+    </target>
+
+    <target name="installBehatOnly" description="Build Moodle and install dependencies for Behat" depends="reportProperties">
+        <phingcall target="installMoodle"/>
+        <phingcall target="behatDependencies"/>
+    </target>
+
+    <target name="installPHPUnitOnly" description="Build Moodle and install dependencies for PHPUnit" depends="reportProperties">
+        <phingcall target="installMoodle"/>
+        <phingcall target="phpunitDependencies"/>
+    </target>
+
+    <target name="reportProperties" hidden="true">
+        <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
+        <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
+        <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
+        <echo message="BUILD_DIR: ${BUILD_DIR}"/>
+        <echo message="DB: ${DB}"/>
+        <echo message="DB.USER: ${DB.USER}"/>
+        <echo message="DB.PASS: ${DB.PASS}"/>
+        <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
+        <echo message="MOODLE_COMPONENT_DIR: ${MOODLE_COMPONENT_DIR}"/>
+        <echo message="MOODLE_DATA_DIR: ${MOODLE_DATA_DIR}"/>
+        <echo message="MOODLE_PHPUNIT_DATA_DIR: ${MOODLE_PHPUNIT_DATA_DIR}"/>
+        <echo message="MOODLE_BEHAT_DATA_DIR: ${MOODLE_BEHAT_DATA_DIR}"/>
+    </target>
+
+    <target name="installMoodle" hidden="true">
+        <fail if="UNKNOWN_DB" message="Unsupported ${DB} used, only supports mysqli and pgsql"/>
+        <fail if="MOODLE_EXISTS" message="Moodle has already been installed at ${MOODLE_DIR}"/>
+
+        <echo message="Cloning Moodle"/>
+        <exec command="git clone --depth=1 --branch ${MOODLE_BRANCH} git://github.com/moodle/moodle ${MOODLE_DIR}" passthru="true" checkreturn="true" level="info"/>
+
+        <echo message="Creating Moodle's data directory"/>
+        <mkdir dir="${MOODLE_DATA_DIR}" mode="777"/>
+        <mkdir dir="${MOODLE_PHPUNIT_DATA_DIR}" mode="777"/>
+        <mkdir dir="${MOODLE_BEHAT_DATA_DIR}" mode="777"/>
+
+        <echo message="Creating Moodle's config file"/>
+        <copy file="${project.basedir}/res/template/config.php.txt" tofile="${MOODLE_DIR}/config.php">
+            <filterchain>
+                <replacetokens begintoken="{{" endtoken="}}">
+                    <token key="DBTYPE" value="${DB}"/>
+                    <token key="DBLIBRARY" value="native"/>
+                    <token key="DBHOST" value="localhost"/>
+                    <token key="DBNAME" value="moodle"/>
+                    <token key="DBUSER" value="${DB.USER}"/>
+                    <token key="DBPASS" value="${DB.PASS}"/>
+                    <token key="WWWROOT" value="http://localhost/moodle"/>
+                    <token key="DATAROOT" value="${MOODLE_DATA_DIR}"/>
+                    <token key="PHPUNITDATAROOT" value="${MOODLE_PHPUNIT_DATA_DIR}"/>
+                    <token key="BEHATDATAROOT" value="${MOODLE_BEHAT_DATA_DIR}"/>
+                    <token key="BEHATWWWROOT" value="http://localhost:8000"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo message="Copying plugin into Moodle"/>
+        <copy todir="${MOODLE_COMPONENT_DIR}">
+            <fileset dir="${TRAVIS_BUILD_DIR}"/>
+        </copy>
+
+        <echo message="Creating database for Moodle"/>
+        <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
+
+        <!-- This helps us to detect if the plugin has any PHPUnit tests or not. -->
+        <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/util.php --buildcomponentconfigs" passthru="true" level="info" checkreturn="true"/>
+    </target>
+
+    <target name="behatDependencies" hidden="true">
+        <!-- Download Selenium and start it. -->
+        <echo message="Downloading Selenium JAR file"/>
+        <exec command="curl -o ${project.basedir}/selenium.jar http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" passthru="true" level="info" checkreturn="true"/>
+        <echo message="Starting Selenium server"/>
+        <exec command="xvfb-run -a --server-args=&quot;-screen 0 1024x768x24&quot; java -jar ${project.basedir}/selenium.jar" spawn="true" level="info" checkreturn="true"/>
+
+        <!-- Start PhantomJS. -->
+        <echo message="Starting PhantomJS"/>
+        <exec command="phantomjs --webdriver=4445" spawn="true" level="info" checkreturn="true"/>
+
+        <!-- Start PHP server. -->
+        <echo message="Starting PHP server"/>
+        <exec command="php -S localhost:8000" spawn="true" level="info" checkreturn="true"/>
+
+        <!-- Initialize Behat. -->
+        <echo message="Initialize Behat in Moodle"/>
+        <exec command="php ${MOODLE_DIR}/admin/tool/behat/cli/init.php" passthru="true" level="info" checkreturn="true"/>
+
+        <!-- This is a flag to let us know that Behat is ready to run. -->
+        <touch file="${MOODLE_DIR}/BEHAT_READY"/>
+    </target>
+
+    <target name="phpunitDependencies" hidden="true">
+        <echo message="Initialize PHPUnit in Moodle"/>
+        <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/init.php" passthru="true" level="info" checkreturn="true"/>
+
+        <!-- This is a flag to let us know that PHPUnit is ready to run. -->
+        <touch file="${MOODLE_DIR}/PHPUNIT_READY"/>
+    </target>
+</project>

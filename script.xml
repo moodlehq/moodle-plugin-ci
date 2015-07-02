@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="MoodleTravisPlugin" default="all">
+    <property name="COMPONENT" value="${env.COMPONENT}"/>
+    <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}"/>
+    <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.."/>
+    <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle"/>
+    <property name="MOODLE_COMPONENT_DIR" value="${BUILD_DIR}/moodle/${COMPONENT_DIR}"/>
+    <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/moodledata/behat_moodledata"/>
+    <available property="PHPUNIT_READY" file="${MOODLE_DIR}/PHPUNIT_READY"/>
+    <available property="BEHAT_READY" file="${MOODLE_DIR}/BEHAT_READY"/>
+
+    <target name="reportProperties" hidden="true">
+        <echo message="COMPONENT: ${COMPONENT}"/>
+        <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
+        <echo message="BUILD_DIR: ${BUILD_DIR}"/>
+        <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
+        <echo message="MOODLE_COMPONENT_DIR: ${MOODLE_COMPONENT_DIR}"/>
+        <echo message="MOODLE_BEHAT_DATA_DIR: ${MOODLE_BEHAT_DATA_DIR}"/>
+        <echo message="PHPUNIT_READY: ${PHPUNIT_READY}"/>
+        <echo message="BEHAT_READY: ${BEHAT_READY}"/>
+    </target>
+
+    <target name="verifyInstall">
+        <available property="BUILD_EXISTS" file="${MOODLE_DIR}"/>
+        <fail unless="BUILD_EXISTS" message="The Moodle install cannot be found: ${MOODLE_DIR}"/>
+    </target>
+
+    <target name="all" description="Run all tests" depends="verifyInstall,reportProperties">
+        <!-- We want everything to run, even if tests fail. -->
+
+        <!-- Run PHPUnit tests. -->
+        <if>
+            <istrue value="${PHPUNIT_READY}"/>
+            <then>
+                <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${BUILD_DIR}/moodle" passthru="true" level="info" returnProperty="RESULTS.PHPUNIT"/>
+                <if>
+                    <not>
+                        <equals arg1="${RESULTS.PHPUNIT}" arg2="0"/>
+                    </not>
+                    <then>
+                        <echo message="PHPUnit tests failed"/>
+                        <property name="FAILED" value="true"/>
+                    </then>
+                </if>
+            </then>
+        </if>
+
+        <!-- Run Behat tests. -->
+        <if>
+            <istrue value="${BEHAT_READY}"/>
+            <then>
+                <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${MOODLE_BEHAT_DATA_DIR}/behat/behat.yml --tags @${COMPONENT}" dir="${BUILD_DIR}/moodle" passthru="true" level="info" returnProperty="RESULTS.BEHAT"/>
+                <if>
+                    <not>
+                        <equals arg1="${RESULTS.BEHAT}" arg2="0"/>
+                    </not>
+                    <then>
+                        <echo message="Behat tests failed"/>
+                        <property name="FAILED" value="true"/>
+                    </then>
+                </if>
+            </then>
+        </if>
+
+        <!-- Run PHP Linting. -->
+        <phplint deprecatedAsError="true" errorproperty="RESULTS.LINT" level="info">
+            <fileset dir="${MOODLE_COMPONENT_DIR}">
+                <include name="**/*.php"/>
+            </fileset>
+        </phplint>
+
+        <if>
+            <not>
+                <equals arg1="${RESULTS.LINT}" arg2=""/>
+            </not>
+            <then>
+                <echo message="PHP Lint error: ${RESULTS.LINT}"/>
+                <property name="FAILED" value="true"/>
+            </then>
+        </if>
+
+        <!-- If anything failed above, we throw an error. -->
+        <fail if="FAILED" message="A test has failed"/>
+    </target>
+
+    <target name="behat" description="Run Behat tests" depends="verifyInstall,reportProperties">
+        <fail unless="BEHAT_READY" message="Behat is not ready to run, something went wrong with the install"/>
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${BUILD_DIR}/moodledata/phpu_moodledata/behat/behat.yml --tags @${COMPONENT}" dir="${BUILD_DIR}/moodle" passthru="true" level="info" checkreturn="true"/>
+    </target>
+
+    <target name="phpunit" description="Run PHPUnit tests" depends="verifyInstall,reportProperties">
+        <fail unless="PHPUNIT_READY" message="PHPUnit is not ready to run, something went wrong with the install"/>
+        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${BUILD_DIR}/moodle" passthru="true" level="info" checkreturn="true"/>
+    </target>
+
+    <target name="phplint" description="Run PHP Lint on the plugin" depends="verifyInstall,reportProperties">
+        <phplint deprecatedAsError="true" haltonfailure="true">
+            <fileset dir="${MOODLE_COMPONENT_DIR}">
+                <include name="**/*.php"/>
+            </fileset>
+        </phplint>
+    </target>
+</project>
