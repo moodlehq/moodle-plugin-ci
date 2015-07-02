@@ -1,8 +1,22 @@
 {
-  "name": "moodlerooms/TODO",
-  "description": "TODO",
+  "name": "moodlerooms/moodle-travis-plugin",
+  "description": "Assists with running Moodle plugins in Travis CI",
+  "keywords": [
+    "moodle",
+    "travis",
+    "ci",
+    "testing"
+  ],
   "type": "project",
-  "license": "proprietary",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Mark Nielsen",
+      "email": "mark@moodlerooms.com",
+      "homepage": "http://moodlerooms.com",
+      "role": "Developer"
+    }
+  ],
   "require": {
     "php": ">=5.4.0",
     "phing/phing": "2.*"
