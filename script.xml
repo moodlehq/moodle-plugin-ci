@@ -85,6 +85,9 @@
             </then>
         </if>
 
+        <!-- Code Checker. IMPORTANT: keep this last.  No way to check for failure, so have to use halt attribute. -->
+        <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" format="summary" file="${MOODLE_COMPONENT_DIR}" verbosity="1" haltonerror="true"/>
+
         <!-- If anything failed above, we throw an error. -->
         <fail if="FAILED" message="A test has failed"/>
     </target>
