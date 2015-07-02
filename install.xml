@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="MoodleTravisPluginInstall" description="Use targets from this Phing file for the 'install' section of the .travis.yml file.  Only call one target." default="install">
-    <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}"/>
-    <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}"/>
-    <property name="DB" value="${env.DB}"/>
-    <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}"/>
-    <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.."/>
-    <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" />
-    <property name="MOODLE_COMPONENT_DIR" value="${BUILD_DIR}/moodle/${COMPONENT_DIR}" />
-    <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" />
-    <property name="MOODLE_PHPUNIT_DATA_DIR" value="${BUILD_DIR}/moodledata/phpu_moodledata" />
-    <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/moodledata/behat_moodledata" />
+    <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}" description="The Moodle git branch to clone"/>
+    <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}" description="Moodle component directory, EG: mod/forum"/>
+    <property name="DB" value="${env.DB}" description="The Moodle DB driver to use: mysqli or pgsql only"/>
+    <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}" description="This is where Travis cloned the plugin"/>
+    <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
+    <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
+    <property name="MOODLE_COMPONENT_DIR" value="${BUILD_DIR}/moodle/${COMPONENT_DIR}" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
+    <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" description="Absolute path to Moodle data directory"/>
+    <property name="MOODLE_PHPUNIT_DATA_DIR" value="${BUILD_DIR}/moodledata/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
+    <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/moodledata/behat_moodledata" description="Absolute path to Behat data directory"/>
 
     <!-- Used to determine if Moodle has already installed. -->
     <available property="MOODLE_EXISTS" file="${MOODLE_DIR}"/>
 
+    <!-- Setup some properties based on the DB type. -->
     <if>
         <equals arg1="${DB}" arg2="pgsql"/>
         <then>
@@ -75,6 +76,7 @@
     </target>
 
     <target name="reportProperties" hidden="true">
+        <!-- Helps with debugging. -->
         <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
         <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
         <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
@@ -90,17 +92,21 @@
     </target>
 
     <target name="installMoodle" hidden="true">
+        <!-- Unknown DB or already installed Moodle can fail the build. -->
         <fail if="UNKNOWN_DB" message="Unsupported ${DB} used, only supports mysqli and pgsql"/>
         <fail if="MOODLE_EXISTS" message="Moodle has already been installed at ${MOODLE_DIR}"/>
 
+        <!-- Clone Moodle. -->
         <echo message="Cloning Moodle"/>
         <exec command="git clone --depth=1 --branch ${MOODLE_BRANCH} git://github.com/moodle/moodle ${MOODLE_DIR}" passthru="true" checkreturn="true" level="info"/>
 
+        <!-- Create data directories -->
         <echo message="Creating Moodle's data directory"/>
         <mkdir dir="${MOODLE_DATA_DIR}" mode="777"/>
         <mkdir dir="${MOODLE_PHPUNIT_DATA_DIR}" mode="777"/>
         <mkdir dir="${MOODLE_BEHAT_DATA_DIR}" mode="777"/>
 
+        <!-- Build Moodle config file. -->
         <echo message="Creating Moodle's config file"/>
         <copy file="${project.basedir}/res/template/config.php.txt" tofile="${MOODLE_DIR}/config.php">
             <filterchain>
@@ -120,11 +126,13 @@
             </filterchain>
         </copy>
 
+        <!-- Copy the plugin into Moodle. -->
         <echo message="Copying plugin into Moodle"/>
         <copy todir="${MOODLE_COMPONENT_DIR}">
             <fileset dir="${TRAVIS_BUILD_DIR}"/>
         </copy>
 
+        <!-- Create Moodle database. -->
         <echo message="Creating database for Moodle"/>
         <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
     </target>
