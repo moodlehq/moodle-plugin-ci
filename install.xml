@@ -145,7 +145,7 @@
     <target name="behatDependencies" hidden="true">
         <!-- Download Selenium and start it. -->
         <echo message="Downloading Selenium JAR file"/>
-        <exec command="curl -o ${project.basedir}/selenium.jar http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" passthru="true" level="info" checkreturn="true"/>
+        <httpget dir="${project.basedir}" url="http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" filename="selenium.jar" description="Test description"/>
         <echo message="Starting Selenium server"/>
         <exec command="${project.basedir}/bin/start_selenium ${project.basedir}/selenium.jar" passthru="true" level="info" checkreturn="true"/>
 
