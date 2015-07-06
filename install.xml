@@ -11,7 +11,7 @@
     <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" description="Absolute path to Moodle data directory"/>
     <property name="MOODLE_PHPUNIT_DATA_DIR" value="${BUILD_DIR}/moodledata/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
     <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/moodledata/behat_moodledata" description="Absolute path to Behat data directory"/>
-    <property name="MOODLE_CODE_CHECKER_VERSION" value="v2.3.2"/>
+    <property name="MOODLE_CODE_CHECKER_VERSION" value="master"/>
 
     <!-- Used to determine if Moodle has already installed. -->
     <available property="MOODLE_EXISTS" file="${MOODLE_DIR}"/>
