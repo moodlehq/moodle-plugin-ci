@@ -21,8 +21,7 @@
     "php": ">=5.4.0",
     "phing/phing": "2.*",
     "squizlabs/php_codesniffer": "2.3.*",
-    "pear/versioncontrol_git": "@dev",
-    "pear/http_request2": "2.2.x"
+    "pear/versioncontrol_git": "@dev"
   },
   "config": {
     "bin-dir": "bin"
