@@ -52,6 +52,7 @@
         <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" haltonerror="true">
             <fileset dir="${MOODLE_COMPONENT_DIR}">
                 <include name="**/**"/>
+                <!-- Exclude YUI build artifacts. -->
                 <exclude name="yui/build/**"/>
             </fileset>
         </phpcodesniffer>
