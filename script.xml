@@ -115,7 +115,7 @@
 
     <target name="codeChecker" description="Run Moodle Code Checker" depends="verifyInstall,reportProperties">
         <echo message="Running Moodle Code Checker"/>
-        <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" verbosity="1" haltonerror="true">
+        <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" haltonerror="true">
             <fileset dir="${MOODLE_COMPONENT_DIR}">
                 <include name="**/**"/>
                 <exclude name="yui/build/**"/>
