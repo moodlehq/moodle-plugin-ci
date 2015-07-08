@@ -57,4 +57,12 @@
             </fileset>
         </phpcodesniffer>
     </target>
+
+    <target name="PHPCPD" description="Run PHP Copy/Paste Detector" depends="ReportProperties">
+        <phpcpd>
+            <fileset dir="${MOODLE_COMPONENT_DIR}">
+                <include name="**/*.php"/>
+            </fileset>
+        </phpcpd>
+    </target>
 </project>

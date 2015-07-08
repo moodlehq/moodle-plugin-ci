@@ -21,6 +21,7 @@
     "php": ">=5.4.0",
     "phing/phing": "2.*",
     "squizlabs/php_codesniffer": "2.3.*",
+    "sebastian/phpcpd": "2.x",
     "pear/versioncontrol_git": "@dev"
   },
   "config": {
