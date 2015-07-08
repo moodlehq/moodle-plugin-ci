@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="MoodleTravisPluginInstall" description="Use targets from this Phing file for the 'install' section of the .travis.yml file.  Only call one target." default="install">
+<project name="MoodleTravisPluginInstall" description="Use targets from this Phing file for the 'install' section of the .travis.yml file.  Only call one target." default="Install">
     <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}" description="The Moodle git branch to clone"/>
     <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}" description="Moodle component directory, EG: mod/forum"/>
     <property name="DB" value="${env.DB}" description="The Moodle DB driver to use: mysqli or pgsql only"/>
@@ -39,8 +39,8 @@
         </else>
     </if>
 
-    <target name="install" description="Builds Moodle and detect dependencies to install" depends="reportProperties">
-        <phingcall target="installMoodle"/>
+    <target name="Install" description="Builds Moodle and detect dependencies to install" depends="ReportProperties">
+        <phingcall target="InstallMoodle"/>
 
         <!-- Try to detect if plugin has Behat tests to run. -->
         <available property="BEHAT_ENABLED" file="${MOODLE_COMPONENT_DIR}/tests/behat"/>
@@ -49,34 +49,34 @@
         <if>
             <istrue value="${BEHAT_ENABLED}"/>
             <then>
-                <phingcall target="behatDependencies"/>
+                <phingcall target="BehatDependencies"/>
             </then>
         </if>
         <if>
             <istrue value="${PHPUNIT_ENABLED}"/>
             <then>
-                <phingcall target="phpunitDependencies"/>
+                <phingcall target="PHPUnitDependencies"/>
             </then>
         </if>
     </target>
 
-    <target name="installForce" description="Builds Moodle and installs all dependencies" depends="reportProperties">
-        <phingcall target="installMoodle"/>
-        <phingcall target="behatDependencies"/>
-        <phingcall target="phpunitDependencies"/>
+    <target name="ForceInstall" description="Builds Moodle and installs all dependencies" depends="ReportProperties">
+        <phingcall target="InstallMoodle"/>
+        <phingcall target="BehatDependencies"/>
+        <phingcall target="PHPUnitDependencies"/>
     </target>
 
-    <target name="installBehatOnly" description="Build Moodle and install dependencies for Behat" depends="reportProperties">
-        <phingcall target="installMoodle"/>
-        <phingcall target="behatDependencies"/>
+    <target name="InstallBehatOnly" description="Build Moodle and install dependencies for Behat" depends="ReportProperties">
+        <phingcall target="InstallMoodle"/>
+        <phingcall target="BehatDependencies"/>
     </target>
 
-    <target name="installPHPUnitOnly" description="Build Moodle and install dependencies for PHPUnit" depends="reportProperties">
-        <phingcall target="installMoodle"/>
-        <phingcall target="phpunitDependencies"/>
+    <target name="InstallPHPUnitOnly" description="Build Moodle and install dependencies for PHPUnit" depends="ReportProperties">
+        <phingcall target="InstallMoodle"/>
+        <phingcall target="PHPUnitDependencies"/>
     </target>
 
-    <target name="reportProperties" hidden="true">
+    <target name="ReportProperties" hidden="true">
         <!-- Helps with debugging. -->
         <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
         <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
@@ -92,7 +92,7 @@
         <echo message="MOODLE_BEHAT_DATA_DIR: ${MOODLE_BEHAT_DATA_DIR}"/>
     </target>
 
-    <target name="installMoodle" hidden="true">
+    <target name="InstallMoodle" hidden="true">
         <!-- Unknown DB or already installed Moodle can fail the build. -->
         <fail if="UNKNOWN_DB" message="Unsupported ${DB} used, only supports mysqli and pgsql"/>
         <fail if="MOODLE_EXISTS" message="Moodle has already been installed at ${MOODLE_DIR}"/>
@@ -142,7 +142,7 @@
         <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
-    <target name="behatDependencies" hidden="true">
+    <target name="BehatDependencies" hidden="true">
         <!-- Download Selenium and start it. -->
         <echo message="Downloading Selenium JAR file"/>
         <exec command="curl -o ${project.basedir}/selenium.jar http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar" passthru="true" level="info" checkreturn="true"/>
@@ -165,7 +165,7 @@
         <touch file="${MOODLE_DIR}/BEHAT_READY"/>
     </target>
 
-    <target name="phpunitDependencies" hidden="true">
+    <target name="PHPUnitDependencies" hidden="true">
         <echo message="Initialize PHPUnit in Moodle"/>
         <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/init.php" passthru="true" level="info" checkreturn="true"/>
 
