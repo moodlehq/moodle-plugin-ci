@@ -64,10 +64,12 @@
     <target name="PHPCPD" description="Run PHP Copy/Paste Detector" depends="ReportProperties">
         <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
         <echo message="Running PHP Copy/Paste Detector"/>
-        <phpcpd>
-            <fileset dir="${MOODLE_COMPONENT_DIR}">
-                <include name="**/*.php"/>
-            </fileset>
-        </phpcpd>
+        <phpcpd file="${MOODLE_COMPONENT_DIR}"/>
+    </target>
+
+    <target name="PHPMD" description="Run PHP Mess Detector" depends="ReportProperties">
+        <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
+        <echo message="Running PHP Mess Detector"/>
+        <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${MOODLE_COMPONENT_DIR}"/>
     </target>
 </project>

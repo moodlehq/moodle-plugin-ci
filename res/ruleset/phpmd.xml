@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset name="PHPMD rules for Moodle"
+        xmlns="http://pmd.sf.net/ruleset/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+        xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>
+        The Moodle rule set contains a collection of rules that finds software design related problems.
+    </description>
+
+    <rule ref="rulesets/codesize.xml"/>
+    <rule ref="rulesets/unusedcode.xml"/>
+    <rule ref="rulesets/naming.xml">
+        <!-- This rule throws out a problem on var names less than three chars, Moodle has $DB, $rs, etc -->
+        <exclude name="ShortVariable"/>
+    </rule>
+    <rule ref="rulesets/design.xml"/>
+    <rule ref="rulesets/cleancode.xml/BooleanArgumentFlag"/>
+
+</ruleset>
