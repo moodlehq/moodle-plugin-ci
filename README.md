@@ -66,12 +66,12 @@ your Github credentials.  Give Travis CI access to your public repository and it
 receives an update or gets a new pull request, Travis CI will run a build.
 
 Optional, but recommended for build speed,
-[create a access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) in Github to prevent 
-[Composer](https://getcomposer.org) from exceeding Github's API rate limit.  For the scopes section, be sure to **uncheck ALL 
-scopes** as this will give read-only access to public information.  After you have created the access token and copied it to your 
-clipboard, go back to your project in Travis CI.  Go to _Settings_ and then to _Environment Variables_ (Note: this might only be 
-available after you have first run a build). Click on _Add a new variable_. For the _Name_ enter `GITHUB_API_TOKEN`, for _Value_ 
-enter in your Github access token and ensure that the _Display value in build logs_ is set to **OFF**.  Then click _Add_.
+[create a access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) in Github to prevent
+[Composer](https://getcomposer.org) from exceeding Github's API rate limit.  When creating your access token, be sure to **uncheck 
+ALL scopes** as this will give read-only access to public information.  After you have created the access token and copied it to your 
+clipboard, go back to your project in Travis CI.  Go to _Settings_ and then to _Environment Variables_. Click on _Add a new
+variable_. For the _Name_ enter `GITHUB_API_TOKEN`, for _Value_ enter in your Github access token and ensure that the _Display
+value in build logs_ is set to **OFF**.  Then click _Add_.
 
 # Customizing the install
 
@@ -81,7 +81,7 @@ that you can use for the install, review the [install XML file](install.xml) for
 PHPUnit, you could do `helper/bin/phing -f helper/install.xml InstallPHPUnitOnly`.  Generally though, the default is best.
 
 If you have make additional adjustments in order for your plugin to install correctly, then you can add those to the end of the
-install section of the `.travis.yml` file.  For example, you need to add another plugin:
+`install` section of the `.travis.yml` file.  For example, you need to add another plugin:
 
 ```yaml
 install:
@@ -92,9 +92,14 @@ install:
 # Customizing the tests
 
 The tests and code analysis are run with `helper/bin/phing -f helper/script.xml`.  The available Phing targets that you can use in
-the `script` section of your `.travis.yml` file are in the [script XML file](install.xml).  It is highly recommended that
+the `script` section of your `.travis.yml` file are in the [script XML file](script.xml).  It is highly recommended that
 you at least run the `PHPUnit`, `Behat` and `CodeChecker` targets if relevant to your plugin.  This will help prevent failures
-when other users add you plugin to their Moodle install and run PHPUnit and Behat tests.  In addition, it makes sure your code is
-in compliance with Moodle's coding standard.
+when other users add your plugin to their Moodle install and run PHPUnit and Behat tests.  In addition, it makes sure your code is
+in compliance with Moodle's coding standards.
 
 Of course, feel free to add anything else you would like to run that is outside of this project.
+
+# Other customizations
+
+Feel free to customize the rest of your `.travis.yml` file to your liking.  For help, see Travis CI's
+[documentation](http://docs.travis-ci.com/user/getting-started/).
