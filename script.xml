@@ -5,8 +5,8 @@
     <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}" description="Moodle component directory, EG: mod/forum"/>
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
-    <property name="MOODLE_COMPONENT_DIR" value="${BUILD_DIR}/moodle/${COMPONENT_DIR}" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
-    <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/moodledata/behat_moodledata" description="Absolute path to Behat data directory"/>
+    <property name="MOODLE_COMPONENT_DIR" value="${MOODLE_DIR}/${COMPONENT_DIR}" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
+    <property name="BEHAT_CONFIG" value="${BUILD_DIR}/moodledata/behat_moodledata/behat/behat.yml" description="Absolute path to Behat config file"/>
     <available property="PHPUNIT_READY" file="${MOODLE_DIR}/PHPUNIT_READY" description="Flag for if PHPUnit has been installed and ready to be run"/>
     <available property="BEHAT_READY" file="${MOODLE_DIR}/BEHAT_READY" description="Flag for if Behat has been installed and ready to be run"/>
     <available property="MOODLE_READY" file="${MOODLE_DIR}" description="Flag for if Moodle has been installed"/>
@@ -18,7 +18,7 @@
         <echo message="BUILD_DIR: ${BUILD_DIR}"/>
         <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
         <echo message="MOODLE_COMPONENT_DIR: ${MOODLE_COMPONENT_DIR}"/>
-        <echo message="MOODLE_BEHAT_DATA_DIR: ${MOODLE_BEHAT_DATA_DIR}"/>
+        <echo message="BEHAT_CONFIG: ${BEHAT_CONFIG}"/>
         <echo message="PHPUNIT_READY: ${PHPUNIT_READY}"/>
         <echo message="BEHAT_READY: ${BEHAT_READY}"/>
         <echo message="MOODLE_READY: ${MOODLE_READY}"/>
@@ -27,30 +27,32 @@
     <target name="Behat" description="Run Behat tests" depends="ReportProperties">
         <fail unless="BEHAT_READY" message="Behat is not ready to run, something went wrong with the install"/>
         <echo message="Running Behat tests"/>
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/behat --config ${MOODLE_BEHAT_DATA_DIR}/behat/behat.yml --tags @${COMPONENT}" dir="${BUILD_DIR}/moodle" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${MOODLE_DIR}/vendor/bin/behat --config ${BEHAT_CONFIG} --tags @${COMPONENT}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="PHPUnit" description="Run PHPUnit tests" depends="ReportProperties">
         <fail unless="PHPUNIT_READY" message="PHPUnit is not ready to run, something went wrong with the install"/>
         <echo message="Running PHPUnit tests"/>
-        <exec command="${BUILD_DIR}/moodle/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${BUILD_DIR}/moodle" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${MOODLE_DIR}/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="PHPLint" description="Run PHP Lint on the plugin" depends="ReportProperties">
         <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
         <echo message="Running PHP Linting"/>
-        <phplint deprecatedAsError="true" haltonfailure="true" level="info">
+        <phplint deprecatedAsError="true" haltonfailure="true">
             <fileset dir="${MOODLE_COMPONENT_DIR}">
                 <include name="**/*.php"/>
             </fileset>
         </phplint>
+        <echo message="Done with PHP linting"/>
     </target>
 
     <target name="CodeChecker" description="Run Moodle Code Checker" depends="ReportProperties">
         <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
         <echo message="Running Moodle Code Checker"/>
-        <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" haltonerror="true">
+        <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" haltonerror="true" reportWidth="120">
             <fileset dir="${MOODLE_COMPONENT_DIR}">
+                <!-- List specific files to avoid processing XML, txt, etc files. -->
                 <include name="**/*.php"/>
                 <include name="**/*.js"/>
                 <!-- Exclude YUI build artifacts. -->
@@ -60,6 +62,8 @@
     </target>
 
     <target name="PHPCPD" description="Run PHP Copy/Paste Detector" depends="ReportProperties">
+        <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
+        <echo message="Running PHP Copy/Paste Detector"/>
         <phpcpd>
             <fileset dir="${MOODLE_COMPONENT_DIR}">
                 <include name="**/*.php"/>
