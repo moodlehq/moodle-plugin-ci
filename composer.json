@@ -1,12 +1,7 @@
 {
   "name": "moodlerooms/moodle-travis-plugin",
   "description": "Assists with running Moodle plugins in Travis CI",
-  "keywords": [
-    "moodle",
-    "travis",
-    "ci",
-    "testing"
-  ],
+  "keywords": ["moodle", "travis", "ci", "testing"],
   "type": "project",
   "license": "GPL-3.0",
   "authors": [
