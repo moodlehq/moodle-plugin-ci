@@ -18,13 +18,19 @@ before_install:
 - composer config -g github-oauth.github.com $GITHUB_API_TOKEN
 
 install:
-  - cd ../..
-  - git clone git://github.com/mrmark/moodle-travis-plugin helper
+  # We do this funny song and dance to mimic how a Moodle plugin would be run.
+  - mv tests/fixture/moodle-local_travis ../moodle-local_travis
+  - cd ..
+  - mv $TRAVIS_BUILD_DIR ../helper
+  - export TRAVIS_BUILD_DIR="`pwd`/moodle-local_travis"
+  - cd ..
+
+  # These should be the same as what Moodle plugins should have.
   - composer install --working-dir helper
-  - export TRAVIS_BUILD_DIR="`pwd`/helper/tests/fixture/moodle-local_travis"
   - helper/bin/phing -f helper/install.xml
 
 script:
+  - helper/bin/phing -f helper/script.xml ReportProperties
   - helper/bin/phing -f helper/script.xml PHPLint
   - helper/bin/phing -f helper/script.xml PHPCPD
   - helper/bin/phing -f helper/script.xml PHPMD
