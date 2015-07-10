@@ -19,6 +19,7 @@ First you need to add a `.travis.yml` to your plugin.  The contents of the `.tra
 language: php
 
 php:
+ - 5.4
  - 5.5
  - 5.6
  - 7.0

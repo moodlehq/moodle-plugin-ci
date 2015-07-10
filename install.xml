@@ -9,8 +9,8 @@
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
     <property name="MOODLE_COMPONENT_DIR" value="${BUILD_DIR}/moodle/${COMPONENT_DIR}" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
     <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" description="Absolute path to Moodle data directory"/>
-    <property name="MOODLE_PHPUNIT_DATA_DIR" value="${BUILD_DIR}/moodledata/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
-    <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/moodledata/behat_moodledata" description="Absolute path to Behat data directory"/>
+    <property name="MOODLE_PHPUNIT_DATA_DIR" value="${MOODLE_DATA_DIR}/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
+    <property name="MOODLE_BEHAT_DATA_DIR" value="${MOODLE_DATA_DIR}/behat_moodledata" description="Absolute path to Behat data directory"/>
     <property name="MOODLE_CODE_CHECKER_VERSION" value="master"/>
 
     <!-- Used to determine if Moodle has already installed. -->

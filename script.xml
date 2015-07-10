@@ -3,6 +3,7 @@
 <project name="MoodleTravisPluginScript" description="Use targets from this Phing file for the 'script' section of the .travis.yml file." default="PHPUnit">
     <property name="COMPONENT" value="${env.COMPONENT}" description="Moodle component, EG: mod_forum"/>
     <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}" description="Moodle component directory, EG: mod/forum"/>
+    <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}" description="This is where Travis cloned the plugin"/>
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
     <property name="MOODLE_COMPONENT_DIR" value="${MOODLE_DIR}/${COMPONENT_DIR}" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
@@ -11,45 +12,58 @@
     <available property="BEHAT_READY" file="${MOODLE_DIR}/BEHAT_READY" description="Flag for if Behat has been installed and ready to be run"/>
     <available property="MOODLE_READY" file="${MOODLE_DIR}" description="Flag for if Moodle has been installed"/>
 
-    <target name="ReportProperties" hidden="true">
+    <if>
+        <istrue value="${MOODLE_READY}"/>
+        <then>
+            <!-- We only have this option because it produces shorter paths in the log. -->
+            <property name="CODE_ANALYSIS_DIR" value="${MOODLE_COMPONENT_DIR}"/>
+        </then>
+        <else>
+            <!-- Moodle probably wasn't installed. Some targets can still be used. -->
+            <property name="CODE_ANALYSIS_DIR" value="${TRAVIS_BUILD_DIR}"/>
+        </else>
+    </if>
+
+    <target name="ReportProperties">
         <!-- Helps with debugging. -->
         <echo message="COMPONENT: ${COMPONENT}"/>
         <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
+        <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
         <echo message="BUILD_DIR: ${BUILD_DIR}"/>
         <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
         <echo message="MOODLE_COMPONENT_DIR: ${MOODLE_COMPONENT_DIR}"/>
+        <echo message="CODE_ANALYSIS_DIR: ${CODE_ANALYSIS_DIR}"/>
         <echo message="BEHAT_CONFIG: ${BEHAT_CONFIG}"/>
         <echo message="PHPUNIT_READY: ${PHPUNIT_READY}"/>
         <echo message="BEHAT_READY: ${BEHAT_READY}"/>
         <echo message="MOODLE_READY: ${MOODLE_READY}"/>
     </target>
 
-    <target name="Behat" description="Run Behat tests" depends="ReportProperties">
+    <target name="Behat" description="Run Behat tests">
         <fail unless="BEHAT_READY" message="Behat is not ready to run, something went wrong with the install"/>
-        <echo message="Running Behat tests"/>
+        <echo message="Running Behat tests for ${COMPONENT}"/>
         <exec command="${MOODLE_DIR}/vendor/bin/behat --config ${BEHAT_CONFIG} --tags @${COMPONENT}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
-    <target name="PHPUnit" description="Run PHPUnit tests" depends="ReportProperties">
+    <target name="PHPUnit" description="Run PHPUnit tests">
         <fail unless="PHPUNIT_READY" message="PHPUnit is not ready to run, something went wrong with the install"/>
-        <echo message="Running PHPUnit tests"/>
+        <echo message="Running PHPUnit tests for ${COMPONENT}"/>
         <exec command="${MOODLE_DIR}/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
-    <target name="PHPLint" description="Run PHP Lint on the plugin" depends="ReportProperties">
-        <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
-        <echo message="Running PHP Linting"/>
+    <target name="PHPLint" description="Run PHP Lint on the plugin">
+        <echo message="Running PHP Linting on ${CODE_ANALYSIS_DIR}"/>
         <phplint deprecatedAsError="true" haltonfailure="true">
-            <fileset dir="${MOODLE_COMPONENT_DIR}">
+            <fileset dir="${CODE_ANALYSIS_DIR}">
                 <include name="**/*.php"/>
             </fileset>
         </phplint>
         <echo message="Done with PHP linting"/>
     </target>
 
-    <target name="CodeChecker" description="Run Moodle Code Checker" depends="ReportProperties">
+    <target name="CodeChecker" description="Run Moodle Code Checker">
         <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
-        <echo message="Running Moodle Code Checker"/>
+        <echo message="Running Moodle Code Checker on ${MOODLE_COMPONENT_DIR}"/>
         <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" haltonerror="true" reportWidth="120">
             <fileset dir="${MOODLE_COMPONENT_DIR}">
                 <!-- List specific files to avoid processing XML, txt, etc files. -->
@@ -61,19 +75,17 @@
         </phpcodesniffer>
     </target>
 
-    <target name="PHPCPD" description="Run PHP Copy/Paste Detector" depends="ReportProperties">
-        <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
-        <echo message="Running PHP Copy/Paste Detector"/>
+    <target name="PHPCPD" description="Run PHP Copy/Paste Detector">
+        <echo message="Running PHP Copy/Paste Detector on ${CODE_ANALYSIS_DIR}"/>
         <phpcpd>
-            <fileset dir="${MOODLE_COMPONENT_DIR}">
+            <fileset dir="${CODE_ANALYSIS_DIR}">
                 <include name="**/*.php"/>
             </fileset>
         </phpcpd>
     </target>
 
-    <target name="PHPMD" description="Run PHP Mess Detector" depends="ReportProperties">
-        <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
-        <echo message="Running PHP Mess Detector"/>
-        <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${MOODLE_COMPONENT_DIR}"/>
+    <target name="PHPMD" description="Run PHP Mess Detector">
+        <echo message="Running PHP Mess Detector on ${CODE_ANALYSIS_DIR}"/>
+        <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${CODE_ANALYSIS_DIR}"/>
     </target>
 </project>
