@@ -1,0 +1,33 @@
+language: php
+
+php:
+ - 5.4
+
+env:
+ global:
+  - COMPONENT=local_travis
+  - COMPONENT_DIR=local/travis
+  - MOODLE_BRANCH=MOODLE_29_STABLE
+ matrix:
+  - DB=pgsql
+  - DB=mysqli
+
+sudo: false
+
+before_install:
+- composer config -g github-oauth.github.com $GITHUB_API_TOKEN
+
+install:
+  - cd ../..
+  - git clone git://github.com/mrmark/moodle-travis-plugin helper
+  - composer install --working-dir helper
+  - export TRAVIS_BUILD_DIR="`pwd`/helper/tests/fixture/moodle-local_travis"
+  - helper/bin/phing -f helper/install.xml
+
+script:
+  - helper/bin/phing -f helper/script.xml PHPLint
+  - helper/bin/phing -f helper/script.xml PHPCPD
+  - helper/bin/phing -f helper/script.xml PHPMD
+  - helper/bin/phing -f helper/script.xml CodeChecker
+  - helper/bin/phing -f helper/script.xml PHPUnit
+  - helper/bin/phing -f helper/script.xml Behat
