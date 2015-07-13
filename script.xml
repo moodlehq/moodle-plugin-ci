@@ -3,7 +3,6 @@
 <project name="MoodleTravisPluginScript" description="Use targets from this Phing file for the 'script' section of the .travis.yml file." default="PHPUnit">
     <property name="COMPONENT" value="${env.COMPONENT}" description="Moodle component, EG: mod_forum"/>
     <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}" description="Moodle component directory, EG: mod/forum"/>
-    <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}" description="This is where Travis cloned the plugin"/>
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
     <property name="MOODLE_COMPONENT_DIR" value="${MOODLE_DIR}/${COMPONENT_DIR}" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
@@ -17,7 +16,6 @@
         <!-- Helps with debugging. -->
         <echo message="COMPONENT: ${COMPONENT}"/>
         <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
-        <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
         <echo message="BUILD_DIR: ${BUILD_DIR}"/>
         <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
         <echo message="MOODLE_COMPONENT_DIR: ${MOODLE_COMPONENT_DIR}"/>
