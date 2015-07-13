@@ -10,19 +10,8 @@
     <property name="BEHAT_CONFIG" value="${BUILD_DIR}/moodledata/behat_moodledata/behat/behat.yml" description="Absolute path to Behat config file"/>
     <available property="PHPUNIT_READY" file="${MOODLE_DIR}/PHPUNIT_READY" description="Flag for if PHPUnit has been installed and ready to be run"/>
     <available property="BEHAT_READY" file="${MOODLE_DIR}/BEHAT_READY" description="Flag for if Behat has been installed and ready to be run"/>
-    <available property="MOODLE_READY" file="${MOODLE_DIR}" description="Flag for if Moodle has been installed"/>
-
-    <if>
-        <istrue value="${MOODLE_READY}"/>
-        <then>
-            <!-- We only have this option because it produces shorter paths in the log. -->
-            <property name="CODE_ANALYSIS_DIR" value="${MOODLE_COMPONENT_DIR}"/>
-        </then>
-        <else>
-            <!-- Moodle probably wasn't installed. Some targets can still be used. -->
-            <property name="CODE_ANALYSIS_DIR" value="${TRAVIS_BUILD_DIR}"/>
-        </else>
-    </if>
+    <available property="MOODLE_READY" file="${MOODLE_DIR}/MOODLE_READY" description="Flag for if Moodle has been installed"/>
+    <property name="MOODLE_READY_FAIL" value="The Moodle install does not exist, something went wrong with the install" description="Error message"/>
 
     <target name="ReportProperties">
         <!-- Helps with debugging. -->
@@ -32,7 +21,6 @@
         <echo message="BUILD_DIR: ${BUILD_DIR}"/>
         <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
         <echo message="MOODLE_COMPONENT_DIR: ${MOODLE_COMPONENT_DIR}"/>
-        <echo message="CODE_ANALYSIS_DIR: ${CODE_ANALYSIS_DIR}"/>
         <echo message="BEHAT_CONFIG: ${BEHAT_CONFIG}"/>
         <echo message="PHPUNIT_READY: ${PHPUNIT_READY}"/>
         <echo message="BEHAT_READY: ${BEHAT_READY}"/>
@@ -52,9 +40,10 @@
     </target>
 
     <target name="PHPLint" description="Run PHP Lint on the plugin">
-        <echo message="Running PHP Linting on ${CODE_ANALYSIS_DIR}"/>
+        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <echo message="Running PHP Linting on ${MOODLE_COMPONENT_DIR}"/>
         <phplint deprecatedAsError="true" haltonfailure="true">
-            <fileset dir="${CODE_ANALYSIS_DIR}">
+            <fileset dir="${MOODLE_COMPONENT_DIR}">
                 <include name="**/*.php"/>
             </fileset>
         </phplint>
@@ -62,7 +51,7 @@
     </target>
 
     <target name="CodeChecker" description="Run Moodle Code Checker">
-        <fail unless="MOODLE_READY" message="The Moodle install does not exist, something went wrong with the install"/>
+        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
         <echo message="Running Moodle Code Checker on ${MOODLE_COMPONENT_DIR}"/>
         <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" haltonerror="true" reportWidth="120">
             <fileset dir="${MOODLE_COMPONENT_DIR}">
@@ -76,16 +65,18 @@
     </target>
 
     <target name="PHPCPD" description="Run PHP Copy/Paste Detector">
-        <echo message="Running PHP Copy/Paste Detector on ${CODE_ANALYSIS_DIR}"/>
+        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <echo message="Running PHP Copy/Paste Detector on ${MOODLE_COMPONENT_DIR}"/>
         <phpcpd>
-            <fileset dir="${CODE_ANALYSIS_DIR}">
+            <fileset dir="${MOODLE_COMPONENT_DIR}">
                 <include name="**/*.php"/>
             </fileset>
         </phpcpd>
     </target>
 
     <target name="PHPMD" description="Run PHP Mess Detector">
-        <echo message="Running PHP Mess Detector on ${CODE_ANALYSIS_DIR}"/>
-        <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${CODE_ANALYSIS_DIR}"/>
+        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <echo message="Running PHP Mess Detector on ${MOODLE_COMPONENT_DIR}"/>
+        <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${MOODLE_COMPONENT_DIR}"/>
     </target>
 </project>

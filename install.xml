@@ -140,6 +140,9 @@
         <!-- Create Moodle database. -->
         <echo message="Creating database for Moodle"/>
         <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
+
+        <!-- This is a flag to let us know that Moodle is ready and completely built. -->
+        <touch file="${MOODLE_DIR}/MOODLE_READY"/>
     </target>
 
     <target name="BehatDependencies" hidden="true">
