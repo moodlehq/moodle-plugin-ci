@@ -58,22 +58,27 @@
                 <phingcall target="PHPUnitDependencies"/>
             </then>
         </if>
+
+        <phingcall target="OtherDependencies"/>
     </target>
 
     <target name="ForceInstall" description="Builds Moodle and installs all dependencies" depends="ReportProperties">
         <phingcall target="InstallMoodle"/>
         <phingcall target="BehatDependencies"/>
         <phingcall target="PHPUnitDependencies"/>
+        <phingcall target="OtherDependencies"/>
     </target>
 
     <target name="InstallBehatOnly" description="Build Moodle and install dependencies for Behat" depends="ReportProperties">
         <phingcall target="InstallMoodle"/>
         <phingcall target="BehatDependencies"/>
+        <phingcall target="OtherDependencies"/>
     </target>
 
     <target name="InstallPHPUnitOnly" description="Build Moodle and install dependencies for PHPUnit" depends="ReportProperties">
         <phingcall target="InstallMoodle"/>
         <phingcall target="PHPUnitDependencies"/>
+        <phingcall target="OtherDependencies"/>
     </target>
 
     <target name="ReportProperties" hidden="true">
@@ -174,5 +179,13 @@
 
         <!-- This is a flag to let us know that PHPUnit is ready to run. -->
         <touch file="${MOODLE_DIR}/PHPUNIT_READY"/>
+    </target>
+
+    <target name="OtherDependencies" hidden="true">
+        <!-- Other dependencies to install for code quality. -->
+
+        <echo message="Installing NodeJS dependencies"/>
+        <exec command="npm install -g jshint" passthru="true" level="info" checkreturn="true"/>
+        <exec command="npm install -g csslint" passthru="true" level="info" checkreturn="true"/>
     </target>
 </project>

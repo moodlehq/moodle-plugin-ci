@@ -10,6 +10,8 @@ Supported tests and code analysis tools:
 * PHP Linting
 * [PHP Copy/Paste Detector](https://github.com/sebastianbergmann/phpcpd)
 * [PHP Mess Detector](http://phpmd.org)
+* [CSS Lint](https://github.com/CSSLint/csslint)
+* [JSHint](http://www.jshint.com/)
 
 # Getting started
 
@@ -53,6 +55,8 @@ script:
   - helper/bin/phing -f helper/script.xml PHPCPD
   - helper/bin/phing -f helper/script.xml PHPMD
   - helper/bin/phing -f helper/script.xml CodeChecker
+  - helper/bin/phing -f helper/script.xml CSSLint
+  - helper/bin/phing -f helper/script.xml JSHint
   - helper/bin/phing -f helper/script.xml PHPUnit
   - helper/bin/phing -f helper/script.xml Behat
 ```

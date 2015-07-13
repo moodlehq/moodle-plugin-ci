@@ -16,7 +16,7 @@ function WIDGET() {
     WIDGET.superclass.constructor.apply(this, arguments);
 }
 
-WIDGET.NAME = NAME;
+WIDGET.NAME = 'moodle-local_travis-widget';
 
 WIDGET.ATTRS = {
     /**
@@ -45,8 +45,8 @@ Y.extend(WIDGET, Y.Base,
          * @method bind
          */
         handle_click: function(e) {
+            // No click for you!
             e.preventDefault();
-            alert('No click for you!');
         }
     }
 );

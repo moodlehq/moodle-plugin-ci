@@ -77,4 +77,16 @@
         <echo message="Running PHP Mess Detector on ${MOODLE_COMPONENT_DIR}"/>
         <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${MOODLE_COMPONENT_DIR}"/>
     </target>
+
+    <target name="JSHint" description="Run JSHint">
+        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <echo message="Running JSHint on ${MOODLE_COMPONENT_DIR}"/>
+        <exec command="jshint --exclude ${COMPONENT_DIR}/yui/build ${COMPONENT_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
+    </target>
+
+    <target name="CSSLint" description="Run CSS Lint">
+        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <echo message="Running CSS Lint on ${MOODLE_COMPONENT_DIR}"/>
+        <exec command="csslint ${COMPONENT_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
+    </target>
 </project>
