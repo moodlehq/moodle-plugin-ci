@@ -1,0 +1,10 @@
+{
+  "name": "moodle-local_travis-widget",
+  "builds": {
+    "moodle-local_travis-widget": {
+      "jsfiles": [
+        "widget.js"
+      ]
+    }
+  }
+}

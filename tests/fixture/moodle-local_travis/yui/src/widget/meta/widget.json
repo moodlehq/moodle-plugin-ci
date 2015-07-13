@@ -1,0 +1,9 @@
+{
+  "moodle-local_travis-widget": {
+    "requires": [
+      "base",
+      "node",
+      "event"
+    ]
+  }
+}
