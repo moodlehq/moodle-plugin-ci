@@ -84,6 +84,24 @@
         <exec command="jshint --exclude ${COMPONENT_DIR}/yui/build ${COMPONENT_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
+    <target name="Shifter" description="Run YUI Shifter and ensure all YUI modules have been shifted">
+        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+
+        <property name="YUI_SRC" value="${MOODLE_COMPONENT_DIR}/yui/src"/>
+        <available property="YUI_EXISTS" file="${YUI_SRC}"/>
+
+        <if>
+            <istrue value="${YUI_EXISTS"/>
+            <then>
+                <echo message="Running YUI Shifter on ${MOODLE_COMPONENT_DIR}"/>
+                <exec command="${project.basedir}/bin/test_shifter" dir="${YUI_SRC}" passthru="true" level="info" checkreturn="true"/>
+            </then>
+            <else>
+                <echo message="Nothing to shift, did not find a yui/src directory in the plugin."/>
+            </else>
+        </if>
+    </target>
+
     <target name="CSSLint" description="Run CSS Lint">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
         <echo message="Running CSS Lint on ${MOODLE_COMPONENT_DIR}"/>

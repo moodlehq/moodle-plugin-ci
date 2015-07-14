@@ -187,5 +187,6 @@
         <echo message="Installing NodeJS dependencies"/>
         <exec command="npm install -g jshint" passthru="true" level="info" checkreturn="true"/>
         <exec command="npm install -g csslint" passthru="true" level="info" checkreturn="true"/>
+        <exec command="npm install -g shifter@0.4.6" passthru="true" level="info" checkreturn="true"/>
     </target>
 </project>

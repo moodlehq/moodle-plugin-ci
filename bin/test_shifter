@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# We expect to be in the plugin's yui/src directory!
+if [ ! -d ../src ]; then
+    echo "This script should be ran in the plugin yui/src directory"
+    exit 1
+fi
+
+echo "Running Shifter:"
+shifter --walk --lint-stderr --build-dir ../buildci
+
+if [ ! -d ../buildci ]; then
+    echo "Shifter failed to make the buildci directory"
+    exit 1
+fi
+
+# Capture output of the diff between the two build dirs.
+TEST=$(diff -r ../build ../buildci)
+
+# Cleanup so we don't break any other tests.
+rm -rf ../buildci
+
+if [[ -n ${TEST} ]]; then
+    echo "The plugin YUI modules need to be re-shifted"
+    exit 1
+fi
+
+echo "The plugin YUI modules appear to be shifted correctly!"
+exit 0

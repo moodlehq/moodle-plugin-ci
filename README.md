@@ -12,6 +12,7 @@ Supported tests and code analysis tools:
 * [PHP Mess Detector](http://phpmd.org)
 * [CSS Lint](https://github.com/CSSLint/csslint)
 * [JSHint](http://www.jshint.com/)
+* [Shifter](https://docs.moodle.org/dev/YUI/Shifter)
 
 # Getting started
 
@@ -56,6 +57,7 @@ script:
   - helper/bin/phing -f helper/script.xml PHPMD
   - helper/bin/phing -f helper/script.xml CodeChecker
   - helper/bin/phing -f helper/script.xml CSSLint
+  - helper/bin/phing -f helper/script.xml Shifter
   - helper/bin/phing -f helper/script.xml JSHint
   - helper/bin/phing -f helper/script.xml PHPUnit
   - helper/bin/phing -f helper/script.xml Behat
