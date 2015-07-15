@@ -12,8 +12,6 @@ matrix:
 
 env:
  global:
-  - COMPONENT=mod_example # Change this line!  It is the Moodle component name of your plugin.
-  - COMPONENT_DIR=mod/example # Change this line! It is the directory of where your plugin is installed into Moodle.
   - MOODLE_BRANCH=MOODLE_29_STABLE
  matrix:
   - DB=pgsql

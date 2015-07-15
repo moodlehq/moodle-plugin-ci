@@ -18,6 +18,7 @@ Supported tests and code analysis tools:
 Requirements:
 * PHP 5.4 or later.
 * Moodle 2.9 or later.
+* Plugin being tested must have a `version.php` and the component must be defined within it.
 
 # Getting started
 
@@ -32,12 +33,8 @@ run a build to make sure nothing broke.
 
 ## Step 2
 
-Add a `.travis.yml` to your plugin.  Copy the [.travis.dist.yml](.travis.dist.yml) into the root of your
-plugin with the name of `.travis.yml`.  Then make the following mandatory changes to your `.travis.yml` file:
-* Replace `mod_example` with the component name of your plugin.
-* Replace `mod/example` with the installation directory of your plugin.
-
-Once you have added the `.travis.yml` file, commit and push up to Github, to trigger a Travis CI build. Check the
+Copy the [.travis.dist.yml](.travis.dist.yml) file into the root of your plugin and rename it to `.travis.yml`.  Once you
+have added the `.travis.yml` file, commit and push up to Github, to trigger a Travis CI build. Check the
 [build status](https://travis-ci.org/repositories) page to see if your build passes or fails.
 
 ## Step 3
@@ -84,11 +81,6 @@ matrix:
 # This section sets up the environment variables for the build.
 env:
  global:
-# This line must be updated for your plugin!  It is the Moodle component name of your plugin.
-  - COMPONENT=mod_example
-# This line must be updated for your plugin!  It is the directory of where your plugin is
-# installed into Moodle.
-  - COMPONENT_DIR=mod/example
 # This line determines which version of Moodle to test against.  You could use a matrix to
 # test against multiple versions of Moodle.
   - MOODLE_BRANCH=MOODLE_29_STABLE

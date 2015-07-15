@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="MoodleTravisPluginScript" description="Use targets from this Phing file for the 'script' section of the .travis.yml file." default="PHPUnit">
-    <property name="COMPONENT" value="${env.COMPONENT}" description="Moodle component, EG: mod_forum"/>
-    <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}" description="Moodle component directory, EG: mod/forum"/>
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
-    <property name="MOODLE_COMPONENT_DIR" value="${MOODLE_DIR}/${COMPONENT_DIR}" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
     <property name="BEHAT_CONFIG" value="${BUILD_DIR}/moodledata/behat_moodledata/behat/behat.yml" description="Absolute path to Behat config file"/>
-    <available property="PHPUNIT_READY" file="${MOODLE_DIR}/PHPUNIT_READY" description="Flag for if PHPUnit has been installed and ready to be run"/>
-    <available property="BEHAT_READY" file="${MOODLE_DIR}/BEHAT_READY" description="Flag for if Behat has been installed and ready to be run"/>
-    <available property="MOODLE_READY" file="${MOODLE_DIR}/MOODLE_READY" description="Flag for if Moodle has been installed"/>
     <property name="MOODLE_READY_FAIL" value="The Moodle install does not exist, something went wrong with the install" description="Error message"/>
+    <property name="PLUGIN_PROPERTIES_FILE" value="${MOODLE_DIR}/plugin.properties" description="Location of the plugin properties file"/>
+
+    <!-- Flags created on install so we know if something is ready to run or not. -->
+    <available property="PHPUNIT_READY" file="${MOODLE_DIR}/PHPUNIT_READY"/>
+    <available property="BEHAT_READY" file="${MOODLE_DIR}/BEHAT_READY"/>
+    <available property="MOODLE_READY" file="${MOODLE_DIR}/MOODLE_READY"/>
+
+    <!-- These properties are read from the component properties file. -->
+    <property name="COMPONENT" value="false" description="Moodle component, EG: mod_forum"/>
+    <property name="COMPONENT_DIR" value="false" description="Moodle component directory, EG: mod/forum"/>
+    <property name="MOODLE_COMPONENT_DIR" value="false" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
+
+    <if>
+        <available property="PROPERTY_FILE_EXISTS" file="${PLUGIN_PROPERTIES_FILE}"/>
+        <then>
+            <property file="${PLUGIN_PROPERTIES_FILE}" override="true"/>
+        </then>
+    </if>
 
     <target name="ReportProperties">
         <!-- Helps with debugging. -->
@@ -23,6 +35,7 @@
         <echo message="PHPUNIT_READY: ${PHPUNIT_READY}"/>
         <echo message="BEHAT_READY: ${BEHAT_READY}"/>
         <echo message="MOODLE_READY: ${MOODLE_READY}"/>
+        <echo message="PLUGIN_PROPERTIES_FILE: ${PLUGIN_PROPERTIES_FILE}"/>
     </target>
 
     <target name="Behat" description="Run Behat tests">
@@ -88,10 +101,9 @@
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
 
         <property name="YUI_SRC" value="${MOODLE_COMPONENT_DIR}/yui/src"/>
-        <available property="YUI_EXISTS" file="${YUI_SRC}"/>
 
         <if>
-            <istrue value="${YUI_EXISTS"/>
+            <available property="YUI_EXISTS" file="${YUI_SRC}"/>
             <then>
                 <echo message="Running YUI Shifter on ${MOODLE_COMPONENT_DIR}"/>
                 <exec command="${project.basedir}/bin/test_shifter" dir="${YUI_SRC}" passthru="true" level="info" checkreturn="true"/>

@@ -5,8 +5,6 @@ php:
 
 env:
  global:
-  - COMPONENT=local_travis
-  - COMPONENT_DIR=local/travis
   - MOODLE_BRANCH=MOODLE_29_STABLE
  matrix:
   - DB=pgsql

@@ -18,7 +18,15 @@
     "squizlabs/php_codesniffer": "2.3.*",
     "sebastian/phpcpd": "2.*",
     "phpmd/phpmd": "2.2.*",
+    "symfony/filesystem": "2.*",
+    "symfony/finder": "2.*",
+    "symfony/console": "2.*",
     "pear/versioncontrol_git": "@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Moodlerooms\\MoodleTravisPlugin\\": "src/"
+    }
   },
   "config": {
     "bin-dir": "bin"

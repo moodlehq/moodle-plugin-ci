@@ -3,6 +3,7 @@ bin/*
 !bin/start_phantomjs
 !bin/start_phpserver
 !bin/test_shifter
+!bin/helper
 vendor/
 .patches/
 .idea/

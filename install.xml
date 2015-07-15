@@ -2,18 +2,21 @@
 
 <project name="MoodleTravisPluginInstall" description="Use targets from this Phing file for the 'install' section of the .travis.yml file.  Only call one target." default="Install">
     <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}" description="The Moodle git branch to clone"/>
-    <property name="COMPONENT_DIR" value="${env.COMPONENT_DIR}" description="Moodle component directory, EG: mod/forum"/>
     <property name="DB" value="${env.DB}" description="The Moodle DB driver to use: mysqli or pgsql only"/>
     <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}" description="This is where Travis cloned the plugin"/>
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
-    <property name="MOODLE_COMPONENT_DIR" value="${BUILD_DIR}/moodle/${COMPONENT_DIR}" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
     <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" description="Absolute path to Moodle data directory"/>
     <property name="MOODLE_PHPUNIT_DATA_DIR" value="${MOODLE_DATA_DIR}/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
     <property name="MOODLE_BEHAT_DATA_DIR" value="${MOODLE_DATA_DIR}/behat_moodledata" description="Absolute path to Behat data directory"/>
+    <property name="PLUGIN_PROPERTIES_FILE" value="${MOODLE_DIR}/plugin.properties" description="Location of the plugin properties file"/>
     <property name="MOODLE_CODE_CHECKER_VERSION" value="master"/>
 
-    <!-- Used to determine if Moodle has already installed. -->
+    <!-- These properties are read from a property file. -->
+    <property name="PHPUNIT_ENABLED" value="false" description="If the plugin has PHPUnit tests"/>
+    <property name="BEHAT_ENABLED" value="false" description="If the plugin has Behat tests"/>
+
+    <!-- Determine if Moodle exists already. -->
     <available property="MOODLE_EXISTS" file="${MOODLE_DIR}"/>
 
     <!-- Setup some properties based on the DB type. -->
@@ -42,10 +45,9 @@
     <target name="Install" description="Builds Moodle and detect dependencies to install" depends="ReportProperties">
         <phingcall target="InstallMoodle"/>
 
-        <!-- Try to detect if plugin has Behat tests to run. -->
-        <available property="BEHAT_ENABLED" file="${MOODLE_COMPONENT_DIR}/tests/behat"/>
-        <!-- Note: this is a super weak test.  Looking for better ways. -->
-        <available property="PHPUNIT_ENABLED" file="${MOODLE_COMPONENT_DIR}/tests"/>
+        <!-- Loads up the values for BEHAT_ENABLED and PHPUNIT_ENABLED. -->
+        <property file="${PLUGIN_PROPERTIES_FILE}" override="true"/>
+
         <if>
             <istrue value="${BEHAT_ENABLED}"/>
             <then>
@@ -84,17 +86,16 @@
     <target name="ReportProperties" hidden="true">
         <!-- Helps with debugging. -->
         <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
-        <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
         <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
         <echo message="BUILD_DIR: ${BUILD_DIR}"/>
         <echo message="DB: ${DB}"/>
         <echo message="DB.USER: ${DB.USER}"/>
         <echo message="DB.PASS: ${DB.PASS}"/>
         <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
-        <echo message="MOODLE_COMPONENT_DIR: ${MOODLE_COMPONENT_DIR}"/>
         <echo message="MOODLE_DATA_DIR: ${MOODLE_DATA_DIR}"/>
         <echo message="MOODLE_PHPUNIT_DATA_DIR: ${MOODLE_PHPUNIT_DATA_DIR}"/>
         <echo message="MOODLE_BEHAT_DATA_DIR: ${MOODLE_BEHAT_DATA_DIR}"/>
+        <echo message="PLUGIN_PROPERTIES_FILE: ${PLUGIN_PROPERTIES_FILE}"/>
     </target>
 
     <target name="InstallMoodle" hidden="true">
@@ -132,19 +133,17 @@
             </filterchain>
         </copy>
 
-        <!-- Copy the plugin into Moodle. -->
-        <echo message="Copying plugin into Moodle"/>
-        <copy todir="${MOODLE_COMPONENT_DIR}">
-            <fileset dir="${TRAVIS_BUILD_DIR}"/>
-        </copy>
+        <!-- Create Moodle database. -->
+        <echo message="Creating database for Moodle"/>
+        <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
+
+        <!-- Install the plugin and create the plugin.properties file. -->
+        <exec command="${project.basedir}/bin/helper installplugin ${MOODLE_DIR} ${TRAVIS_BUILD_DIR}" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${project.basedir}/bin/helper pluginproperties ${MOODLE_DIR} ${TRAVIS_BUILD_DIR} ${PLUGIN_PROPERTIES_FILE}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Install Code Checker. -->
         <gitclone repository="git://github.com/moodlehq/moodle-local_codechecker.git" targetPath="${MOODLE_DIR}/local/codechecker"/>
         <gitcheckout repository="${MOODLE_DIR}/local/codechecker" create="true" branchname="working" startpoint="${MOODLE_CODE_CHECKER_VERSION}"/>
-
-        <!-- Create Moodle database. -->
-        <echo message="Creating database for Moodle"/>
-        <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that Moodle is ready and completely built. -->
         <touch file="${MOODLE_DIR}/MOODLE_READY"/>
