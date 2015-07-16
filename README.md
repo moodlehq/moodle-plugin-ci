@@ -130,10 +130,10 @@ script:
   - helper/bin/phing -f helper/script.xml PHPLint
 # This step runs the PHP Copy/Paste Detector on your plugin. This helps to find
 # code duplication.
-  - helper/bin/phing -f helper/script.xml PHPCPD
+  - helper/bin/phing -f helper/script.xml PHPCopyPasteDetector
 # This step runs the PHP Mess Detector on your plugin. This helps to find potential
 # problems with your code which can result in refactoring opportunities.
-  - helper/bin/phing -f helper/script.xml PHPMD
+  - helper/bin/phing -f helper/script.xml PHPMessDetector
 # This step runs the Moodle Code Checker to make sure that your plugin conforms to the
 # Moodle coding standards.  It is highly recommended that you keep this step.
   - helper/bin/phing -f helper/script.xml CodeChecker

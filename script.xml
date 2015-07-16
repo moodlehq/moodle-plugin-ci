@@ -73,7 +73,7 @@
         </phpcodesniffer>
     </target>
 
-    <target name="PHPCPD" description="Run PHP Copy/Paste Detector">
+    <target name="PHPCopyPasteDetector" description="Run PHP Copy/Paste Detector">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
         <echo message="Running PHP Copy/Paste Detector on ${MOODLE_PLUGIN_DIR}"/>
         <phpcpd>
@@ -83,7 +83,7 @@
         </phpcpd>
     </target>
 
-    <target name="PHPMD" description="Run PHP Mess Detector">
+    <target name="PHPMessDetector" description="Run PHP Mess Detector">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
         <echo message="Running PHP Mess Detector on ${MOODLE_PLUGIN_DIR}"/>
         <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${MOODLE_PLUGIN_DIR}"/>

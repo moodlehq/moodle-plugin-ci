@@ -30,8 +30,8 @@ install:
 script:
   - helper/bin/phing -f helper/script.xml ReportProperties
   - helper/bin/phing -f helper/script.xml PHPLint
-  - helper/bin/phing -f helper/script.xml PHPCPD
-  - helper/bin/phing -f helper/script.xml PHPMD
+  - helper/bin/phing -f helper/script.xml PHPCopyPasteDetector
+  - helper/bin/phing -f helper/script.xml PHPMessDetector
   - helper/bin/phing -f helper/script.xml CodeChecker
   - helper/bin/phing -f helper/script.xml CSSLint
   - helper/bin/phing -f helper/script.xml Shifter
