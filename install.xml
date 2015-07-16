@@ -9,7 +9,7 @@
     <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" description="Absolute path to Moodle data directory"/>
     <property name="MOODLE_PHPUNIT_DATA_DIR" value="${BUILD_DIR}/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
     <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/behat_moodledata" description="Absolute path to Behat data directory"/>
-    <property name="PLUGIN_PROPERTIES_FILE" value="${project.basedir}/plugin.properties" description="Location of the plugin properties file"/>
+    <property name="PROPERTIES_FILE" value="${project.basedir}/build.properties" description="Location of the build properties file"/>
     <property name="MOODLE_CODE_CHECKER_VERSION" value="master" description="The version to checkout"/>
 
     <!-- These properties are read from the plugin properties file. -->
@@ -44,7 +44,7 @@
         <phingcall target="InstallMoodle"/>
 
         <!-- Loads up the values for BEHAT_ENABLED and PHPUNIT_ENABLED. -->
-        <property file="${PLUGIN_PROPERTIES_FILE}" override="true"/>
+        <property file="${PROPERTIES_FILE}" override="true"/>
 
         <if>
             <istrue value="${BEHAT_ENABLED}"/>
@@ -90,7 +90,7 @@
         <echo message="MOODLE_DATA_DIR: ${MOODLE_DATA_DIR}"/>
         <echo message="MOODLE_PHPUNIT_DATA_DIR: ${MOODLE_PHPUNIT_DATA_DIR}"/>
         <echo message="MOODLE_BEHAT_DATA_DIR: ${MOODLE_BEHAT_DATA_DIR}"/>
-        <echo message="PLUGIN_PROPERTIES_FILE: ${PLUGIN_PROPERTIES_FILE}"/>
+        <echo message="PROPERTIES_FILE: ${PROPERTIES_FILE}"/>
         <echo message="DB: ${DB}"/>
         <echo message="DB.USER: ${DB.USER}"/>
         <echo message="DB.PASS: ${DB.PASS}"/>
@@ -138,7 +138,7 @@
         <!-- Install the plugin and create the plugin.properties file. -->
         <echo message="Installing the plugin into Moodle"/>
         <exec command="${project.basedir}/bin/helper installplugin ${MOODLE_DIR} ${TRAVIS_BUILD_DIR}" passthru="true" level="info" checkreturn="true"/>
-        <exec command="${project.basedir}/bin/helper pluginproperties ${MOODLE_DIR} ${TRAVIS_BUILD_DIR} ${PLUGIN_PROPERTIES_FILE}" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${project.basedir}/bin/helper pluginproperties ${MOODLE_DIR} ${TRAVIS_BUILD_DIR} ${PROPERTIES_FILE}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Install Code Checker. -->
         <echo message="Installing the Moodle Code Checker plugin into Moodle"/>
@@ -146,7 +146,7 @@
         <gitcheckout repository="${MOODLE_DIR}/local/codechecker" create="true" branchname="working" startpoint="${MOODLE_CODE_CHECKER_VERSION}"/>
 
         <!-- This is a flag to let us know that Moodle is ready and completely built. -->
-        <touch file="${project.basedir}/MOODLE_READY"/>
+        <append destFile="${PROPERTIES_FILE}" text="MOODLE_READY=true"/>
     </target>
 
     <target name="BehatDependencies" hidden="true">
@@ -169,7 +169,7 @@
         <exec command="php ${MOODLE_DIR}/admin/tool/behat/cli/init.php" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that Behat is ready to run. -->
-        <touch file="${project.basedir}/BEHAT_READY"/>
+        <append destFile="${PROPERTIES_FILE}" text="BEHAT_READY=true"/>
     </target>
 
     <target name="PHPUnitDependencies" hidden="true">
@@ -177,7 +177,7 @@
         <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/init.php" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that PHPUnit is ready to run. -->
-        <touch file="${project.basedir}/PHPUNIT_READY"/>
+        <append destFile="${PROPERTIES_FILE}" text="PHPUNIT_READY=true"/>
     </target>
 
     <target name="OtherDependencies" hidden="true">
