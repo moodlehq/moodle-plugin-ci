@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="MoodleTravisPluginInstall" description="Use targets from this Phing file for the 'install' section of the .travis.yml file.  Only call one target." default="Install">
+    <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
+    <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}" description="This is where Travis cloned the plugin"/>
     <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}" description="The Moodle git branch to clone"/>
     <property name="DB" value="${env.DB}" description="The Moodle DB driver to use: mysqli or pgsql only"/>
-    <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}" description="This is where Travis cloned the plugin"/>
-    <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
     <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" description="Absolute path to Moodle data directory"/>
-    <property name="MOODLE_PHPUNIT_DATA_DIR" value="${MOODLE_DATA_DIR}/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
-    <property name="MOODLE_BEHAT_DATA_DIR" value="${MOODLE_DATA_DIR}/behat_moodledata" description="Absolute path to Behat data directory"/>
+    <property name="MOODLE_PHPUNIT_DATA_DIR" value="${BUILD_DIR}/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
+    <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/behat_moodledata" description="Absolute path to Behat data directory"/>
     <property name="PLUGIN_PROPERTIES_FILE" value="${MOODLE_DIR}/plugin.properties" description="Location of the plugin properties file"/>
-    <property name="MOODLE_CODE_CHECKER_VERSION" value="master"/>
+    <property name="MOODLE_CODE_CHECKER_VERSION" value="master" description="The version to checkout"/>
 
-    <!-- These properties are read from a property file. -->
+    <!-- These properties are read from the plugin properties file. -->
     <property name="PHPUNIT_ENABLED" value="false" description="If the plugin has PHPUnit tests"/>
     <property name="BEHAT_ENABLED" value="false" description="If the plugin has Behat tests"/>
 
@@ -27,7 +27,6 @@
             <property name="DB.PASS" value=""/>
             <property name="DB.CREATE" value="psql -c 'CREATE DATABASE moodle;' -U postgres"/>
         </then>
-
         <elseif>
             <equals arg1="${DB}" arg2="mysqli"/>
             <then>
@@ -36,7 +35,6 @@
                 <property name="DB.CREATE" value="mysql -e 'CREATE DATABASE moodle DEFAULT CHARACTER SET UTF8 COLLATE UTF8_bin;'"/>
             </then>
         </elseif>
-
         <else>
             <property name="UNKNOWN_DB" value="true"/>
         </else>
@@ -85,17 +83,17 @@
 
     <target name="ReportProperties" hidden="true">
         <!-- Helps with debugging. -->
-        <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
-        <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
         <echo message="BUILD_DIR: ${BUILD_DIR}"/>
-        <echo message="DB: ${DB}"/>
-        <echo message="DB.USER: ${DB.USER}"/>
-        <echo message="DB.PASS: ${DB.PASS}"/>
+        <echo message="TRAVIS_BUILD_DIR: ${TRAVIS_BUILD_DIR}"/>
+        <echo message="MOODLE_BRANCH: ${MOODLE_BRANCH}"/>
         <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
         <echo message="MOODLE_DATA_DIR: ${MOODLE_DATA_DIR}"/>
         <echo message="MOODLE_PHPUNIT_DATA_DIR: ${MOODLE_PHPUNIT_DATA_DIR}"/>
         <echo message="MOODLE_BEHAT_DATA_DIR: ${MOODLE_BEHAT_DATA_DIR}"/>
         <echo message="PLUGIN_PROPERTIES_FILE: ${PLUGIN_PROPERTIES_FILE}"/>
+        <echo message="DB: ${DB}"/>
+        <echo message="DB.USER: ${DB.USER}"/>
+        <echo message="DB.PASS: ${DB.PASS}"/>
     </target>
 
     <target name="InstallMoodle" hidden="true">
@@ -108,7 +106,7 @@
         <exec command="git clone --depth=1 --branch ${MOODLE_BRANCH} git://github.com/moodle/moodle ${MOODLE_DIR}" passthru="true" checkreturn="true" level="info"/>
 
         <!-- Create data directories -->
-        <echo message="Creating Moodle's data directory"/>
+        <echo message="Creating Moodle data directories"/>
         <mkdir dir="${MOODLE_DATA_DIR}" mode="777"/>
         <mkdir dir="${MOODLE_PHPUNIT_DATA_DIR}" mode="777"/>
         <mkdir dir="${MOODLE_BEHAT_DATA_DIR}" mode="777"/>
@@ -138,10 +136,12 @@
         <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Install the plugin and create the plugin.properties file. -->
+        <echo message="Installing the plugin into Moodle"/>
         <exec command="${project.basedir}/bin/helper installplugin ${MOODLE_DIR} ${TRAVIS_BUILD_DIR}" passthru="true" level="info" checkreturn="true"/>
         <exec command="${project.basedir}/bin/helper pluginproperties ${MOODLE_DIR} ${TRAVIS_BUILD_DIR} ${PLUGIN_PROPERTIES_FILE}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Install Code Checker. -->
+        <echo message="Installing the Moodle Code Checker plugin into Moodle"/>
         <gitclone repository="git://github.com/moodlehq/moodle-local_codechecker.git" targetPath="${MOODLE_DIR}/local/codechecker"/>
         <gitcheckout repository="${MOODLE_DIR}/local/codechecker" create="true" branchname="working" startpoint="${MOODLE_CODE_CHECKER_VERSION}"/>
 
@@ -184,8 +184,6 @@
         <!-- Other dependencies to install for code quality. -->
 
         <echo message="Installing NodeJS dependencies"/>
-        <exec command="npm install -g jshint" passthru="true" level="info" checkreturn="true"/>
-        <exec command="npm install -g csslint" passthru="true" level="info" checkreturn="true"/>
-        <exec command="npm install -g shifter@0.4.6" passthru="true" level="info" checkreturn="true"/>
+        <exec command="npm install -g jshint csslint shifter@0.4.6" passthru="true" level="info" checkreturn="true"/>
     </target>
 </project>
