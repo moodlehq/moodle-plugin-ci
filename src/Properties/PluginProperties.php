@@ -27,8 +27,8 @@ class PluginProperties {
 
         return <<<TEXT
 COMPONENT=$component
-COMPONENT_DIR=$relative
-MOODLE_COMPONENT_DIR=$directory
+PLUGIN_DIR=$relative
+MOODLE_PLUGIN_DIR=$directory
 PHPUNIT_ENABLED=$phpunit
 BEHAT_ENABLED=$behat
 TEXT;

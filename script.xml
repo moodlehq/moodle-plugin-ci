@@ -14,8 +14,8 @@
 
     <!-- These properties are read from the component properties file. -->
     <property name="COMPONENT" value="false" description="Moodle component, EG: mod_forum"/>
-    <property name="COMPONENT_DIR" value="false" description="Moodle component directory, EG: mod/forum"/>
-    <property name="MOODLE_COMPONENT_DIR" value="false" description="Absolute path to Moodle component director, EG: /path/to/mod/forum"/>
+    <property name="PLUGIN_DIR" value="false" description="Moodle plugin directory, EG: mod/forum"/>
+    <property name="MOODLE_PLUGIN_DIR" value="false" description="Absolute path to Moodle plugin director, EG: /path/to/mod/forum"/>
 
     <if>
         <available property="PROPERTY_FILE_EXISTS" file="${PLUGIN_PROPERTIES_FILE}"/>
@@ -27,10 +27,10 @@
     <target name="ReportProperties">
         <!-- Helps with debugging. -->
         <echo message="COMPONENT: ${COMPONENT}"/>
-        <echo message="COMPONENT_DIR: ${COMPONENT_DIR}"/>
+        <echo message="PLUGIN_DIR: ${PLUGIN_DIR}"/>
         <echo message="BUILD_DIR: ${BUILD_DIR}"/>
         <echo message="MOODLE_DIR: ${MOODLE_DIR}"/>
-        <echo message="MOODLE_COMPONENT_DIR: ${MOODLE_COMPONENT_DIR}"/>
+        <echo message="MOODLE_PLUGIN_DIR: ${MOODLE_PLUGIN_DIR}"/>
         <echo message="BEHAT_CONFIG: ${BEHAT_CONFIG}"/>
         <echo message="PHPUNIT_READY: ${PHPUNIT_READY}"/>
         <echo message="BEHAT_READY: ${BEHAT_READY}"/>
@@ -52,9 +52,9 @@
 
     <target name="PHPLint" description="Run PHP Lint on the plugin">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
-        <echo message="Running PHP Linting on ${MOODLE_COMPONENT_DIR}"/>
+        <echo message="Running PHP Linting on ${MOODLE_PLUGIN_DIR}"/>
         <phplint deprecatedAsError="true" haltonfailure="true">
-            <fileset dir="${MOODLE_COMPONENT_DIR}">
+            <fileset dir="${MOODLE_PLUGIN_DIR}">
                 <include name="**/*.php"/>
             </fileset>
         </phplint>
@@ -63,9 +63,9 @@
 
     <target name="CodeChecker" description="Run Moodle Code Checker">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
-        <echo message="Running Moodle Code Checker on ${MOODLE_COMPONENT_DIR}"/>
+        <echo message="Running Moodle Code Checker on ${MOODLE_PLUGIN_DIR}"/>
         <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" haltonerror="true" reportWidth="120">
-            <fileset dir="${MOODLE_COMPONENT_DIR}">
+            <fileset dir="${MOODLE_PLUGIN_DIR}">
                 <!-- List specific files to avoid processing XML, txt, etc files. -->
                 <include name="**/*.php"/>
                 <include name="**/*.js"/>
@@ -77,9 +77,9 @@
 
     <target name="PHPCPD" description="Run PHP Copy/Paste Detector">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
-        <echo message="Running PHP Copy/Paste Detector on ${MOODLE_COMPONENT_DIR}"/>
+        <echo message="Running PHP Copy/Paste Detector on ${MOODLE_PLUGIN_DIR}"/>
         <phpcpd>
-            <fileset dir="${MOODLE_COMPONENT_DIR}">
+            <fileset dir="${MOODLE_PLUGIN_DIR}">
                 <include name="**/*.php"/>
             </fileset>
         </phpcpd>
@@ -87,25 +87,25 @@
 
     <target name="PHPMD" description="Run PHP Mess Detector">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
-        <echo message="Running PHP Mess Detector on ${MOODLE_COMPONENT_DIR}"/>
-        <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${MOODLE_COMPONENT_DIR}"/>
+        <echo message="Running PHP Mess Detector on ${MOODLE_PLUGIN_DIR}"/>
+        <phpmd rulesets="${project.basedir}/res/ruleset/phpmd.xml" file="${MOODLE_PLUGIN_DIR}"/>
     </target>
 
     <target name="JSHint" description="Run JSHint">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
-        <echo message="Running JSHint on ${MOODLE_COMPONENT_DIR}"/>
-        <exec command="jshint --exclude ${COMPONENT_DIR}/yui/build ${COMPONENT_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
+        <echo message="Running JSHint on ${MOODLE_PLUGIN_DIR}"/>
+        <exec command="jshint --exclude ${PLUGIN_DIR}/yui/build ${PLUGIN_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="Shifter" description="Run YUI Shifter and ensure all YUI modules have been shifted">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
 
-        <property name="YUI_SRC" value="${MOODLE_COMPONENT_DIR}/yui/src"/>
+        <property name="YUI_SRC" value="${MOODLE_PLUGIN_DIR}/yui/src"/>
 
         <if>
             <available property="YUI_EXISTS" file="${YUI_SRC}"/>
             <then>
-                <echo message="Running YUI Shifter on ${MOODLE_COMPONENT_DIR}"/>
+                <echo message="Running YUI Shifter on ${MOODLE_PLUGIN_DIR}"/>
                 <exec command="${project.basedir}/bin/test_shifter" dir="${YUI_SRC}" passthru="true" level="info" checkreturn="true"/>
             </then>
             <else>
@@ -116,7 +116,7 @@
 
     <target name="CSSLint" description="Run CSS Lint">
         <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
-        <echo message="Running CSS Lint on ${MOODLE_COMPONENT_DIR}"/>
-        <exec command="csslint ${COMPONENT_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
+        <echo message="Running CSS Lint on ${MOODLE_PLUGIN_DIR}"/>
+        <exec command="csslint ${PLUGIN_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 </project>
