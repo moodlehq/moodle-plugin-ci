@@ -17,13 +17,13 @@ before_install:
 
 install:
   # We do this funny song and dance to mimic how a Moodle plugin would be run.
-  - mv tests/fixture/moodle-local_travis ../moodle-local_travis
+  - cp -R tests/fixture/moodle-local_travis ../moodle-local_travis
   - cd ..
   - mv $TRAVIS_BUILD_DIR ../helper
   - export TRAVIS_BUILD_DIR="`pwd`/moodle-local_travis"
   - cd ..
 
-  # These should be the same as what Moodle plugins should have.
+  # The following should be the same as in .travis.dist.yml.
   - composer install --working-dir helper
   - helper/bin/phing -f helper/install.xml
 
@@ -34,7 +34,7 @@ script:
   - helper/bin/phing -f helper/script.xml PHPMD
   - helper/bin/phing -f helper/script.xml CodeChecker
   - helper/bin/phing -f helper/script.xml CSSLint
-  - helper/bin/phing -f helper/script.xml JSHint
   - helper/bin/phing -f helper/script.xml Shifter
+  - helper/bin/phing -f helper/script.xml JSHint
   - helper/bin/phing -f helper/script.xml PHPUnit
   - helper/bin/phing -f helper/script.xml Behat
