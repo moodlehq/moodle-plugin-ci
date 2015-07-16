@@ -9,7 +9,7 @@
     <property name="MOODLE_DATA_DIR" value="${BUILD_DIR}/moodledata" description="Absolute path to Moodle data directory"/>
     <property name="MOODLE_PHPUNIT_DATA_DIR" value="${BUILD_DIR}/phpu_moodledata" description="Absolute path to PHPUnit data directory"/>
     <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/behat_moodledata" description="Absolute path to Behat data directory"/>
-    <property name="PLUGIN_PROPERTIES_FILE" value="${MOODLE_DIR}/plugin.properties" description="Location of the plugin properties file"/>
+    <property name="PLUGIN_PROPERTIES_FILE" value="${project.basedir}/plugin.properties" description="Location of the plugin properties file"/>
     <property name="MOODLE_CODE_CHECKER_VERSION" value="master" description="The version to checkout"/>
 
     <!-- These properties are read from the plugin properties file. -->
@@ -146,7 +146,7 @@
         <gitcheckout repository="${MOODLE_DIR}/local/codechecker" create="true" branchname="working" startpoint="${MOODLE_CODE_CHECKER_VERSION}"/>
 
         <!-- This is a flag to let us know that Moodle is ready and completely built. -->
-        <touch file="${MOODLE_DIR}/MOODLE_READY"/>
+        <touch file="${project.basedir}/MOODLE_READY"/>
     </target>
 
     <target name="BehatDependencies" hidden="true">
@@ -169,7 +169,7 @@
         <exec command="php ${MOODLE_DIR}/admin/tool/behat/cli/init.php" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that Behat is ready to run. -->
-        <touch file="${MOODLE_DIR}/BEHAT_READY"/>
+        <touch file="${project.basedir}/BEHAT_READY"/>
     </target>
 
     <target name="PHPUnitDependencies" hidden="true">
@@ -177,7 +177,7 @@
         <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/init.php" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that PHPUnit is ready to run. -->
-        <touch file="${MOODLE_DIR}/PHPUNIT_READY"/>
+        <touch file="${project.basedir}/PHPUNIT_READY"/>
     </target>
 
     <target name="OtherDependencies" hidden="true">

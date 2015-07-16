@@ -5,12 +5,12 @@
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
     <property name="BEHAT_CONFIG" value="${BUILD_DIR}/behat_moodledata/behat/behat.yml" description="Absolute path to Behat config file"/>
     <property name="MOODLE_READY_FAIL" value="The Moodle install does not exist, something went wrong with the install" description="Error message"/>
-    <property name="PLUGIN_PROPERTIES_FILE" value="${MOODLE_DIR}/plugin.properties" description="Location of the plugin properties file"/>
+    <property name="PLUGIN_PROPERTIES_FILE" value="${project.basedir}/plugin.properties" description="Location of the plugin properties file"/>
 
     <!-- Flags created on install so we know if something is ready to run or not. -->
-    <available property="PHPUNIT_READY" file="${MOODLE_DIR}/PHPUNIT_READY"/>
-    <available property="BEHAT_READY" file="${MOODLE_DIR}/BEHAT_READY"/>
-    <available property="MOODLE_READY" file="${MOODLE_DIR}/MOODLE_READY"/>
+    <available property="PHPUNIT_READY" file="${project.basedir}/PHPUNIT_READY"/>
+    <available property="BEHAT_READY" file="${project.basedir}/BEHAT_READY"/>
+    <available property="MOODLE_READY" file="${project.basedir}/MOODLE_READY"/>
 
     <!-- These properties are read from the plugin properties file. -->
     <property name="COMPONENT" value="false" description="Moodle component, EG: mod_forum"/>
