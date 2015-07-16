@@ -7,7 +7,7 @@
     <property name="MOODLE_READY_FAIL" value="The Moodle install does not exist, something went wrong with the install" description="Error message"/>
     <property name="PROPERTIES_FILE" value="${project.basedir}/build.properties" description="Location of the build properties file"/>
 
-    <!-- These properties are read from the plugin properties file. -->
+    <!-- These properties are read from the properties file. -->
     <property name="COMPONENT" value="false" description="Moodle component, EG: mod_forum"/>
     <property name="PLUGIN_DIR" value="false" description="Moodle plugin directory, EG: mod/forum"/>
     <property name="MOODLE_PLUGIN_DIR" value="false" description="Absolute path to Moodle plugin director, EG: /path/to/mod/forum"/>

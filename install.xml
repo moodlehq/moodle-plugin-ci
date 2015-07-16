@@ -12,7 +12,7 @@
     <property name="PROPERTIES_FILE" value="${project.basedir}/build.properties" description="Location of the build properties file"/>
     <property name="MOODLE_CODE_CHECKER_VERSION" value="master" description="The version to checkout"/>
 
-    <!-- These properties are read from the plugin properties file. -->
+    <!-- These properties are read from the properties file. -->
     <property name="PHPUNIT_ENABLED" value="false" description="If the plugin has PHPUnit tests"/>
     <property name="BEHAT_ENABLED" value="false" description="If the plugin has Behat tests"/>
 
