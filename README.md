@@ -15,11 +15,11 @@ Supported tests and code analysis tools:
 * [JSHint](http://www.jshint.com/)
 * [Shifter](https://docs.moodle.org/dev/YUI/Shifter)
 
-Requirements:
-* PHP 5.4 or later.
-* Moodle 2.9 or later.
-* The plugin being tested must have a [version.php](https://docs.moodle.org/dev/version.php) file and `$plugin->component`
-  must be defined within it.
+# Requirements
+**PHP 5.4** or later and **Moodle 2.9** or later.
+
+In addition, the plugin being tested must have a
+[version.php](https://docs.moodle.org/dev/version.php) file and `$plugin->component` must be defined within it.
 
 # Getting started
 
