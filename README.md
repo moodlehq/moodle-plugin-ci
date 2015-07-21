@@ -15,6 +15,8 @@ Supported tests and code analysis tools:
 * [JSHint](http://www.jshint.com/)
 * [Shifter](https://docs.moodle.org/dev/YUI/Shifter)
 
+[![Build Status](https://travis-ci.org/mrmark/moodle-travis-plugin.svg?branch=master)](https://travis-ci.org/mrmark/moodle-travis-plugin)
+
 # Requirements
 **PHP 5.4** or later and **Moodle 2.9** or later.
 
