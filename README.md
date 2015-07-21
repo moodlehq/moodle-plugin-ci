@@ -151,3 +151,7 @@ script:
 # it is highly recommended that you keep this step.
   - helper/bin/phing -f helper/script.xml Behat
 ```
+
+# License
+
+This project is licensed under the GNU GPL v3 or later.  See the [LICENSE](LICENSE) file for details.
