@@ -152,6 +152,12 @@ script:
   - helper/bin/phing -f helper/script.xml Behat
 ```
 
+# Usage / Versioning
+
+This project uses [Semantic Versioning](http://semver.org/) for its public API.  The public API for this project is defined as
+any publicly available Phing target listed in the [install.xml](install.xml) and [script.xml](script.xml) files.  _Everything_
+outside of these Phing targets is considered to be private API and is not guaranteed to follow Semantic Versioning.
+
 # License
 
 This project is licensed under the GNU GPL v3 or later.  See the [LICENSE](LICENSE) file for details.
