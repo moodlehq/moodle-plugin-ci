@@ -1,13 +1,22 @@
 #!/usr/bin/env php
 <?php
+/**
+ * This file is part of the Moodle Plugin CI package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
-use Moodlerooms\MoodleTravisPlugin\Command\InstallPluginCommand;
-use Moodlerooms\MoodleTravisPlugin\Command\PluginPropertiesCommand;
+use Moodlerooms\MoodlePluginCI\Command\InstallPluginCommand;
+use Moodlerooms\MoodlePluginCI\Command\PluginPropertiesCommand;
 use Symfony\Component\Console\Application;
 
 require_once(__DIR__.'/../vendor/autoload.php');
 
-$application = new Application('Moodle Travis CI Helper', '1.0');
+$application = new Application('Moodle Plugin CI', '1.0');
 $application->add(new InstallPluginCommand());
 $application->add(new PluginPropertiesCommand());
 $application->run();

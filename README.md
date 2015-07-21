@@ -15,7 +15,7 @@ Supported tests and code analysis tools:
 * [JSHint](http://www.jshint.com/)
 * [Shifter](https://docs.moodle.org/dev/YUI/Shifter)
 
-[![Build Status](https://travis-ci.org/mrmark/moodle-travis-plugin.svg?branch=master)](https://travis-ci.org/mrmark/moodle-travis-plugin)
+[![Build Status](https://travis-ci.org/moodlerooms/moodle-plugin-ci.svg?branch=master)](https://travis-ci.org/moodlerooms/moodle-plugin-ci)
 
 # Requirements
 **PHP 5.4** or later and **Moodle 2.9** or later.
@@ -110,7 +110,7 @@ install:
 # directories to build the project.
   - cd ../..
 # Install the CI helper.
-  - git clone git://github.com/mrmark/moodle-travis-plugin helper
+  - git clone git://github.com/moodlerooms/moodle-plugin-ci helper
   - composer install --working-dir helper
 # Run the default install.  The overview of what this does:
 #    - Clone the Moodle project into a directory called moodle.

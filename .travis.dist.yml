@@ -24,7 +24,7 @@ before_install:
 
 install:
   - cd ../..
-  - git clone git://github.com/mrmark/moodle-travis-plugin helper
+  - git clone git://github.com/moodlerooms/moodle-plugin-ci helper
   - composer install --working-dir helper
   - helper/bin/phing -f helper/install.xml
 

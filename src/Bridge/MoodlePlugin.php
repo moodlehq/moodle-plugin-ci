@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the Moodle Plugin Travis CI package.
+ * This file is part of the Moodle Plugin CI package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,7 +9,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodleTravisPlugin\Bridge;
+namespace Moodlerooms\MoodlePluginCI\Bridge;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;

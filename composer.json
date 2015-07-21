@@ -1,5 +1,5 @@
 {
-  "name": "moodlerooms/moodle-travis-plugin",
+  "name": "moodlerooms/moodle-plugin-ci",
   "description": "Assists with running Moodle plugins in Travis CI",
   "keywords": ["moodle", "travis", "ci", "testing"],
   "type": "project",
@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Moodlerooms\\MoodleTravisPlugin\\": "src/"
+      "Moodlerooms\\MoodlePluginCI\\": "src/"
     }
   },
   "config": {

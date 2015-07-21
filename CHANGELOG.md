@@ -18,4 +18,4 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - Phing target _Shifter_ to `script.xml`.  Run YUI Shifter on plugin YUI modules.
 - Phing target _CSSLint_ to `script.xml`.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/mrmark/moodle-travis-plugin/commits/master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/commits/master

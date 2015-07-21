@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="MoodleTravisPluginScript" description="Use targets from this Phing file for the 'script' section of the .travis.yml file." default="PHPUnit">
+<project name="Moodle Plugin CI Script" description="Use targets from this Phing file for the 'script' section of the .travis.yml file." default="PHPUnit">
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
     <property name="BEHAT_CONFIG" value="${BUILD_DIR}/behat_moodledata/behat/behat.yml" description="Absolute path to Behat config file"/>

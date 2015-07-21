@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="MoodleTravisPluginInstall" description="Use targets from this Phing file for the 'install' section of the .travis.yml file.  Only call one target." default="Install">
+<project name="Moodle Plugin CI Install" description="Use targets from this Phing file for the 'install' section of the .travis.yml file.  Only call one target." default="Install">
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="TRAVIS_BUILD_DIR" value="${env.TRAVIS_BUILD_DIR}" description="This is where Travis cloned the plugin"/>
     <property name="MOODLE_BRANCH" value="${env.MOODLE_BRANCH}" description="The Moodle git branch to clone"/>
