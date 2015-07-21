@@ -15,7 +15,7 @@
     <property name="PHPUNIT_READY" value="false" description="Flag for if PHPUnit has been installed"/>
     <property name="BEHAT_READY" value="false" description="Flag for if Behat has been installed"/>
 
-    <!-- Load plugin properties file if it exists. -->
+    <!-- Load properties file if it exists. -->
     <if>
         <available property="PROPERTY_FILE_EXISTS" file="${PROPERTIES_FILE}"/>
         <then>

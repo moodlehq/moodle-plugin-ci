@@ -7,9 +7,6 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Added
 - Phing target _Install_ to `install.xml`.  This is the default install option.
-- Phing target _ForceInstall_ to `install.xml`.  Force installs everything.
-- Phing target _InstallBehatOnly_ to `install.xml`.  Installs Behat only.
-- Phing target _InstallPHPUnitOnly_ to `install.xml`.  Installs PHPUnit only.
 - Phing target _ReportProperties_ to `script.xml`.  Prints build properties, helps with debugging.
 - Phing target _Behat_ to `script.xml`.  Runs plugin Behat tests.
 - Phing target _PHPUnit_ to `script.xml`.  Runs plugin PHPUnit tests.
