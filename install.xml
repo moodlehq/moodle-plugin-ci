@@ -126,6 +126,10 @@
         <gitclone repository="git://github.com/moodlehq/moodle-local_codechecker.git" targetPath="${MOODLE_DIR}/local/codechecker"/>
         <gitcheckout repository="${MOODLE_DIR}/local/codechecker" create="true" branchname="working" startpoint="${MOODLE_CODE_CHECKER_VERSION}"/>
 
+        <!-- Install Moodle Composer dependencies. -->
+        <echo message="Installing Moodle Composer dependencies"/>
+        <exec command="composer install" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
+
         <!-- This is a flag to let us know that Moodle is ready and completely built. -->
         <append destFile="${PROPERTIES_FILE}" text="MOODLE_READY=true"/>
     </target>
@@ -146,8 +150,21 @@
         <exec command="${project.basedir}/bin/start_phpserver" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Initialize Behat. -->
+        <if>
+            <available property="BEHAT_UTIL_EXISTS" file="${MOODLE_DIR}/admin/tool/behat/cli/util_single_run.php"/>
+            <then>
+                <!-- Moodle 2.9 or later. -->
+                <property name="BEHAT_UTIL" value="${MOODLE_DIR}/admin/tool/behat/cli/util_single_run.php"/>
+            </then>
+            <else>
+                <!-- Moodle 2.8 or earlier. -->
+                <property name="BEHAT_UTIL" value="${MOODLE_DIR}/admin/tool/behat/cli/util.php"/>
+            </else>
+        </if>
+
         <echo message="Initialize Behat in Moodle"/>
-        <exec command="php ${MOODLE_DIR}/admin/tool/behat/cli/init.php" passthru="true" level="info" checkreturn="true"/>
+        <exec command="php ${BEHAT_UTIL} --install" passthru="true" level="info" checkreturn="true"/>
+        <exec command="php ${BEHAT_UTIL} --enable" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that Behat is ready to run. -->
         <append destFile="${PROPERTIES_FILE}" text="BEHAT_READY=true"/>
@@ -155,7 +172,8 @@
 
     <target name="PHPUnitDependencies" hidden="true">
         <echo message="Initialize PHPUnit in Moodle"/>
-        <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/init.php" passthru="true" level="info" checkreturn="true"/>
+        <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/util.php --install" passthru="true" level="info" checkreturn="true"/>
+        <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/util.php --buildconfig" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that PHPUnit is ready to run. -->
         <append destFile="${PROPERTIES_FILE}" text="PHPUNIT_READY=true"/>

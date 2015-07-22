@@ -18,7 +18,7 @@ Supported tests and code analysis tools:
 [![Build Status](https://travis-ci.org/moodlerooms/moodle-plugin-ci.svg?branch=master)](https://travis-ci.org/moodlerooms/moodle-plugin-ci)
 
 # Requirements
-**PHP 5.4** or later and **Moodle 2.9** or later.
+**PHP 5.4** or later and **Moodle 2.7** or later.
 
 In addition, the plugin being tested must have a
 [version.php](https://docs.moodle.org/dev/version.php) file and `$plugin->component` must be defined within it.
@@ -84,8 +84,7 @@ matrix:
 # This section sets up the environment variables for the build.
 env:
  global:
-# This line determines which version of Moodle to test against.  You could use a matrix to
-# test against multiple versions of Moodle.
+# This line determines which version of Moodle to test against.
   - MOODLE_BRANCH=MOODLE_29_STABLE
 # This matrix is used for testing against multiple databases.  So for each version of
 # PHP being tested, one build will be created for each database listed here.  EG: for
@@ -100,6 +99,8 @@ sudo: false
 
 # This lists steps that are run before the installation step. 
 before_install:
+# Update Composer.
+- composer selfupdate
 # This configures Composer with your GitHub access token if you configured that in
 # Travis CI.  If you didn't configure this, then it can be removed.
 - composer config -g github-oauth.github.com $GITHUB_API_TOKEN

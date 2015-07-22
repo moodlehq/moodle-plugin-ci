@@ -20,6 +20,7 @@ env:
 sudo: false
 
 before_install:
+- composer selfupdate
 - composer config -g github-oauth.github.com $GITHUB_API_TOKEN
 
 install:

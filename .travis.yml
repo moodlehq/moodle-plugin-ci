@@ -4,27 +4,29 @@ php:
  - 5.4
 
 env:
- global:
-  - MOODLE_BRANCH=MOODLE_29_STABLE
- matrix:
-  - DB=pgsql
-  - DB=mysqli
+  - MOODLE_BRANCH=MOODLE_27_STABLE DB=pgsql
+  - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli
+  - MOODLE_BRANCH=MOODLE_28_STABLE DB=pgsql
+  - MOODLE_BRANCH=MOODLE_28_STABLE DB=mysqli
+  - MOODLE_BRANCH=MOODLE_29_STABLE DB=pgsql
+  - MOODLE_BRANCH=MOODLE_29_STABLE DB=mysqli
 
 sudo: false
 
 before_install:
+- composer selfupdate
 - composer config -g github-oauth.github.com $GITHUB_API_TOKEN
 
 install:
   # We do this funny song and dance to mimic how a Moodle plugin would be run.
+  - composer install
   - cp -R tests/fixture/moodle-local_travis ../moodle-local_travis
   - cd ..
   - mv $TRAVIS_BUILD_DIR ../helper
   - export TRAVIS_BUILD_DIR="`pwd`/moodle-local_travis"
   - cd ..
 
-  # The following should be the same as in .travis.dist.yml.
-  - composer install --working-dir helper
+  # Finally, the standard Moodle install step.
   - helper/bin/phing -f helper/install.xml
 
 script:
