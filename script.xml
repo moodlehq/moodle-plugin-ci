@@ -4,7 +4,6 @@
     <resolvepath propertyName="BUILD_DIR" file="${project.basedir}/.." description="Where everything is built, like Moodle"/>
     <property name="MOODLE_DIR" value="${BUILD_DIR}/moodle" description="Directory where Moodle is cloned to"/>
     <property name="BEHAT_CONFIG" value="${BUILD_DIR}/behat_moodledata/behat/behat.yml" description="Absolute path to Behat config file"/>
-    <property name="MOODLE_READY_FAIL" value="The Moodle install does not exist, something went wrong with the install" description="Error message"/>
     <property name="PROPERTIES_FILE" value="${project.basedir}/build.properties" description="Location of the build properties file"/>
 
     <!-- These properties are read from the properties file. -->
@@ -23,6 +22,26 @@
         </then>
     </if>
 
+    <!-- Setup flags that can be used by Phing fail task. -->
+    <if>
+        <isfalse value="${MOODLE_READY}"/>
+        <then>
+            <property name="MOODLE_NOT_READY" value="The Moodle install does not exist, something went wrong with the install" />
+        </then>
+    </if>
+    <if>
+        <isfalse value="${BEHAT_READY}"/>
+        <then>
+            <property name="BEHAT_NOT_READY" value="Behat is not ready to run, it must not have been installed" />
+        </then>
+    </if>
+    <if>
+        <isfalse value="${PHPUNIT_READY}"/>
+        <then>
+            <property name="PHPUNIT_NOT_READY" value="PHPUnit is not ready to run, it must not have been installed" />
+        </then>
+    </if>
+
     <target name="ReportProperties">
         <!-- Helps with debugging. -->
         <echo message="COMPONENT: ${COMPONENT}"/>
@@ -35,19 +54,19 @@
     </target>
 
     <target name="Behat" description="Run Behat tests">
-        <fail unless="BEHAT_READY" message="Behat is not ready to run, something went wrong with the install"/>
+        <fail if="BEHAT_NOT_READY" message="${BEHAT_NOT_READY}"/>
         <echo message="Running Behat tests for ${COMPONENT}"/>
         <exec command="${MOODLE_DIR}/vendor/bin/behat --config ${BEHAT_CONFIG} --tags @${COMPONENT}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="PHPUnit" description="Run PHPUnit tests">
-        <fail unless="PHPUNIT_READY" message="PHPUnit is not ready to run, something went wrong with the install"/>
+        <fail if="PHPUNIT_NOT_READY" message="${PHPUNIT_NOT_READY}"/>
         <echo message="Running PHPUnit tests for ${COMPONENT}"/>
         <exec command="${MOODLE_DIR}/vendor/bin/phpunit --testsuite &quot;${COMPONENT}_testsuite&quot;" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="PHPLint" description="Run PHP Lint on the plugin">
-        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running PHP Linting on ${MOODLE_PLUGIN_DIR}"/>
         <phplint deprecatedAsError="true" haltonfailure="true">
             <fileset dir="${MOODLE_PLUGIN_DIR}">
@@ -58,7 +77,7 @@
     </target>
 
     <target name="CodeChecker" description="Run Moodle Code Checker">
-        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running Moodle Code Checker on ${MOODLE_PLUGIN_DIR}"/>
         <phpcodesniffer standard="${MOODLE_DIR}/local/codechecker/moodle" haltonerror="true" reportWidth="120">
             <fileset dir="${MOODLE_PLUGIN_DIR}">
@@ -72,7 +91,7 @@
     </target>
 
     <target name="PHPCopyPasteDetector" description="Run PHP Copy/Paste Detector">
-        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running PHP Copy/Paste Detector on ${MOODLE_PLUGIN_DIR}"/>
         <phpcpd>
             <fileset dir="${MOODLE_PLUGIN_DIR}">
@@ -82,19 +101,19 @@
     </target>
 
     <target name="PHPMessDetector" description="Run PHP Mess Detector">
-        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running PHP Mess Detector on ${MOODLE_PLUGIN_DIR}"/>
         <phpmd rulesets="${project.basedir}/res/config/phpmd.xml" file="${MOODLE_PLUGIN_DIR}"/>
     </target>
 
     <target name="JSHint" description="Run JSHint">
-        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running JSHint on ${MOODLE_PLUGIN_DIR}"/>
         <exec command="jshint --exclude ${PLUGIN_DIR}/yui/build ${PLUGIN_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="Shifter" description="Run YUI Shifter and ensure all YUI modules have been shifted">
-        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
 
         <property name="YUI_SRC" value="${MOODLE_PLUGIN_DIR}/yui/src"/>
 
@@ -111,7 +130,7 @@
     </target>
 
     <target name="CSSLint" description="Run CSS Lint">
-        <fail unless="MOODLE_READY" message="${MOODLE_READY_FAIL}"/>
+        <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running CSS Lint on ${MOODLE_PLUGIN_DIR}"/>
         <exec command="csslint ${PLUGIN_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
