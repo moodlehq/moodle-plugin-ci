@@ -19,15 +19,17 @@ use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class PluginProperties {
+class PluginProperties
+{
     /**
-     * Generate properties file content from a Moodle plugin
+     * Generate properties file content from a Moodle plugin.
      *
      * @param MoodlePlugin $plugin
      * @return string
      * @throws \Exception
      */
-    public function getPropertiesFromPlugin(MoodlePlugin $plugin) {
+    public function getPropertiesFromPlugin(MoodlePlugin $plugin)
+    {
         $component = $plugin->getComponent();
         $directory = $plugin->getInstallDirectory();
         $relative  = $plugin->getRelativeInstallDirectory();

@@ -15,7 +15,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Bridge to a Moodle plugin
+ * Bridge to a Moodle plugin.
  *
  * Inspects the contents of a Moodle plugin
  * and uses Moodle API to get information about
@@ -25,9 +25,10 @@ use Symfony\Component\Finder\Finder;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class MoodlePlugin {
+class MoodlePlugin
+{
     /**
-     * Absolute path to a Moodle plugin
+     * Absolute path to a Moodle plugin.
      *
      * @var string
      */
@@ -42,18 +43,20 @@ class MoodlePlugin {
      * @param Moodle $moodle
      * @param string $pathToPlugin Absolute path to a Moodle plugin
      */
-    public function __construct(Moodle $moodle, $pathToPlugin) {
+    public function __construct(Moodle $moodle, $pathToPlugin)
+    {
         $this->moodle       = $moodle;
         $this->pathToPlugin = $pathToPlugin;
     }
 
     /**
-     * Loads the contents of a plugin's version.php
+     * Loads the contents of a plugin's version.php.
      *
      * @return \stdClass
      * @throws \Exception
      */
-    protected function loadVersionFile() {
+    protected function loadVersionFile()
+    {
         // Need config because of MOODLE_INTERNAL, etc.
         $this->moodle->requireConfig();
 
@@ -67,7 +70,7 @@ class MoodlePlugin {
         }
 
         /** @noinspection PhpIncludeInspection */
-        require($versionFile);
+        require $versionFile;
 
         return $plugin;
     }
@@ -78,7 +81,8 @@ class MoodlePlugin {
      * @return string
      * @throws \Exception
      */
-    public function getComponent() {
+    public function getComponent()
+    {
         $plugin = $this->loadVersionFile();
 
         if (empty($plugin->component)) {
@@ -89,11 +93,12 @@ class MoodlePlugin {
     }
 
     /**
-     * Get the absolute install directory path within Moodle
+     * Get the absolute install directory path within Moodle.
      *
      * @return string Absolute path, EG: /path/to/mod/forum
      */
-    public function getInstallDirectory() {
+    public function getInstallDirectory()
+    {
         $this->moodle->requireConfig();
 
         $component = $this->getComponent();
@@ -111,9 +116,10 @@ class MoodlePlugin {
     }
 
     /**
-     * Install the plugin into Moodle
+     * Install the plugin into Moodle.
      */
-    public function installPluginIntoMoodle() {
+    public function installPluginIntoMoodle()
+    {
         $directory = $this->getInstallDirectory();
 
         if (is_dir($directory)) {
@@ -126,22 +132,24 @@ class MoodlePlugin {
     }
 
     /**
-     * Get the relative install directory path within Moodle
+     * Get the relative install directory path within Moodle.
      *
      * @return string Relative path, EG: mod/forum
      */
-    public function getRelativeInstallDirectory() {
+    public function getRelativeInstallDirectory()
+    {
         $path = $this->getInstallDirectory();
 
         return str_replace($this->moodle->pathToMoodle.'/', '', $path);
     }
 
     /**
-     * Determine if the plugin has any PHPUnit tests
+     * Determine if the plugin has any PHPUnit tests.
      *
      * @return bool
      */
-    public function hasUnitTests() {
+    public function hasUnitTests()
+    {
         $finder = new Finder();
         $result = $finder->files()->in($this->pathToPlugin)->path('tests')->name('*_test.php')->count();
 
@@ -149,11 +157,12 @@ class MoodlePlugin {
     }
 
     /**
-     * Determine if the plugin has any Behat features
+     * Determine if the plugin has any Behat features.
      *
      * @return bool
      */
-    public function hasBehatFeatures() {
+    public function hasBehatFeatures()
+    {
         $finder = new Finder();
         $result = $finder->files()->in($this->pathToPlugin)->path('tests/behat')->name('*.feature')->count();
 

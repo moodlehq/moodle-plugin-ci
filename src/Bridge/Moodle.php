@@ -12,14 +12,15 @@
 namespace Moodlerooms\MoodlePluginCI\Bridge;
 
 /**
- * Bridge to Moodle
+ * Bridge to Moodle.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class Moodle {
+class Moodle
+{
     /**
-     * Absolute path to Moodle directory
+     * Absolute path to Moodle directory.
      *
      * @var string
      */
@@ -28,14 +29,16 @@ class Moodle {
     /**
      * @param string $pathToMoodle Absolute path to Moodle directory
      */
-    public function __construct($pathToMoodle) {
+    public function __construct($pathToMoodle)
+    {
         $this->pathToMoodle = $pathToMoodle;
     }
 
     /**
-     * Load's Moodle config so we can use Moodle APIs
+     * Load's Moodle config so we can use Moodle APIs.
      */
-    public function requireConfig() {
+    public function requireConfig()
+    {
         if (!defined('CLI_SCRIPT')) {
             define('CLI_SCRIPT', true);
         }
@@ -53,6 +56,6 @@ class Moodle {
         }
 
         /** @noinspection PhpIncludeInspection */
-        require_once($path);
+        require_once $path;
     }
 }

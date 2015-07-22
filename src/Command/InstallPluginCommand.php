@@ -24,15 +24,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class InstallPluginCommand extends Command {
-    protected function configure() {
+class InstallPluginCommand extends Command
+{
+    protected function configure()
+    {
         $this->setName('installplugin')
             ->setDescription('Install a plugin into Moodle')
             ->addArgument('moodle', InputArgument::REQUIRED, 'Absolute path to Moodle')
             ->addArgument('plugin', InputArgument::REQUIRED, 'Absolute path to the plugin that should be installed');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $moodle = $input->getArgument('moodle');
         $plugin = $input->getArgument('plugin');
 

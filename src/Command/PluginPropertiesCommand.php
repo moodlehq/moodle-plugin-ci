@@ -26,8 +26,10 @@ use Symfony\Component\Filesystem\Filesystem;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class PluginPropertiesCommand extends Command {
-    protected function configure() {
+class PluginPropertiesCommand extends Command
+{
+    protected function configure()
+    {
         $this->setName('pluginproperties')
             ->setDescription('Create a Phing properties file about a plugin')
             ->addArgument('moodle', InputArgument::REQUIRED, 'Absolute path to Moodle')
@@ -35,7 +37,8 @@ class PluginPropertiesCommand extends Command {
             ->addArgument('out', InputArgument::REQUIRED, 'Absolute path to the file to write to');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $moodle = $input->getArgument('moodle');
         $plugin = $input->getArgument('plugin');
         $out    = $input->getArgument('out');
