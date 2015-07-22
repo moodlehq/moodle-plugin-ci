@@ -111,8 +111,7 @@ install:
 # directories to build the project.
   - cd ../..
 # Install the CI helper.
-  - git clone git://github.com/moodlerooms/moodle-plugin-ci helper
-  - composer install --working-dir helper
+  - composer create-project -n moodlerooms/moodle-plugin-ci helper dev-master
 # Run the default install.  The overview of what this does:
 #    - Clone the Moodle project into a directory called moodle.
 #    - Create Moodle config.php, database, data directories, etc.
