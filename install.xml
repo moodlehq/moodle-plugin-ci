@@ -131,7 +131,7 @@
         <exec command="composer install" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that Moodle is ready and completely built. -->
-        <append destFile="${PROPERTIES_FILE}" text="MOODLE_READY=true"/>
+        <append destFile="${PROPERTIES_FILE}" text="${line.separator}MOODLE_READY=true"/>
     </target>
 
     <target name="BehatDependencies" hidden="true">
@@ -167,7 +167,7 @@
         <exec command="php ${BEHAT_UTIL} --enable" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that Behat is ready to run. -->
-        <append destFile="${PROPERTIES_FILE}" text="BEHAT_READY=true"/>
+        <append destFile="${PROPERTIES_FILE}" text="${line.separator}BEHAT_READY=true"/>
     </target>
 
     <target name="PHPUnitDependencies" hidden="true">
@@ -176,7 +176,7 @@
         <exec command="php ${MOODLE_DIR}/admin/tool/phpunit/cli/util.php --buildconfig" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that PHPUnit is ready to run. -->
-        <append destFile="${PROPERTIES_FILE}" text="PHPUNIT_READY=true"/>
+        <append destFile="${PROPERTIES_FILE}" text="${line.separator}PHPUNIT_READY=true"/>
     </target>
 
     <target name="OtherDependencies" hidden="true">
