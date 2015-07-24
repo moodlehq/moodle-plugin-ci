@@ -95,7 +95,7 @@
     <target name="PHPMessDetector" description="Run PHP Mess Detector">
         <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running PHP Mess Detector on ${MOODLE_PLUGIN_DIR}"/>
-        <phpmd rulesets="${project.basedir}/res/config/phpmd.xml" file="${MOODLE_PLUGIN_DIR}"/>
+        <exec command="${project.basedir}/bin/helper mess ${MOODLE_PLUGIN_DIR} ${project.basedir}/res/config/phpmd.xml" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="JSHint" description="Run JSHint">

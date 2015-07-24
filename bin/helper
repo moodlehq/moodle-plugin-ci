@@ -9,8 +9,10 @@
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
 use Moodlerooms\MoodlePluginCI\Command\InstallPluginCommand;
+use Moodlerooms\MoodlePluginCI\Command\MessDetectorCommand;
 use Moodlerooms\MoodlePluginCI\Command\PluginPropertiesCommand;
 use Symfony\Component\Console\Application;
 
@@ -20,4 +22,5 @@ $application = new Application('Moodle Plugin CI', '1.0');
 $application->add(new InstallPluginCommand());
 $application->add(new PluginPropertiesCommand());
 $application->add(new CodeCheckerCommand());
+$application->add(new MessDetectorCommand());
 $application->run();

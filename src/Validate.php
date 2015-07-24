@@ -37,4 +37,23 @@ class Validate
 
         return $path;
     }
+
+    /**
+     * Validate a file path.
+     *
+     * @param string $path
+     * @return string
+     */
+    public function filePath($path)
+    {
+        $realPath = realpath($path);
+        if ($realPath === false) {
+            throw new \InvalidArgumentException(sprintf('Failed to run realpath(\'%s\')', $path));
+        }
+        if (!is_file($realPath) and !is_dir($realPath)) {
+            throw new \InvalidArgumentException(sprintf('The path is not a directory or a file: %s', $realPath));
+        }
+
+        return $path;
+    }
 }
