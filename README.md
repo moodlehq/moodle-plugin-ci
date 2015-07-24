@@ -36,8 +36,10 @@ run a build to make sure nothing broke.
 
 ## Step 2
 
-Copy the [.travis.dist.yml](.travis.dist.yml) file into the root of your plugin and rename it to `.travis.yml`.  Once you
-have added the `.travis.yml` file, commit and push up to GitHub, to trigger a Travis CI build. Check the
+Copy the [.travis.dist.yml](.travis.dist.yml) file into the root of your plugin and rename it to `.travis.yml`. Now
+might be a good time to review the `.travis.yml` contents and remove anything that is not needed.  See below for an
+explanation about the contents of this file.  Once you have added the `.travis.yml` file, commit and push up to GitHub,
+to trigger a Travis CI build. Check the
 [build status](https://travis-ci.org/repositories) page to see if your build passes or fails.
 
 ## Step 3
