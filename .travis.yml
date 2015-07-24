@@ -4,10 +4,10 @@ php:
  - 5.4
 
 env:
+  # Just test pgsql on older versions.
   - MOODLE_BRANCH=MOODLE_27_STABLE DB=pgsql
-  - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli
   - MOODLE_BRANCH=MOODLE_28_STABLE DB=pgsql
-  - MOODLE_BRANCH=MOODLE_28_STABLE DB=mysqli
+  # Test both DB backends on latest supported version.
   - MOODLE_BRANCH=MOODLE_29_STABLE DB=pgsql
   - MOODLE_BRANCH=MOODLE_29_STABLE DB=mysqli
 
