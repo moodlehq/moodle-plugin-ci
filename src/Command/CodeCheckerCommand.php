@@ -58,6 +58,11 @@ class CodeCheckerCommand extends Command
             /** @var \SplFileInfo $file */
             $files[] = $file->getRealpath();
         }
+        if (empty($files)) {
+            $output->writeln('<error>Failed to find any files to process.</error>');
+            return 0;
+        }
+
         $cs = new \PHP_CodeSniffer();
         $cs->setCli(new CodeSnifferCLI([
             'reports'      => ['full' => null],
@@ -68,6 +73,8 @@ class CodeCheckerCommand extends Command
         ]));
 
         $cs->process($files, $moodle.'/local/codechecker/moodle');
-        $cs->reporting->printReport('full', false, $cs->cli->getCommandLineValues(), null, 120);
+        $results = $cs->reporting->printReport('full', false, $cs->cli->getCommandLineValues(), null, 120);
+
+        return $results['errors'] > 0 ? 1 : 0;
     }
 }
