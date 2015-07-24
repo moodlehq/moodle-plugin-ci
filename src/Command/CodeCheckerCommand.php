@@ -60,6 +60,7 @@ class CodeCheckerCommand extends Command
         }
         if (empty($files)) {
             $output->writeln('<error>Failed to find any files to process.</error>');
+
             return 0;
         }
 

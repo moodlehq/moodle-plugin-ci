@@ -45,9 +45,9 @@ class MessDetectorCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $validate = new Validate();
-        $plugin = realpath($validate->directory($input->getArgument('plugin')));
-        $rules  = realpath($validate->filePath($input->getArgument('rules')));
-        $moodle = realpath($validate->directory($input->getOption('moodle')));
+        $plugin   = realpath($validate->directory($input->getArgument('plugin')));
+        $rules    = realpath($validate->filePath($input->getArgument('rules')));
+        $moodle   = realpath($validate->directory($input->getOption('moodle')));
 
         $moodlePlugin = new MoodlePlugin(new Moodle($moodle), $plugin);
 
@@ -65,6 +65,7 @@ class MessDetectorCommand extends Command
         }
         if (empty($files)) {
             $output->writeln('<error>Failed to find any files to process.</error>');
+
             return 0;
         }
 

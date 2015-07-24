@@ -47,24 +47,22 @@ class MessDetectorRenderer extends AbstractRenderer
      * phase.
      *
      * @param \PHPMD\Report $report
-     * @return void
      */
     public function renderReport(Report $report)
     {
         $this->output->writeln('');
 
         $groupByFile = [];
-        /** @var \PHPMD\RuleViolation $violation */
+        /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $groupByFile[$violation->getFileName()][] = $violation;
         }
 
-        /** @var \PHPMD\ProcessingError $error */
+        /** @var ProcessingError $error */
         foreach ($report->getErrors() as $error) {
             $groupByFile[$error->getFile()][] = $error;
         }
         foreach ($groupByFile as $file => $problems) {
-
             $violationCount = $errorCount = 0;
 
             $table = new Table($this->output);
@@ -72,10 +70,11 @@ class MessDetectorRenderer extends AbstractRenderer
             foreach ($problems as $problem) {
                 if ($problem instanceof RuleViolation) {
                     $table->addRow([$problem->getBeginLine(), '<comment>VIOLATION</comment>', $problem->getDescription()]);
-                    $violationCount++;
-                } else if ($problem instanceof ProcessingError) {
+                    ++$violationCount;
+                }
+                if ($problem instanceof ProcessingError) {
                     $table->addRow(['-', '<error>ERROR</error>', $problem->getMessage()]);
-                    $errorCount++;
+                    ++$errorCount;
                 }
             }
 
