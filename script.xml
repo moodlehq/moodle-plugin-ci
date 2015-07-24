@@ -101,7 +101,7 @@
     <target name="JSHint" description="Run JSHint">
         <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running JSHint on ${MOODLE_PLUGIN_DIR}"/>
-        <exec command="jshint --exclude ${PLUGIN_DIR}/yui/build ${PLUGIN_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
+        <exec command="jshint --exclude yui/build ." dir="${MOODLE_PLUGIN_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="Shifter" description="Run YUI Shifter and ensure all YUI modules have been shifted">
