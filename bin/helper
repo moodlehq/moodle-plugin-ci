@@ -10,6 +10,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
+use Moodlerooms\MoodlePluginCI\Command\CopyPasteDetectorCommand;
 use Moodlerooms\MoodlePluginCI\Command\InstallPluginCommand;
 use Moodlerooms\MoodlePluginCI\Command\MessDetectorCommand;
 use Moodlerooms\MoodlePluginCI\Command\PluginPropertiesCommand;
@@ -22,4 +23,5 @@ $application->add(new InstallPluginCommand());
 $application->add(new PluginPropertiesCommand());
 $application->add(new CodeCheckerCommand());
 $application->add(new MessDetectorCommand());
+$application->add(new CopyPasteDetectorCommand());
 $application->run();

@@ -85,11 +85,7 @@
     <target name="PHPCopyPasteDetector" description="Run PHP Copy/Paste Detector">
         <fail if="MOODLE_NOT_READY" message="${MOODLE_NOT_READY}"/>
         <echo message="Running PHP Copy/Paste Detector on ${MOODLE_PLUGIN_DIR}"/>
-        <phpcpd>
-            <fileset dir="${MOODLE_PLUGIN_DIR}">
-                <include name="**/*.php"/>
-            </fileset>
-        </phpcpd>
+        <exec command="${project.basedir}/bin/helper copypaste ${MOODLE_PLUGIN_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
     </target>
 
     <target name="PHPMessDetector" description="Run PHP Mess Detector">
