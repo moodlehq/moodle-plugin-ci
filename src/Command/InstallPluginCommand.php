@@ -13,9 +13,11 @@ namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Validate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -30,21 +32,16 @@ class InstallPluginCommand extends Command
     {
         $this->setName('installplugin')
             ->setDescription('Install a plugin into Moodle')
-            ->addArgument('moodle', InputArgument::REQUIRED, 'Absolute path to Moodle')
-            ->addArgument('plugin', InputArgument::REQUIRED, 'Absolute path to the plugin that should be installed');
+            ->addArgument('plugin', InputArgument::REQUIRED, 'Path to the plugin that should be installed')
+            ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', '.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $moodle = $input->getArgument('moodle');
-        $plugin = $input->getArgument('plugin');
+        $validate = new Validate();
+        $plugin   = realpath($validate->directory($input->getArgument('plugin')));
+        $moodle   = realpath($validate->directory($input->getOption('moodle')));
 
-        if (!is_dir($moodle)) {
-            throw new \InvalidArgumentException('The moodle argument is not a path a directory');
-        }
-        if (!is_dir($plugin)) {
-            throw new \InvalidArgumentException('The plugin argument is not a path a directory');
-        }
         $moodlePlugin = new MoodlePlugin(new Moodle($moodle), $plugin);
         $moodlePlugin->installPluginIntoMoodle();
 

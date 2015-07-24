@@ -14,9 +14,11 @@ namespace Moodlerooms\MoodlePluginCI\Command;
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Properties\PluginProperties;
+use Moodlerooms\MoodlePluginCI\Validate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -32,23 +34,18 @@ class PluginPropertiesCommand extends Command
     {
         $this->setName('pluginproperties')
             ->setDescription('Create a Phing properties file about a plugin')
-            ->addArgument('moodle', InputArgument::REQUIRED, 'Absolute path to Moodle')
-            ->addArgument('plugin', InputArgument::REQUIRED, 'Absolute path to the plugin that should be installed')
-            ->addArgument('out', InputArgument::REQUIRED, 'Absolute path to the file to write to');
+            ->addArgument('plugin', InputArgument::REQUIRED, 'Path to the plugin that should be installed')
+            ->addArgument('out', InputArgument::REQUIRED, 'Absolute path to the file to write to')
+            ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', '.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $moodle = $input->getArgument('moodle');
-        $plugin = $input->getArgument('plugin');
-        $out    = $input->getArgument('out');
+        $validate = new Validate();
+        $plugin   = realpath($validate->directory($input->getArgument('plugin')));
+        $moodle   = realpath($validate->directory($input->getOption('moodle')));
+        $out      = $input->getArgument('out');
 
-        if (!is_dir($moodle)) {
-            throw new \InvalidArgumentException('The moodle argument is not a path a directory');
-        }
-        if (!is_dir($plugin)) {
-            throw new \InvalidArgumentException('The plugin argument is not a path a directory');
-        }
         $moodlePlugin     = new MoodlePlugin(new Moodle($moodle), $plugin);
         $pluginProperties = new PluginProperties();
         $properties       = $pluginProperties->getPropertiesFromPlugin($moodlePlugin);

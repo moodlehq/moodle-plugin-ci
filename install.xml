@@ -118,8 +118,8 @@
 
         <!-- Install the plugin and create the build properties file. -->
         <echo message="Installing the plugin into Moodle"/>
-        <exec command="${project.basedir}/bin/helper installplugin ${MOODLE_DIR} ${TRAVIS_BUILD_DIR}" passthru="true" level="info" checkreturn="true"/>
-        <exec command="${project.basedir}/bin/helper pluginproperties ${MOODLE_DIR} ${TRAVIS_BUILD_DIR} ${PROPERTIES_FILE}" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${project.basedir}/bin/helper installplugin ${TRAVIS_BUILD_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
+        <exec command="${project.basedir}/bin/helper pluginproperties ${TRAVIS_BUILD_DIR} ${PROPERTIES_FILE}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- Install Code Checker. -->
         <echo message="Installing the Moodle Code Checker plugin into Moodle"/>
