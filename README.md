@@ -160,6 +160,16 @@ This project uses [Semantic Versioning](http://semver.org/) for its public API. 
 any publicly available Phing target listed in the [install.xml](install.xml) and [script.xml](script.xml) files.  _Everything_
 outside of these Phing targets is considered to be private API and is not guaranteed to follow Semantic Versioning.
 
+# Ignoring files
+
+For some of the code analysis tools, it is important to ignore some files within the plugin because they might not be
+fixable, like a third party library.  The Moodle Code Checker, PHP Copy/Paste Detector and PHP Mess Detector commands
+in this project ignore files and directories listed in the
+[thirdpartylibs.xml](https://docs.moodle.org/dev/Plugin_files#thirdpartylibs.xml) plugin file.
+
+The JSHint command does not know about the `thirdpartylibs.xml`, but it will use the `.jshintignore` file if it exists
+in the plugin.
+
 # License
 
 This project is licensed under the GNU GPL v3 or later.  See the [LICENSE](LICENSE) file for details.
