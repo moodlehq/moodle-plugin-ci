@@ -19,8 +19,8 @@ use Symfony\Component\Finder\Finder;
  *
  * Inspects the contents of a Moodle plugin
  * and uses Moodle API to get information about
- * the plugin.  Very important, the plugin is not
- * installed into Moodle.
+ * the plugin.  Very important, the plugin may not
+ * be installed into Moodle.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -167,5 +167,31 @@ class MoodlePlugin
         $result = $finder->files()->in($this->pathToPlugin)->path('tests/behat')->name('*.feature')->count();
 
         return ($result !== 0);
+    }
+
+    /**
+     * Get paths to 3rd party libraries within the plugin.
+     *
+     * @return array
+     */
+    public function getThirdPartyLibraryPaths()
+    {
+        $paths         = [];
+        $thirdPartyXML = $this->pathToPlugin.'/thirdpartylibs.xml';
+
+        if (!is_file($thirdPartyXML)) {
+            return $paths;
+        }
+        $xml = simplexml_load_file($thirdPartyXML);
+        foreach ($xml->xpath('/libraries/library/location') as $location) {
+            // Accept only correct paths from XML files.
+            if (file_exists(dirname($this->pathToPlugin.'/'.$location))) {
+                $paths[] = (string) $location;
+            } else {
+                throw new \RuntimeException('The plugin thirdpartylibs.xml contains a non-existent path: '.$location);
+            }
+        }
+
+        return $paths;
     }
 }
