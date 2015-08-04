@@ -21,11 +21,23 @@
     "symfony/filesystem": "2.*",
     "symfony/finder": "2.*",
     "symfony/console": "2.*",
-    "pear/versioncontrol_git": "@dev"
+    "symfony/yaml": "2.*",
+    "symfony/process": "2.*",
+    "pear/versioncontrol_git": "@dev",
+    "jakub-onderka/php-parallel-lint": "0.*",
+    "jakub-onderka/php-console-highlighter": "0.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.7.*"
   },
   "autoload": {
     "psr-4": {
       "Moodlerooms\\MoodlePluginCI\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Moodlerooms\\MoodlePluginCI\\Tests\\": "tests/"
     }
   },
   "config": {

@@ -11,7 +11,8 @@
 
 namespace Moodlerooms\MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\Bridge\CodeSnifferCLI;
+use JakubOnderka\PhpParallelLint\Manager;
+use JakubOnderka\PhpParallelLint\Settings;
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Validate;
@@ -23,17 +24,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Run Moodle Code Checker on a plugin.
+ * Run PHP Lint on a plugin.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class CodeCheckerCommand extends Command
+class PHPLintCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('codechecker')
-            ->setDescription('Run Moodle Code Checker on a plugin')
+        $this->setName('phplint')
+            ->setDescription('Run PHP Lint on a plugin')
             ->addArgument('plugin', InputArgument::REQUIRED, 'Path to the plugin')
             ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', '.');
     }
@@ -47,7 +48,7 @@ class CodeCheckerCommand extends Command
         $moodlePlugin = new MoodlePlugin(new Moodle($moodle), $plugin);
 
         $finder = new Finder();
-        $finder->notPath('yui/build')->name('*.php')->name('*.js')->notName('*-min.js');
+        $finder->name('*.php');
 
         $files = $moodlePlugin->getFiles($finder);
 
@@ -57,18 +58,12 @@ class CodeCheckerCommand extends Command
             return 0;
         }
 
-        $cs = new \PHP_CodeSniffer();
-        $cs->setCli(new CodeSnifferCLI([
-            'reports'      => ['full' => null],
-            'colors'       => true,
-            'encoding'     => 'utf-8',
-            'showProgress' => true,
-            'reportWidth'  => 120,
-        ]));
+        $settings = new Settings();
+        $settings->addPaths($files);
 
-        $cs->process($files, $moodle.'/local/codechecker/moodle');
-        $results = $cs->reporting->printReport('full', false, $cs->cli->getCommandLineValues(), null, 120);
+        $manager = new Manager();
+        $result  = $manager->run($settings);
 
-        return $results['errors'] > 0 ? 1 : 0;
+        return $result->hasError() ? 1 : 0;
     }
 }

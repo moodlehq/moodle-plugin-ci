@@ -12,7 +12,7 @@
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUndefinedNamespaceInspection */
 $finder = Symfony\CS\Finder\DefaultFinder::create()
-    ->exclude('tests/fixture/moodle-local_travis')
+    ->exclude('tests/Fixture')
     ->name('helper') // This covers bin/helper.
     ->in(__DIR__);
 
@@ -29,5 +29,6 @@ return Symfony\CS\Config\Config::create()
         '-phpdoc_separation',
         '-phpdoc_to_comment',
         '-blankline_after_open_tag',
+        '-psr0',
     ])
     ->finder($finder);

@@ -11,6 +11,8 @@
     <property name="MOODLE_BEHAT_DATA_DIR" value="${BUILD_DIR}/behat_moodledata" description="Absolute path to Behat data directory"/>
     <property name="PROPERTIES_FILE" value="${project.basedir}/build.properties" description="Location of the build properties file"/>
     <property name="MOODLE_CODE_CHECKER_VERSION" value="master" description="The version to checkout"/>
+    <property name="IGNORE_PATHS" value="" description="CSV of file paths to ignore"/>
+    <property name="IGNORE_NAMES" value="" description="CSV of file names to ignore"/>
 
     <!-- These properties are read from the properties file. -->
     <property name="PHPUNIT_ENABLED" value="false" description="If the plugin has PHPUnit tests"/>
@@ -38,6 +40,20 @@
         <else>
             <property name="UNKNOWN_DB" value="true"/>
         </else>
+    </if>
+
+    <!-- Optional environment variables. -->
+    <if>
+        <isset property="env.IGNORE_PATHS"/>
+        <then>
+            <property name="IGNORE_PATHS" value="{env.IGNORE_PATHS}" override="true"/>
+        </then>
+    </if>
+    <if>
+        <isset property="env.IGNORE_NAMES"/>
+        <then>
+            <property name="IGNORE_NAMES" value="${env.IGNORE_NAMES}" override="true"/>
+        </then>
     </if>
 
     <target name="Install" description="Builds Moodle and detect dependencies to install" depends="ReportProperties">
@@ -116,8 +132,9 @@
         <echo message="Creating database for Moodle"/>
         <exec command="${DB.CREATE}" passthru="true" level="info" checkreturn="true"/>
 
-        <!-- Install the plugin and create the build properties file. -->
+        <!-- Create ignore file, install the plugin and create the build properties file. -->
         <echo message="Installing the plugin into Moodle"/>
+        <exec command="${project.basedir}/bin/helper ignorefile --not-paths ${IGNORE_PATHS} --not-names ${IGNORE_NAMES} -- ${TRAVIS_BUILD_DIR}" passthru="true" level="info" checkreturn="true"/>
         <exec command="${project.basedir}/bin/helper installplugin ${TRAVIS_BUILD_DIR}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
         <exec command="${project.basedir}/bin/helper pluginproperties ${TRAVIS_BUILD_DIR} ${PROPERTIES_FILE}" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
 
@@ -128,7 +145,7 @@
 
         <!-- Install Moodle Composer dependencies. -->
         <echo message="Installing Moodle Composer dependencies"/>
-        <exec command="composer install" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
+        <exec command="composer install -n" dir="${MOODLE_DIR}" passthru="true" level="info" checkreturn="true"/>
 
         <!-- This is a flag to let us know that Moodle is ready and completely built. -->
         <append destFile="${PROPERTIES_FILE}" text="${line.separator}MOODLE_READY=true"/>

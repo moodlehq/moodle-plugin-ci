@@ -34,7 +34,7 @@ class PluginPropertiesCommand extends Command
     {
         $this->setName('pluginproperties')
             ->setDescription('Create a Phing properties file about a plugin')
-            ->addArgument('plugin', InputArgument::REQUIRED, 'Path to the plugin that should be installed')
+            ->addArgument('plugin', InputArgument::REQUIRED, 'Path to the plugin')
             ->addArgument('out', InputArgument::REQUIRED, 'Absolute path to the file to write to')
             ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', '.');
     }

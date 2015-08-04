@@ -11,8 +11,12 @@
  */
 use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
 use Moodlerooms\MoodlePluginCI\Command\CopyPasteDetectorCommand;
+use Moodlerooms\MoodlePluginCI\Command\CSSLintCommand;
+use Moodlerooms\MoodlePluginCI\Command\IgnoreFileCommand;
 use Moodlerooms\MoodlePluginCI\Command\InstallPluginCommand;
+use Moodlerooms\MoodlePluginCI\Command\JSHintCommand;
 use Moodlerooms\MoodlePluginCI\Command\MessDetectorCommand;
+use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
 use Moodlerooms\MoodlePluginCI\Command\PluginPropertiesCommand;
 use Symfony\Component\Console\Application;
 
@@ -24,4 +28,8 @@ $application->add(new PluginPropertiesCommand());
 $application->add(new CodeCheckerCommand());
 $application->add(new MessDetectorCommand());
 $application->add(new CopyPasteDetectorCommand());
+$application->add(new CSSLintCommand());
+$application->add(new JSHintCommand());
+$application->add(new PHPLintCommand());
+$application->add(new IgnoreFileCommand());
 $application->run();

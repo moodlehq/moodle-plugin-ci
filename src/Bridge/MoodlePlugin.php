@@ -13,6 +13,7 @@ namespace Moodlerooms\MoodlePluginCI\Bridge;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Bridge to a Moodle plugin.
@@ -32,12 +33,12 @@ class MoodlePlugin
      *
      * @var string
      */
-    private $pathToPlugin;
+    protected $pathToPlugin;
 
     /**
      * @var Moodle
      */
-    private $moodle;
+    protected $moodle;
 
     /**
      * @param Moodle $moodle
@@ -116,6 +117,18 @@ class MoodlePlugin
     }
 
     /**
+     * Get the relative install directory path within Moodle.
+     *
+     * @return string Relative path, EG: mod/forum
+     */
+    public function getRelativeInstallDirectory()
+    {
+        $path = $this->getInstallDirectory();
+
+        return str_replace($this->moodle->pathToMoodle.'/', '', $path);
+    }
+
+    /**
      * Install the plugin into Moodle.
      */
     public function installPluginIntoMoodle()
@@ -129,18 +142,6 @@ class MoodlePlugin
         // Install the plugin.
         $fs = new Filesystem();
         $fs->mirror($this->pathToPlugin, $directory);
-    }
-
-    /**
-     * Get the relative install directory path within Moodle.
-     *
-     * @return string Relative path, EG: mod/forum
-     */
-    public function getRelativeInstallDirectory()
-    {
-        $path = $this->getInstallDirectory();
-
-        return str_replace($this->moodle->pathToMoodle.'/', '', $path);
     }
 
     /**
@@ -184,14 +185,86 @@ class MoodlePlugin
         }
         $xml = simplexml_load_file($thirdPartyXML);
         foreach ($xml->xpath('/libraries/library/location') as $location) {
+            $location = (string) trim($location, '/');
+
             // Accept only correct paths from XML files.
             if (file_exists(dirname($this->pathToPlugin.'/'.$location))) {
-                $paths[] = (string) $location;
+                $paths[] = $location;
             } else {
                 throw new \RuntimeException('The plugin thirdpartylibs.xml contains a non-existent path: '.$location);
             }
         }
 
         return $paths;
+    }
+
+    /**
+     * Get ignore file information.
+     *
+     * @return array
+     */
+    public function getIgnores()
+    {
+        $ignoreFile = $this->pathToPlugin.'/.travis-ignore.yml';
+
+        if (!is_file($ignoreFile)) {
+            return [];
+        }
+
+        return Yaml::parse($ignoreFile);
+    }
+
+    /**
+     * Get a list of plugin files.
+     *
+     * @param Finder $finder The finder to use, can be pre-configured
+     * @return array Of files
+     */
+    public function getFiles(Finder $finder)
+    {
+        $finder->files()->in($this->pathToPlugin)->ignoreUnreadableDirs();
+
+        // Ignore third party libraries.
+        foreach ($this->getThirdPartyLibraryPaths() as $libPath) {
+            $finder->notPath($libPath);
+        }
+
+        // Extra ignores for CI.
+        $ignores = $this->getIgnores();
+
+        if (!empty($ignores['notPaths'])) {
+            foreach ($ignores['notPaths'] as $notPath) {
+                $finder->notPath($notPath);
+            }
+        }
+        if (!empty($ignores['notNames'])) {
+            foreach ($ignores['notNames'] as $notName) {
+                $finder->notName($notName);
+            }
+        }
+
+        $files = [];
+        foreach ($finder as $file) {
+            /** @var \SplFileInfo $file */
+            $files[] = $file->getRealpath();
+        }
+
+        return $files;
+    }
+
+    /**
+     * Get a list of plugin files, with paths relative to the plugin itself.
+     *
+     * @param Finder $finder The finder to use, can be pre-configured
+     * @return array Of files
+     */
+    public function getRelativeFiles(Finder $finder)
+    {
+        $files = [];
+        foreach ($this->getFiles($finder) as $file) {
+            $files[] = str_replace($this->pathToPlugin.'/', '', $file);
+        }
+
+        return $files;
     }
 }

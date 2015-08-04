@@ -28,4 +28,4 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->version   = 2015071000;
 $plugin->requires  = 2014051200;  // Moodle 2.7.
 $plugin->component = 'local_travis';
-$plugin->maturity  = MATURITY_ALPHA;
+$plugin->maturity  = MATURITY_STABLE;

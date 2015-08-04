@@ -19,8 +19,8 @@ before_install:
 
 install:
   # We do this funny song and dance to mimic how a Moodle plugin would be run.
-  - composer install
-  - cp -R tests/fixture/moodle-local_travis ../moodle-local_travis
+  - composer install -n
+  - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
   - cd ..
   - mv $TRAVIS_BUILD_DIR ../helper
   - export TRAVIS_BUILD_DIR="`pwd`/moodle-local_travis"
@@ -30,6 +30,7 @@ install:
   - helper/bin/phing -f helper/install.xml
 
 script:
+  - helper/bin/phpunit -c helper
   - helper/bin/phing -f helper/script.xml ReportProperties
   - helper/bin/phing -f helper/script.xml PHPLint
   - helper/bin/phing -f helper/script.xml PHPCopyPasteDetector

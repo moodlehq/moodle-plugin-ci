@@ -37,7 +37,7 @@ class MessDetectorCommand extends Command
     {
         $this->setName('mess')
             ->setDescription('Run Moodle Code Checker on a plugin')
-            ->addArgument('plugin', InputArgument::REQUIRED, 'Path to the plugin that should be installed')
+            ->addArgument('plugin', InputArgument::REQUIRED, 'Path to the plugin')
             ->addArgument('rules', InputArgument::REQUIRED, 'Path to PHP Mess Detector rule set')
             ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', '.');
     }
@@ -52,17 +52,10 @@ class MessDetectorCommand extends Command
         $moodlePlugin = new MoodlePlugin(new Moodle($moodle), $plugin);
 
         $finder = new Finder();
-        $finder->files()->in($plugin)->name('*.php');
+        $finder->name('*.php');
 
-        foreach ($moodlePlugin->getThirdPartyLibraryPaths() as $libPath) {
-            $finder->notPath($libPath);
-        }
+        $files = $moodlePlugin->getFiles($finder);
 
-        $files = [];
-        foreach ($finder as $file) {
-            /** @var \SplFileInfo $file */
-            $files[] = $file->getRealpath();
-        }
         if (empty($files)) {
             $output->writeln('<error>Failed to find any files to process.</error>');
 
