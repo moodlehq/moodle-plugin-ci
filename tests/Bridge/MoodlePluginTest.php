@@ -1,5 +1,6 @@
 <?php
-/**
+
+/*
  * This file is part of the Moodle Plugin CI package.
  *
  * For the full copyright and license information, please view the LICENSE
@@ -11,8 +12,7 @@
 
 namespace Moodlerooms\MoodlePluginCI\Tests\Bridge;
 
-use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
-use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
@@ -52,27 +52,13 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
 
     public function testGetComponent()
     {
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertEquals('local_travis', $plugin->getComponent());
-    }
-
-    public function getRelativeInstallDirectory()
-    {
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
-        $this->assertEquals('local/travis', $plugin->getRelativeInstallDirectory());
-    }
-
-    public function testInstallPluginIntoMoodle()
-    {
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
-        $plugin->installPluginIntoMoodle();
-
-        $this->assertFileExists($this->moodleDir.'/local/travis/version.php');
     }
 
     public function testHasUnitTests()
     {
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertTrue($plugin->hasUnitTests());
     }
 
@@ -82,13 +68,13 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests/phpunit_test.php');
 
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertFalse($plugin->hasUnitTests());
     }
 
     public function testHasBehatFeatures()
     {
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertTrue($plugin->hasBehatFeatures());
     }
 
@@ -98,13 +84,13 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests/behat/login.feature');
 
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertFalse($plugin->hasBehatFeatures());
     }
 
     public function testGetThirdPartyLibraryPaths()
     {
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertEquals(['vendor.php', 'vendor'], $plugin->getThirdPartyLibraryPaths());
     }
 
@@ -117,7 +103,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $fs = new Filesystem();
         $fs->copy(__DIR__.'/../Fixture/broken-thirdpartylibs.xml', $this->pluginDir.'/thirdpartylibs.xml', true);
 
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $plugin->getThirdPartyLibraryPaths();
     }
 
@@ -131,7 +117,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $fs = new Filesystem();
         $fs->dumpFile($this->pluginDir.'/.travis-ignore.yml', Yaml::dump($expected));
 
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertEquals($expected, $plugin->getIgnores());
     }
 
@@ -147,7 +133,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $finder = new Finder();
         $finder->name('*.php');
 
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertEquals([$this->pluginDir.'/lib.php'], $plugin->getFiles($finder));
     }
 
@@ -156,7 +142,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $finder = new Finder();
         $finder->name('*.php')->sortByName();
 
-        $plugin = new DummyMoodlePlugin(new DummyMoodle($this->moodleDir), $this->pluginDir);
+        $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertEquals(['lib.php', 'tests/phpunit_test.php', 'version.php'], $plugin->getRelativeFiles($finder));
     }
 }

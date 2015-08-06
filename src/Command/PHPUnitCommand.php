@@ -13,61 +13,62 @@
 namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Process\Execute;
 use Moodlerooms\MoodlePluginCI\Validate;
-use SebastianBergmann\PHPCPD\Detector\Detector;
-use SebastianBergmann\PHPCPD\Detector\Strategy\DefaultStrategy;
-use SebastianBergmann\PHPCPD\Log\Text;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
 
 /**
- * Run PHP Copy/Paste Detector on a plugin.
+ * Run PHPUnit tests.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class CopyPasteDetectorCommand extends Command
+class PHPUnitCommand extends Command
 {
+    /**
+     * @var Execute
+     */
+    public $execute;
+
     protected function configure()
     {
-        // Install Command sets this in Travis CI.
+        // Install Command sets these in Travis CI.
         $plugin = getenv('PLUGIN_DIR') !== false ? getenv('PLUGIN_DIR') : null;
         $mode   = getenv('PLUGIN_DIR') !== false ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
+        $moodle = getenv('MOODLE_DIR') !== false ? getenv('MOODLE_DIR') : '.';
 
-        $this->setName('phpcpd')
-            ->setDescription('Run PHP Copy/Paste Detector on a plugin')
-            ->addArgument('plugin', $mode, 'Path to the plugin', $plugin);
+        $this->setName('phpunit')
+            ->setDescription('Run PHPUnit on a plugin')
+            ->addArgument('plugin', $mode, 'Path to the plugin', $plugin)
+            ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', $moodle);
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->execute = $this->execute ?: new Execute($output, $this->getHelper('process'));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $validate  = new Validate();
         $pluginDir = realpath($validate->directory($input->getArgument('plugin')));
+        $moodleDir = realpath($validate->directory($input->getOption('moodle')));
         $plugin    = new MoodlePlugin($pluginDir);
 
-        $finder = new Finder();
-        $finder->name('*.php');
-
-        $files = $plugin->getFiles($finder);
-
-        if (empty($files)) {
-            $output->writeln('<error>Failed to find any files to process.</error>');
-
-            return 0;
+        if (!$plugin->hasUnitTests()) {
+            throw new \InvalidArgumentException('The plugin does not have any PHPUnit tests to run: '.$pluginDir);
         }
 
-        $output->writeln("<bg=green;fg=white;options=bold> RUN </> <fg=blue>PHP Copy/Paste Detector on {$plugin->getComponent()}</>");
+        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>PHPUnit tests for {$plugin->getComponent()}</>");
 
-        $detector = new Detector(new DefaultStrategy());
-        $clones   = $detector->copyPasteDetection($files);
+        $process = $this->execute->passThrough(
+            "$moodleDir/vendor/bin/phpunit --testsuite {$plugin->getComponent()}_testsuite", $moodleDir
+        );
 
-        $printer = new Text();
-        $printer->printResult($output, $clones);
-        $output->writeln(\PHP_Timer::resourceUsage());
-
-        return count($clones) > 0 ? 1 : 0;
+        return $process->isSuccessful() ? 0 : 1;
     }
 }

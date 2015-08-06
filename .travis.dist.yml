@@ -1,5 +1,11 @@
 language: php
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 php:
  - 5.4
  - 5.5
@@ -17,24 +23,23 @@ env:
   - DB=pgsql
   - DB=mysqli
 
-sudo: false
-
 before_install:
-- composer selfupdate
-- composer config -g github-oauth.github.com $GITHUB_API_TOKEN
+  - composer selfupdate
+  - composer config -g github-oauth.github.com $GITHUB_API_TOKEN
+  - composer global require -n --update-no-dev moodlerooms/moodle-plugin-ci:dev-master
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - cd ../..
 
 install:
-  - cd ../..
-  - composer create-project -n moodlerooms/moodle-plugin-ci helper dev-master
-  - helper/bin/phing -f helper/install.xml
+  - moodle-plugin-ci install
 
 script:
-  - helper/bin/phing -f helper/script.xml PHPLint
-  - helper/bin/phing -f helper/script.xml PHPCopyPasteDetector
-  - helper/bin/phing -f helper/script.xml PHPMessDetector
-  - helper/bin/phing -f helper/script.xml CodeChecker
-  - helper/bin/phing -f helper/script.xml CSSLint
-  - helper/bin/phing -f helper/script.xml Shifter
-  - helper/bin/phing -f helper/script.xml JSHint
-  - helper/bin/phing -f helper/script.xml PHPUnit
-  - helper/bin/phing -f helper/script.xml Behat
+  - moodle-plugin-ci phplint
+  - moodle-plugin-ci phpcpd
+  - moodle-plugin-ci phpmd
+  - moodle-plugin-ci codechecker
+  - moodle-plugin-ci csslint
+  - moodle-plugin-ci shifter
+  - moodle-plugin-ci jshint
+  - moodle-plugin-ci phpunit
+  - moodle-plugin-ci behat

@@ -1,5 +1,6 @@
 <?php
-/**
+
+/*
  * This file is part of the Moodle Plugin CI package.
  *
  * For the full copyright and license information, please view the LICENSE
@@ -11,16 +12,14 @@
 
 namespace Moodlerooms\MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Process\Execute;
 use Moodlerooms\MoodlePluginCI\Validate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\Process;
 
 /**
  * Run JSHint on a plugin.
@@ -30,26 +29,37 @@ use Symfony\Component\Process\Process;
  */
 class JSHintCommand extends Command
 {
+    /**
+     * @var Execute
+     */
+    public $execute;
+
     protected function configure()
     {
+        // Install Command sets this in Travis CI.
+        $plugin = getenv('PLUGIN_DIR') !== false ? getenv('PLUGIN_DIR') : null;
+        $mode   = getenv('PLUGIN_DIR') !== false ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
+
         $this->setName('jshint')
             ->setDescription('Run JSHint on a plugin')
-            ->addArgument('plugin', InputArgument::REQUIRED, 'Path to the plugin')
-            ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', '.');
+            ->addArgument('plugin', $mode, 'Path to the plugin', $plugin);
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->execute = $this->execute ?: new Execute($output, $this->getHelper('process'));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $validate = new Validate();
-        $plugin   = realpath($validate->directory($input->getArgument('plugin')));
-        $moodle   = realpath($validate->directory($input->getOption('moodle')));
-
-        $moodlePlugin = new MoodlePlugin(new Moodle($moodle), $plugin);
+        $validate  = new Validate();
+        $pluginDir = realpath($validate->directory($input->getArgument('plugin')));
+        $plugin    = new MoodlePlugin($pluginDir);
 
         $finder = new Finder();
         $finder->name('*.js')->notName('*-min.js')->notPath('yui/build');
 
-        $files = $moodlePlugin->getRelativeFiles($finder);
+        $files = $plugin->getRelativeFiles($finder);
 
         if (empty($files)) {
             $output->writeln('<error>Failed to find any files to process.</error>');
@@ -57,11 +67,9 @@ class JSHintCommand extends Command
             return 0;
         }
 
-        $process = new Process('jshint '.implode(' ', $files), $moodlePlugin->getInstallDirectory());
-        $process->setTimeout(null);
-        $process->run(function ($type, $buffer) use ($output) {
-            $output->write($buffer);
-        });
+        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>JSHint on {$plugin->getComponent()}</>");
+
+        $process = $this->execute->passThrough('jshint '.implode(' ', $files), $plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;
     }

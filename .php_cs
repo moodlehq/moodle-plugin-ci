@@ -1,5 +1,6 @@
 <?php
-/**
+
+/*
  * This file is part of the Moodle Plugin CI package.
  *
  * For the full copyright and license information, please view the LICENSE
@@ -13,7 +14,7 @@
 /** @noinspection PhpUndefinedNamespaceInspection */
 $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->exclude('tests/Fixture')
-    ->name('helper') // This covers bin/helper.
+    ->name('moodle-plugin-ci') // This covers bin/moodle-plugin-ci.
     ->in(__DIR__);
 
 /** @noinspection PhpUndefinedClassInspection */
@@ -24,11 +25,6 @@ return Symfony\CS\Config\Config::create()
         'align_double_arrow',
         'ordered_use',
         'short_array_syntax',
-        '-phpdoc_params',
-        '-elseif',
-        '-phpdoc_separation',
-        '-phpdoc_to_comment',
-        '-blankline_after_open_tag',
         '-psr0',
     ])
     ->finder($finder);

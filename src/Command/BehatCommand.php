@@ -12,24 +12,39 @@
 
 namespace Moodlerooms\MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\Bridge\CodeSnifferCLI;
+use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Process\Execute;
 use Moodlerooms\MoodlePluginCI\Validate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
 
 /**
- * Run Moodle Code Checker on a plugin.
+ * Run Behat tests.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class CodeCheckerCommand extends Command
+class BehatCommand extends Command
 {
+    /**
+     * @var Execute
+     */
+    public $execute;
+
+    /**
+     * @var Moodle
+     */
+    public $moodle;
+
+    /**
+     * @var MoodlePlugin
+     */
+    public $plugin;
+
     protected function configure()
     {
         // Install Command sets these in Travis CI.
@@ -37,44 +52,41 @@ class CodeCheckerCommand extends Command
         $mode   = getenv('PLUGIN_DIR') !== false ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
         $moodle = getenv('MOODLE_DIR') !== false ? getenv('MOODLE_DIR') : '.';
 
-        $this->setName('codechecker')
-            ->setDescription('Run Moodle Code Checker on a plugin')
+        $this->setName('behat')
+            ->setDescription('Run Behat on a plugin')
             ->addArgument('plugin', $mode, 'Path to the plugin', $plugin)
             ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', $moodle);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $validate  = new Validate();
         $pluginDir = realpath($validate->directory($input->getArgument('plugin')));
         $moodleDir = realpath($validate->directory($input->getOption('moodle')));
-        $plugin    = new MoodlePlugin($pluginDir);
 
-        $finder = new Finder();
-        $finder->notPath('yui/build')->name('*.php')->name('*.js')->notName('*-min.js');
+        $this->execute = $this->execute ?: new Execute($output, $this->getHelper('process'));
+        $this->moodle  = $this->moodle ?: new Moodle($moodleDir);
+        $this->plugin  = $this->plugin ?: new MoodlePlugin($pluginDir);
+    }
 
-        $files = $plugin->getFiles($finder);
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $config = $this->moodle->getBehatDataDirectory().'/behat/behat.yml';
 
-        if (empty($files)) {
-            $output->writeln('<error>Failed to find any files to process.</error>');
-
-            return 0;
+        if (!$this->plugin->hasBehatFeatures()) {
+            throw new \InvalidArgumentException('The plugin does not have any Behat features to run: '.$this->plugin->directory);
+        }
+        if (!file_exists($config)) {
+            throw new \RuntimeException('Behat config file not found.  Behat must not have been installed.');
         }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>Moodle Code Checker on {$plugin->getComponent()}</>");
+        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>Behat features for {$this->plugin->getComponent()}</>");
 
-        $cs = new \PHP_CodeSniffer();
-        $cs->setCli(new CodeSnifferCLI([
-            'reports'      => ['full' => null],
-            'colors'       => true,
-            'encoding'     => 'utf-8',
-            'showProgress' => true,
-            'reportWidth'  => 120,
-        ]));
+        $process = $this->execute->passThrough(
+            "{$this->moodle->directory}/vendor/bin/behat --config $config --tags @{$this->plugin->getComponent()}",
+            $this->moodle->directory
+        );
 
-        $cs->process($files, $moodleDir.'/local/codechecker/moodle');
-        $results = $cs->reporting->printReport('full', false, $cs->cli->getCommandLineValues(), null, 120);
-
-        return $results['errors'] > 0 ? 1 : 0;
+        return $process->isSuccessful() ? 0 : 1;
     }
 }

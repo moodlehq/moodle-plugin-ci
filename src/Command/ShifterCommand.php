@@ -19,15 +19,16 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
 
 /**
- * Run CSS Lint on a plugin.
+ * Shift YUI modules on a plugin.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class CSSLintCommand extends Command
+class ShifterCommand extends Command
 {
     /**
      * @var Execute
@@ -40,8 +41,8 @@ class CSSLintCommand extends Command
         $plugin = getenv('PLUGIN_DIR') !== false ? getenv('PLUGIN_DIR') : null;
         $mode   = getenv('PLUGIN_DIR') !== false ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
 
-        $this->setName('csslint')
-            ->setDescription('Run CSSLint on a plugin')
+        $this->setName('shifter')
+            ->setDescription('Shift YUI modules in a plugin')
             ->addArgument('plugin', $mode, 'Path to the plugin', $plugin);
     }
 
@@ -56,21 +57,38 @@ class CSSLintCommand extends Command
         $pluginDir = realpath($validate->directory($input->getArgument('plugin')));
         $plugin    = new MoodlePlugin($pluginDir);
 
-        $finder = new Finder();
-        $finder->name('*.css')->notName('*-min.css');
-
-        $files = $plugin->getRelativeFiles($finder);
-
-        if (empty($files)) {
-            $output->writeln('<error>Failed to find any files to process.</error>');
+        if (!is_dir($pluginDir.'/yui/src')) {
+            $output->writeln('<error>Plugin does not have a yui/src directory to process.</error>');
 
             return 0;
         }
+        if (!is_dir($pluginDir.'/yui/build')) {
+            throw new \RuntimeException('The yui/build directory does not exist, plugin YUI modules need to be re-shifted.');
+        }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>CSSLint on {$plugin->getComponent()}</>");
+        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>Shifter on {$plugin->getComponent()}</>");
 
-        $process = $this->execute->passThrough('csslint '.implode(' ', $files), $plugin->directory);
+        $process = new Process('shifter --walk --lint-stderr --build-dir ../buildci', $pluginDir.'/yui/src');
+        $this->execute->mustRun($process);
 
-        return $process->isSuccessful() ? 0 : 1;
+        if (!is_dir($pluginDir.'/yui/buildci')) {
+            throw new \RuntimeException('Shifter failed to make the yui/buildci directory.');
+        }
+
+        $process = $this->execute->mustRun("diff -r $pluginDir/yui/build $pluginDir/yui/buildci");
+        $out     = trim($process->getOutput());
+
+        $fs = new Filesystem();
+        $fs->remove($pluginDir.'/yui/buildci');
+
+        if ($out !== '') {
+            $output->writeln('<error>The plugin YUI modules need to be re-shifted</error>');
+
+            return 1;
+        }
+
+        $output->writeln('<info>The plugin YUI modules appear to be shifted correctly!</info>');
+
+        return 0;
     }
 }

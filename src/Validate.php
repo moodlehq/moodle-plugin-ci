@@ -1,5 +1,6 @@
 <?php
-/**
+
+/*
  * This file is part of the Moodle Plugin CI package.
  *
  * For the full copyright and license information, please view the LICENSE
@@ -23,6 +24,7 @@ class Validate
      * Validate a directory path.
      *
      * @param string $path
+     *
      * @return string
      */
     public function directory($path)
@@ -42,6 +44,7 @@ class Validate
      * Validate a file path.
      *
      * @param string $path
+     *
      * @return string
      */
     public function filePath($path)
@@ -50,10 +53,26 @@ class Validate
         if ($realPath === false) {
             throw new \InvalidArgumentException(sprintf('Failed to run realpath(\'%s\')', $path));
         }
-        if (!is_file($realPath) and !is_dir($realPath)) {
+        if (!is_file($realPath)) {
             throw new \InvalidArgumentException(sprintf('The path is not a directory or a file: %s', $realPath));
         }
 
         return $path;
+    }
+
+    /**
+     * Validate Moodle branch name.
+     *
+     * @param string $branch
+     *
+     * @return string
+     */
+    public function moodleBranch($branch)
+    {
+        if ($branch !== 'master' && preg_match('/^MOODLE_\d\d_STABLE$/', $branch) !== 1) {
+            throw new \InvalidArgumentException(sprintf('Invalid Moodle branch: %s', $branch));
+        }
+
+        return $branch;
     }
 }

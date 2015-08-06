@@ -10,30 +10,21 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge;
-
-use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
+namespace Moodlerooms\MoodlePluginCI\Installer\Database;
 
 /**
- * Must override to avoid using Moodle API.
+ * Postgres Database.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class DummyMoodle extends Moodle
+class PostgresDatabase extends AbstractDatabase
 {
-    public function requireConfig()
-    {
-        // Don't do anything.
-    }
+    public $user = 'postgres';
+    public $type = 'pgsql';
 
-    public function getComponentInstallDirectory($component)
+    public function getCreateDatabaseCommand()
     {
-        return $this->directory.'/local/travis';
-    }
-
-    public function getBehatDataDirectory()
-    {
-        return $this->directory;
+        return sprintf('psql -c %s -U %s', escapeshellarg("CREATE DATABASE $this->name;"), $this->user);
     }
 }

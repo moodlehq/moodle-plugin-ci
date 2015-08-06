@@ -1,5 +1,6 @@
 <?php
-/**
+
+/*
  * This file is part of the Moodle Plugin CI package.
  *
  * For the full copyright and license information, please view the LICENSE
@@ -9,20 +10,22 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge;
-
-use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+namespace Moodlerooms\MoodlePluginCI\Installer\Database;
 
 /**
- * Must override to avoid using Moodle API.
+ * MySQL Database.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class DummyMoodlePlugin extends MoodlePlugin
+class MySQLDatabase extends AbstractDatabase
 {
-    public function getInstallDirectory()
+    public $type = 'mysqli';
+
+    public function getCreateDatabaseCommand()
     {
-        return $this->moodle->pathToMoodle.'/local/travis';
+        $passOpt = !empty($this->pass) ? ' --password='.escapeshellarg($this->pass) : '';
+
+        return sprintf('mysql -u %s%s -e %s', escapeshellarg($this->user), $passOpt, escapeshellarg("CREATE DATABASE $this->name DEFAULT CHARACTER SET UTF8 COLLATE UTF8_bin;"));
     }
 }

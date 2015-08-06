@@ -1,17 +1,18 @@
 language: php
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 php:
  - 5.4
 
 env:
-  # Test both DB backends on latest supported version.
   - MOODLE_BRANCH=MOODLE_29_STABLE DB=pgsql
-  - MOODLE_BRANCH=MOODLE_29_STABLE DB=mysqli
-  # Just test pgsql on older versions.
   - MOODLE_BRANCH=MOODLE_28_STABLE DB=pgsql
-  - MOODLE_BRANCH=MOODLE_27_STABLE DB=pgsql
-
-sudo: false
+  - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli
 
 before_install:
 - composer selfupdate
@@ -21,23 +22,21 @@ install:
   # We do this funny song and dance to mimic how a Moodle plugin would be run.
   - composer install -n
   - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
-  - cd ..
-  - mv $TRAVIS_BUILD_DIR ../helper
-  - export TRAVIS_BUILD_DIR="`pwd`/moodle-local_travis"
-  - cd ..
+  - export PATH="$(cd bin; pwd):$(cd vendor/bin; pwd):$PATH"
+  - export TRAVIS_BUILD_DIR=$(cd ../moodle-local_travis; pwd)
+  - cd ../..
 
-  # Finally, the standard Moodle install step.
-  - helper/bin/phing -f helper/install.xml
+  # Finally, the standard install step.
+  - moodle-plugin-ci install
 
 script:
-  - helper/bin/phpunit -c helper
-  - helper/bin/phing -f helper/script.xml ReportProperties
-  - helper/bin/phing -f helper/script.xml PHPLint
-  - helper/bin/phing -f helper/script.xml PHPCopyPasteDetector
-  - helper/bin/phing -f helper/script.xml PHPMessDetector
-  - helper/bin/phing -f helper/script.xml CodeChecker
-  - helper/bin/phing -f helper/script.xml CSSLint
-  - helper/bin/phing -f helper/script.xml Shifter
-  - helper/bin/phing -f helper/script.xml JSHint
-  - helper/bin/phing -f helper/script.xml PHPUnit
-  - helper/bin/phing -f helper/script.xml Behat
+  - phpunit -c moodlerooms/moodle-plugin-ci
+  - moodle-plugin-ci phplint
+  - moodle-plugin-ci phpcpd
+  - moodle-plugin-ci phpmd
+  - moodle-plugin-ci codechecker
+  - moodle-plugin-ci csslint
+  - moodle-plugin-ci shifter
+  - moodle-plugin-ci jshint
+  - moodle-plugin-ci phpunit
+  - moodle-plugin-ci behat
