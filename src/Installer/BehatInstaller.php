@@ -74,8 +74,6 @@ class BehatInstaller extends AbstractInstaller
         $process = new Process(sprintf('php %s --install', $behatUtility));
         $process->setTimeout(null);
 
-        // TODO: Grep output for debugging or PHP notices/errors.
-
         $this->execute->mustRun($process);
 
         $this->step('Enabling Behat');
