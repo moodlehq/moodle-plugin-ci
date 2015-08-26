@@ -82,16 +82,16 @@ class MoodleInstaller extends AbstractInstaller
         $this->step('Moodle assets');
 
         $this->log('Creating Moodle data directories');
-        $fs = new Filesystem();
-        $fs->mkdir($this->dataDir);
-        $fs->mkdir($this->dataDir.'/phpu_moodledata');
-        $fs->mkdir($this->dataDir.'/behat_moodledata');
+        $filesystem = new Filesystem();
+        $filesystem->mkdir($this->dataDir);
+        $filesystem->mkdir($this->dataDir.'/phpu_moodledata');
+        $filesystem->mkdir($this->dataDir.'/behat_moodledata');
 
         $this->log('Create Moodle database');
         $this->execute->mustRun($this->database->getCreateDatabaseCommand());
 
         $this->log('Creating Moodle\'s config file');
-        $fs->dumpFile($this->moodle->directory.'/config.php', $this->generateConfig($this->expandPath($this->dataDir)));
+        $filesystem->dumpFile($this->moodle->directory.'/config.php', $this->generateConfig($this->expandPath($this->dataDir)));
 
         $this->step('Clone Code Checker');
 

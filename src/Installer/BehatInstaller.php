@@ -45,7 +45,7 @@ class BehatInstaller extends AbstractInstaller
         $this->step('Download Selenium');
 
         $jar     = $this->moodle->directory.'/selenium.jar';
-        $process = new Process("curl -o $jar http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar");
+        $process = new Process(sprintf('curl -o %s http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar', $jar));
         $process->setTimeout(120);
 
         $this->execute->mustRun($process);
@@ -55,13 +55,13 @@ class BehatInstaller extends AbstractInstaller
         $binDir = realpath(__DIR__.'/../../bin');
 
         $this->log('Starting Selenium server');
-        $this->execute->mustRun("$binDir/start-selenium $jar");
+        $this->execute->mustRun(sprintf('%s/start-selenium %s', $binDir, $jar));
 
         $this->log('Starting PhantomJS');
-        $this->execute->mustRun("$binDir/start-phantom-js");
+        $this->execute->mustRun(sprintf('%s/start-phantom-js', $binDir));
 
         $this->log('Starting PHP web server');
-        $this->execute->mustRun(new Process("$binDir/start-web-server", $this->moodle->directory));
+        $this->execute->mustRun(new Process(sprintf('%s/start-web-server', $binDir), $this->moodle->directory));
 
         // Moodle 2.9 or later use this one.
         $behatUtility = $this->moodle->directory.'/admin/tool/behat/cli/util_single_run.php';
@@ -71,7 +71,7 @@ class BehatInstaller extends AbstractInstaller
         }
 
         $this->step('Initialize Behat');
-        $process = new Process("php $behatUtility --install");
+        $process = new Process(sprintf('php %s --install', $behatUtility));
         $process->setTimeout(null);
 
         // TODO: Grep output for debugging or PHP notices/errors.
@@ -79,7 +79,7 @@ class BehatInstaller extends AbstractInstaller
         $this->execute->mustRun($process);
 
         $this->step('Enabling Behat');
-        $process = new Process("php $behatUtility --enable");
+        $process = new Process(sprintf('php %s --enable', $behatUtility));
         $process->setTimeout(null);
 
         $this->execute->mustRun($process);

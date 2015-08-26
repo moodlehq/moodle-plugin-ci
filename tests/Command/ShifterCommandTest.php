@@ -56,7 +56,7 @@ class ShifterCommandTest extends \PHPUnit_Framework_TestCase
 
         $commandTester = new CommandTester($application->find('shifter'));
         $commandTester->execute([
-            'plugin'   => $pluginDir,
+            'plugin' => $pluginDir,
         ]);
 
         return $commandTester;

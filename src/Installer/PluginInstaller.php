@@ -91,8 +91,8 @@ class PluginInstaller extends AbstractInstaller
         $this->log(sprintf('Copying plugin from %s to %s', $this->plugin->directory, $directory), LogLevel::INFO);
 
         // Install the plugin.
-        $fs = new Filesystem();
-        $fs->mirror($this->plugin->directory, $directory);
+        $filesystem = new Filesystem();
+        $filesystem->mirror($this->plugin->directory, $directory);
 
         return $directory;
     }
@@ -125,8 +125,8 @@ class PluginInstaller extends AbstractInstaller
 
         $dump = Yaml::dump($ignores);
 
-        $fs = new Filesystem();
-        $fs->dumpFile($filename, $dump);
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($filename, $dump);
 
         $this->log('Created ignore file at '.$filename);
     }

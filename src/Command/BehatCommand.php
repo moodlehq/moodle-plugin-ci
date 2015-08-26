@@ -80,10 +80,10 @@ class BehatCommand extends Command
             throw new \RuntimeException('Behat config file not found.  Behat must not have been installed.');
         }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>Behat features for {$this->plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>Behat features for %s</>', $this->plugin->getComponent()));
 
         $process = $this->execute->passThrough(
-            "{$this->moodle->directory}/vendor/bin/behat --config $config --tags @{$this->plugin->getComponent()}",
+            sprintf('%s/vendor/bin/behat --config %s --tags @%s', $this->moodle->directory, $config, $this->plugin->getComponent()),
             $this->moodle->directory
         );
 

@@ -58,7 +58,7 @@ class PHPLintCommand extends Command
             return 0;
         }
 
-        $output->writeln("<bg=green;fg=white;options=bold> RUN </> <fg=blue>PHP Lint on {$plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>PHP Lint on %s</>', $plugin->getComponent()));
 
         $settings = new Settings();
         $settings->addPaths($files);

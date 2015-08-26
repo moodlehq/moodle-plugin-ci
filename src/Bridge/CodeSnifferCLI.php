@@ -26,14 +26,14 @@ namespace Moodlerooms\MoodlePluginCI\Bridge;
  */
 class CodeSnifferCLI extends \PHP_CodeSniffer_CLI
 {
-    private $_overrideCommandLineValues = [];
+    private $overrideCommandLineValues = [];
 
     public function __construct($override = [])
     {
         $this->errorSeverity   = 1;
         $this->warningSeverity = 1;
 
-        $this->_overrideCommandLineValues = $override;
+        $this->overrideCommandLineValues = $override;
     }
 
     /**
@@ -45,7 +45,7 @@ class CodeSnifferCLI extends \PHP_CodeSniffer_CLI
     {
         return array_merge(
             $this->getDefaults(),
-            $this->_overrideCommandLineValues
+            $this->overrideCommandLineValues
         );
     }
 }

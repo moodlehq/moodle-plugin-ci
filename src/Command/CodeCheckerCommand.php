@@ -61,10 +61,10 @@ class CodeCheckerCommand extends Command
             return 0;
         }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>Moodle Code Checker on {$plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>Moodle Code Checker on %s</>', $plugin->getComponent()));
 
-        $cs = new \PHP_CodeSniffer();
-        $cs->setCli(new CodeSnifferCLI([
+        $sniffer = new \PHP_CodeSniffer();
+        $sniffer->setCli(new CodeSnifferCLI([
             'reports'      => ['full' => null],
             'colors'       => true,
             'encoding'     => 'utf-8',
@@ -72,8 +72,8 @@ class CodeCheckerCommand extends Command
             'reportWidth'  => 120,
         ]));
 
-        $cs->process($files, $moodleDir.'/local/codechecker/moodle');
-        $results = $cs->reporting->printReport('full', false, $cs->cli->getCommandLineValues(), null, 120);
+        $sniffer->process($files, $moodleDir.'/local/codechecker/moodle');
+        $results = $sniffer->reporting->printReport('full', false, $sniffer->cli->getCommandLineValues(), null, 120);
 
         return $results['errors'] > 0 ? 1 : 0;
     }

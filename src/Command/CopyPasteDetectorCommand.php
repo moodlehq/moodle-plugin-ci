@@ -59,7 +59,7 @@ class CopyPasteDetectorCommand extends Command
             return 0;
         }
 
-        $output->writeln("<bg=green;fg=white;options=bold> RUN </> <fg=blue>PHP Copy/Paste Detector on {$plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>PHP Copy/Paste Detector on %s</>', $plugin->getComponent()));
 
         $detector = new Detector(new DefaultStrategy());
         $clones   = $detector->copyPasteDetection($files);

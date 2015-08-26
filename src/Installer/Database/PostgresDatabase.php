@@ -25,6 +25,9 @@ class PostgresDatabase extends AbstractDatabase
 
     public function getCreateDatabaseCommand()
     {
-        return sprintf('psql -c %s -U %s', escapeshellarg("CREATE DATABASE $this->name;"), $this->user);
+        $user     = escapeshellarg($this->user);
+        $createDB = escapeshellarg(sprintf('CREATE DATABASE %s;', $this->name));
+
+        return sprintf('psql -c %s -U %s', $createDB, $user);
     }
 }

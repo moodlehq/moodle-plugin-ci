@@ -74,7 +74,7 @@ class MoodlePlugin
     {
         $file = $this->directory.'/'.$relativePath;
         if (!file_exists($file)) {
-            throw new \RuntimeException("Failed to find the plugin's '$relativePath' file.");
+            throw new \RuntimeException(sprintf('Failed to find the plugin\'s \'%s\' file.', $relativePath));
         }
 
         return file_get_contents($file);
@@ -95,10 +95,15 @@ class MoodlePlugin
         $parser = new Parser(new Lexer());
 
         try {
-            return $parser->parse($this->loadFile($relativePath));
+            $statements = $parser->parse($this->loadFile($relativePath));
         } catch (Error $e) {
-            throw new \RuntimeException("Failed to parse $relativePath file due to parse error: {$e->getMessage()}", 0, $e);
+            throw new \RuntimeException(sprintf('Failed to parse %s file due to parse error: %s', $relativePath, $e->getMessage()), 0, $e);
         }
+        if ($statements === null) {
+            throw new \RuntimeException(sprintf('Failed to parse %s', $relativePath));
+        }
+
+        return $statements;
     }
 
     /**
@@ -116,10 +121,6 @@ class MoodlePlugin
         }
 
         $statements = $this->parseFile('version.php');
-
-        // We are looking for statements that look like this:
-        // $plugin->component = 'local_travis';
-        // $module->component = 'local_travis';
         foreach ($statements as $statement) {
             // Looking for an assignment statement.
             if ($statement instanceof Assign) {

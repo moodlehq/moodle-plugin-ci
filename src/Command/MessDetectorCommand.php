@@ -67,7 +67,7 @@ class MessDetectorCommand extends Command
             return 0;
         }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>PHP Mess Detector on {$plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>PHP Mess Detector on %s</>', $plugin->getComponent()));
 
         $renderer = new MessDetectorRenderer($output, $moodleDir);
         $renderer->setWriter(new StreamWriter(STDOUT));
@@ -75,8 +75,8 @@ class MessDetectorCommand extends Command
         $ruleSetFactory = new RuleSetFactory();
         $ruleSetFactory->setMinimumPriority(5);
 
-        $md = new PHPMD();
-        $md->processFiles(implode(',', $files), $rules, [$renderer], $ruleSetFactory);
+        $messDetector = new PHPMD();
+        $messDetector->processFiles(implode(',', $files), $rules, [$renderer], $ruleSetFactory);
 
         return 0;
     }

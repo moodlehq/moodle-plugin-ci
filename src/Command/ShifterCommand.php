@@ -66,7 +66,7 @@ class ShifterCommand extends Command
             throw new \RuntimeException('The yui/build directory does not exist, plugin YUI modules need to be re-shifted.');
         }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>Shifter on {$plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>Shifter on %s</>', $plugin->getComponent()));
 
         $process = new Process('shifter --walk --lint-stderr --build-dir ../buildci', $pluginDir.'/yui/src');
         $this->execute->mustRun($process);
@@ -75,11 +75,11 @@ class ShifterCommand extends Command
             throw new \RuntimeException('Shifter failed to make the yui/buildci directory.');
         }
 
-        $process = $this->execute->mustRun("diff -r $pluginDir/yui/build $pluginDir/yui/buildci");
+        $process = $this->execute->mustRun(sprintf('diff -r %1$s/yui/build %1$s/yui/buildci', $pluginDir));
         $out     = trim($process->getOutput());
 
-        $fs = new Filesystem();
-        $fs->remove($pluginDir.'/yui/buildci');
+        $filesystem = new Filesystem();
+        $filesystem->remove($pluginDir.'/yui/buildci');
 
         if ($out !== '') {
             $output->writeln('<error>The plugin YUI modules need to be re-shifted</error>');

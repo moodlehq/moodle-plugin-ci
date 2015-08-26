@@ -58,13 +58,19 @@ class DatabaseResolver
      */
     private function resolveDatabaseType($type)
     {
-        /* @var AbstractDatabase[] $databases */
-        $databases = [new MySQLDatabase(), new PostgresDatabase()];
-        foreach ($databases as $database) {
+        foreach ($this->getDatabases() as $database) {
             if ($database->type === $type) {
                 return $database;
             }
         }
         throw new \DomainException(sprintf('Unknown database type (%s). Please use mysqli or pgsql.', $type));
+    }
+
+    /**
+     * @return AbstractDatabase[]
+     */
+    private function getDatabases()
+    {
+        return [new MySQLDatabase(), new PostgresDatabase()];
     }
 }

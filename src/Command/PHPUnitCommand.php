@@ -63,10 +63,11 @@ class PHPUnitCommand extends Command
             throw new \InvalidArgumentException('The plugin does not have any PHPUnit tests to run: '.$pluginDir);
         }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>PHPUnit tests for {$plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>PHPUnit tests for %s</>', $plugin->getComponent()));
 
         $process = $this->execute->passThrough(
-            "$moodleDir/vendor/bin/phpunit --testsuite {$plugin->getComponent()}_testsuite", $moodleDir
+            sprintf('%s/vendor/bin/phpunit --testsuite %s_testsuite', $moodleDir, $plugin->getComponent()),
+            $moodleDir
         );
 
         return $process->isSuccessful() ? 0 : 1;

@@ -64,7 +64,8 @@ class MessDetectorRenderer extends AbstractRenderer
             $groupByFile[$error->getFile()][] = $error;
         }
         foreach ($groupByFile as $file => $problems) {
-            $violationCount = $errorCount = 0;
+            $violationCount = 0;
+            $errorCount     = 0;
 
             $table = new Table($this->output);
             $table->setStyle('borderless');

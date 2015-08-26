@@ -107,10 +107,10 @@ class Installer
         }
         $content = '';
         foreach ($variables as $name => $value) {
-            $content .= "$name=$value\n";
+            $content .= sprintf('%s=%s', $name, $value).PHP_EOL;
         }
 
-        $fs = new Filesystem();
-        $fs->dumpFile('~/.env-travis', $content);
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile('~/.env-travis', $content);
     }
 }

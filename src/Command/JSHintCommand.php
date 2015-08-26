@@ -67,7 +67,7 @@ class JSHintCommand extends Command
             return 0;
         }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>JSHint on {$plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>JSHint on %s</>', $plugin->getComponent()));
 
         $process = $this->execute->passThrough('jshint '.implode(' ', $files), $plugin->directory);
 

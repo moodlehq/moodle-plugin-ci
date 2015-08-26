@@ -67,7 +67,7 @@ class CSSLintCommand extends Command
             return 0;
         }
 
-        $output->writeln("<bg=green;fg=white;> RUN </> <fg=blue>CSSLint on {$plugin->getComponent()}</>");
+        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>CSSLint on %s</>', $plugin->getComponent()));
 
         $process = $this->execute->passThrough('csslint '.implode(' ', $files), $plugin->directory);
 
