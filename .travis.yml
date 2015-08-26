@@ -24,13 +24,12 @@ install:
   - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
   - export PATH="$(cd bin; pwd):$(cd vendor/bin; pwd):$PATH"
   - export TRAVIS_BUILD_DIR=$(cd ../moodle-local_travis; pwd)
-  - cd ../..
 
   # Finally, the standard install step.
   - moodle-plugin-ci install
 
 script:
-  - phpunit -c moodlerooms/moodle-plugin-ci --coverage-clover coverage.clover
+  - phpunit --coverage-clover coverage.clover
   - moodle-plugin-ci phplint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
