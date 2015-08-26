@@ -55,13 +55,13 @@ class BehatInstaller extends AbstractInstaller
         $binDir = realpath(__DIR__.'/../../bin');
 
         $this->log('Starting Selenium server');
-        $this->execute->mustRun("$binDir/start_selenium $jar");
+        $this->execute->mustRun("$binDir/start-selenium $jar");
 
         $this->log('Starting PhantomJS');
-        $this->execute->mustRun("$binDir/start_phantomjs");
+        $this->execute->mustRun("$binDir/start-phantom-js");
 
-        $this->log('Starting PHP server');
-        $this->execute->mustRun(new Process("$binDir/start_phpserver", $this->moodle->directory));
+        $this->log('Starting PHP web server');
+        $this->execute->mustRun(new Process("$binDir/start-web-server", $this->moodle->directory));
 
         // Moodle 2.9 or later use this one.
         $behatUtility = $this->moodle->directory.'/admin/tool/behat/cli/util_single_run.php';
