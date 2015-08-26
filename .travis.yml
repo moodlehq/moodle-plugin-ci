@@ -30,7 +30,7 @@ install:
   - moodle-plugin-ci install
 
 script:
-  - phpunit -c moodlerooms/moodle-plugin-ci
+  - phpunit -c moodlerooms/moodle-plugin-ci --coverage-clover coverage.clover
   - moodle-plugin-ci phplint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
@@ -40,3 +40,6 @@ script:
   - moodle-plugin-ci jshint
   - moodle-plugin-ci phpunit
   - moodle-plugin-ci behat
+
+after_success:
+  - ocular code-coverage:upload --format=php-clover coverage.clover

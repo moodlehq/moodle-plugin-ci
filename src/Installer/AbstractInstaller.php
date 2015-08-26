@@ -49,7 +49,7 @@ abstract class AbstractInstaller
     private $actualSteps = 0;
 
     /**
-     * @param ProgressBar $progressBar|null
+     * @param ProgressBar|null $progressBar
      */
     public function setProgressBar(ProgressBar $progressBar = null)
     {

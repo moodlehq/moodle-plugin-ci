@@ -123,7 +123,7 @@ class MoodlePlugin
         foreach ($statements as $statement) {
             // Looking for an assignment statement.
             if ($statement instanceof Assign) {
-                $variable   = $statement->var;  // Left side of equals.
+                $variable   = $statement->var; // Left side of equals.
                 $expression = $statement->expr; // Right side of equals.
 
                 // Looking for "$anything->component" being set to a string.

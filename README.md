@@ -15,6 +15,8 @@ Supported tests and code analysis tools:
 * [Shifter](https://docs.moodle.org/dev/YUI/Shifter)
 
 [![Build Status](https://travis-ci.org/moodlerooms/moodle-plugin-ci.svg?branch=master)](https://travis-ci.org/moodlerooms/moodle-plugin-ci)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/moodlerooms/moodle-plugin-ci/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/moodlerooms/moodle-plugin-ci/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/moodlerooms/moodle-plugin-ci/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/moodlerooms/moodle-plugin-ci/?branch=master)
 
 # Requirements
 **PHP 5.4** or later and **Moodle 2.7** or later.
