@@ -14,13 +14,11 @@ env:
   - MOODLE_BRANCH=MOODLE_28_STABLE DB=pgsql
   - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli
 
-before_install:
-- composer selfupdate
-- composer config -g github-oauth.github.com $GITHUB_API_TOKEN
-
 install:
-  # We do this funny song and dance to mimic how a Moodle plugin would be run.
+  - composer selfupdate
   - composer install -n
+
+  # Mimic how a Moodle plugin would be run.
   - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
   - export PATH="$(cd bin; pwd):$(cd vendor/bin; pwd):$PATH"
   - export TRAVIS_BUILD_DIR=$(cd ../moodle-local_travis; pwd)
@@ -30,6 +28,8 @@ install:
 
 script:
   - phpunit --coverage-clover coverage.clover
+
+  # This is basically "integration" testing.
   - moodle-plugin-ci phplint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
@@ -40,5 +40,5 @@ script:
   - moodle-plugin-ci phpunit
   - moodle-plugin-ci behat
 
-after_success:
+after_script:
   - ocular code-coverage:upload --format=php-clover coverage.clover

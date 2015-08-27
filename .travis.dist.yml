@@ -25,7 +25,6 @@ env:
 
 before_install:
   - composer selfupdate
-  - composer config -g github-oauth.github.com $GITHUB_API_TOKEN
   - composer global require -n --update-no-dev moodlerooms/moodle-plugin-ci:dev-master
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - cd ../..

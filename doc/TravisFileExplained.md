@@ -46,10 +46,7 @@ env:
 before_install:
 # Update Composer.
   - composer selfupdate
-# This configures Composer with your GitHub access token if you configured that in
-# Travis CI.  If you didn't configure this, then it can be removed.
-  - composer config -g github-oauth.github.com $GITHUB_API_TOKEN
-# Globally install this project. 
+# Globally install this project.
   - composer global require -n --update-no-dev moodlerooms/moodle-plugin-ci:dev-master
 # Add Composer's global bin directory to the $PATH so we can use scripts from this project.
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
