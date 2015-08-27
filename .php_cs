@@ -14,7 +14,9 @@
 /** @noinspection PhpUndefinedNamespaceInspection */
 $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->exclude('tests/Fixture')
-    ->name('moodle-plugin-ci') // This covers bin/moodle-plugin-ci.
+    ->exclude('moodle')
+    ->exclude('moodledata')
+    ->name('moodle-plugin-ci')
     ->in(__DIR__);
 
 /** @noinspection PhpUndefinedClassInspection */

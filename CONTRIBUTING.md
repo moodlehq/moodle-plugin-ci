@@ -15,22 +15,18 @@ command in debug mode by using the `-vvv` option. EG: `moodle-plugin-ci install 
 
 # Contributing policy
 
-Fork the project, create a feature branch, and send us a pull request.
+Fork the project, create a feature branch, and send us a pull request.  Prior to submitting the pull request,
+please ensure that these commands are ran successfully:
+
+``` bash
+$ composer fix
+$ composer lint
+$ composer test
+```
 
 Ways to improve your chances of getting your contribution accepted:
-* Run [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to correct any style issues.  EG: `php-cs-fixer fix`
 * Add tests when adding a new feature or fixing a bug.
 * Only one pull request per feature or fix.
 * Send coherent history by making sure each individual commit in your pull request is meaningful. Use interactive
   rebase to squash intermediate commits.
 * Ensure that [read me](README.md), [change log](CHANGELOG.md) and [other docs](doc) are updated as needed.
-* Ensure tests pass (see below).
-
-# Testing
-
-If contributing, please ensure these pass before submitting a pull request.
-
-``` bash
-$ ./vendor/bin/parallel-lint src tests
-$ ./vendor/bin/phpunit
-```

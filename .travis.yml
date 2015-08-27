@@ -27,7 +27,9 @@ install:
   - moodle-plugin-ci install
 
 script:
+  - composer lint
   - phpunit --coverage-clover coverage.clover
+  - php-cs-fixer --dry-run -v fix
 
   # This is basically "integration" testing.
   - moodle-plugin-ci phplint

@@ -30,7 +30,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "4.7.*",
-    "scrutinizer/ocular": "^1.1"
+    "scrutinizer/ocular": "^1.1",
+    "fabpot/php-cs-fixer": "^1.10"
   },
   "autoload": {
     "psr-4": {
@@ -44,5 +45,10 @@
   },
   "bin": [
     "bin/moodle-plugin-ci"
-  ]
+  ],
+  "scripts": {
+    "test": "phpunit",
+    "lint": "parallel-lint src tests bin/moodle-plugin-ci",
+    "fix": "php-cs-fixer fix -v"
+  }
 }
