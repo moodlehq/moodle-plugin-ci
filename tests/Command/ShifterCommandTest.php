@@ -68,15 +68,15 @@ class ShifterCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testExecuteNoSource()
     {
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/yui/src');
 
-        $commandTester = $this->executeCommand();
-
-        $this->assertEquals(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/Plugin does not have a yui\/src directory to process/', $commandTester->getDisplay());
+        $this->executeCommand();
     }
 
     /**

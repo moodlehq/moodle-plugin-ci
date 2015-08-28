@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\JSHintCommand;
+use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -37,6 +38,7 @@ class JSHintCommandTest extends \PHPUnit_Framework_TestCase
         }
 
         $command          = new JSHintCommand();
+        $command->plugin  = new DummyMoodlePlugin($pluginDir);
         $command->execute = new DummyExecute();
 
         $application = new Application();
@@ -56,13 +58,13 @@ class JSHintCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testExecuteNoFiles()
     {
         // Just random directory with no JS files.
-        $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
-
-        $this->assertEquals(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/Failed to find any files to process/', $commandTester->getDisplay());
+        $this->executeCommand($this->pluginDir.'/tests/behat');
     }
 
     /**

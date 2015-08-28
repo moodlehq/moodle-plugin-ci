@@ -12,45 +12,43 @@
 
 namespace Moodlerooms\MoodlePluginCI\Command;
 
+use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
+use Moodlerooms\MoodlePluginCI\Validate;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Run PHPUnit tests.
+ * Abstract Moodle Command.
+ *
+ * This command interacts with Moodle and a plugin.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class PHPUnitCommand extends AbstractMoodleCommand
+abstract class AbstractMoodleCommand extends AbstractPluginCommand
 {
-    use ExecuteTrait;
+    /**
+     * @var Moodle
+     */
+    public $moodle;
 
     protected function configure()
     {
         parent::configure();
 
-        $this->setName('phpunit')
-            ->setDescription('Run PHPUnit on a plugin');
+        $moodle = getenv('MOODLE_DIR') !== false ? getenv('MOODLE_DIR') : '.';
+        $this->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', $moodle);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
-        $this->initializeExecute($output, $this->getHelper('process'));
-    }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->outputHeading($output, 'PHPUnit tests for %s');
-
-        if (!$this->plugin->hasUnitTests()) {
-            throw new \InvalidArgumentException('No PHPUnit tests found in plugin: '.$this->plugin->directory);
+        if (!$this->moodle) {
+            $validate     = new Validate();
+            $moodleDir    = realpath($validate->directory($input->getOption('moodle')));
+            $this->moodle = new Moodle($moodleDir);
         }
-        $process = $this->execute->passThrough(
-            sprintf('%s/vendor/bin/phpunit --testsuite %s_testsuite', $this->moodle->directory, $this->plugin->getComponent()),
-            $this->moodle->directory
-        );
-
-        return $process->isSuccessful() ? 0 : 1;
     }
 }

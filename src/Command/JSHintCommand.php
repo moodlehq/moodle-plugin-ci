@@ -12,11 +12,6 @@
 
 namespace Moodlerooms\MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
-use Moodlerooms\MoodlePluginCI\Process\Execute;
-use Moodlerooms\MoodlePluginCI\Validate;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
@@ -27,49 +22,33 @@ use Symfony\Component\Finder\Finder;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class JSHintCommand extends Command
+class JSHintCommand extends AbstractPluginCommand
 {
-    /**
-     * @var Execute
-     */
-    public $execute;
+    use ExecuteTrait;
 
     protected function configure()
     {
-        // Install Command sets this in Travis CI.
-        $plugin = getenv('PLUGIN_DIR') !== false ? getenv('PLUGIN_DIR') : null;
-        $mode   = getenv('PLUGIN_DIR') !== false ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
+        parent::configure();
 
         $this->setName('jshint')
-            ->setDescription('Run JSHint on a plugin')
-            ->addArgument('plugin', $mode, 'Path to the plugin', $plugin);
+            ->setDescription('Run JSHint on a plugin');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->execute = $this->execute ?: new Execute($output, $this->getHelper('process'));
+        parent::initialize($input, $output);
+        $this->initializeExecute($output, $this->getHelper('process'));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $validate  = new Validate();
-        $pluginDir = realpath($validate->directory($input->getArgument('plugin')));
-        $plugin    = new MoodlePlugin($pluginDir);
+        $this->outputHeading($output, 'JSHint on %s');
 
-        $finder = new Finder();
-        $finder->name('*.js')->notName('*-min.js')->notPath('yui/build');
+        $files = $this->plugin->getRelativeFiles(
+            Finder::create()->name('*.js')->notName('*-min.js')->notPath('yui/build')
+        );
 
-        $files = $plugin->getRelativeFiles($finder);
-
-        if (empty($files)) {
-            $output->writeln('<error>Failed to find any files to process.</error>');
-
-            return 0;
-        }
-
-        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>JSHint on %s</>', $plugin->getComponent()));
-
-        $process = $this->execute->passThrough('jshint '.implode(' ', $files), $plugin->directory);
+        $process = $this->execute->passThrough('jshint '.implode(' ', $files), $this->plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;
     }

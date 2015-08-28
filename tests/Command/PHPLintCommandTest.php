@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
+use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -35,7 +36,8 @@ class PHPLintCommandTest extends \PHPUnit_Framework_TestCase
             $pluginDir = $this->pluginDir;
         }
 
-        $command = new PHPLintCommand();
+        $command         = new PHPLintCommand();
+        $command->plugin = new DummyMoodlePlugin($pluginDir);
 
         $application = new Application();
         $application->add($command);
@@ -57,13 +59,13 @@ class PHPLintCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testExecuteNoFiles()
     {
         // Just random directory with no PHP files.
-        $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
-
-        $this->assertEquals(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/Failed to find any files to process/', $commandTester->getDisplay());
+        $this->executeCommand($this->pluginDir.'/tests/behat');
     }
 
     /**

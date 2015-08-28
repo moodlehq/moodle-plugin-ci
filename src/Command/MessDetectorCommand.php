@@ -13,13 +13,10 @@
 namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MessDetectorRenderer;
-use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Validate;
 use PHPMD\PHPMD;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,45 +28,28 @@ use Symfony\Component\Finder\Finder;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class MessDetectorCommand extends Command
+class MessDetectorCommand extends AbstractMoodleCommand
 {
     protected function configure()
     {
-        // Install Command sets these in Travis CI.
-        $plugin = getenv('PLUGIN_DIR') !== false ? getenv('PLUGIN_DIR') : null;
-        $mode   = getenv('PLUGIN_DIR') !== false ? InputArgument::OPTIONAL : InputArgument::REQUIRED;
-        $moodle = getenv('MOODLE_DIR') !== false ? getenv('MOODLE_DIR') : '.';
-        $rules  = realpath(__DIR__.'/../../res/config/phpmd.xml');
+        parent::configure();
+
+        $rules = realpath(__DIR__.'/../../res/config/phpmd.xml');
 
         $this->setName('phpmd')
             ->setDescription('Run PHP Mess Detector on a plugin')
-            ->addArgument('plugin', $mode, 'Path to the plugin', $plugin)
-            ->addOption('rules', 'r', InputOption::VALUE_OPTIONAL, 'Path to PHP Mess Detector rule set', $rules)
-            ->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', $moodle);
+            ->addOption('rules', 'r', InputOption::VALUE_OPTIONAL, 'Path to PHP Mess Detector rule set', $rules);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $validate  = new Validate();
-        $pluginDir = realpath($validate->directory($input->getArgument('plugin')));
-        $moodleDir = realpath($validate->directory($input->getOption('moodle')));
-        $rules     = realpath($validate->filePath($input->getOption('rules')));
-        $plugin    = new MoodlePlugin($pluginDir);
+        $this->outputHeading($output, 'PHP Mess Detector on %s');
 
-        $finder = new Finder();
-        $finder->name('*.php');
+        $validate = new Validate();
+        $rules    = realpath($validate->filePath($input->getOption('rules')));
+        $files    = $this->plugin->getFiles(Finder::create()->name('*.php'));
 
-        $files = $plugin->getFiles($finder);
-
-        if (empty($files)) {
-            $output->writeln('<error>Failed to find any files to process.</error>');
-
-            return 0;
-        }
-
-        $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>PHP Mess Detector on %s</>', $plugin->getComponent()));
-
-        $renderer = new MessDetectorRenderer($output, $moodleDir);
+        $renderer = new MessDetectorRenderer($output, $this->moodle->directory);
         $renderer->setWriter(new StreamWriter(STDOUT));
 
         $ruleSetFactory = new RuleSetFactory();

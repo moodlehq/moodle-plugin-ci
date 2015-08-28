@@ -86,7 +86,7 @@ class Execute
     public function passThroughProcess(Process $process)
     {
         if (OutputInterface::VERBOSITY_VERY_VERBOSE <= $this->output->getVerbosity()) {
-            $this->output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>%s</>', $process->getCommandLine()));
+            $this->output->writeln(sprintf('<bg=blue;fg=white;> RUN </> <fg=blue>%s</>', $process->getCommandLine()));
         }
         $process->run(function ($type, $buffer) {
             $this->output->write($buffer);
