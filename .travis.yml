@@ -28,8 +28,8 @@ install:
 
 script:
   - composer lint
-  - phpunit --coverage-clover coverage.clover
   - php-cs-fixer --dry-run -v fix
+  - phpunit --coverage-clover coverage.clover
 
   # This is basically "integration" testing.
   - moodle-plugin-ci phplint
