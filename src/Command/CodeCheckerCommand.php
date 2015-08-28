@@ -14,6 +14,7 @@ namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Moodlerooms\MoodlePluginCI\Bridge\CodeSnifferCLI;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
@@ -32,7 +33,8 @@ class CodeCheckerCommand extends AbstractMoodleCommand
         parent::configure();
 
         $this->setName('codechecker')
-            ->setDescription('Run Moodle Code Checker on a plugin');
+            ->setDescription('Run Moodle Code Checker on a plugin')
+            ->addOption('standard', 's', InputOption::VALUE_OPTIONAL, 'The name or path of the coding standard to use');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -45,7 +47,8 @@ class CodeCheckerCommand extends AbstractMoodleCommand
     {
         $this->outputHeading($output, 'Moodle Code Checker on %s');
 
-        $files = $this->plugin->getFiles(
+        $standard = $input->getOption('standard') ?: $this->moodle->directory.'/local/codechecker/moodle';
+        $files    = $this->plugin->getFiles(
             Finder::create()->notPath('yui/build')->name('*.php')->name('*.js')->notName('*-min.js')
         );
 
@@ -58,7 +61,7 @@ class CodeCheckerCommand extends AbstractMoodleCommand
             'reportWidth'  => 120,
         ]));
 
-        $sniffer->process($files, $this->moodle->directory.'/local/codechecker/moodle');
+        $sniffer->process($files, $standard);
         $results = $sniffer->reporting->printReport('full', false, $sniffer->cli->getCommandLineValues(), null, 120);
 
         return $results['errors'] > 0 ? 1 : 0;

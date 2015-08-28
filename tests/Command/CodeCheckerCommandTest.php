@@ -12,7 +12,7 @@
 
 namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
-use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
+use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -21,7 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class PHPLintCommandTest extends \PHPUnit_Framework_TestCase
+class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
 {
     private $pluginDir;
 
@@ -36,15 +36,16 @@ class PHPLintCommandTest extends \PHPUnit_Framework_TestCase
             $pluginDir = $this->pluginDir;
         }
 
-        $command         = new PHPLintCommand();
+        $command         = new CodeCheckerCommand();
         $command->plugin = new DummyMoodlePlugin($pluginDir);
 
         $application = new Application();
         $application->add($command);
 
-        $commandTester = new CommandTester($application->find('phplint'));
+        $commandTester = new CommandTester($application->find('codechecker'));
         $commandTester->execute([
-            'plugin' => $pluginDir,
+            'plugin'     => $pluginDir,
+            '--standard' => realpath(__DIR__.'/../Fixture/ruleset.xml'),
         ]);
 
         return $commandTester;
@@ -52,9 +53,8 @@ class PHPLintCommandTest extends \PHPUnit_Framework_TestCase
 
     public function testExecute()
     {
-        $this->expectOutputRegex('/No syntax error found/');
+        $this->expectOutputRegex('/\.+/');
         $commandTester = $this->executeCommand();
-
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 

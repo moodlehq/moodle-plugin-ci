@@ -91,6 +91,17 @@ class ShifterCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \RuntimeException
+     */
+    public function testExecuteShifterFail()
+    {
+        $fs = new Filesystem();
+        $fs->remove($this->pluginDir.'/yui/buildci');
+
+        $this->executeCommand();
+    }
+
+    /**
      * @expectedException \InvalidArgumentException
      */
     public function testExecuteNoPlugin()

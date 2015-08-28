@@ -34,6 +34,15 @@ class DatabaseResolverTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \DomainException
+     */
+    public function testTypeError()
+    {
+        $resolver = new DatabaseResolver();
+        $resolver->resolveDatabase('foo');
+    }
+
     public function testOptions()
     {
         $resolver = new DatabaseResolver();
