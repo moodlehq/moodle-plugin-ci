@@ -21,6 +21,21 @@ namespace Moodlerooms\MoodlePluginCI;
 class Validate
 {
     /**
+     * @param string $path
+     *
+     * @return string
+     */
+    private function realPath($path)
+    {
+        $result = realpath($path);
+        if ($result === false) {
+            throw new \InvalidArgumentException(sprintf('Failed to run realpath(\'%s\')', $path));
+        }
+
+        return $result;
+    }
+
+    /**
      * Validate a directory path.
      *
      * @param string $path
@@ -29,12 +44,9 @@ class Validate
      */
     public function directory($path)
     {
-        $dir = realpath($path);
-        if ($dir === false) {
-            throw new \InvalidArgumentException(sprintf('Failed to run realpath(\'%s\')', $path));
-        }
-        if (is_file($dir)) {
-            throw new \InvalidArgumentException(sprintf('The directory path is a file path: %s', $dir));
+        $dir = $this->realPath($path);
+        if (!is_dir($dir)) {
+            throw new \InvalidArgumentException(sprintf('The path is not a directory: %s', $dir));
         }
 
         return $path;
@@ -49,12 +61,9 @@ class Validate
      */
     public function filePath($path)
     {
-        $realPath = realpath($path);
-        if ($realPath === false) {
-            throw new \InvalidArgumentException(sprintf('Failed to run realpath(\'%s\')', $path));
-        }
-        if (!is_file($realPath)) {
-            throw new \InvalidArgumentException(sprintf('The path is not a directory or a file: %s', $realPath));
+        $file = $this->realPath($path);
+        if (!is_file($file)) {
+            throw new \InvalidArgumentException(sprintf('The path is not a file: %s', $file));
         }
 
         return $path;
