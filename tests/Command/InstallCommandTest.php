@@ -13,6 +13,10 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\InstallCommand;
+use Moodlerooms\MoodlePluginCI\Tests\Fake\Installer\DummyInstall;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -20,9 +24,55 @@ use Moodlerooms\MoodlePluginCI\Command\InstallCommand;
  */
 class InstallCommandTest extends \PHPUnit_Framework_TestCase
 {
+    private $tempDir;
+    private $pluginDir;
+
+    protected function setUp()
+    {
+        $this->tempDir   = sys_get_temp_dir().'/moodle-plugin-ci/InstallCommandTest'.time();
+        $this->pluginDir = $this->tempDir.'/plugin';
+
+        $fs = new Filesystem();
+        $fs->mkdir($this->tempDir);
+        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
+    }
+
+    protected function tearDown()
+    {
+        $fs = new Filesystem();
+        $fs->remove($this->tempDir);
+    }
+
+    protected function executeCommand()
+    {
+        $command          = new InstallCommand();
+        $command->install = new DummyInstall();
+
+        $application = new Application();
+        $application->add($command);
+
+        $commandTester = new CommandTester($application->find('install'));
+        $commandTester->execute([
+            '--moodle'  => $this->tempDir.'/moodle',
+            '--plugin'  => $this->pluginDir,
+            '--data'    => $this->tempDir.'/moodledata',
+            '--branch'  => 'MOODLE_29_STABLE',
+            '--db-type' => 'mysqli',
+        ]);
+
+        return $commandTester;
+    }
+
+    public function testExecute()
+    {
+        $commandTester = $this->executeCommand();
+        $this->assertEquals(0, $commandTester->getStatusCode());
+    }
+
     /**
      * @param string $value
      * @param array  $expected
+     *
      * @dataProvider csvToArrayProvider
      */
     public function testCsvToArray($value, array $expected)

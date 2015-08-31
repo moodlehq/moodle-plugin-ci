@@ -14,15 +14,14 @@ namespace Moodlerooms\MoodlePluginCI\Installer;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Installer.
+ * Installer collection.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class Installer
+class InstallerCollection
 {
     /**
      * @var AbstractInstaller[]
@@ -32,12 +31,12 @@ class Installer
     /**
      * @var LoggerInterface
      */
-    private $logger;
+    public $logger;
 
     /**
-     * @var ProgressBar
+     * @var ProgressBar|null
      */
-    private $progressBar;
+    public $progressBar;
 
     /**
      * Total number of steps from all the added installers.
@@ -61,7 +60,7 @@ class Installer
      *
      * @param AbstractInstaller $installer
      */
-    public function addInstaller(AbstractInstaller $installer)
+    public function add(AbstractInstaller $installer)
     {
         $installer->setLogger($this->logger);
         $installer->setProgressBar($this->progressBar);
@@ -72,45 +71,35 @@ class Installer
     }
 
     /**
-     * Run the entire install process.
+     * @return AbstractInstaller[]
      */
-    public function runInstallation()
+    public function all()
     {
-        $this->logger->info('Starting install');
-
-        if ($this->progressBar instanceof ProgressBar) {
-            $this->progressBar->setMessage('Starting install');
-            $this->progressBar->start($this->totalSteps + 1);
-        }
-
-        foreach ($this->installers as $installer) {
-            $installer->install();
-        }
-        $this->writeEnvFile();
-
-        $this->logger->info('Install completed');
-
-        if ($this->progressBar instanceof ProgressBar) {
-            $this->progressBar->setMessage('Install completed');
-            $this->progressBar->finish();
-        }
+        return $this->installers;
     }
 
     /**
-     * After installers run, write their environment variables to a file.
+     * Merge the environment variables from all installers.
+     *
+     * @return array
      */
-    public function writeEnvFile()
+    public function mergeEnv()
     {
-        $variables = [];
+        $env = [];
         foreach ($this->installers as $installer) {
-            $variables = array_merge($variables, $installer->env);
-        }
-        $content = '';
-        foreach ($variables as $name => $value) {
-            $content .= sprintf('%s=%s', $name, $value).PHP_EOL;
+            $env = array_merge($env, $installer->env);
         }
 
-        $filesystem = new Filesystem();
-        $filesystem->dumpFile('~/.env-travis', $content);
+        return $env;
+    }
+
+    /**
+     * Get the total number of steps from all installers.
+     *
+     * @return int
+     */
+    public function totalSteps()
+    {
+        return $this->totalSteps;
     }
 }

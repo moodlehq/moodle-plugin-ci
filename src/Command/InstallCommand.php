@@ -14,15 +14,11 @@ namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
-use Moodlerooms\MoodlePluginCI\Installer\BehatInstaller;
-use Moodlerooms\MoodlePluginCI\Installer\ComposerInstaller;
 use Moodlerooms\MoodlePluginCI\Installer\Database\DatabaseResolver;
-use Moodlerooms\MoodlePluginCI\Installer\Installer;
-use Moodlerooms\MoodlePluginCI\Installer\JSInstaller;
-use Moodlerooms\MoodlePluginCI\Installer\MoodleInstaller;
-use Moodlerooms\MoodlePluginCI\Installer\PHPUnitInstaller;
-use Moodlerooms\MoodlePluginCI\Installer\PluginInstaller;
-use Moodlerooms\MoodlePluginCI\Process\Execute;
+use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
+use Moodlerooms\MoodlePluginCI\Installer\Install;
+use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
+use Moodlerooms\MoodlePluginCI\Installer\InstallerFactory;
 use Moodlerooms\MoodlePluginCI\Validate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -39,6 +35,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InstallCommand extends Command
 {
+    use ExecuteTrait;
+
+    /**
+     * @var Install
+     */
+    public $install;
+
+    /**
+     * @var InstallerFactory
+     */
+    public $factory;
+
     protected function configure()
     {
         // Travis CI configures some things by environment variables, default to those if available.
@@ -64,16 +72,16 @@ class InstallCommand extends Command
             ->addOption('not-names', null, InputOption::VALUE_OPTIONAL, 'CSV of file names to exclude', $names);
     }
 
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->initializeExecute($output, $this->getHelper('process'));
+
+        $this->install = $this->install ?: new Install();
+        $this->factory = $this->factory ?: $this->initializeInstallerFactory($input);
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $validate  = new Validate();
-        $moodleDir = $input->getOption('moodle');
-        $dataDir   = $input->getOption('data');
-        $branch    = $validate->moodleBranch($input->getOption('branch'));
-        $pluginDir = realpath($validate->directory($input->getOption('plugin')));
-        $notPaths  = $this->csvToArray($input->getOption('not-paths'));
-        $notNames  = $this->csvToArray($input->getOption('not-names'));
-
         $progressBar = null;
         if ($output->getVerbosity() < OutputInterface::VERBOSITY_VERY_VERBOSE) {
             // Low verbosity, use progress bar.
@@ -81,13 +89,38 @@ class InstallCommand extends Command
             $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s% [%message%]');
         }
 
-        $moodle    = new Moodle($moodleDir);
-        $plugin    = new MoodlePlugin($pluginDir);
-        $execute   = new Execute($output, $this->getHelper('process'));
-        $logger    = new ConsoleLogger($output);
-        $installer = new Installer($logger, $progressBar);
+        $installers = new InstallerCollection(new ConsoleLogger($output), $progressBar);
+
+        $this->factory->addInstallers($installers);
+        $this->install->runInstallation($installers, new EnvDumper());
+
+        // Progress bar does not end with a newline.
+        $output->writeln('');
+    }
+
+    /**
+     * Create a new installer factory from input options.
+     *
+     * @param InputInterface $input
+     *
+     * @return InstallerFactory
+     */
+    public function initializeInstallerFactory(InputInterface $input)
+    {
+        $validate  = new Validate();
         $resolver  = new DatabaseResolver();
-        $database  = $resolver->resolveDatabase(
+        $pluginDir = realpath($validate->directory($input->getOption('plugin')));
+
+        $factory            = new InstallerFactory();
+        $factory->moodle    = new Moodle($input->getOption('moodle'));
+        $factory->plugin    = new MoodlePlugin($pluginDir);
+        $factory->execute   = $this->execute;
+        $factory->branch    = $validate->moodleBranch($input->getOption('branch'));
+        $factory->dataDir   = $input->getOption('data');
+        $factory->notPaths  = $this->csvToArray($input->getOption('not-paths'));
+        $factory->notNames  = $this->csvToArray($input->getOption('not-names'));
+        $factory->includeJS = ($input->getOption('no-js') === false);
+        $factory->database  = $resolver->resolveDatabase(
             $input->getOption('db-type'),
             $input->getOption('db-name'),
             $input->getOption('db-user'),
@@ -95,25 +128,7 @@ class InstallCommand extends Command
             $input->getOption('db-host')
         );
 
-        $installer->addInstaller(new MoodleInstaller($execute, $database, $moodle, $branch, $dataDir));
-        $installer->addInstaller(new PluginInstaller($moodle, $plugin, $notPaths, $notNames));
-
-        if ($plugin->hasBehatFeatures() || $plugin->hasUnitTests()) {
-            $installer->addInstaller(new ComposerInstaller($moodle, $execute));
-        }
-        if ($plugin->hasBehatFeatures()) {
-            $installer->addInstaller(new BehatInstaller($moodle, $execute));
-        }
-        if ($plugin->hasUnitTests()) {
-            $installer->addInstaller(new PHPUnitInstaller($moodle, $execute));
-        }
-        if ($input->getOption('no-js') === false) {
-            $installer->addInstaller(new JSInstaller($execute));
-        }
-
-        $installer->runInstallation();
-
-        $output->writeln('');
+        return $factory;
     }
 
     /**
