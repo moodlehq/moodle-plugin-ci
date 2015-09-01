@@ -78,7 +78,7 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($installer->getPostBehatInstallProcesses());
     }
 
-    public function testPHPUnitProcesses()
+    public function testUnitTestProcesses()
     {
         $output    = new InstallOutput();
         $installer = new TestSuiteInstaller(
@@ -88,13 +88,13 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
         );
         $installer->setInstallOutput($output);
 
-        $this->assertNotEmpty($installer->getPHPUnitInstallProcesses());
-        $this->assertNotEmpty($installer->getPostPHPUnitInstallProcesses());
+        $this->assertNotEmpty($installer->getUnitTestInstallProcesses());
+        $this->assertNotEmpty($installer->getPostUnitTestInstallProcesses());
 
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests');
 
-        $this->assertEmpty($installer->getPHPUnitInstallProcesses());
-        $this->assertEmpty($installer->getPostPHPUnitInstallProcesses());
+        $this->assertEmpty($installer->getUnitTestInstallProcesses());
+        $this->assertEmpty($installer->getPostUnitTestInstallProcesses());
     }
 }

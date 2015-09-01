@@ -70,14 +70,14 @@ class TestSuiteInstaller extends AbstractInstaller
 
         $this->execute->mustRunAll(array_merge(
             $this->getBehatInstallProcesses(),
-            $this->getPHPUnitInstallProcesses()
+            $this->getUnitTestInstallProcesses()
         ));
 
         $this->output->step('Building configs');
 
         $this->execute->mustRunAll(array_merge(
             $this->getPostBehatInstallProcesses(),
-            $this->getPostPHPUnitInstallProcesses()
+            $this->getPostUnitTestInstallProcesses()
         ));
     }
 
@@ -133,7 +133,7 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return Process[]
      */
-    public function getPHPUnitInstallProcesses()
+    public function getUnitTestInstallProcesses()
     {
         if (!$this->plugin->hasUnitTests()) {
             return [];
@@ -152,7 +152,7 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return Process[]
      */
-    public function getPostPHPUnitInstallProcesses()
+    public function getPostUnitTestInstallProcesses()
     {
         if (!$this->plugin->hasUnitTests()) {
             return [];
