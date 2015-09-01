@@ -70,7 +70,7 @@ class MoodleInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->step('Cloning Moodle');
+        $this->output->step('Cloning Moodle');
 
         $process = new Process(sprintf('git clone --depth=1 --branch %s git://github.com/moodle/moodle %s', $this->branch, $this->moodle->directory));
         $process->setTimeout(null);
@@ -79,21 +79,21 @@ class MoodleInstaller extends AbstractInstaller
         // Expand the path to Moodle so all other installers use absolute path.
         $this->moodle->directory = $this->expandPath($this->moodle->directory);
 
-        $this->step('Moodle assets');
+        $this->output->step('Moodle assets');
 
-        $this->log('Creating Moodle data directories');
+        $this->output->debug('Creating Moodle data directories');
         $filesystem = new Filesystem();
         $filesystem->mkdir($this->dataDir);
         $filesystem->mkdir($this->dataDir.'/phpu_moodledata');
         $filesystem->mkdir($this->dataDir.'/behat_moodledata');
 
-        $this->log('Create Moodle database');
+        $this->output->debug('Create Moodle database');
         $this->execute->mustRun($this->database->getCreateDatabaseCommand());
 
-        $this->log('Creating Moodle\'s config file');
+        $this->output->debug('Creating Moodle\'s config file');
         $filesystem->dumpFile($this->moodle->directory.'/config.php', $this->generateConfig($this->expandPath($this->dataDir)));
 
-        $this->step('Clone Code Checker');
+        $this->output->step('Clone Code Checker');
 
         $this->execute->mustRun(
             sprintf('git clone --depth=1 --branch master git://github.com/moodlehq/moodle-local_codechecker.git %s', $this->moodle->directory.'/local/codechecker')

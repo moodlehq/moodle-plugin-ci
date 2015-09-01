@@ -15,10 +15,8 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
 use Moodlerooms\MoodlePluginCI\Installer\Install;
 use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
+use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Installer\DummyInstaller;
-use Psr\Log\NullLogger;
-use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -28,13 +26,15 @@ class InstallTest extends \PHPUnit_Framework_TestCase
 {
     public function testRunInstallation()
     {
-        $installer  = new DummyInstaller();
-        $installers = new InstallerCollection(new NullLogger(), new ProgressBar(new NullOutput()));
+        $output    = new InstallOutput();
+        $installer = new DummyInstaller();
+
+        $installers = new InstallerCollection($output);
         $installers->add($installer);
 
-        $manager = new Install();
+        $manager = new Install($output);
         $manager->runInstallation($installers, new EnvDumper());
 
-        $this->assertEquals($installer->stepCount(), $installer->actualStepCount());
+        $this->assertEquals($installer->stepCount(), $output->getStepCount());
     }
 }

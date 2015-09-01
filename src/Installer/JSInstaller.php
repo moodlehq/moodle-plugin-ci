@@ -35,7 +35,7 @@ class JSInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->step('Install NPM packages');
+        $this->output->step('Install NPM packages');
         $process = new Process('npm install -g jshint csslint shifter@0.4.6');
         $process->setTimeout(null);
 

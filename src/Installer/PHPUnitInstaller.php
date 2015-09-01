@@ -42,13 +42,13 @@ class PHPUnitInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->step('Initialize PHPUnit');
+        $this->output->step('Initialize PHPUnit');
         $process = new Process(sprintf('php %s/admin/tool/phpunit/cli/util.php --install', $this->moodle->directory));
         $process->setTimeout(null);
 
         $this->execute->mustRun($process);
 
-        $this->step('Build PHPUnit config');
+        $this->output->step('Build PHPUnit config');
         $process = new Process(sprintf('php %s/admin/tool/phpunit/cli/util.php --buildconfig', $this->moodle->directory));
         $process->setTimeout(null);
 

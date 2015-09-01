@@ -12,6 +12,7 @@
 
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
+use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Installer\PHPUnitInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
@@ -24,9 +25,11 @@ class PHPUnitInstallerTest extends \PHPUnit_Framework_TestCase
 {
     public function testInstall()
     {
+        $output    = new InstallOutput();
         $installer = new PHPUnitInstaller(new DummyMoodle(''), new DummyExecute());
+        $installer->setInstallOutput($output);
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $installer->actualStepCount());
+        $this->assertEquals($installer->stepCount(), $output->getStepCount());
     }
 }

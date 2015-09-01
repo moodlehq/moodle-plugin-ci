@@ -12,9 +12,6 @@
 
 namespace Moodlerooms\MoodlePluginCI\Installer;
 
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Helper\ProgressBar;
-
 /**
  * Installer collection.
  *
@@ -29,30 +26,13 @@ class InstallerCollection
     private $installers = [];
 
     /**
-     * @var LoggerInterface
+     * @var InstallOutput
      */
-    public $logger;
+    private $output;
 
-    /**
-     * @var ProgressBar|null
-     */
-    public $progressBar;
-
-    /**
-     * Total number of steps from all the added installers.
-     *
-     * @var int
-     */
-    private $totalSteps = 0;
-
-    /**
-     * @param LoggerInterface  $logger
-     * @param ProgressBar|null $progressBar
-     */
-    public function __construct(LoggerInterface $logger, ProgressBar $progressBar = null)
+    public function __construct(InstallOutput $output)
     {
-        $this->logger      = $logger;
-        $this->progressBar = $progressBar;
+        $this->output = $output;
     }
 
     /**
@@ -62,11 +42,7 @@ class InstallerCollection
      */
     public function add(AbstractInstaller $installer)
     {
-        $installer->setLogger($this->logger);
-        $installer->setProgressBar($this->progressBar);
-
-        $this->totalSteps += $installer->stepCount();
-
+        $installer->setInstallOutput($this->output);
         $this->installers[] = $installer;
     }
 
@@ -98,8 +74,13 @@ class InstallerCollection
      *
      * @return int
      */
-    public function totalSteps()
+    public function sumStepCount()
     {
-        return $this->totalSteps;
+        $sum = 0;
+        foreach ($this->installers as $installer) {
+            $sum += $installer->stepCount();
+        }
+
+        return $sum;
     }
 }

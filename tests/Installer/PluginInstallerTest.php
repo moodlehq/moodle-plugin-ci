@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Installer\PluginInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Symfony\Component\Filesystem\Filesystem;
@@ -43,10 +44,12 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
     {
         $fixture   = __DIR__.'/../Fixture/moodle-local_travis';
         $plugin    = new MoodlePlugin($fixture);
+        $output    = new InstallOutput();
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin);
+        $installer->setInstallOutput($output);
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $installer->actualStepCount());
+        $this->assertEquals($installer->stepCount(), $output->getStepCount());
 
         $installDir = $this->tempDir.'/local/travis';
 
@@ -56,8 +59,10 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
 
     public function testInstallPluginIntoMoodle()
     {
-        $fixture    = realpath(__DIR__.'/../Fixture/moodle-local_travis');
-        $installer  = new PluginInstaller(new DummyMoodle($this->tempDir), new MoodlePlugin($fixture));
+        $fixture   = realpath(__DIR__.'/../Fixture/moodle-local_travis');
+        $installer = new PluginInstaller(new DummyMoodle($this->tempDir), new MoodlePlugin($fixture));
+        $installer->setInstallOutput(new InstallOutput());
+
         $installDir = $installer->installPluginIntoMoodle();
 
         $this->assertTrue(is_dir($installDir));
@@ -89,6 +94,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
             $expected['notNames']
         );
 
+        $installer->setInstallOutput(new InstallOutput());
         $installer->createIgnoreFile($filename);
 
         $this->assertFileExists($filename);

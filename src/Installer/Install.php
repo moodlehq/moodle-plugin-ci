@@ -12,8 +12,6 @@
 
 namespace Moodlerooms\MoodlePluginCI\Installer;
 
-use Symfony\Component\Console\Helper\ProgressBar;
-
 /**
  * Manages the installation process.
  *
@@ -23,6 +21,16 @@ use Symfony\Component\Console\Helper\ProgressBar;
 class Install
 {
     /**
+     * @var InstallOutput
+     */
+    private $output;
+
+    public function __construct(InstallOutput $output)
+    {
+        $this->output = $output;
+    }
+
+    /**
      * Run the entire install process.
      *
      * @param InstallerCollection $installers
@@ -30,26 +38,13 @@ class Install
      */
     public function runInstallation(InstallerCollection $installers, EnvDumper $envDumper)
     {
-        $logger = $installers->logger;
-        $bar    = $installers->progressBar;
-
-        $logger->info('Starting install');
-
-        if ($bar instanceof ProgressBar) {
-            $bar->setMessage('Starting install');
-            $bar->start($installers->totalSteps() + 1);
-        }
+        $this->output->start('Starting install', $installers->sumStepCount() + 1);
 
         foreach ($installers->all() as $installer) {
             $installer->install();
         }
         $envDumper->dump($installers->mergeEnv());
 
-        $logger->info('Install completed');
-
-        if ($bar instanceof ProgressBar) {
-            $bar->setMessage('Install completed');
-            $bar->finish();
-        }
+        $this->output->end('Install completed');
     }
 }

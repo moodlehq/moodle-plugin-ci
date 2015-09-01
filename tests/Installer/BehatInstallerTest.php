@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
 use Moodlerooms\MoodlePluginCI\Installer\BehatInstaller;
+use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
 
@@ -24,9 +25,11 @@ class BehatInstallerTest extends \PHPUnit_Framework_TestCase
 {
     public function testInstall()
     {
+        $output    = new InstallOutput();
         $installer = new BehatInstaller(new DummyMoodle(''), new DummyExecute());
+        $installer->setInstallOutput($output);
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $installer->actualStepCount());
+        $this->assertEquals($installer->stepCount(), $output->getStepCount());
     }
 }

@@ -12,10 +12,6 @@
 
 namespace Moodlerooms\MoodlePluginCI\Installer;
 
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
-use Symfony\Component\Console\Helper\ProgressBar;
-
 /**
  * Abstract Installer.
  *
@@ -25,14 +21,9 @@ use Symfony\Component\Console\Helper\ProgressBar;
 abstract class AbstractInstaller
 {
     /**
-     * @var ProgressBar|null
+     * @var InstallOutput
      */
-    private $progressBar;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    protected $output;
 
     /**
      * Environment variables to write out.
@@ -41,27 +32,9 @@ abstract class AbstractInstaller
      */
     public $env = [];
 
-    /**
-     * Actual number of steps after running.
-     *
-     * @var int
-     */
-    private $actualSteps = 0;
-
-    /**
-     * @param ProgressBar|null $progressBar
-     */
-    public function setProgressBar(ProgressBar $progressBar = null)
+    public function setInstallOutput(InstallOutput $output)
     {
-        $this->progressBar = $progressBar;
-    }
-
-    /**
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+        $this->output = $output;
     }
 
     /**
@@ -75,47 +48,6 @@ abstract class AbstractInstaller
      * @return int
      */
     abstract public function stepCount();
-
-    /**
-     * Get the actual number of steps taken during install.
-     *
-     * @return int
-     */
-    public function actualStepCount()
-    {
-        return $this->actualSteps;
-    }
-
-    /**
-     * Signify the move to the next step in the install.
-     *
-     * @param string $message Very short message about the step
-     */
-    public function step($message)
-    {
-        ++$this->actualSteps;
-
-        $this->log($message, LogLevel::INFO);
-
-        if ($this->progressBar instanceof ProgressBar) {
-            $this->progressBar->setMessage($message);
-            $this->progressBar->advance();
-        }
-    }
-
-    /**
-     * Log a message.
-     *
-     * @param string $message
-     * @param string $level
-     * @param array  $context
-     */
-    public function log($message, $level = LogLevel::DEBUG, array $context = [])
-    {
-        if ($this->logger instanceof LoggerInterface) {
-            $this->logger->log($level, $message, $context);
-        }
-    }
 
     /**
      * Add a variable to write to the environment.

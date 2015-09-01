@@ -13,10 +13,8 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
 use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
+use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Installer\DummyInstaller;
-use Psr\Log\NullLogger;
-use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -28,7 +26,7 @@ class InstallerCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $installer1 = new DummyInstaller();
         $installer2 = new DummyInstaller();
-        $installers = new InstallerCollection(new NullLogger(), new ProgressBar(new NullOutput()));
+        $installers = new InstallerCollection(new InstallOutput());
 
         $installers->add($installer1);
         $installers->add($installer2);
@@ -46,7 +44,7 @@ class InstallerCollectionTest extends \PHPUnit_Framework_TestCase
         $installer2->addEnv('BAT', 'baz');
         $installer2->addEnv('THIS', 'that');
 
-        $installers = new InstallerCollection(new NullLogger(), new ProgressBar(new NullOutput()));
+        $installers = new InstallerCollection(new InstallOutput());
         $installers->add($installer1);
         $installers->add($installer2);
 
@@ -62,12 +60,12 @@ class InstallerCollectionTest extends \PHPUnit_Framework_TestCase
     public function testTotalSteps()
     {
         $installer  = new DummyInstaller();
-        $installers = new InstallerCollection(new NullLogger(), new ProgressBar(new NullOutput()));
+        $installers = new InstallerCollection(new InstallOutput());
 
         $installers->add($installer);
         $installers->add(new DummyInstaller());
         $installers->add(new DummyInstaller());
 
-        $this->assertEquals($installers->totalSteps(), $installer->stepCount() * 3);
+        $this->assertEquals($installers->sumStepCount(), $installer->stepCount() * 3);
     }
 }

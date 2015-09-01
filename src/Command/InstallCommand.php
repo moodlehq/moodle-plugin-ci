@@ -19,6 +19,7 @@ use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
 use Moodlerooms\MoodlePluginCI\Installer\Install;
 use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
 use Moodlerooms\MoodlePluginCI\Installer\InstallerFactory;
+use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Validate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -41,6 +42,11 @@ class InstallCommand extends Command
      * @var Install
      */
     public $install;
+
+    /**
+     * @var InstallerCollection
+     */
+    public $installers;
 
     /**
      * @var InstallerFactory
@@ -76,11 +82,27 @@ class InstallCommand extends Command
     {
         $this->initializeExecute($output, $this->getHelper('process'));
 
-        $this->install = $this->install ?: new Install();
-        $this->factory = $this->factory ?: $this->initializeInstallerFactory($input);
+        $installOutput    = $this->initializeInstallOutput($output);
+        $this->install    = $this->install ?: new Install($installOutput);
+        $this->factory    = $this->factory ?: $this->initializeInstallerFactory($input);
+        $this->installers = $this->installers ?: new InstallerCollection($installOutput);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->factory->addInstallers($this->installers);
+        $this->install->runInstallation($this->installers, new EnvDumper());
+
+        // Progress bar does not end with a newline.
+        $output->writeln('');
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return InstallOutput
+     */
+    public function initializeInstallOutput(OutputInterface $output)
     {
         $progressBar = null;
         if ($output->getVerbosity() < OutputInterface::VERBOSITY_VERY_VERBOSE) {
@@ -89,13 +111,7 @@ class InstallCommand extends Command
             $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s% [%message%]');
         }
 
-        $installers = new InstallerCollection(new ConsoleLogger($output), $progressBar);
-
-        $this->factory->addInstallers($installers);
-        $this->install->runInstallation($installers, new EnvDumper());
-
-        // Progress bar does not end with a newline.
-        $output->writeln('');
+        return new InstallOutput(new ConsoleLogger($output), $progressBar);
     }
 
     /**

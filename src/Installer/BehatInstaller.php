@@ -42,7 +42,7 @@ class BehatInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->step('Download Selenium');
+        $this->output->step('Download Selenium');
 
         $jar     = $this->moodle->directory.'/selenium.jar';
         $process = new Process(sprintf('curl -o %s http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar', $jar));
@@ -50,17 +50,17 @@ class BehatInstaller extends AbstractInstaller
 
         $this->execute->mustRun($process);
 
-        $this->step('Starting servers');
+        $this->output->step('Starting servers');
 
         $binDir = realpath(__DIR__.'/../../bin');
 
-        $this->log('Starting Selenium server');
+        $this->output->debug('Starting Selenium server');
         $this->execute->mustRun(sprintf('%s/start-selenium %s', $binDir, $jar));
 
-        $this->log('Starting PhantomJS');
+        $this->output->debug('Starting PhantomJS');
         $this->execute->mustRun(sprintf('%s/start-phantom-js', $binDir));
 
-        $this->log('Starting PHP web server');
+        $this->output->debug('Starting PHP web server');
         $this->execute->mustRun(new Process(sprintf('%s/start-web-server', $binDir), $this->moodle->directory));
 
         // Moodle 2.9 or later use this one.
@@ -70,13 +70,13 @@ class BehatInstaller extends AbstractInstaller
             $behatUtility = $this->moodle->directory.'/admin/tool/behat/cli/util.php';
         }
 
-        $this->step('Initialize Behat');
+        $this->output->step('Initialize Behat');
         $process = new Process(sprintf('php %s --install', $behatUtility));
         $process->setTimeout(null);
 
         $this->execute->mustRun($process);
 
-        $this->step('Enabling Behat');
+        $this->output->step('Enabling Behat');
         $process = new Process(sprintf('php %s --enable', $behatUtility));
         $process->setTimeout(null);
 

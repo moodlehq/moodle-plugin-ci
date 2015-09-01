@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\InstallCommand;
+use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Installer\DummyInstall;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -46,7 +47,7 @@ class InstallCommandTest extends \PHPUnit_Framework_TestCase
     protected function executeCommand()
     {
         $command          = new InstallCommand();
-        $command->install = new DummyInstall();
+        $command->install = new DummyInstall(new InstallOutput());
 
         $application = new Application();
         $application->add($command);

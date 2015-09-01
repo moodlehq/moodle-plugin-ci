@@ -42,7 +42,7 @@ class ComposerInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->step('Composer install');
+        $this->output->step('Composer install');
 
         $process = new Process('composer install -n', $this->moodle->directory);
         $process->setTimeout(null);

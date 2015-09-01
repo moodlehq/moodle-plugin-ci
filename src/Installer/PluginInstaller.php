@@ -14,7 +14,6 @@ namespace Moodlerooms\MoodlePluginCI\Installer;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
-use Psr\Log\LogLevel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
@@ -62,7 +61,7 @@ class PluginInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->step('Install '.$this->plugin->getComponent());
+        $this->output->step('Install '.$this->plugin->getComponent());
 
         $installDir = $this->installPluginIntoMoodle();
         $this->createIgnoreFile($installDir.'/.travis-ignore.yml');
@@ -88,7 +87,7 @@ class PluginInstaller extends AbstractInstaller
             throw new \RuntimeException('Plugin is already installed in standard Moodle');
         }
 
-        $this->log(sprintf('Copying plugin from %s to %s', $this->plugin->directory, $directory), LogLevel::INFO);
+        $this->output->info(sprintf('Copying plugin from %s to %s', $this->plugin->directory, $directory));
 
         // Install the plugin.
         $filesystem = new Filesystem();
@@ -105,7 +104,7 @@ class PluginInstaller extends AbstractInstaller
     public function createIgnoreFile($filename)
     {
         if (file_exists($filename)) {
-            $this->log('Ignore file already exists in plugin, skipping creation of ignore file.');
+            $this->output->debug('Ignore file already exists in plugin, skipping creation of ignore file.');
 
             return;
         }
@@ -118,7 +117,7 @@ class PluginInstaller extends AbstractInstaller
             $ignores['notNames'] = $this->notNames;
         }
         if (empty($ignores)) {
-            $this->log('No file ignores to write out, skipping creation of ignore file.');
+            $this->output->debug('No file ignores to write out, skipping creation of ignore file.');
 
             return;
         }
@@ -128,7 +127,7 @@ class PluginInstaller extends AbstractInstaller
         $filesystem = new Filesystem();
         $filesystem->dumpFile($filename, $dump);
 
-        $this->log('Created ignore file at '.$filename);
+        $this->output->debug('Created ignore file at '.$filename);
     }
 
     public function stepCount()
