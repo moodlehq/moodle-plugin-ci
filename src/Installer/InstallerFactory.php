@@ -82,12 +82,7 @@ class InstallerFactory
 
         if ($this->plugin->hasBehatFeatures() || $this->plugin->hasUnitTests()) {
             $installers->add(new ComposerInstaller($this->moodle, $this->execute));
-        }
-        if ($this->plugin->hasBehatFeatures()) {
-            $installers->add(new BehatInstaller($this->moodle, $this->execute));
-        }
-        if ($this->plugin->hasUnitTests()) {
-            $installers->add(new PHPUnitInstaller($this->moodle, $this->execute));
+            $installers->add(new TestSuiteInstaller($this->moodle, $this->plugin, $this->execute));
         }
         if ($this->includeJS === true) {
             $installers->add(new JSInstaller($this->execute));

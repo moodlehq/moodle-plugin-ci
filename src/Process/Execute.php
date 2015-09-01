@@ -14,6 +14,7 @@ namespace Moodlerooms\MoodlePluginCI\Process;
 
 use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -60,6 +61,39 @@ class Execute
     public function mustRun($cmd, $error = null)
     {
         return $this->helper->mustRun($this->output, $cmd, $error);
+    }
+
+    /**
+     * @param Process[] $processes
+     */
+    public function runAll($processes)
+    {
+        if (OutputInterface::VERBOSITY_VERY_VERBOSE <= $this->output->getVerbosity()) {
+            // If verbose, then do not run in parallel so we get sane debug output.
+            array_map([$this, 'run'], $processes);
+
+            return;
+        }
+        foreach ($processes as $process) {
+            $process->start();
+        }
+        foreach ($processes as $process) {
+            $process->wait();
+        }
+    }
+
+    /**
+     * @param Process[] $processes
+     */
+    public function mustRunAll($processes)
+    {
+        $this->runAll($processes);
+
+        foreach ($processes as $process) {
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+        }
     }
 
     /**

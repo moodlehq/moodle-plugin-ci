@@ -37,6 +37,16 @@ class DummyExecute extends Execute
         return new DummyProcess('dummy');
     }
 
+    public function runAll($processes)
+    {
+        // Do nothing.
+    }
+
+    public function mustRunAll($processes)
+    {
+        // Do nothing.
+    }
+
     public function passThrough($commandline, $cwd = null, $timeout = null)
     {
         return $this->passThroughProcess(new DummyProcess($commandline, $cwd, null, null, $timeout));
