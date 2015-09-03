@@ -63,7 +63,7 @@ class InstallerCollection
     {
         $env = [];
         foreach ($this->installers as $installer) {
-            $env = array_merge($env, $installer->env);
+            $env = array_merge($env, $installer->getEnv());
         }
 
         return $env;

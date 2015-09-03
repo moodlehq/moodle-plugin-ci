@@ -30,7 +30,7 @@ abstract class AbstractInstaller
      *
      * @var array
      */
-    public $env = [];
+    private $env = [];
 
     /**
      * @param InstallOutput $output
@@ -51,6 +51,14 @@ abstract class AbstractInstaller
         }
 
         return $this->output;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEnv()
+    {
+        return $this->env;
     }
 
     /**

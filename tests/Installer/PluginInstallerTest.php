@@ -51,7 +51,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
         $installDir = $this->tempDir.'/local/travis';
 
         $this->assertEquals($installDir, $plugin->directory, 'Plugin directory should be absolute path after install');
-        $this->assertEquals(['PLUGIN_DIR' => $installDir], $installer->env);
+        $this->assertEquals(['PLUGIN_DIR' => $installDir], $installer->getEnv());
     }
 
     public function testInstallPluginIntoMoodle()

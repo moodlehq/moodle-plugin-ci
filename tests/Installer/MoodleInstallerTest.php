@@ -61,7 +61,7 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
         $installDir = realpath($this->tempDir);
 
         $this->assertEquals($installDir, $moodle->directory, 'Moodle directory should be absolute path after install');
-        $this->assertEquals(['MOODLE_DIR' => $installDir], $installer->env);
+        $this->assertEquals(['MOODLE_DIR' => $installDir], $installer->getEnv());
     }
 
     public function testGenerateConfig()
