@@ -47,7 +47,7 @@ class CodeCheckerCommand extends AbstractMoodleCommand
     {
         $this->outputHeading($output, 'Moodle Code Checker on %s');
 
-        $standard = $input->getOption('standard') ?: $this->moodle->directory.'/local/codechecker/moodle';
+        $standard = $input->getOption('standard') ?: $this->resolveStandard();
         $files    = $this->plugin->getFiles(
             Finder::create()->notPath('yui/build')->name('*.php')->name('*.js')->notName('*-min.js')
         );
@@ -65,5 +65,28 @@ class CodeCheckerCommand extends AbstractMoodleCommand
         $results = $sniffer->reporting->printReport('full', false, $sniffer->cli->getCommandLineValues(), null, 120);
 
         return $results['errors'] > 0 ? 1 : 0;
+    }
+
+    /**
+     * Find the Moodle coding standard.
+     *
+     * @param array|null $locations Override the default locations to search
+     *
+     * @return string
+     */
+    public function resolveStandard(array $locations = null)
+    {
+        $locations = $locations ?: [
+            __DIR__.'/../../../../moodlehq/codechecker/moodle', // Global Composer install.
+            __DIR__.'/../../vendor/moodlehq/codechecker/moodle', // Local Composer install.
+        ];
+
+        foreach ($locations as $location) {
+            if (file_exists($location)) {
+                return $location;
+            }
+        }
+
+        throw new \RuntimeException('Failed to find the Moodle coding standard, likely need to run Composer install');
     }
 }

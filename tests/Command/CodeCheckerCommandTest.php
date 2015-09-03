@@ -44,8 +44,7 @@ class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
 
         $commandTester = new CommandTester($application->find('codechecker'));
         $commandTester->execute([
-            'plugin'     => $pluginDir,
-            '--standard' => realpath(__DIR__.'/../Fixture/ruleset.xml'),
+            'plugin' => $pluginDir,
         ]);
 
         return $commandTester;
@@ -73,5 +72,14 @@ class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecuteNoPlugin()
     {
         $this->executeCommand('/path/to/no/plugin');
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testStandardNotFound()
+    {
+        $command = new CodeCheckerCommand();
+        $command->resolveStandard([__DIR__.'/bad/location']);
     }
 }

@@ -93,12 +93,6 @@ class MoodleInstaller extends AbstractInstaller
         $this->output->debug('Creating Moodle\'s config file');
         $filesystem->dumpFile($this->moodle->directory.'/config.php', $this->generateConfig($this->expandPath($this->dataDir)));
 
-        $this->output->step('Clone Code Checker');
-
-        $this->execute->mustRun(
-            sprintf('git clone --depth=1 --branch master git://github.com/moodlehq/moodle-local_codechecker.git %s', $this->moodle->directory.'/local/codechecker')
-        );
-
         $this->addEnv('MOODLE_DIR', $this->moodle->directory);
     }
 
@@ -145,6 +139,6 @@ class MoodleInstaller extends AbstractInstaller
 
     public function stepCount()
     {
-        return 3;
+        return 2;
     }
 }
