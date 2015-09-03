@@ -15,7 +15,7 @@
   "require": {
     "php": ">=5.4.0",
     "squizlabs/php_codesniffer": "^2.3",
-    "moodlehq/codechecker": "dev-master",
+    "moodlehq/codechecker": "^2.3",
     "sebastian/phpcpd": "^2.0",
     "phpmd/phpmd": "^2.2",
     "symfony/filesystem": "^2.7",
@@ -39,7 +39,7 @@
       "type": "package",
       "package": {
         "name": "moodlehq/codechecker",
-        "version": "dev-master",
+        "version": "v2.3.2",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
           "type": "git",

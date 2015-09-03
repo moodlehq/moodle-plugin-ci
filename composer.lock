@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a709283307dd615989f62b939dd51c7d",
+    "hash": "0fe3eddfae1a1f79b0d546a8abf82a26",
     "packages": [
         {
             "name": "jakub-onderka/php-console-color",
@@ -142,14 +142,13 @@
         },
         {
             "name": "moodlehq/codechecker",
-            "version": "dev-master",
+            "version": "v2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
                 "reference": "master"
             },
-            "type": "library",
-            "time": "2015-05-15 08:46:54"
+            "type": "library"
         },
         {
             "name": "nikic/php-parser",
@@ -2526,9 +2525,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "moodlehq/codechecker": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
