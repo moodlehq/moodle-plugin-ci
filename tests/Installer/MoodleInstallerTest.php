@@ -13,7 +13,6 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
 use Moodlerooms\MoodlePluginCI\Installer\Database\MySQLDatabase;
-use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Installer\MoodleInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
@@ -43,7 +42,6 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
     {
         $dataDir   = $this->tempDir.'/moodledata';
         $moodle    = new DummyMoodle($this->tempDir);
-        $output    = new InstallOutput();
         $installer = new MoodleInstaller(
             new DummyExecute(),
             new MySQLDatabase(),
@@ -51,10 +49,9 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
             'MOODLE_27_STABLE',
             $dataDir
         );
-        $installer->setInstallOutput($output);
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $output->getStepCount());
+        $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
 
         $this->assertTrue(is_dir($dataDir));
         $this->assertTrue(is_dir($dataDir.'/phpu_moodledata'));

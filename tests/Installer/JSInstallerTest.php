@@ -12,7 +12,6 @@
 
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
-use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Installer\JSInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
 
@@ -24,11 +23,9 @@ class JSInstallerTest extends \PHPUnit_Framework_TestCase
 {
     public function testInstall()
     {
-        $output    = new InstallOutput();
         $installer = new JSInstaller(new DummyExecute());
-        $installer->setInstallOutput($output);
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $output->getStepCount());
+        $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
     }
 }

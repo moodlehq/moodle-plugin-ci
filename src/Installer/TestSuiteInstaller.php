@@ -66,14 +66,14 @@ class TestSuiteInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->output->step('Initialize test suite');
+        $this->getOutput()->step('Initialize test suite');
 
         $this->execute->mustRunAll(array_merge(
             $this->getBehatInstallProcesses(),
             $this->getUnitTestInstallProcesses()
         ));
 
-        $this->output->step('Building configs');
+        $this->getOutput()->step('Building configs');
 
         $this->execute->mustRunAll(array_merge(
             $this->getPostBehatInstallProcesses(),
@@ -97,7 +97,7 @@ class TestSuiteInstaller extends AbstractInstaller
             return [];
         }
 
-        $this->output->debug('Download Selenium, start servers and initialize Behat');
+        $this->getOutput()->debug('Download Selenium, start servers and initialize Behat');
 
         $jar    = $this->moodle->directory.'/selenium.jar';
         $curl   = sprintf('curl -o %s http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar', $jar);
@@ -123,7 +123,7 @@ class TestSuiteInstaller extends AbstractInstaller
             return [];
         }
 
-        $this->output->debug('Enabling Behat');
+        $this->getOutput()->debug('Enabling Behat');
 
         return [new Process(sprintf('php %s --enable', $this->getBehatUtility()))];
     }
@@ -139,7 +139,7 @@ class TestSuiteInstaller extends AbstractInstaller
             return [];
         }
 
-        $this->output->debug('Initialize PHPUnit');
+        $this->getOutput()->debug('Initialize PHPUnit');
 
         $process = new Process(sprintf('php %s/admin/tool/phpunit/cli/util.php --install', $this->moodle->directory));
         $process->setTimeout(null);
@@ -158,7 +158,7 @@ class TestSuiteInstaller extends AbstractInstaller
             return [];
         }
 
-        $this->output->debug('Build PHPUnit config');
+        $this->getOutput()->debug('Build PHPUnit config');
 
         return [new Process(sprintf('php %s/admin/tool/phpunit/cli/util.php --buildconfig', $this->moodle->directory))];
     }

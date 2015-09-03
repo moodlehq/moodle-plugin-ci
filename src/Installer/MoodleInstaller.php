@@ -70,7 +70,7 @@ class MoodleInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->output->step('Cloning Moodle');
+        $this->getOutput()->step('Cloning Moodle');
 
         $process = new Process(sprintf('git clone --depth=1 --branch %s git://github.com/moodle/moodle %s', $this->branch, $this->moodle->directory));
         $process->setTimeout(null);
@@ -79,18 +79,18 @@ class MoodleInstaller extends AbstractInstaller
         // Expand the path to Moodle so all other installers use absolute path.
         $this->moodle->directory = $this->expandPath($this->moodle->directory);
 
-        $this->output->step('Moodle assets');
+        $this->getOutput()->step('Moodle assets');
 
-        $this->output->debug('Creating Moodle data directories');
+        $this->getOutput()->debug('Creating Moodle data directories');
         $filesystem = new Filesystem();
         $filesystem->mkdir($this->dataDir);
         $filesystem->mkdir($this->dataDir.'/phpu_moodledata');
         $filesystem->mkdir($this->dataDir.'/behat_moodledata');
 
-        $this->output->debug('Create Moodle database');
+        $this->getOutput()->debug('Create Moodle database');
         $this->execute->mustRun($this->database->getCreateDatabaseCommand());
 
-        $this->output->debug('Creating Moodle\'s config file');
+        $this->getOutput()->debug('Creating Moodle\'s config file');
         $filesystem->dumpFile($this->moodle->directory.'/config.php', $this->generateConfig($this->expandPath($this->dataDir)));
 
         $this->addEnv('MOODLE_DIR', $this->moodle->directory);

@@ -22,8 +22,8 @@ class DummyInstaller extends AbstractInstaller
 {
     public function install()
     {
-        $this->output->step('Step 1');
-        $this->output->step('Step 2');
+        $this->getOutput()->step('Step 1');
+        $this->getOutput()->step('Step 2');
     }
 
     public function stepCount()

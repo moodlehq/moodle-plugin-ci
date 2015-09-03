@@ -23,7 +23,7 @@ abstract class AbstractInstaller
     /**
      * @var InstallOutput
      */
-    protected $output;
+    private $output;
 
     /**
      * Environment variables to write out.
@@ -32,9 +32,36 @@ abstract class AbstractInstaller
      */
     public $env = [];
 
-    public function setInstallOutput(InstallOutput $output)
+    /**
+     * @param InstallOutput $output
+     */
+    public function setOutput(InstallOutput $output)
     {
         $this->output = $output;
+    }
+
+    /**
+     * @return InstallOutput
+     */
+    public function getOutput()
+    {
+        // Output is optional, if not set, use null output.
+        if (!$this->output instanceof InstallOutput) {
+            $this->output = new InstallOutput();
+        }
+
+        return $this->output;
+    }
+
+    /**
+     * Add a variable to write to the environment.
+     *
+     * @param string $name
+     * @param string $value
+     */
+    public function addEnv($name, $value)
+    {
+        $this->env[$name] = $value;
     }
 
     /**
@@ -48,15 +75,4 @@ abstract class AbstractInstaller
      * @return int
      */
     abstract public function stepCount();
-
-    /**
-     * Add a variable to write to the environment.
-     *
-     * @param string $name
-     * @param string $value
-     */
-    public function addEnv($name, $value)
-    {
-        $this->env[$name] = $value;
-    }
 }

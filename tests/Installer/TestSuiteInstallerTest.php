@@ -13,7 +13,6 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
-use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Installer\TestSuiteInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
@@ -46,27 +45,23 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
 
     public function testInstall()
     {
-        $output    = new InstallOutput();
         $installer = new TestSuiteInstaller(
             new DummyMoodle(''),
             new MoodlePlugin($this->pluginDir),
             new DummyExecute()
         );
-        $installer->setInstallOutput($output);
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $output->getStepCount());
+        $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
     }
 
     public function testBehatProcesses()
     {
-        $output    = new InstallOutput();
         $installer = new TestSuiteInstaller(
             new DummyMoodle(''),
             new MoodlePlugin($this->pluginDir),
             new DummyExecute()
         );
-        $installer->setInstallOutput($output);
 
         $this->assertNotEmpty($installer->getBehatInstallProcesses());
         $this->assertNotEmpty($installer->getPostBehatInstallProcesses());
@@ -80,13 +75,11 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
 
     public function testUnitTestProcesses()
     {
-        $output    = new InstallOutput();
         $installer = new TestSuiteInstaller(
             new DummyMoodle(''),
             new MoodlePlugin($this->pluginDir),
             new DummyExecute()
         );
-        $installer->setInstallOutput($output);
 
         $this->assertNotEmpty($installer->getUnitTestInstallProcesses());
         $this->assertNotEmpty($installer->getPostUnitTestInstallProcesses());

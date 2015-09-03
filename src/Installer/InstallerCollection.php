@@ -42,7 +42,7 @@ class InstallerCollection
      */
     public function add(AbstractInstaller $installer)
     {
-        $installer->setInstallOutput($this->output);
+        $installer->setOutput($this->output);
         $this->installers[] = $installer;
     }
 
