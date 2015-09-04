@@ -13,16 +13,17 @@
 namespace Moodlerooms\MoodlePluginCI\Installer;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
+use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Process\Execute;
 use Symfony\Component\Process\Process;
 
 /**
- * Composer installer.
+ * Vendor installer.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class ComposerInstaller extends AbstractInstaller
+class VendorInstaller extends AbstractInstaller
 {
     /**
      * @var Moodle
@@ -30,24 +31,33 @@ class ComposerInstaller extends AbstractInstaller
     private $moodle;
 
     /**
+     * @var MoodlePlugin
+     */
+    private $plugin;
+
+    /**
      * @var Execute
      */
     private $execute;
 
-    public function __construct(Moodle $moodle, Execute $execute)
+    public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute)
     {
         $this->moodle  = $moodle;
+        $this->plugin  = $plugin;
         $this->execute = $execute;
     }
 
     public function install()
     {
-        $this->getOutput()->step('Composer install');
+        $this->getOutput()->step('Install dependencies');
 
-        $process = new Process('composer install -n', $this->moodle->directory);
-        $process->setTimeout(null);
+        $processes = [];
+        if ($this->plugin->hasUnitTests() || $this->plugin->hasBehatFeatures()) {
+            $processes[] = new Process('composer install -n', $this->moodle->directory, null, null, null);
+        }
+        $processes[] = new Process('npm install -g jshint csslint shifter@0.4.6', null, null, null, null);
 
-        $this->execute->mustRun($process);
+        $this->execute->mustRunAll($processes);
     }
 
     public function stepCount()

@@ -66,11 +66,6 @@ class InstallerFactory
     public $notNames = [];
 
     /**
-     * @var bool
-     */
-    public $includeJS = true;
-
-    /**
      * Given a big bag of install options, add installers to the collection.
      *
      * @param InstallerCollection $installers Installers will be added to this.
@@ -79,13 +74,10 @@ class InstallerFactory
     {
         $installers->add(new MoodleInstaller($this->execute, $this->database, $this->moodle, $this->branch, $this->dataDir));
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->notPaths, $this->notNames));
+        $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute));
 
         if ($this->plugin->hasBehatFeatures() || $this->plugin->hasUnitTests()) {
-            $installers->add(new ComposerInstaller($this->moodle, $this->execute));
             $installers->add(new TestSuiteInstaller($this->moodle, $this->plugin, $this->execute));
-        }
-        if ($this->includeJS === true) {
-            $installers->add(new JSInstaller($this->execute));
         }
     }
 }

@@ -73,7 +73,6 @@ class InstallCommand extends Command
             ->addOption('db-pass', null, InputOption::VALUE_OPTIONAL, 'Database pass', '')
             ->addOption('db-name', null, InputOption::VALUE_OPTIONAL, 'Database name', 'moodle')
             ->addOption('db-host', null, InputOption::VALUE_OPTIONAL, 'Database host', 'localhost')
-            ->addOption('no-js', null, InputOption::VALUE_NONE, 'Do not install NPM packages')
             ->addOption('not-paths', null, InputOption::VALUE_OPTIONAL, 'CSV of file paths to exclude', $paths)
             ->addOption('not-names', null, InputOption::VALUE_OPTIONAL, 'CSV of file names to exclude', $names);
     }
@@ -127,16 +126,15 @@ class InstallCommand extends Command
         $resolver  = new DatabaseResolver();
         $pluginDir = realpath($validate->directory($input->getOption('plugin')));
 
-        $factory            = new InstallerFactory();
-        $factory->moodle    = new Moodle($input->getOption('moodle'));
-        $factory->plugin    = new MoodlePlugin($pluginDir);
-        $factory->execute   = $this->execute;
-        $factory->branch    = $validate->moodleBranch($input->getOption('branch'));
-        $factory->dataDir   = $input->getOption('data');
-        $factory->notPaths  = $this->csvToArray($input->getOption('not-paths'));
-        $factory->notNames  = $this->csvToArray($input->getOption('not-names'));
-        $factory->includeJS = ($input->getOption('no-js') === false);
-        $factory->database  = $resolver->resolveDatabase(
+        $factory           = new InstallerFactory();
+        $factory->moodle   = new Moodle($input->getOption('moodle'));
+        $factory->plugin   = new MoodlePlugin($pluginDir);
+        $factory->execute  = $this->execute;
+        $factory->branch   = $validate->moodleBranch($input->getOption('branch'));
+        $factory->dataDir  = $input->getOption('data');
+        $factory->notPaths = $this->csvToArray($input->getOption('not-paths'));
+        $factory->notNames = $this->csvToArray($input->getOption('not-names'));
+        $factory->database = $resolver->resolveDatabase(
             $input->getOption('db-type'),
             $input->getOption('db-name'),
             $input->getOption('db-user'),
