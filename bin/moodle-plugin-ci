@@ -14,6 +14,7 @@
 use Dotenv\Dotenv;
 use Moodlerooms\MoodlePluginCI\Command\BehatCommand;
 use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
+use Moodlerooms\MoodlePluginCI\Command\CompletionCommand;
 use Moodlerooms\MoodlePluginCI\Command\CopyPasteDetectorCommand;
 use Moodlerooms\MoodlePluginCI\Command\CSSLintCommand;
 use Moodlerooms\MoodlePluginCI\Command\InstallCommand;
@@ -47,6 +48,7 @@ if (file_exists('~/.env-travis')) {
 $application = new Application('Moodle Plugin CI', '1.0');
 $application->add(new BehatCommand());
 $application->add(new CodeCheckerCommand());
+$application->add(new CompletionCommand());
 $application->add(new CopyPasteDetectorCommand());
 $application->add(new CSSLintCommand());
 $application->add(new InstallCommand());

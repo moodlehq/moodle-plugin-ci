@@ -64,17 +64,17 @@ class InstallCommand extends Command
 
         $this->setName('install')
             ->setDescription('Install everything required for CI testing')
-            ->addOption('moodle', null, InputOption::VALUE_OPTIONAL, 'Clone Moodle to this directory', 'moodle')
-            ->addOption('data', null, InputOption::VALUE_OPTIONAL, 'Directory create for Moodle data files', 'moodledata')
-            ->addOption('branch', null, InputOption::VALUE_OPTIONAL, 'Moodle git branch to clone, EG: MOODLE_29_STABLE', $branch)
-            ->addOption('plugin', null, InputOption::VALUE_OPTIONAL, 'Path to Moodle plugin', $plugin)
-            ->addOption('db-type', null, InputOption::VALUE_OPTIONAL, 'Database type, mysqli or pgsql', $type)
-            ->addOption('db-user', null, InputOption::VALUE_OPTIONAL, 'Database user')
-            ->addOption('db-pass', null, InputOption::VALUE_OPTIONAL, 'Database pass', '')
-            ->addOption('db-name', null, InputOption::VALUE_OPTIONAL, 'Database name', 'moodle')
-            ->addOption('db-host', null, InputOption::VALUE_OPTIONAL, 'Database host', 'localhost')
-            ->addOption('not-paths', null, InputOption::VALUE_OPTIONAL, 'CSV of file paths to exclude', $paths)
-            ->addOption('not-names', null, InputOption::VALUE_OPTIONAL, 'CSV of file names to exclude', $names);
+            ->addOption('moodle', null, InputOption::VALUE_REQUIRED, 'Clone Moodle to this directory', 'moodle')
+            ->addOption('data', null, InputOption::VALUE_REQUIRED, 'Directory create for Moodle data files', 'moodledata')
+            ->addOption('branch', null, InputOption::VALUE_REQUIRED, 'Moodle git branch to clone, EG: MOODLE_29_STABLE', $branch)
+            ->addOption('plugin', null, InputOption::VALUE_REQUIRED, 'Path to Moodle plugin', $plugin)
+            ->addOption('db-type', null, InputOption::VALUE_REQUIRED, 'Database type, mysqli or pgsql', $type)
+            ->addOption('db-user', null, InputOption::VALUE_REQUIRED, 'Database user')
+            ->addOption('db-pass', null, InputOption::VALUE_REQUIRED, 'Database pass', '')
+            ->addOption('db-name', null, InputOption::VALUE_REQUIRED, 'Database name', 'moodle')
+            ->addOption('db-host', null, InputOption::VALUE_REQUIRED, 'Database host', 'localhost')
+            ->addOption('not-paths', null, InputOption::VALUE_REQUIRED, 'CSV of file paths to exclude', $paths)
+            ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)

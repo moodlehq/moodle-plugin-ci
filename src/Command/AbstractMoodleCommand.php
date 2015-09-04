@@ -38,7 +38,7 @@ abstract class AbstractMoodleCommand extends AbstractPluginCommand
         parent::configure();
 
         $moodle = getenv('MOODLE_DIR') !== false ? getenv('MOODLE_DIR') : '.';
-        $this->addOption('moodle', 'm', InputOption::VALUE_OPTIONAL, 'Path to Moodle', $moodle);
+        $this->addOption('moodle', 'm', InputOption::VALUE_REQUIRED, 'Path to Moodle', $moodle);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)

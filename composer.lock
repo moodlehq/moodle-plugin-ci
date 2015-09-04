@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0fe3eddfae1a1f79b0d546a8abf82a26",
+    "hash": "6ef5fa92f08a2ef4852b40822875d00e",
     "packages": [
         {
             "name": "jakub-onderka/php-console-color",
@@ -573,6 +573,51 @@
                 "standards"
             ],
             "time": "2015-06-24 03:16:23"
+        },
+        {
+            "name": "stecman/symfony-console-completion",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stecman/symfony-console-completion.git",
+                "reference": "0e426113086878a21aea9db0b2996d2f702b6d33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stecman/symfony-console-completion/zipball/0e426113086878a21aea9db0b2996d2f702b6d33",
+                "reference": "0e426113086878a21aea9db0b2996d2f702b6d33",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/console": "~2.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stecman\\Component\\Symfony\\Console\\BashCompletion\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Holdaway",
+                    "email": "stephen@stecman.co.nz"
+                }
+            ],
+            "description": "Automatic BASH completion for Symfony Console Component based applications.",
+            "time": "2015-08-30 15:37:24"
         },
         {
             "name": "symfony/config",

@@ -34,7 +34,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
 
         $this->setName('codechecker')
             ->setDescription('Run Moodle Code Checker on a plugin')
-            ->addOption('standard', 's', InputOption::VALUE_OPTIONAL, 'The name or path of the coding standard to use');
+            ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)

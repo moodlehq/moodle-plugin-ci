@@ -38,7 +38,7 @@ class MessDetectorCommand extends AbstractMoodleCommand
 
         $this->setName('phpmd')
             ->setDescription('Run PHP Mess Detector on a plugin')
-            ->addOption('rules', 'r', InputOption::VALUE_OPTIONAL, 'Path to PHP Mess Detector rule set', $rules);
+            ->addOption('rules', 'r', InputOption::VALUE_REQUIRED, 'Path to PHP Mess Detector rule set', $rules);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
