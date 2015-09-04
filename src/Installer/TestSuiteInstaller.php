@@ -75,10 +75,7 @@ class TestSuiteInstaller extends AbstractInstaller
 
         $this->getOutput()->step('Building configs');
 
-        $this->execute->mustRunAll(array_merge(
-            $this->getPostBehatInstallProcesses(),
-            $this->getPostUnitTestInstallProcesses()
-        ));
+        $this->execute->mustRunAll($this->getPostInstallProcesses());
     }
 
     public function stepCount()
@@ -113,22 +110,6 @@ class TestSuiteInstaller extends AbstractInstaller
     }
 
     /**
-     * Get all the post install processes for Behat.
-     *
-     * @return Process[]
-     */
-    public function getPostBehatInstallProcesses()
-    {
-        if (!$this->plugin->hasBehatFeatures()) {
-            return [];
-        }
-
-        $this->getOutput()->debug('Enabling Behat');
-
-        return [new Process(sprintf('php %s --enable', $this->getBehatUtility()))];
-    }
-
-    /**
      * Get all the processes to initialize PHPUnit.
      *
      * @return Process[]
@@ -148,18 +129,23 @@ class TestSuiteInstaller extends AbstractInstaller
     }
 
     /**
-     * Get all the post install processes for PHPUnit.
+     * Get all the post install processes.
      *
      * @return Process[]
      */
-    public function getPostUnitTestInstallProcesses()
+    public function getPostInstallProcesses()
     {
-        if (!$this->plugin->hasUnitTests()) {
-            return [];
+        $processes = [];
+
+        if ($this->plugin->hasBehatFeatures()) {
+            $this->getOutput()->debug('Enabling Behat');
+            $processes[] = new Process(sprintf('php %s --enable', $this->getBehatUtility()));
+        }
+        if ($this->plugin->hasUnitTests()) {
+            $this->getOutput()->debug('Build PHPUnit config');
+            $processes[] = new Process(sprintf('php %s/admin/tool/phpunit/cli/util.php --buildconfig', $this->moodle->directory));
         }
 
-        $this->getOutput()->debug('Build PHPUnit config');
-
-        return [new Process(sprintf('php %s/admin/tool/phpunit/cli/util.php --buildconfig', $this->moodle->directory))];
+        return $processes;
     }
 }

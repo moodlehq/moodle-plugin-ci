@@ -66,7 +66,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
     {
         // Remove the only unit test file.
         $fs = new Filesystem();
-        $fs->remove($this->pluginDir.'/tests/phpunit_test.php');
+        $fs->remove($this->pluginDir.'/tests/lib_test.php');
 
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertFalse($plugin->hasUnitTests());
@@ -143,6 +143,6 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $finder->name('*.php')->sortByName();
 
         $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertEquals(['lib.php', 'tests/phpunit_test.php', 'version.php'], $plugin->getRelativeFiles($finder));
+        $this->assertEquals(['lib.php', 'tests/lib_test.php', 'version.php'], $plugin->getRelativeFiles($finder));
     }
 }

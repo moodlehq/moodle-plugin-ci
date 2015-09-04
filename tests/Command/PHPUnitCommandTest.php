@@ -79,7 +79,7 @@ class PHPUnitCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecuteNoTests()
     {
         $fs = new Filesystem();
-        $fs->remove($this->pluginDir.'/tests/phpunit_test.php');
+        $fs->remove($this->pluginDir.'/tests/lib_test.php');
 
         $this->executeCommand();
     }

@@ -24,6 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once(__DIR__.'/../lib.php');
+
 /**
  * The test
  *
@@ -32,8 +34,12 @@ defined('MOODLE_INTERNAL') || die();
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class local_travis_phpunit_test extends basic_testcase {
-    public function test_phpunit() {
-        // Ensure the sky is not falling.
-        $this->assertTrue(true);
+    /**
+     * Test our math skills.
+     */
+    public function test_local_travis_add() {
+        $this->assertEquals(4, local_travis_add(2, 2));
+        $this->assertEquals(2, local_travis_add(4, -2));
+        $this->assertEquals(0, local_travis_add(-4, 4));
     }
 }
