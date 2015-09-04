@@ -47,7 +47,7 @@ class DummyExecute extends Execute
         // Do nothing.
     }
 
-    public function passThrough($commandline, $cwd = null, $timeout = null)
+    public function passThrough($commandline, $cwd = null, $timeout = null, $tty = true)
     {
         return $this->passThroughProcess(new DummyProcess($commandline, $cwd, null, null, $timeout));
     }

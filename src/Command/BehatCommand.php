@@ -52,10 +52,8 @@ class BehatCommand extends AbstractMoodleCommand
             throw new \RuntimeException('Behat config file not found.  Behat must not have been installed.');
         }
 
-        $process = $this->execute->passThrough(
-            sprintf('%s/vendor/bin/behat --config %s --tags @%s', $this->moodle->directory, $config, $this->plugin->getComponent()),
-            $this->moodle->directory
-        );
+        $command = sprintf('%s/vendor/bin/behat --config %s --tags @%s', $this->moodle->directory, $config, $this->plugin->getComponent());
+        $process = $this->execute->passThrough($command, $this->moodle->directory, null, true);
 
         return $process->isSuccessful() ? 0 : 1;
     }
