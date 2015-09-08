@@ -77,8 +77,8 @@ class CodeCheckerCommand extends AbstractPluginCommand
     public function resolveStandard(array $locations = null)
     {
         $locations = $locations ?: [
-            __DIR__.'/../../../../moodlehq/codechecker/moodle', // Global Composer install.
-            __DIR__.'/../../vendor/moodlehq/codechecker/moodle', // Local Composer install.
+            __DIR__.'/../../../../moodlerooms/moodle-coding-standard/moodle', // Global Composer install.
+            __DIR__.'/../../vendor/moodlerooms/moodle-coding-standard/moodle', // Local Composer install.
         ];
 
         foreach ($locations as $location) {
