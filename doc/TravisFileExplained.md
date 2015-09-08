@@ -1,6 +1,6 @@
 # Travis CI file explained
 
-Below is the [.travis.dist.yml](.travis.dist.yml) file but with comments added to explain what each section is doing.
+Below is the [.travis.dist.yml](../.travis.dist.yml) file but with comments added to explain what each section is doing.
 For additional help, see [Travis CI's documentation](http://docs.travis-ci.com/user/getting-started/).
 
 ```yaml
