@@ -44,15 +44,15 @@ env:
 
 # This lists steps that are run before the installation step. 
 before_install:
-# Update Composer.
-  - composer selfupdate
-# Globally install this project.
-  - composer global require -n --update-no-dev moodlerooms/moodle-plugin-ci:dev-master
-# Add Composer's global bin directory to the $PATH so we can use scripts from this project.
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
 # Currently we are inside of the clone of your repository.  We move up two
 # directories to build the project.
   - cd ../..
+# Update Composer.
+  - composer selfupdate
+# Install this project into a directory called "ci".
+  - composer create-project -n moodlerooms/moodle-plugin-ci ci dev-master
+# Update the $PATH so scripts from this project can be called easily.
+  - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 # This lists steps that are run for installation and setup.
 install:

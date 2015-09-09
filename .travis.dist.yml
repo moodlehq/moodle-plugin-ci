@@ -24,10 +24,10 @@ env:
   - DB=mysqli
 
 before_install:
-  - composer selfupdate
-  - composer global require -n --update-no-dev moodlerooms/moodle-plugin-ci:dev-master
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - cd ../..
+  - composer selfupdate
+  - composer create-project -n moodlerooms/moodle-plugin-ci ci dev-master
+  - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:
   - moodle-plugin-ci install
