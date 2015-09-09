@@ -109,26 +109,25 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
 
     public function testGetIgnores()
     {
-        $expected = [
+        $expected = ['filter' => [
             'notPaths' => ['foo/bar', 'very/bad.php'],
             'notNames' => ['*-m.js', 'bad.php'],
-        ];
+        ]];
 
         $fs = new Filesystem();
-        $fs->dumpFile($this->pluginDir.'/.travis-ignore.yml', Yaml::dump($expected));
+        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($expected));
 
         $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertEquals($expected, $plugin->getIgnores());
+        $this->assertEquals($expected['filter'], $plugin->getIgnores());
     }
 
     public function testGetFiles()
     {
-
-        // Create an ignore file for better testing
-        $ignores = ['notNames' => ['version.php'], 'notPaths' => ['test']];
+        // Ignore some files for better testing.
+        $config = ['filter' => ['notNames' => ['version.php'], 'notPaths' => ['test']]];
 
         $fs = new Filesystem();
-        $fs->dumpFile($this->pluginDir.'/.travis-ignore.yml', Yaml::dump($ignores));
+        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
 
         $finder = new Finder();
         $finder->name('*.php');

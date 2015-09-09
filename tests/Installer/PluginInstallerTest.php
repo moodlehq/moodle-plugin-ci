@@ -76,17 +76,17 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateIgnoreFile()
     {
-        $filename = $this->tempDir.'/.travis-ignore.yml';
-        $expected = [
+        $filename = $this->tempDir.'/.moodle-plugin-ci.yml';
+        $expected = ['filter' => [
             'notPaths' => ['foo/bar', 'very/bad.php'],
             'notNames' => ['*-m.js', 'bad.php'],
-        ];
+        ]];
 
         $installer = new PluginInstaller(
             new DummyMoodle($this->tempDir),
             new MoodlePlugin($this->tempDir),
-            $expected['notPaths'],
-            $expected['notNames']
+            $expected['filter']['notPaths'],
+            $expected['filter']['notNames']
         );
 
         $installer->createIgnoreFile($filename);

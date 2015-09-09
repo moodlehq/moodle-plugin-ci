@@ -203,13 +203,15 @@ class MoodlePlugin
      */
     public function getIgnores()
     {
-        $ignoreFile = $this->directory.'/.travis-ignore.yml';
+        $configFile = $this->directory.'/.moodle-plugin-ci.yml';
 
-        if (!is_file($ignoreFile)) {
+        if (!is_file($configFile)) {
             return [];
         }
 
-        return Yaml::parse($ignoreFile);
+        $config = Yaml::parse($configFile);
+
+        return array_key_exists('filter', $config) ? $config['filter'] : [];
     }
 
     /**

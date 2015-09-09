@@ -64,7 +64,7 @@ class PluginInstaller extends AbstractInstaller
         $this->getOutput()->step('Install '.$this->plugin->getComponent());
 
         $installDir = $this->installPluginIntoMoodle();
-        $this->createIgnoreFile($installDir.'/.travis-ignore.yml');
+        $this->createIgnoreFile($installDir.'/.moodle-plugin-ci.yml');
 
         // Update plugin so other installers use the installed path.
         $this->plugin->directory = $installDir;
@@ -122,7 +122,7 @@ class PluginInstaller extends AbstractInstaller
             return;
         }
 
-        $dump = Yaml::dump($ignores);
+        $dump = Yaml::dump(['filter' => $ignores]);
 
         $filesystem = new Filesystem();
         $filesystem->dumpFile($filename, $dump);
