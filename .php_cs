@@ -10,8 +10,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUndefinedNamespaceInspection */
 $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->exclude('tests/Fixture')
     ->exclude('moodle')
@@ -19,8 +17,6 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->name('moodle-plugin-ci')
     ->in(__DIR__);
 
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUndefinedNamespaceInspection */
 return Symfony\CS\Config\Config::create()
     ->fixers([
         'align_equals',
