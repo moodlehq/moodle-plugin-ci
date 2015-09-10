@@ -102,21 +102,12 @@ class Execute
      * @param string         $commandline The command line to run
      * @param string|null    $cwd         The working directory or null to use the working dir of the current PHP process
      * @param int|float|null $timeout     The timeout in seconds or null to disable
-     * @param bool           $tty         Enables or disables the TTY mode
      *
      * @return Process
      */
-    public function passThrough($commandline, $cwd = null, $timeout = null, $tty = false)
+    public function passThrough($commandline, $cwd = null, $timeout = null)
     {
-        $process = new Process($commandline, $cwd, null, null, $timeout);
-
-        try {
-            $process->setTty($tty);
-        } catch (\Exception $e) {
-            // This is Windows or TTY just is just not available, no problem.
-        }
-
-        return $this->passThroughProcess($process);
+        return $this->passThroughProcess(new Process($commandline, $cwd, null, null, $timeout));
     }
 
     /**
