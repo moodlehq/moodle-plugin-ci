@@ -53,7 +53,7 @@ class BehatCommand extends AbstractMoodleCommand
         }
 
         $process = $this->execute->passThrough(
-            sprintf('%s/vendor/bin/behat --config %s --tags @%s', $this->moodle->directory, $config, $this->plugin->getComponent()),
+            sprintf('%s/vendor/bin/behat --ansi --config %s --tags @%s', $this->moodle->directory, $config, $this->plugin->getComponent()),
             $this->moodle->directory
         );
 
