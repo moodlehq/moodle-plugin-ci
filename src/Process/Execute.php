@@ -90,6 +90,9 @@ class Execute
         $this->runAll($processes);
 
         foreach ($processes as $process) {
+            if ($process instanceof MoodleProcess) {
+                $process->checkOutputForProblems();
+            }
             if (!$process->isSuccessful()) {
                 throw new ProcessFailedException($process);
             }

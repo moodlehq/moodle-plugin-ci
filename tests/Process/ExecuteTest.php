@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Process;
 
 use Moodlerooms\MoodlePluginCI\Process\Execute;
+use Moodlerooms\MoodlePluginCI\Process\MoodleProcess;
 use Symfony\Component\Console\Helper\DebugFormatterHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\ProcessHelper;
@@ -80,7 +81,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         /** @var Process[] $processes */
         $processes = [
             new Process('php -r "echo 42;"'),
-            new Process('php -r "echo 42;"'),
+            new MoodleProcess('-r "echo 42;"'),
             new Process('php -r "echo 42;"'),
         ];
 

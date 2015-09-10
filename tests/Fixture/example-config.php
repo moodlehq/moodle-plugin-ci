@@ -19,18 +19,22 @@ $CFG->admin    = 'admin';
 
 $CFG->directorypermissions = 02777;
 
+// Show debugging messages.
+$CFG->debug        = (E_ALL | E_STRICT);
+$CFG->debugdisplay = 1;
+
 // No emails.
 $CFG->noemailever = true;
 
 // PHPUnit settings.
-$CFG->phpunit_prefix = 'phpu_';
-$CFG->phpunit_dataroot='/path/to/moodledata/phpu_moodledata';
+$CFG->phpunit_prefix   = 'phpu_';
+$CFG->phpunit_dataroot = '/path/to/moodledata/phpu_moodledata';
 
 // Behat settings.
-$CFG->behat_prefix = 'behat_';
+$CFG->behat_prefix   = 'behat_';
 $CFG->behat_dataroot = '/path/to/moodledata/behat_moodledata';
-$CFG->behat_wwwroot = 'http://localhost:8000';
-$CFG->behat_config = array(
+$CFG->behat_wwwroot  = 'http://localhost:8000';
+$CFG->behat_config   = array(
     'default' => array(
         'extensions' => array(
             'Behat\MinkExtension\Extension' => array(

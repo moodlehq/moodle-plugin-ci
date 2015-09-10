@@ -15,6 +15,7 @@ namespace Moodlerooms\MoodlePluginCI\Installer;
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Process\Execute;
+use Moodlerooms\MoodlePluginCI\Process\MoodleProcess;
 use Symfony\Component\Process\Process;
 
 /**
@@ -113,7 +114,7 @@ class TestSuiteInstaller extends AbstractInstaller
 
         return [
             new Process($curl, null, null, null, 120),
-            new Process(sprintf('php %s --install', $this->getBehatUtility()), null, null, null, null),
+            new MoodleProcess(sprintf('%s --install', $this->getBehatUtility())),
         ];
     }
 
@@ -130,10 +131,7 @@ class TestSuiteInstaller extends AbstractInstaller
 
         $this->getOutput()->debug('Initialize PHPUnit');
 
-        $process = new Process(sprintf('php %s/admin/tool/phpunit/cli/util.php --install', $this->moodle->directory));
-        $process->setTimeout(null);
-
-        return [$process];
+        return [new MoodleProcess(sprintf('%s/admin/tool/phpunit/cli/util.php --install', $this->moodle->directory))];
     }
 
     /**
@@ -153,11 +151,11 @@ class TestSuiteInstaller extends AbstractInstaller
             $processes[] = new Process(sprintf('%s/start-selenium %s', $binDir, $this->getSeleniumJarPath()));
             $processes[] = new Process(sprintf('%s/start-phantom-js', $binDir));
             $processes[] = new Process(sprintf('%s/start-web-server', $binDir), $this->moodle->directory);
-            $processes[] = new Process(sprintf('php %s --enable', $this->getBehatUtility()));
+            $processes[] = new MoodleProcess(sprintf('%s --enable', $this->getBehatUtility()));
         }
         if ($this->plugin->hasUnitTests()) {
             $this->getOutput()->debug('Build PHPUnit config');
-            $processes[] = new Process(sprintf('php %s/admin/tool/phpunit/cli/util.php --buildconfig', $this->moodle->directory));
+            $processes[] = new MoodleProcess(sprintf('%s/admin/tool/phpunit/cli/util.php --buildconfig', $this->moodle->directory));
         }
 
         return $processes;
