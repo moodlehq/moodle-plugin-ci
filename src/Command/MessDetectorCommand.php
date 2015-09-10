@@ -57,7 +57,5 @@ class MessDetectorCommand extends AbstractMoodleCommand
 
         $messDetector = new PHPMD();
         $messDetector->processFiles(implode(',', $files), $rules, [$renderer], $ruleSetFactory);
-
-        return 0;
     }
 }
