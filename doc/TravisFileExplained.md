@@ -50,7 +50,7 @@ before_install:
 # Update Composer.
   - composer selfupdate
 # Install this project into a directory called "ci".
-  - composer create-project -n moodlerooms/moodle-plugin-ci ci dev-master
+  - composer create-project -n --no-dev moodlerooms/moodle-plugin-ci ci ^1
 # Update the $PATH so scripts from this project can be called easily.
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 

@@ -26,7 +26,7 @@ env:
 before_install:
   - cd ../..
   - composer selfupdate
-  - composer create-project -n moodlerooms/moodle-plugin-ci ci ^1
+  - composer create-project -n --no-dev moodlerooms/moodle-plugin-ci ci ^1
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:
