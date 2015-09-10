@@ -64,6 +64,16 @@ class TestSuiteInstaller extends AbstractInstaller
         return $behatUtility;
     }
 
+    /**
+     * The location where the selenium.jar file is stored.
+     *
+     * @return string
+     */
+    private function getSeleniumJarPath()
+    {
+        return $this->moodle->directory.'/selenium.jar';
+    }
+
     public function install()
     {
         $this->getOutput()->step('Initialize test suite');
@@ -96,15 +106,13 @@ class TestSuiteInstaller extends AbstractInstaller
 
         $this->getOutput()->debug('Download Selenium, start servers and initialize Behat');
 
-        $jar    = $this->moodle->directory.'/selenium.jar';
-        $curl   = sprintf('curl -o %s http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar', $jar);
-        $binDir = realpath(__DIR__.'/../../bin');
+        $curl = sprintf(
+            'curl -o %s http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar',
+            $this->getSeleniumJarPath()
+        );
 
         return [
             new Process($curl, null, null, null, 120),
-            new Process(sprintf('%s/start-selenium %s', $binDir, $jar)),
-            new Process(sprintf('%s/start-phantom-js', $binDir)),
-            new Process(sprintf('%s/start-web-server', $binDir), $this->moodle->directory),
             new Process(sprintf('php %s --install', $this->getBehatUtility()), null, null, null, null),
         ];
     }
@@ -139,6 +147,12 @@ class TestSuiteInstaller extends AbstractInstaller
 
         if ($this->plugin->hasBehatFeatures()) {
             $this->getOutput()->debug('Enabling Behat');
+
+            $binDir = realpath(__DIR__.'/../../bin');
+
+            $processes[] = new Process(sprintf('%s/start-selenium %s', $binDir, $this->getSeleniumJarPath()));
+            $processes[] = new Process(sprintf('%s/start-phantom-js', $binDir));
+            $processes[] = new Process(sprintf('%s/start-web-server', $binDir), $this->moodle->directory);
             $processes[] = new Process(sprintf('php %s --enable', $this->getBehatUtility()));
         }
         if ($this->plugin->hasUnitTests()) {
