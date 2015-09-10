@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## 1.0.0 - 2015-09-10
 ### Added
 - `moodle-plugin-ci install` command.  This does all of the setup for testing.
 - `moodle-plugin-ci behat` command.  Runs plugin Behat features.
@@ -17,4 +19,4 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/commits/master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.0.0...master
