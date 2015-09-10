@@ -44,8 +44,12 @@ class CSSLintCommand extends AbstractPluginCommand
     {
         $this->outputHeading($output, 'CSS Lint on %s');
 
+        $ignoreRules = 'adjoining-classes,box-sizing,box-model,overqualified-elements,bulletproof-font-face,'.
+            'compatible-vendor-prefixes,selector-max-approaching,fallback-colors,floats,ids,'.
+            'qualified-headings,selector-max,unique-headings';
+
         $files   = $this->plugin->getRelativeFiles(Finder::create()->name('*.css')->notName('*-min.css'));
-        $process = $this->execute->passThrough('csslint '.implode(' ', $files), $this->plugin->directory);
+        $process = $this->execute->passThrough(sprintf('csslint --ignore=%s %s', $ignoreRules, implode(' ', $files)), $this->plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;
     }
