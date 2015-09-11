@@ -30,7 +30,7 @@ class MoodleDebugException extends \RuntimeException
         );
 
         if (!$process->isOutputDisabled()) {
-            $error .= sprintf("\n\nOutput:\n================\n%s", $process->getOutput());
+            $error .= sprintf("\n\nOutput\n======\n%s", $process->getOutput());
         }
 
         parent::__construct($error);
