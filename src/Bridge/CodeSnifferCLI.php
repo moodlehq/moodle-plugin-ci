@@ -19,7 +19,7 @@ namespace Moodlerooms\MoodlePluginCI\Bridge;
  * does not print when you do not use Code Sniffer
  * via its own CLI script.
  *
- * This is copied from moodle-local_codechecker.
+ * This was inspired by moodle-local_codechecker.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
