@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Installer;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
+use Moodlerooms\MoodlePluginCI\Bridge\MoodleConfig;
 use Moodlerooms\MoodlePluginCI\Installer\Database\AbstractDatabase;
 use Moodlerooms\MoodlePluginCI\Process\Execute;
 use Moodlerooms\MoodlePluginCI\Validate;
@@ -43,6 +44,11 @@ class MoodleInstaller extends AbstractInstaller
     private $moodle;
 
     /**
+     * @var MoodleConfig
+     */
+    private $config;
+
+    /**
      * @var string
      */
     private $branch;
@@ -56,14 +62,16 @@ class MoodleInstaller extends AbstractInstaller
      * @param Execute          $execute
      * @param AbstractDatabase $database
      * @param Moodle           $moodle
+     * @param MoodleConfig     $config
      * @param string           $branch
      * @param string           $dataDir
      */
-    public function __construct(Execute $execute, AbstractDatabase $database, Moodle $moodle, $branch, $dataDir)
+    public function __construct(Execute $execute, AbstractDatabase $database, Moodle $moodle, MoodleConfig $config, $branch, $dataDir)
     {
         $this->execute  = $execute;
         $this->database = $database;
         $this->moodle   = $moodle;
+        $this->config   = $config;
         $this->branch   = $branch;
         $this->dataDir  = $dataDir;
     }
@@ -91,36 +99,10 @@ class MoodleInstaller extends AbstractInstaller
         $this->execute->mustRun($this->database->getCreateDatabaseCommand());
 
         $this->getOutput()->debug('Creating Moodle\'s config file');
-        $filesystem->dumpFile($this->moodle->directory.'/config.php', $this->generateConfig($this->expandPath($this->dataDir)));
+        $contents = $this->config->createContents($this->database, $this->expandPath($this->dataDir));
+        $this->config->dump($this->moodle->directory.'/config.php', $contents);
 
         $this->addEnv('MOODLE_DIR', $this->moodle->directory);
-    }
-
-    /**
-     * Create a Moodle config.
-     *
-     * @param string $dataDir
-     *
-     * @return string
-     */
-    public function generateConfig($dataDir)
-    {
-        $template  = file_get_contents(__DIR__.'/../../res/template/config.php.txt');
-        $variables = [
-            '{{DBTYPE}}'          => $this->database->type,
-            '{{DBLIBRARY}}'       => $this->database->library,
-            '{{DBHOST}}'          => $this->database->host,
-            '{{DBNAME}}'          => $this->database->name,
-            '{{DBUSER}}'          => $this->database->user,
-            '{{DBPASS}}'          => $this->database->pass,
-            '{{WWWROOT}}'         => 'http://localhost/moodle',
-            '{{DATAROOT}}'        => $dataDir,
-            '{{PHPUNITDATAROOT}}' => $dataDir.'/phpu_moodledata',
-            '{{BEHATDATAROOT}}'   => $dataDir.'/behat_moodledata',
-            '{{BEHATWWWROOT}}'    => 'http://localhost:8000',
-        ];
-
-        return str_replace(array_keys($variables), array_values($variables), $template);
     }
 
     /**

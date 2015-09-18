@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Installer;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
+use Moodlerooms\MoodlePluginCI\Bridge\MoodleConfig;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Installer\Database\AbstractDatabase;
 use Moodlerooms\MoodlePluginCI\Process\Execute;
@@ -72,7 +73,7 @@ class InstallerFactory
      */
     public function addInstallers(InstallerCollection $installers)
     {
-        $installers->add(new MoodleInstaller($this->execute, $this->database, $this->moodle, $this->branch, $this->dataDir));
+        $installers->add(new MoodleInstaller($this->execute, $this->database, $this->moodle, new MoodleConfig(), $this->branch, $this->dataDir));
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->notPaths, $this->notNames));
         $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute));
 

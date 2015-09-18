@@ -12,10 +12,7 @@
 
 namespace Moodlerooms\MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
-use Moodlerooms\MoodlePluginCI\Validate;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -28,27 +25,17 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractMoodleCommand extends AbstractPluginCommand
 {
-    /**
-     * @var Moodle
-     */
-    public $moodle;
+    use MoodleOptionTrait;
 
     protected function configure()
     {
         parent::configure();
-
-        $moodle = getenv('MOODLE_DIR') !== false ? getenv('MOODLE_DIR') : '.';
-        $this->addOption('moodle', 'm', InputOption::VALUE_REQUIRED, 'Path to Moodle', $moodle);
+        $this->addMoodleOption($this);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
-
-        if (!$this->moodle) {
-            $validate     = new Validate();
-            $moodleDir    = realpath($validate->directory($input->getOption('moodle')));
-            $this->moodle = new Moodle($moodleDir);
-        }
+        $this->initializeMoodle($input);
     }
 }

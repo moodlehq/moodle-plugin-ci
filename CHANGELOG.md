@@ -6,9 +6,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 
-## 1.0.0 - 2015-09-10
+## 1.0.0 - 2015-09-18
 ### Added
 - `moodle-plugin-ci install` command.  This does all of the setup for testing.
+- `moodle-plugin-ci add-config` command.  Adds extra configs to Moodle's config file.
 - `moodle-plugin-ci behat` command.  Runs plugin Behat features.
 - `moodle-plugin-ci phpunit` command.  Runs plugin PHPUnit tests.
 - `moodle-plugin-ci phplint` command.  Lints PHP files in the plugin.

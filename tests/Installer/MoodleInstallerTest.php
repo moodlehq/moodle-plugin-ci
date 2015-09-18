@@ -12,6 +12,7 @@
 
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
+use Moodlerooms\MoodlePluginCI\Bridge\MoodleConfig;
 use Moodlerooms\MoodlePluginCI\Installer\Database\MySQLDatabase;
 use Moodlerooms\MoodlePluginCI\Installer\MoodleInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
@@ -46,6 +47,7 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
             new DummyExecute(),
             new MySQLDatabase(),
             $moodle,
+            new MoodleConfig(),
             'MOODLE_27_STABLE',
             $dataDir
         );
@@ -62,22 +64,5 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($installDir, $moodle->directory, 'Moodle directory should be absolute path after install');
         $this->assertEquals(['MOODLE_DIR' => $installDir], $installer->getEnv());
-    }
-
-    public function testGenerateConfig()
-    {
-        $installer = new MoodleInstaller(
-            new DummyExecute(),
-            new MySQLDatabase(),
-            new DummyMoodle($this->tempDir),
-            'MOODLE_27_STABLE',
-            $this->tempDir
-        );
-
-        $configFile = $this->tempDir.'/config.php';
-        $config     = $installer->generateConfig('/path/to/moodledata');
-        file_put_contents($configFile, $config);
-
-        $this->assertFileEquals(__DIR__.'/../Fixture/example-config.php', $configFile);
     }
 }

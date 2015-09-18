@@ -46,6 +46,7 @@ added the `.travis.yml` file, commit and push up to GitHub, to trigger a Travis 
 # Documentation
 
 * [Travis CI file explained](doc/TravisFileExplained.md)
+* [Add extra Moodle configs](doc/AddExtraConfig.md)
 * [Ignoring files](doc/IgnoringFiles.md)
 
 # Usage / Versioning

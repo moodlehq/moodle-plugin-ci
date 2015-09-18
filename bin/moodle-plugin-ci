@@ -12,6 +12,7 @@
  */
 
 use Dotenv\Dotenv;
+use Moodlerooms\MoodlePluginCI\Command\AddConfigCommand;
 use Moodlerooms\MoodlePluginCI\Command\BehatCommand;
 use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
 use Moodlerooms\MoodlePluginCI\Command\CompletionCommand;
@@ -46,6 +47,7 @@ if (file_exists('~/.env-travis')) {
 }
 
 $application = new Application('Moodle Plugin CI', '1.0.0');
+$application->add(new AddConfigCommand());
 $application->add(new BehatCommand());
 $application->add(new CodeCheckerCommand());
 $application->add(new CompletionCommand());

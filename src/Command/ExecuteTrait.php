@@ -29,6 +29,12 @@ trait ExecuteTrait
      */
     public $execute;
 
+    /**
+     * Initialize the execute property if necessary.
+     *
+     * @param OutputInterface $output
+     * @param ProcessHelper   $helper
+     */
     protected function initializeExecute(OutputInterface $output, ProcessHelper $helper)
     {
         $this->execute = $this->execute ?: new Execute($output, $helper);
