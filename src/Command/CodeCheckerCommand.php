@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Moodlerooms\MoodlePluginCI\Bridge\CodeSnifferCLI;
+use Moodlerooms\MoodlePluginCI\StandardResolver;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -28,29 +29,49 @@ class CodeCheckerCommand extends AbstractPluginCommand
 {
     use ExecuteTrait;
 
+    /**
+     * The coding standard to use.
+     *
+     * @var string
+     */
+    protected $standard;
+
+    /**
+     * Used to find the files to process.
+     *
+     * @var Finder
+     */
+    protected $finder;
+
     protected function configure()
     {
         parent::configure();
 
         $this->setName('codechecker')
             ->setDescription('Run Moodle Code Checker on a plugin')
-            ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use');
+            ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
+
+        // Resolve the coding standard.
+        $resolver       = new StandardResolver();
+        $this->standard = $input->getOption('standard');
+        if ($resolver->hasStandard($this->standard)) {
+            $this->standard = $resolver->resolve($this->standard);
+        }
+
+        $this->finder = Finder::create()->notPath('yui/build')->name('*.php')->name('*.js')->notName('*-min.js');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->outputHeading($output, 'Moodle Code Checker on %s');
 
-        $standard = $input->getOption('standard') ?: $this->resolveStandard();
-        $files    = $this->plugin->getFiles(
-            Finder::create()->notPath('yui/build')->name('*.php')->name('*.js')->notName('*-min.js')
-        );
+        $files = $this->plugin->getFiles($this->finder);
 
         $sniffer = new \PHP_CodeSniffer();
         $sniffer->setCli(new CodeSnifferCLI([
@@ -61,32 +82,9 @@ class CodeCheckerCommand extends AbstractPluginCommand
             'reportWidth'  => 120,
         ]));
 
-        $sniffer->process($files, $standard);
+        $sniffer->process($files, $this->standard);
         $results = $sniffer->reporting->printReport('full', false, $sniffer->cli->getCommandLineValues(), null, 120);
 
         return $results['errors'] > 0 ? 1 : 0;
-    }
-
-    /**
-     * Find the Moodle coding standard.
-     *
-     * @param array|null $locations Override the default locations to search
-     *
-     * @return string
-     */
-    public function resolveStandard(array $locations = null)
-    {
-        $locations = $locations ?: [
-            __DIR__.'/../../../../moodlerooms/moodle-coding-standard/moodle', // Global Composer install.
-            __DIR__.'/../../vendor/moodlerooms/moodle-coding-standard/moodle', // Local Composer install.
-        ];
-
-        foreach ($locations as $location) {
-            if (file_exists($location)) {
-                return $location;
-            }
-        }
-
-        throw new \RuntimeException('Failed to find the Moodle coding standard, likely need to run Composer install');
     }
 }

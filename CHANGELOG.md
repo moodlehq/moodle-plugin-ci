@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- `moodle-plugin-ci phpcbf` command. Re-formats code according to Moodle coding standards. This command is **not**
+  supposed to be used on Travis CI, but rather locally to fix coding style problems.
 
 ## 1.0.0 - 2015-09-18
 ### Added

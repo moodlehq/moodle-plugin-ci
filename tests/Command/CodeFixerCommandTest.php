@@ -12,8 +12,9 @@
 
 namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
-use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
+use Moodlerooms\MoodlePluginCI\Command\CodeFixerCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -21,7 +22,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
+class CodeFixerCommandTest extends \PHPUnit_Framework_TestCase
 {
     private $pluginDir;
 
@@ -36,13 +37,14 @@ class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
             $pluginDir = $this->pluginDir;
         }
 
-        $command         = new CodeCheckerCommand();
-        $command->plugin = new DummyMoodlePlugin($pluginDir);
+        $command          = new CodeFixerCommand();
+        $command->plugin  = new DummyMoodlePlugin($pluginDir);
+        $command->execute = new DummyExecute();
 
         $application = new Application();
         $application->add($command);
 
-        $commandTester = new CommandTester($application->find('codechecker'));
+        $commandTester = new CommandTester($application->find('phpcbf'));
         $commandTester->execute([
             'plugin' => $pluginDir,
         ]);
@@ -52,25 +54,7 @@ class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
 
     public function testExecute()
     {
-        $this->expectOutputRegex('/\.+/');
         $commandTester = $this->executeCommand();
         $this->assertEquals(0, $commandTester->getStatusCode());
-    }
-
-    /**
-     * @expectedException \RuntimeException
-     */
-    public function testExecuteNoFiles()
-    {
-        // Just random directory with no PHP files.
-        $this->executeCommand($this->pluginDir.'/tests/behat');
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExecuteNoPlugin()
-    {
-        $this->executeCommand('/path/to/no/plugin');
     }
 }
