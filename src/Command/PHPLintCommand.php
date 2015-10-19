@@ -38,10 +38,13 @@ class PHPLintCommand extends AbstractPluginCommand
     {
         $this->outputHeading($output, 'PHP Lint on %s');
 
+        $files = $this->plugin->getFiles(Finder::create()->name('*.php'));
+        if (count($files) === 0) {
+            return $this->outputSkip($output);
+        }
+
         $settings = new Settings();
-        $settings->addPaths(
-            $this->plugin->getFiles(Finder::create()->name('*.php'))
-        );
+        $settings->addPaths($files);
 
         $manager = new Manager();
         $result  = $manager->run($settings);

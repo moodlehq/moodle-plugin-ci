@@ -45,9 +45,12 @@ class MessDetectorCommand extends AbstractMoodleCommand
     {
         $this->outputHeading($output, 'PHP Mess Detector on %s');
 
+        $files = $this->plugin->getFiles(Finder::create()->name('*.php'));
+        if (count($files) === 0) {
+            return $this->outputSkip($output);
+        }
         $validate = new Validate();
         $rules    = realpath($validate->filePath($input->getOption('rules')));
-        $files    = $this->plugin->getFiles(Finder::create()->name('*.php'));
 
         $renderer = new MessDetectorRenderer($output, $this->moodle->directory);
         $renderer->setWriter(new StreamWriter(STDOUT));

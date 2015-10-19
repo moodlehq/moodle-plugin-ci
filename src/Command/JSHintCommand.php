@@ -48,6 +48,10 @@ class JSHintCommand extends AbstractPluginCommand
             Finder::create()->name('*.js')->notName('*-min.js')->notPath('yui/build')
         );
 
+        if (count($files) === 0) {
+            return $this->outputSkip($output);
+        }
+
         $process = $this->execute->passThrough('jshint '.implode(' ', $files), $this->plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;

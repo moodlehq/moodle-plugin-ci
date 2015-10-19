@@ -8,6 +8,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 - `moodle-plugin-ci phpcbf` command. Re-formats code according to Moodle coding standards. This command is **not**
   supposed to be used on Travis CI, but rather locally to fix coding style problems.
+### Changed
+- Commands no longer error when relevant files are not found.
 
 ## 1.0.0 - 2015-09-18
 ### Added

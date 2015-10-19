@@ -250,10 +250,6 @@ class MoodlePlugin
             $files[] = $file->getRealpath();
         }
 
-        if (empty($files)) {
-            throw new \RuntimeException('Failed to find any plugin files to process');
-        }
-
         return $files;
     }
 

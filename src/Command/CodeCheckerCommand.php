@@ -72,6 +72,9 @@ class CodeCheckerCommand extends AbstractPluginCommand
         $this->outputHeading($output, 'Moodle Code Checker on %s');
 
         $files = $this->plugin->getFiles($this->finder);
+        if (count($files) === 0) {
+            return $this->outputSkip($output);
+        }
 
         $sniffer = new \PHP_CodeSniffer();
         $sniffer->setCli(new CodeSnifferCLI([

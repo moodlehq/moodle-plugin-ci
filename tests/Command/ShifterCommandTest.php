@@ -68,15 +68,14 @@ class ShifterCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testExecuteNoSource()
     {
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/yui/src');
 
-        $this->executeCommand();
+        $commandTester = $this->executeCommand();
+        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertRegExp('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
     /**

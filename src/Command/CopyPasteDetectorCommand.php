@@ -39,10 +39,12 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
     {
         $this->outputHeading($output, 'PHP Copy/Paste Detector on %s');
 
+        $files = $this->plugin->getFiles(Finder::create()->name('*.php'));
+        if (count($files) === 0) {
+            return $this->outputSkip($output);
+        }
         $detector = new Detector(new DefaultStrategy());
-        $clones   = $detector->copyPasteDetection(
-            $this->plugin->getFiles(Finder::create()->name('*.php'))
-        );
+        $clones   = $detector->copyPasteDetection($files);
 
         $printer = new Text();
         $printer->printResult($output, $clones);

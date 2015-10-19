@@ -55,4 +55,12 @@ abstract class AbstractPluginCommand extends Command
         $message = sprintf($message, $this->plugin->getComponent());
         $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>%s</>', $message));
     }
+
+    protected function outputSkip(OutputInterface $output, $message = null)
+    {
+        $message = $message ?: 'No relevant files found to process, free pass!';
+        $output->writeln('<info>'.$message.'</info>');
+
+        return 0;
+    }
 }

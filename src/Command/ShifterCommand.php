@@ -48,7 +48,7 @@ class ShifterCommand extends AbstractPluginCommand
         $pluginDir = $this->plugin->directory;
 
         if (!is_dir($pluginDir.'/yui/src')) {
-            throw new \RuntimeException('Plugin does not have a \'yui/src\' directory to process');
+            return $this->outputSkip($output);
         }
         if (!is_dir($pluginDir.'/yui/build')) {
             throw new \RuntimeException('The yui/build directory does not exist, plugin YUI modules need to be re-shifted.');

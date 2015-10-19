@@ -48,7 +48,10 @@ class CSSLintCommand extends AbstractPluginCommand
             'compatible-vendor-prefixes,selector-max-approaching,fallback-colors,floats,ids,'.
             'qualified-headings,selector-max,unique-headings';
 
-        $files   = $this->plugin->getRelativeFiles(Finder::create()->name('*.css')->notName('*-min.css'));
+        $files = $this->plugin->getRelativeFiles(Finder::create()->name('*.css')->notName('*-min.css'));
+        if (count($files) === 0) {
+            return $this->outputSkip($output);
+        }
         $process = $this->execute->passThrough(sprintf('csslint --ignore=%s %s', $ignoreRules, implode(' ', $files)), $this->plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;

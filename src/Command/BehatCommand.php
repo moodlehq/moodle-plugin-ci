@@ -43,11 +43,11 @@ class BehatCommand extends AbstractMoodleCommand
     {
         $this->outputHeading($output, 'Behat features for %s');
 
-        $config = $this->moodle->getBehatDataDirectory().'/behat/behat.yml';
-
         if (!$this->plugin->hasBehatFeatures()) {
-            throw new \InvalidArgumentException('No Behat features to run in '.$this->plugin->directory);
+            return $this->outputSkip($output, 'No Behat features to run, free pass!');
         }
+
+        $config = $this->moodle->getBehatDataDirectory().'/behat/behat.yml';
         if (!file_exists($config)) {
             throw new \RuntimeException('Behat config file not found.  Behat must not have been installed.');
         }

@@ -35,7 +35,11 @@ class CodeFixerCommand extends CodeCheckerCommand
     {
         $this->outputHeading($output, 'Code Beautifier and Fixer on %s');
 
-        $files   = $this->plugin->getRelativeFiles($this->finder);
+        $files = $this->plugin->getRelativeFiles($this->finder);
+        if (count($files) === 0) {
+            return $this->outputSkip($output, 'No files found to process.');
+        }
+
         $command = sprintf('phpcbf --encoding=utf-8 --colors --standard=%s %s', $this->standard, implode(' ', $files));
         $process = $this->execute->passThrough($command, $this->plugin->directory);
 

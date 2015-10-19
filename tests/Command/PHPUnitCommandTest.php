@@ -73,15 +73,14 @@ class PHPUnitCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoTests()
     {
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests/lib_test.php');
 
-        $this->executeCommand();
+        $commandTester = $this->executeCommand();
+        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertRegExp('/No PHPUnit tests to run, free pass!/', $commandTester->getDisplay());
     }
 
     /**

@@ -77,15 +77,14 @@ class BehatCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoFeatures()
     {
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests/behat');
 
-        $this->executeCommand();
+        $commandTester = $this->executeCommand();
+        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertRegExp('/No Behat features to run, free pass!/', $commandTester->getDisplay());
     }
 
     /**

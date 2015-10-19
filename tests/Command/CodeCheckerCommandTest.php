@@ -57,13 +57,12 @@ class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testExecuteNoFiles()
     {
         // Just random directory with no PHP files.
-        $this->executeCommand($this->pluginDir.'/tests/behat');
+        $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
+        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertRegExp('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
     /**

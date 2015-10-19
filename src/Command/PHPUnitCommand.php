@@ -44,7 +44,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
         $this->outputHeading($output, 'PHPUnit tests for %s');
 
         if (!$this->plugin->hasUnitTests()) {
-            throw new \InvalidArgumentException('No PHPUnit tests found in plugin: '.$this->plugin->directory);
+            return $this->outputSkip($output, 'No PHPUnit tests to run, free pass!');
         }
         $process = $this->execute->passThrough(
             sprintf('%s/vendor/bin/phpunit --colors --testsuite %s_testsuite', $this->moodle->directory, $this->plugin->getComponent()),
