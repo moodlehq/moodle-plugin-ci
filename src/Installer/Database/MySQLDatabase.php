@@ -26,8 +26,9 @@ class MySQLDatabase extends AbstractDatabase
     {
         $passOpt  = !empty($this->pass) ? ' --password='.escapeshellarg($this->pass) : '';
         $user     = escapeshellarg($this->user);
-        $createDB = escapeshellarg(sprintf('CREATE DATABASE %s DEFAULT CHARACTER SET UTF8 COLLATE UTF8_bin;', $this->name));
+        $host     = escapeshellarg($this->host);
+        $createDB = escapeshellarg(sprintf('CREATE DATABASE `%s` DEFAULT CHARACTER SET UTF8 COLLATE UTF8_bin;', $this->name));
 
-        return sprintf('mysql -u %s%s -e %s', $user, $passOpt, $createDB);
+        return sprintf('mysql -u %s%s -h %s -e %s', $user, $passOpt, $host, $createDB);
     }
 }
