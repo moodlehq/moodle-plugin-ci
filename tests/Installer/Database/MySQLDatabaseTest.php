@@ -28,7 +28,7 @@ class MySQLDatabaseTest extends \PHPUnit_Framework_TestCase
         $database->pass = 'TestPass';
         $database->host = 'TestHost';
 
-        $expected = 'mysql -u \'TestUser\' --password=\'TestPass\' -h \'TestHost\' -e \'CREATE DATABASE `TestName` DEFAULT CHARACTER SET UTF8 COLLATE UTF8_bin;\'';
+        $expected = 'mysql -u \'TestUser\' --password=\'TestPass\' -h \'TestHost\' -e \'CREATE DATABASE `TestName` DEFAULT CHARACTER SET UTF8 COLLATE utf8_general_ci;\'';
         $this->assertEquals($expected, $database->getCreateDatabaseCommand());
     }
 }

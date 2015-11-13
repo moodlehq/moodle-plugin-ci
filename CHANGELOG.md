@@ -9,6 +9,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - Pass host when connecting with MySQL and Postgres.
 - Add quotes around database name for MySQL and Postgres.
 
+### Changed
+- MySQL database collation from UTF8_bin to utf8_general_ci.
+
 ## [1.1.0] - 2015-10-19
 ### Added
 - `moodle-plugin-ci phpcbf` command. Re-formats code according to Moodle coding standards. This command is **not**
