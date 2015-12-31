@@ -12,7 +12,6 @@
 
 namespace Moodlerooms\MoodlePluginCI\Process;
 
-use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
 /**
@@ -31,11 +30,9 @@ class MoodleProcess extends Process
      */
     public function __construct($script, $cwd = null, array $env = null, $timeout = null)
     {
-        $phpFinder = new PhpExecutableFinder();
-
         // By telling PHP to log errors without having a log file, PHP will write
         // errors to STDERR in a specific format (each line is prefixed with PHP).
-        $commandline = sprintf('%s -d log_errors=1 -d error_log=NULL %s', $phpFinder->find(), $script);
+        $commandline = sprintf('php -d log_errors=1 -d error_log=NULL %s', $script);
 
         parent::__construct($commandline, $cwd, $env, null, $timeout);
     }

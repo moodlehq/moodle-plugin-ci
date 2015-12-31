@@ -10,16 +10,19 @@ php:
  - 5.4
 
 env:
-  - MOODLE_BRANCH=MOODLE_29_STABLE DB=pgsql
-  - MOODLE_BRANCH=MOODLE_28_STABLE DB=pgsql
-  - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli
+  - MOODLE_BRANCH=MOODLE_29_STABLE DB=pgsql COVERAGE=false
+  - MOODLE_BRANCH=MOODLE_28_STABLE DB=pgsql COVERAGE=false
+  - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli COVERAGE=false
 
 matrix:
   include:
     - php: 7.0
-      env: MOODLE_BRANCH=MOODLE_30_STABLE DB=pgsql
+      env: MOODLE_BRANCH=MOODLE_30_STABLE DB=pgsql COVERAGE=true
 
 install:
+  # Several tools complain about xdebug slowdown.
+  - phpenv config-rm xdebug.ini || return 0
+
   - composer selfupdate
   - composer install -n
 
@@ -35,7 +38,8 @@ script:
   - composer validate
   - composer lint
   - php-cs-fixer --dry-run -v fix
-  - phpunit --coverage-clover coverage.clover
+  - if [ "$COVERAGE" = true ]; then phpdbg -qrr $(which phpunit) --coverage-clover coverage.clover; fi
+  - if [ "$COVERAGE" = false ]; then phpunit; fi
 
   # This is basically "integration" testing.
   - moodle-plugin-ci phplint
@@ -49,4 +53,4 @@ script:
   - moodle-plugin-ci behat
 
 after_script:
-  - ocular code-coverage:upload --format=php-clover coverage.clover
+  - if [ "$COVERAGE" = true ]; then ocular code-coverage:upload --format=php-clover coverage.clover; fi
