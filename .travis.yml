@@ -14,6 +14,11 @@ env:
   - MOODLE_BRANCH=MOODLE_28_STABLE DB=pgsql
   - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli
 
+matrix:
+  include:
+    - php: 7.0
+      env: MOODLE_BRANCH=MOODLE_30_STABLE DB=pgsql
+
 install:
   - composer selfupdate
   - composer install -n
