@@ -11,6 +11,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Changed
 - MySQL database collation from UTF8_bin to utf8_general_ci.
+- Project dependencies have been updated for PHP7 support.
 
 ### Added
 - Support for [glob](http://php.net/manual/en/function.glob.php) patterns for file paths in `thirdpartylibs.xml` files.
