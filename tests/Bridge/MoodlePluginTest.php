@@ -90,8 +90,9 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
 
     public function testGetThirdPartyLibraryPaths()
     {
-        $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertEquals(['vendor.php', 'vendor'], $plugin->getThirdPartyLibraryPaths());
+        $plugin   = new MoodlePlugin($this->pluginDir);
+        $expected = ['vendor.php', 'vendor', 'vendor_glob1.php', 'vendor_glob2.php'];
+        $this->assertEquals($expected, $plugin->getThirdPartyLibraryPaths());
     }
 
     /**

@@ -14,4 +14,11 @@
         <license>GPL</license>
         <licenseversion>3.0</licenseversion>
     </library>
+    <library>
+        <location>vendor_glob*.*</location>
+        <name>Acme Package</name>
+        <version>v1.0.0</version>
+        <license>GPL</license>
+        <licenseversion>3.0</licenseversion>
+    </library>
 </libraries>

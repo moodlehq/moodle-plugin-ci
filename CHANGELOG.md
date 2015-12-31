@@ -12,6 +12,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Changed
 - MySQL database collation from UTF8_bin to utf8_general_ci.
 
+### Added
+- Support for [glob](http://php.net/manual/en/function.glob.php) patterns for file paths in `thirdpartylibs.xml` files.
+
 ## [1.1.0] - 2015-10-19
 ### Added
 - `moodle-plugin-ci phpcbf` command. Re-formats code according to Moodle coding standards. This command is **not**

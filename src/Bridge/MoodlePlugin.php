@@ -175,25 +175,13 @@ class MoodlePlugin
      */
     public function getThirdPartyLibraryPaths()
     {
-        $paths         = [];
-        $thirdPartyXML = $this->directory.'/thirdpartylibs.xml';
-
-        if (!is_file($thirdPartyXML)) {
-            return $paths;
+        $xmlFile = $this->directory.'/thirdpartylibs.xml';
+        if (!is_file($xmlFile)) {
+            return [];
         }
-        $xml = simplexml_load_file($thirdPartyXML);
-        foreach ($xml->xpath('/libraries/library/location') as $location) {
-            $location = (string) trim($location, '/');
+        $vendors = new Vendors($xmlFile);
 
-            // Accept only correct paths from XML files.
-            if (file_exists(dirname($this->directory.'/'.$location))) {
-                $paths[] = $location;
-            } else {
-                throw new \RuntimeException('The plugin thirdpartylibs.xml contains a non-existent path: '.$location);
-            }
-        }
-
-        return $paths;
+        return $vendors->getRelativeVendorPath();
     }
 
     /**
