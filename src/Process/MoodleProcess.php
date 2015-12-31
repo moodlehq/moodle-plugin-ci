@@ -99,7 +99,7 @@ class MoodleProcess extends Process
         // Looks for something like the following which is a debug message and the start of the debug trace:
         // ++ Some message ++
         // * line
-        return (preg_match("/\\+\\+ .* \\+\\+\n\\* line/", $output) !== 0);
+        return preg_match("/\\+\\+ .* \\+\\+\n\\* line/", $output) !== 0;
     }
 
     /**
@@ -113,6 +113,6 @@ class MoodleProcess extends Process
     {
         // Looks for something like the following which is a debug message and the start of the debug trace:
         // PHP Notice:  Undefined index: bat in /path/to/file.php on line 30
-        return (preg_match('/PHP [\w\s]+:/s', $output) !== 0);
+        return preg_match('/PHP [\w\s]+:/s', $output) !== 0;
     }
 }

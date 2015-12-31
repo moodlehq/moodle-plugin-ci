@@ -152,7 +152,7 @@ class MoodlePlugin
         $finder = new Finder();
         $result = $finder->files()->in($this->directory)->path('tests')->name('*_test.php')->count();
 
-        return ($result !== 0);
+        return $result !== 0;
     }
 
     /**
@@ -165,7 +165,7 @@ class MoodlePlugin
         $finder = new Finder();
         $result = $finder->files()->in($this->directory)->path('tests/behat')->name('*.feature')->count();
 
-        return ($result !== 0);
+        return $result !== 0;
     }
 
     /**
