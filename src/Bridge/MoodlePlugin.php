@@ -181,7 +181,7 @@ class MoodlePlugin
         }
         $vendors = new Vendors($xmlFile);
 
-        return $vendors->getRelativeVendorPath();
+        return $vendors->getRelativeVendorPaths();
     }
 
     /**

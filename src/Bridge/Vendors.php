@@ -80,7 +80,7 @@ class Vendors
      *
      * @return array
      */
-    public function getRelativeVendorPath()
+    public function getRelativeVendorPaths()
     {
         $base = dirname($this->path).'/';
 
