@@ -8,6 +8,12 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Removed
 - PhantomJS support.  No way to actually use it and Selenium can handle everything.
 
+### Changed
+- The `.travis.dist.yml` file not longer allows PHP7 to fail.
+- The `.travis.dist.yml` file now disables XDebug to improve build times.
+- The `.travis.dist.yml` file now defaults to Moodle 3 stable which supports PHP7.  Older versions of Moodle do
+  not support PHP7, so take this into account when you update your YAML file.
+
 ## [1.2.0] - 2015-12-31
 ### Fixed
 - Pass host when connecting with MySQL and Postgres.

@@ -17,23 +17,18 @@ cache:
 
 # Determines which versions of PHP to test our project against.  Each version listed
 # here will create a separate build and run the tests against that version of PHP.
+# WARNING, PHP7 only works in Moodle 3.0.1 or later!
 php:
  - 5.4
  - 5.5
  - 5.6
  - 7.0
 
-# This allows PHP 7.0 to fail without failing the whole build.  This is handy for spotting
-# future compatibility problems.
-matrix:
- allow_failures:
-  - php: 7.0
-
 # This section sets up the environment variables for the build.
 env:
  global:
 # This line determines which version of Moodle to test against.
-  - MOODLE_BRANCH=MOODLE_29_STABLE
+  - MOODLE_BRANCH=MOODLE_30_STABLE
 # This matrix is used for testing against multiple databases.  So for each version of
 # PHP being tested, one build will be created for each database listed here.  EG: for
 # PHP 5.4, one build will be created using PHP 5.4 and pgsql.  In addition, another
@@ -44,6 +39,9 @@ env:
 
 # This lists steps that are run before the installation step. 
 before_install:
+# This disables XDebug which should speed up the build.  One reason to remove this
+# line is if you are trying to generate code coverage with PHPUnit.
+  - phpenv config-rm xdebug.ini
 # Currently we are inside of the clone of your repository.  We move up two
 # directories to build the project.
   - cd ../..
