@@ -45,17 +45,6 @@ $CFG->behat_config   = array(
             )
         )
     ),
-    'phantomjs' => array(
-        'filters' => array('tags' => '~@_file_upload && ~@_alert && ~@_bug_phantomjs'),
-        'extensions' => array(
-            'Behat\MinkExtension\Extension' => array(
-                'selenium2' => array(
-                    'browser' => 'phantomjs',
-                    'wd_host' => 'http://localhost:4445/wd/hub'
-                )
-            )
-        )
-    ),
 );
 
 {{EXTRACONFIG}}

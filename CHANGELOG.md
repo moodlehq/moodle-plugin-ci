@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Removed
+- PhantomJS support.  No way to actually use it and Selenium can handle everything.
 
 ## [1.2.0] - 2015-12-31
 ### Fixed

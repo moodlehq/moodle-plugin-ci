@@ -64,7 +64,7 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertNotEmpty($installer->getBehatInstallProcesses());
-        $this->assertCount(5, $installer->getPostInstallProcesses());
+        $this->assertCount(4, $installer->getPostInstallProcesses());
 
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests/behat');
@@ -82,12 +82,12 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertNotEmpty($installer->getUnitTestInstallProcesses());
-        $this->assertCount(5, $installer->getPostInstallProcesses());
+        $this->assertCount(4, $installer->getPostInstallProcesses());
 
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests/lib_test.php');
 
         $this->assertEmpty($installer->getUnitTestInstallProcesses());
-        $this->assertCount(4, $installer->getPostInstallProcesses());
+        $this->assertCount(3, $installer->getPostInstallProcesses());
     }
 }

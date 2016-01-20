@@ -149,7 +149,6 @@ class TestSuiteInstaller extends AbstractInstaller
             $binDir = realpath(__DIR__.'/../../bin');
 
             $processes[] = new Process(sprintf('%s/start-selenium %s', $binDir, $this->getSeleniumJarPath()));
-            $processes[] = new Process(sprintf('%s/start-phantom-js', $binDir));
             $processes[] = new Process(sprintf('%s/start-web-server', $binDir), $this->moodle->directory);
             $processes[] = new MoodleProcess(sprintf('%s --enable', $this->getBehatUtility()));
         }
