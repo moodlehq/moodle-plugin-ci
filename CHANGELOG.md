@@ -16,6 +16,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Added
 - _Testing a plugin against PHP7_ help document.
+- `moodle-plugin-ci parallel` command. Runs all the commands at once. This command is **not** supposed to be used
+  on Travis CI, but rather locally, to save programmer fingers.
 
 ## [1.2.0] - 2015-12-31
 ### Fixed
