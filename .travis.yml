@@ -21,7 +21,7 @@ matrix:
 
 install:
   # Several tools complain about xdebug slowdown.
-  - phpenv config-rm xdebug.ini || return 0
+  - phpenv config-rm xdebug.ini
 
   - composer selfupdate
   - composer install -n
