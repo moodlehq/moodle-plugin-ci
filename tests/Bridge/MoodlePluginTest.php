@@ -133,8 +133,14 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $finder = new Finder();
         $finder->name('*.php');
 
-        $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertEquals([$this->pluginDir.'/lib.php'], $plugin->getFiles($finder));
+        $plugin   = new MoodlePlugin($this->pluginDir);
+        $expected = [
+            $this->pluginDir.'/classes/math.php',
+            $this->pluginDir.'/db/access.php',
+            $this->pluginDir.'/lang/en/local_travis.php',
+            $this->pluginDir.'/lib.php',
+        ];
+        $this->assertEquals($expected, $plugin->getFiles($finder));
     }
 
     public function testGetRelativeFiles()
@@ -142,7 +148,15 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $finder = new Finder();
         $finder->name('*.php')->sortByName();
 
-        $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertEquals(['lib.php', 'tests/lib_test.php', 'version.php'], $plugin->getRelativeFiles($finder));
+        $plugin   = new MoodlePlugin($this->pluginDir);
+        $expected = [
+            'classes/math.php',
+            'db/access.php',
+            'lang/en/local_travis.php',
+            'lib.php',
+            'tests/lib_test.php',
+            'version.php',
+        ];
+        $this->assertEquals($expected, $plugin->getRelativeFiles($finder));
     }
 }

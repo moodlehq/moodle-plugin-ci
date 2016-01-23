@@ -12,6 +12,10 @@
 
 namespace Moodlerooms\MoodlePluginCI\Bridge;
 
+use Moodlerooms\MoodlePluginCI\Parser\CodeParser;
+use Moodlerooms\MoodlePluginCI\Parser\StatementFilter;
+use PhpParser\Node\Scalar\String_;
+
 /**
  * Bridge to Moodle.
  *
@@ -75,6 +79,21 @@ class Moodle
     }
 
     /**
+     * Normalize the component into the type and plugin name.
+     *
+     * @param $component
+     *
+     * @return array
+     */
+    public function normalizeComponent($component)
+    {
+        $this->requireConfig();
+
+        /* @noinspection PhpUndefinedClassInspection */
+        return \core_component::normalize_component($component);
+    }
+
+    /**
      * Get the absolute install directory path within Moodle.
      *
      * @param string $component Moodle component, EG: mod_forum
@@ -83,10 +102,8 @@ class Moodle
      */
     public function getComponentInstallDirectory($component)
     {
-        $this->requireConfig();
+        list($type, $name) = $this->normalizeComponent($component);
 
-        /* @noinspection PhpUndefinedClassInspection */
-        list($type, $name) = \core_component::normalize_component($component);
         /* @noinspection PhpUndefinedClassInspection */
         $types = \core_component::get_plugin_types();
 
@@ -95,6 +112,26 @@ class Moodle
         }
 
         return $types[$type].'/'.$name;
+    }
+
+    /**
+     * Get the branch number, EG: 29, 30, etc.
+     *
+     * @return int
+     */
+    public function getBranch()
+    {
+        $filter = new StatementFilter();
+        $parser = new CodeParser();
+
+        $statements = $parser->parseFile($this->directory.'/version.php');
+        $assign     = $filter->findFirstVariableAssignment($statements, 'branch', 'Failed to find $branch in Moodle version.php');
+
+        if ($assign->expr instanceof String_) {
+            return (int) $assign->expr->value;
+        }
+
+        throw new \RuntimeException('Failed to find Moodle branch version');
     }
 
     /**

@@ -70,6 +70,7 @@ class ParallelCommand extends AbstractMoodleCommand
             'csslint'     => new Process(sprintf('%s csslint --ansi %s', $bin, $plugin)),
             'shifter'     => new Process(sprintf('%s shifter --ansi %s', $bin, $plugin)),
             'jshint'      => new Process(sprintf('%s jshint --ansi %s', $bin, $plugin)),
+            'validate'    => new Process(sprintf('%s validate --ansi -m %s %s', $bin, $moodle, $plugin)),
             'phpunit'     => new Process(sprintf('%s phpunit --ansi -m %s %s', $bin, $moodle, $plugin)),
             'behat'       => new Process(sprintf('%s behat --ansi -m %s %s', $bin, $moodle, $plugin)),
         ];

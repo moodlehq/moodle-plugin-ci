@@ -10,35 +10,19 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge;
+namespace Moodlerooms\MoodlePluginCI\Tests\Bridge;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 
 /**
- * Must override to avoid using Moodle API.
- *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class DummyMoodle extends Moodle
+class MoodleTest extends \PHPUnit_Framework_TestCase
 {
-    public function requireConfig()
+    public function testGetBranch()
     {
-        // Don't do anything.
-    }
-
-    public function normalizeComponent($component)
-    {
-        return ['local', 'travis'];
-    }
-
-    public function getComponentInstallDirectory($component)
-    {
-        return $this->directory.'/local/travis';
-    }
-
-    public function getBehatDataDirectory()
-    {
-        return $this->directory;
+        $moodle = new Moodle(__DIR__.'/../Fixture/moodle');
+        $this->assertEquals(29, $moodle->getBranch());
     }
 }

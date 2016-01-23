@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Just to give analysis tools something to work on.
+ * Plugin capabilities
  *
  * @package   local_travis
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -24,47 +24,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Add
- *
- * @param int $a A integer
- * @param int $b A integer
- * @return int
- */
-function local_travis_add($a, $b) {
-    // Let's add them.
-    return $a + $b;
-}
-
-/**
- * Subtract
- *
- * @param int $a A integer
- * @param int $b A integer
- * @return int
- */
-function local_travis_subtract($a, $b) {
-    // Let's subtract them.
-    return $a - $b;
-}
-
-/**
- * Math class.
- *
- * @package   local_travis
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class local_travis_math {
-    /**
-     * Add
-     *
-     * @param int $a A integer
-     * @param int $b A integer
-     * @return int
-     */
-    public function add($a, $b) {
-        // Let's add them.
-        return $a + $b;
-    }
-}
+$capabilities = [
+    'local/travis:view' => [
+        'captype'      => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes'   => [
+            'teacher'        => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager'        => CAP_ALLOW,
+        ],
+    ],
+];

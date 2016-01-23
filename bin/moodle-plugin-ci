@@ -26,6 +26,7 @@ use Moodlerooms\MoodlePluginCI\Command\ParallelCommand;
 use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
 use Moodlerooms\MoodlePluginCI\Command\PHPUnitCommand;
 use Moodlerooms\MoodlePluginCI\Command\ShifterCommand;
+use Moodlerooms\MoodlePluginCI\Command\ValidateCommand;
 use Symfony\Component\Console\Application;
 
 // Global install.
@@ -63,4 +64,5 @@ $application->add(new ParallelCommand());
 $application->add(new PHPLintCommand());
 $application->add(new PHPUnitCommand());
 $application->add(new ShifterCommand());
+$application->add(new ValidateCommand());
 $application->run();

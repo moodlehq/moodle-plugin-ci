@@ -88,6 +88,8 @@ script:
   - moodle-plugin-ci shifter
 # This step runs JSHint on the Javascript files in your plugin.
   - moodle-plugin-ci jshint
+# This step runs some light validation on the plugin file structure and code.  Validation can be plugin specific.
+  - moodle-plugin-ci validate
 # This step runs the PHPUnit tests of your plugin.  If your plugin has PHPUnit tests,
 # then it is highly recommended that you keep this step.
   - moodle-plugin-ci phpunit

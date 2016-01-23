@@ -12,12 +12,9 @@
 
 namespace Moodlerooms\MoodlePluginCI\Bridge;
 
-use PhpParser\Error;
-use PhpParser\Lexer;
-use PhpParser\Node\Expr\Assign;
-use PhpParser\Node\Expr\PropertyFetch;
+use Moodlerooms\MoodlePluginCI\Parser\CodeParser;
+use Moodlerooms\MoodlePluginCI\Parser\StatementFilter;
 use PhpParser\Node\Scalar\String_;
-use PhpParser\Parser;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
@@ -42,11 +39,6 @@ class MoodlePlugin
     public $directory;
 
     /**
-     * @var Moodle
-     */
-    protected $moodle;
-
-    /**
      * Cached component string.
      *
      * @var string
@@ -59,51 +51,6 @@ class MoodlePlugin
     public function __construct($directory)
     {
         $this->directory = $directory;
-    }
-
-    /**
-     * Loads the contents of a plugin file.
-     *
-     * @param string $relativePath Relative file path
-     *
-     * @return string
-     *
-     * @throws \RuntimeException
-     */
-    protected function loadFile($relativePath)
-    {
-        $file = $this->directory.'/'.$relativePath;
-        if (!file_exists($file)) {
-            throw new \RuntimeException(sprintf('Failed to find the plugin\'s \'%s\' file.', $relativePath));
-        }
-
-        return file_get_contents($file);
-    }
-
-    /**
-     * Parse a plugin file.
-     *
-     * @param string $relativePath Relative file path
-     *
-     * @return \PhpParser\Node[]
-     *
-     * @throws \Exception
-     */
-    protected function parseFile($relativePath)
-    {
-        // This looks overkill and it is, but works very well.
-        $parser = new Parser(new Lexer());
-
-        try {
-            $statements = $parser->parse($this->loadFile($relativePath));
-        } catch (Error $e) {
-            throw new \RuntimeException(sprintf('Failed to parse %s file due to parse error: %s', $relativePath, $e->getMessage()), 0, $e);
-        }
-        if ($statements === null) {
-            throw new \RuntimeException(sprintf('Failed to parse %s', $relativePath));
-        }
-
-        return $statements;
     }
 
     /**
@@ -120,24 +67,22 @@ class MoodlePlugin
             return $this->component;
         }
 
-        $statements = $this->parseFile('version.php');
-        foreach ($statements as $statement) {
-            // Looking for an assignment statement.
-            if ($statement instanceof Assign) {
-                $variable   = $statement->var; // Left side of equals.
-                $expression = $statement->expr; // Right side of equals.
+        $filter = new StatementFilter();
+        $parser = new CodeParser();
 
-                // Looking for "$anything->component" being set to a string.
-                if ($variable instanceof PropertyFetch && $variable->name === 'component' && $expression instanceof String_) {
-                    $this->component = $expression->value;
-                    break;
-                }
-            }
+        $notFound   = 'The plugin must define the $plugin->component in the version.php file.';
+        $statements = $parser->parseFile($this->directory.'/version.php');
+
+        try {
+            $assign = $filter->findFirstPropertyFetchAssignment($statements, 'plugin', 'component', $notFound);
+        } catch (\Exception $e) {
+            $assign = $filter->findFirstPropertyFetchAssignment($statements, 'module', 'component', $notFound);
         }
 
-        if (empty($this->component)) {
-            throw new \RuntimeException('The plugin must define the component in the version.php file.');
+        if (!$assign->expr instanceof String_) {
+            throw new \RuntimeException('The $plugin->component must be assigned to a string in the version.php file.');
         }
+        $this->component = $assign->expr->value;
 
         return $this->component;
     }

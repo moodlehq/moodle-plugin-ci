@@ -26,7 +26,7 @@
     "jakub-onderka/php-parallel-lint": "^0.9",
     "jakub-onderka/php-console-highlighter": "^0.3",
     "psr/log": "^1.0",
-    "nikic/php-parser": "^1.4",
+    "nikic/php-parser": "^2.0",
     "vlucas/phpdotenv": "^2.0",
     "stecman/symfony-console-completion": "^0.6.0"
   },

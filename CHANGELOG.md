@@ -9,13 +9,17 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - PhantomJS support.  No way to actually use it and Selenium can handle everything.
 
 ### Changed
+- The `.travis.dist.yml` now has the new `moodle-plugin-ci validate` command.
 - The `.travis.dist.yml` file not longer allows PHP7 to fail.
 - The `.travis.dist.yml` file now disables XDebug to improve build times.
 - The `.travis.dist.yml` file now defaults to Moodle 3 stable which supports PHP7.  Older versions of Moodle do
   not support PHP7, so take this into account when you update your YAML file.
+- Project dependencies have been updated.
 
 ### Added
 - _Testing a plugin against PHP7_ help document.
+- `moodle-plugin-ci validate` command. Does some light validation of plugin file structure and code.
+  Validation can be plugin specific.
 - `moodle-plugin-ci parallel` command. Runs all the commands at once. This command is **not** supposed to be used
   on Travis CI, but rather locally, to save programmer fingers.
 
