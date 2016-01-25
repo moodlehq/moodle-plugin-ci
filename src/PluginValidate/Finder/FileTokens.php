@@ -131,7 +131,7 @@ class FileTokens
      *
      * @return bool
      */
-    public function haveAllTokensBeenFound()
+    public function hasFoundAllTokens()
     {
         foreach ($this->tokens as $token) {
             if (!$token->hasTokenBeenFound()) {

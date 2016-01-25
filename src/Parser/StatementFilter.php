@@ -105,9 +105,9 @@ class StatementFilter
     /**
      * Find first variable assignment with a given name.
      *
-     * @param array  $statements
-     * @param string $name
-     * @param string $notFoundError
+     * @param array       $statements
+     * @param string      $name
+     * @param string|null $notFoundError
      *
      * @return Assign
      */
@@ -127,10 +127,10 @@ class StatementFilter
      *
      * EG: Find $foo->bar = something.
      *
-     * @param array  $statements    PHP statements
-     * @param string $variable      The variable name, EG: foo in $foo->bar.
-     * @param string $property      The property name, EG: bar in $foo->bar.
-     * @param string $notFoundError Use this error when not found
+     * @param array       $statements    PHP statements
+     * @param string      $variable      The variable name, EG: foo in $foo->bar.
+     * @param string      $property      The property name, EG: bar in $foo->bar.
+     * @param string|null $notFoundError Use this error when not found
      *
      * @return Assign
      */

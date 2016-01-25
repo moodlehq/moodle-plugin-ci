@@ -29,6 +29,6 @@ class CapabilityFinderTest extends \PHPUnit_Framework_TestCase
         $finder = new CapabilityFinder();
         $finder->findTokens($file, $fileTokens);
 
-        $this->assertTrue($fileTokens->haveAllTokensBeenFound());
+        $this->assertTrue($fileTokens->hasFoundAllTokens());
     }
 }

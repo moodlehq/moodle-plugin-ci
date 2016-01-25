@@ -58,28 +58,20 @@ class Token
      * See if the passed string matches our token(s).
      *
      * @param string $string
-     *
-     * @return bool
      */
     public function compare($string)
     {
         foreach ($this->tokens as $token) {
             if (strcasecmp($token, $string) === 0) {
                 $this->found = true;
-
-                return true;
             }
         }
-
-        return false;
     }
 
     /**
      * See if the beginning of the passed string matches our token(s).
      *
      * @param string $string
-     *
-     * @return bool
      */
     public function compareStart($string)
     {
@@ -87,11 +79,7 @@ class Token
         foreach ($this->tokens as $token) {
             if (strpos($lowerString, strtolower($token)) === 0) {
                 $this->found = true;
-
-                return true;
             }
         }
-
-        return false;
     }
 }

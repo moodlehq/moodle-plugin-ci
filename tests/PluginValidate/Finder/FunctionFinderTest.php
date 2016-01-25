@@ -29,6 +29,6 @@ class FunctionFinderTest extends \PHPUnit_Framework_TestCase
         $finder = new FunctionFinder();
         $finder->findTokens($file, $fileTokens);
 
-        $this->assertTrue($fileTokens->haveAllTokensBeenFound());
+        $this->assertTrue($fileTokens->hasFoundAllTokens());
     }
 }

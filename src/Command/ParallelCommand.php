@@ -112,22 +112,22 @@ class ParallelCommand extends AbstractMoodleCommand
      */
     private function reportOnProcesses(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
+        $style = new SymfonyStyle($input, $output);
 
         $result = 0;
         foreach ($this->processes as $name => $process) {
-            $io->newLine();
+            $style->newLine();
 
             echo $process->getOutput();
 
             if (!$process->isSuccessful()) {
                 $result = 1;
-                $io->error(sprintf('Command %s failed', $name));
+                $style->error(sprintf('Command %s failed', $name));
             }
             $errorOutput = $process->getErrorOutput();
             if (!empty($errorOutput)) {
-                $io->error(sprintf('Error output for %s command', $name));
-                $io->writeln($errorOutput);
+                $style->error(sprintf('Error output for %s command', $name));
+                $style->writeln($errorOutput);
             }
         }
 

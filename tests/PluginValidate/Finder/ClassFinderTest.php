@@ -29,7 +29,7 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
         $finder = new ClassFinder();
         $finder->findTokens($file, $fileTokens);
 
-        $this->assertTrue($fileTokens->haveAllTokensBeenFound());
+        $this->assertTrue($fileTokens->hasFoundAllTokens());
     }
 
     public function testFindTokensNameSpaceClass()
@@ -40,6 +40,6 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
         $finder = new ClassFinder();
         $finder->findTokens($file, $fileTokens);
 
-        $this->assertTrue($fileTokens->haveAllTokensBeenFound());
+        $this->assertTrue($fileTokens->hasFoundAllTokens());
     }
 }
