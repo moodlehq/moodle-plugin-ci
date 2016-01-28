@@ -8,6 +8,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 No unreleased changes.
 
+## [1.3.1] - 2016-01-28
+### Fixed
+- Downgraded PHP_CodeSniffer to 2.5.0 from 2.5.1 to fix PHP Notices with the Moodle sniffs.
+
 ## [1.3.0] - 2016-01-28
 ### Removed
 - PhantomJS support.  No way to actually use it and Selenium can handle everything.
@@ -61,7 +65,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.3.0...master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.3.1...master
+[1.3.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.3.0...1.3.1
 [1.3.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.0.0...1.1.0
