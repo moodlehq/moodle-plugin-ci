@@ -5,8 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-
-No unreleased changes.
+### Changed
+- Updated Moodle coding standard with latest changes.  This fully supports PHP_CodeSniffer 2+ so some new sniff
+  failures might appear as they were silently hidden before.  Also includes fixes and improvements.
+- Upgraded PHP_CodeSniffer to 2.5.1 to be in alignment with code checker.
 
 ## [1.3.1] - 2016-01-28
 ### Fixed

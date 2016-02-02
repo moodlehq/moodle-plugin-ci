@@ -14,8 +14,8 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "moodlerooms/moodle-coding-standard": "^1",
-    "squizlabs/php_codesniffer": "2.5.0",
+    "moodlerooms/moodle-coding-standard": "^2.0.0",
+    "squizlabs/php_codesniffer": "2.5.1",
     "sebastian/phpcpd": "^2.0",
     "phpmd/phpmd": "^2.2",
     "symfony/filesystem": "^2.7",
