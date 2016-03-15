@@ -34,16 +34,14 @@ class Install
      * Run the entire install process.
      *
      * @param InstallerCollection $installers
-     * @param EnvDumper           $envDumper
      */
-    public function runInstallation(InstallerCollection $installers, EnvDumper $envDumper)
+    public function runInstallation(InstallerCollection $installers)
     {
         $this->output->start('Starting install', $installers->sumStepCount() + 1);
 
         foreach ($installers->all() as $installer) {
             $installer->install();
         }
-        $envDumper->dump($installers->mergeEnv());
 
         $this->output->end('Install completed');
     }

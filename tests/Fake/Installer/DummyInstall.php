@@ -12,7 +12,6 @@
 
 namespace Moodlerooms\MoodlePluginCI\Tests\Fake\Installer;
 
-use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
 use Moodlerooms\MoodlePluginCI\Installer\Install;
 use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
 
@@ -22,7 +21,7 @@ use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
  */
 class DummyInstall extends Install
 {
-    public function runInstallation(InstallerCollection $installers, EnvDumper $envDumper)
+    public function runInstallation(InstallerCollection $installers)
     {
         // Do nothing.
     }

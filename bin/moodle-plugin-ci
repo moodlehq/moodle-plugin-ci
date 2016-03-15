@@ -42,24 +42,27 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
     die(1);
 }
 
-if (file_exists('~/.env-travis')) {
+define('ENV_DIR', dirname(__DIR__));
+define('ENV_FILE', ENV_DIR.'/.env');
+
+if (file_exists(ENV_FILE)) {
     // Use this file because PHP cannot write to the environment.
     // These are used to allow the install command to relay important
     // information to the other commands so they can run with no args.
-    $env = new Dotenv('~', '.env-travis');
+    $env = new Dotenv(ENV_DIR);
     $env->load();
 }
 
 $application = new Application('Moodle Plugin CI', '1.4.1');
 $application->add(new AddConfigCommand());
-$application->add(new AddPluginCommand());
+$application->add(new AddPluginCommand(ENV_FILE));
 $application->add(new BehatCommand());
 $application->add(new CodeCheckerCommand());
 $application->add(new CodeFixerCommand());
 $application->add(new CompletionCommand());
 $application->add(new CopyPasteDetectorCommand());
 $application->add(new CSSLintCommand());
-$application->add(new InstallCommand());
+$application->add(new InstallCommand(ENV_FILE));
 $application->add(new JSHintCommand());
 $application->add(new MessDetectorCommand());
 $application->add(new ParallelCommand());

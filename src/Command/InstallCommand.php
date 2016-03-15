@@ -53,6 +53,17 @@ class InstallCommand extends Command
      */
     public $factory;
 
+    /**
+     * @var string
+     */
+    private $envFile;
+
+    public function __construct($envFile)
+    {
+        parent::__construct();
+        $this->envFile = $envFile;
+    }
+
     protected function configure()
     {
         // Travis CI configures some things by environment variables, default to those if available.
@@ -92,7 +103,10 @@ class InstallCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->factory->addInstallers($this->installers);
-        $this->install->runInstallation($this->installers, new EnvDumper());
+        $this->install->runInstallation($this->installers);
+
+        $envDumper = new EnvDumper();
+        $envDumper->dump($this->installers->mergeEnv(), $this->envFile);
 
         // Progress bar does not end with a newline.
         $output->writeln('');

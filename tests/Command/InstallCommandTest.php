@@ -46,7 +46,7 @@ class InstallCommandTest extends \PHPUnit_Framework_TestCase
 
     protected function executeCommand()
     {
-        $command          = new InstallCommand();
+        $command          = new InstallCommand($this->tempDir.'/.env');
         $command->install = new DummyInstall(new InstallOutput());
 
         $application = new Application();
@@ -79,7 +79,7 @@ class InstallCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testCsvToArray($value, array $expected)
     {
-        $command = new InstallCommand();
+        $command = new InstallCommand($this->tempDir.'/.env');
         $this->assertEquals($expected, $command->csvToArray($value), "Converting this value: '$value'");
     }
 

@@ -12,7 +12,6 @@
 
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
-use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
 use Moodlerooms\MoodlePluginCI\Installer\Install;
 use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
 use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
@@ -33,7 +32,7 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $installers->add($installer);
 
         $manager = new Install($output);
-        $manager->runInstallation($installers, new EnvDumper());
+        $manager->runInstallation($installers);
 
         $this->assertEquals($installer->stepCount(), $output->getStepCount());
     }

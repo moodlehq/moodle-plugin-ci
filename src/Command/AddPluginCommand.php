@@ -32,7 +32,16 @@ class AddPluginCommand extends Command
 {
     use ExecuteTrait;
 
-    public $envFile = '~/.env-travis';
+    /**
+     * @var string
+     */
+    private $envFile;
+
+    public function __construct($envFile)
+    {
+        parent::__construct();
+        $this->envFile = $envFile;
+    }
 
     protected function configure()
     {

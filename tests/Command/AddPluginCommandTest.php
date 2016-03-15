@@ -42,9 +42,8 @@ class AddPluginCommandTest extends \PHPUnit_Framework_TestCase
 
     protected function getCommandTester()
     {
-        $command          = new AddPluginCommand();
+        $command          = new AddPluginCommand($this->tempDir.'/.env');
         $command->execute = new DummyExecute();
-        $command->envFile = $this->tempDir.'/.env-travis';
 
         $application = new Application();
         $application->add($command);
@@ -62,10 +61,10 @@ class AddPluginCommandTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $commandTester->getStatusCode());
         $this->assertTrue(is_dir($this->tempDir.'/plugins'));
-        $this->assertFileExists($this->tempDir.'/.env-travis');
+        $this->assertFileExists($this->tempDir.'/.env');
         $this->assertEquals(
             sprintf("EXTRA_PLUGINS_DIR=%s/plugins\n", realpath($this->tempDir)),
-            file_get_contents($this->tempDir.'/.env-travis')
+            file_get_contents($this->tempDir.'/.env')
         );
     }
 
@@ -79,10 +78,10 @@ class AddPluginCommandTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, $commandTester->getStatusCode());
         $this->assertTrue(is_dir($this->tempDir.'/plugins'));
-        $this->assertFileExists($this->tempDir.'/.env-travis');
+        $this->assertFileExists($this->tempDir.'/.env');
         $this->assertEquals(
             sprintf("EXTRA_PLUGINS_DIR=%s/plugins\n", realpath($this->tempDir)),
-            file_get_contents($this->tempDir.'/.env-travis')
+            file_get_contents($this->tempDir.'/.env')
         );
     }
 
