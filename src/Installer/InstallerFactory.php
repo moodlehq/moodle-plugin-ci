@@ -67,6 +67,11 @@ class InstallerFactory
     public $notNames = [];
 
     /**
+     * @var string
+     */
+    public $pluginsDir;
+
+    /**
      * Given a big bag of install options, add installers to the collection.
      *
      * @param InstallerCollection $installers Installers will be added to this.
@@ -75,6 +80,10 @@ class InstallerFactory
     {
         $installers->add(new MoodleInstaller($this->execute, $this->database, $this->moodle, new MoodleConfig(), $this->branch, $this->dataDir));
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->notPaths, $this->notNames));
+
+        if (!empty($this->pluginsDir)) {
+            $installers->add(new ExtraPluginsInstaller($this->moodle, $this->pluginsDir));
+        }
         $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute));
 
         if ($this->plugin->hasBehatFeatures() || $this->plugin->hasUnitTests()) {

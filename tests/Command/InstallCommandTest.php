@@ -54,11 +54,12 @@ class InstallCommandTest extends \PHPUnit_Framework_TestCase
 
         $commandTester = new CommandTester($application->find('install'));
         $commandTester->execute([
-            '--moodle'  => $this->tempDir.'/moodle',
-            '--plugin'  => $this->pluginDir,
-            '--data'    => $this->tempDir.'/moodledata',
-            '--branch'  => 'MOODLE_29_STABLE',
-            '--db-type' => 'mysqli',
+            '--moodle'        => $this->tempDir.'/moodle',
+            '--plugin'        => $this->pluginDir,
+            '--data'          => $this->tempDir.'/moodledata',
+            '--branch'        => 'MOODLE_29_STABLE',
+            '--db-type'       => 'mysqli',
+            '--extra-plugins' => $this->tempDir, // Not accurate, but tests more code.
         ]);
 
         return $commandTester;

@@ -57,8 +57,9 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
     public function testInstallPluginIntoMoodle()
     {
         $fixture    = realpath(__DIR__.'/../Fixture/moodle-local_travis');
-        $installer  = new PluginInstaller(new DummyMoodle($this->tempDir), new MoodlePlugin($fixture));
-        $installDir = $installer->installPluginIntoMoodle();
+        $plugin     = new MoodlePlugin($fixture);
+        $installer  = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin);
+        $installDir = $installer->installPluginIntoMoodle($plugin);
 
         $this->assertTrue(is_dir($installDir));
 
@@ -72,6 +73,20 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
             $this->assertFileExists($path);
             $this->assertFileEquals($file->getPathname(), $path);
         }
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testInstallPluginIntoMoodleAlreadyExists()
+    {
+        $filesystem = new Filesystem();
+        $filesystem->mkdir($this->tempDir.'/local/travis');
+
+        $fixture   = realpath(__DIR__.'/../Fixture/moodle-local_travis');
+        $plugin    = new MoodlePlugin($fixture);
+        $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin);
+        $installer->installPluginIntoMoodle($plugin);
     }
 
     public function testCreateIgnoreFile()

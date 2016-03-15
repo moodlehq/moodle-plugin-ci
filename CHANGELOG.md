@@ -5,7 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Added
+- `moodle-plugin-ci add-plugin` command. Allows for installing plugin dependencies.
+- `doc/AddExtraPlugins.md` documentation on how to use the `add-plugin` command.
 
 ## [1.4.1] - 2016-03-14
 ### Changed

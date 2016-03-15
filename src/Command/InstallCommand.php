@@ -61,6 +61,7 @@ class InstallCommand extends Command
         $plugin = getenv('TRAVIS_BUILD_DIR') !== false ? getenv('TRAVIS_BUILD_DIR') : null;
         $paths  = getenv('IGNORE_PATHS') !== false ? getenv('IGNORE_PATHS') : null;
         $names  = getenv('IGNORE_NAMES') !== false ? getenv('IGNORE_NAMES') : null;
+        $extra  = getenv('EXTRA_PLUGINS_DIR') !== false ? getenv('EXTRA_PLUGINS_DIR') : null;
 
         $this->setName('install')
             ->setDescription('Install everything required for CI testing')
@@ -74,7 +75,8 @@ class InstallCommand extends Command
             ->addOption('db-name', null, InputOption::VALUE_REQUIRED, 'Database name', 'moodle')
             ->addOption('db-host', null, InputOption::VALUE_REQUIRED, 'Database host', 'localhost')
             ->addOption('not-paths', null, InputOption::VALUE_REQUIRED, 'CSV of file paths to exclude', $paths)
-            ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names);
+            ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names)
+            ->addOption('extra-plugins', null, InputOption::VALUE_REQUIRED, 'Directory of extra plugins to install', $extra);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -122,19 +124,25 @@ class InstallCommand extends Command
      */
     public function initializeInstallerFactory(InputInterface $input)
     {
-        $validate  = new Validate();
-        $resolver  = new DatabaseResolver();
-        $pluginDir = realpath($validate->directory($input->getOption('plugin')));
+        $validate   = new Validate();
+        $resolver   = new DatabaseResolver();
+        $pluginDir  = realpath($validate->directory($input->getOption('plugin')));
+        $pluginsDir = $input->getOption('extra-plugins');
 
-        $factory           = new InstallerFactory();
-        $factory->moodle   = new Moodle($input->getOption('moodle'));
-        $factory->plugin   = new MoodlePlugin($pluginDir);
-        $factory->execute  = $this->execute;
-        $factory->branch   = $validate->moodleBranch($input->getOption('branch'));
-        $factory->dataDir  = $input->getOption('data');
-        $factory->notPaths = $this->csvToArray($input->getOption('not-paths'));
-        $factory->notNames = $this->csvToArray($input->getOption('not-names'));
-        $factory->database = $resolver->resolveDatabase(
+        if (!empty($pluginsDir)) {
+            $pluginsDir = realpath($validate->directory($pluginsDir));
+        }
+
+        $factory             = new InstallerFactory();
+        $factory->moodle     = new Moodle($input->getOption('moodle'));
+        $factory->plugin     = new MoodlePlugin($pluginDir);
+        $factory->execute    = $this->execute;
+        $factory->branch     = $validate->moodleBranch($input->getOption('branch'));
+        $factory->dataDir    = $input->getOption('data');
+        $factory->notPaths   = $this->csvToArray($input->getOption('not-paths'));
+        $factory->notNames   = $this->csvToArray($input->getOption('not-names'));
+        $factory->pluginsDir = $pluginsDir;
+        $factory->database   = $resolver->resolveDatabase(
             $input->getOption('db-type'),
             $input->getOption('db-name'),
             $input->getOption('db-user'),

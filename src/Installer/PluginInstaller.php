@@ -23,13 +23,8 @@ use Symfony\Component\Yaml\Yaml;
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class PluginInstaller extends AbstractInstaller
+class PluginInstaller extends AbstractPluginInstaller
 {
-    /**
-     * @var Moodle
-     */
-    private $moodle;
-
     /**
      * @var MoodlePlugin
      */
@@ -53,47 +48,24 @@ class PluginInstaller extends AbstractInstaller
      */
     public function __construct(Moodle $moodle, MoodlePlugin $plugin, array $notPaths = [], array $notNames = [])
     {
-        $this->moodle   = $moodle;
         $this->plugin   = $plugin;
         $this->notPaths = $notPaths;
         $this->notNames = $notNames;
+
+        parent::__construct($moodle);
     }
 
     public function install()
     {
         $this->getOutput()->step('Install '.$this->plugin->getComponent());
 
-        $installDir = $this->installPluginIntoMoodle();
+        $installDir = $this->installPluginIntoMoodle($this->plugin);
         $this->createIgnoreFile($installDir.'/.moodle-plugin-ci.yml');
 
         // Update plugin so other installers use the installed path.
         $this->plugin->directory = $installDir;
 
         $this->addEnv('PLUGIN_DIR', $installDir);
-    }
-
-    /**
-     * Install the plugin into Moodle.
-     *
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function installPluginIntoMoodle()
-    {
-        $directory = $this->moodle->getComponentInstallDirectory($this->plugin->getComponent());
-
-        if (is_dir($directory)) {
-            throw new \RuntimeException('Plugin is already installed in standard Moodle');
-        }
-
-        $this->getOutput()->info(sprintf('Copying plugin from %s to %s', $this->plugin->directory, $directory));
-
-        // Install the plugin.
-        $filesystem = new Filesystem();
-        $filesystem->mirror($this->plugin->directory, $directory);
-
-        return $directory;
     }
 
     /**
@@ -128,10 +100,5 @@ class PluginInstaller extends AbstractInstaller
         $filesystem->dumpFile($filename, $dump);
 
         $this->getOutput()->debug('Created ignore file at '.$filename);
-    }
-
-    public function stepCount()
-    {
-        return 1;
     }
 }

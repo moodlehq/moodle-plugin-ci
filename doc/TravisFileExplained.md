@@ -61,10 +61,6 @@ install:
 #    - If your plugin has Behat features, then Behat will be setup.
 #    - If your plugin has unit tests, then PHPUnit will be setup.
   - moodle-plugin-ci install
-# After the above step, there will be a moodle directory available to you.
-# If needed, you can add additional steps if your plugin needs them.
-# Example, adding another plugin:
-#  - git clone --branch $MOODLE_BRANCH git://github.com/owner/moodle-mod_sample moodle/mod/sample
 
 # This lists steps that are run for the purposes of testing.  Any of
 # these steps can be re-ordered or removed to your liking.  And of

@@ -50,6 +50,7 @@ added the `.travis.yml` file, commit and push up to GitHub, to trigger a Travis 
 
 * [Travis CI file explained](doc/TravisFileExplained.md)
 * [Add extra Moodle configs](doc/AddExtraConfig.md)
+* [Add extra plugins](doc/AddExtraPlugins.md)
 * [Ignoring files](doc/IgnoringFiles.md)
 * [Testing a plugin against PHP7](doc/PHP7.md)
 
