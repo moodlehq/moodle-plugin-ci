@@ -53,7 +53,7 @@ class VendorInstaller extends AbstractInstaller
 
         $processes = [];
         if ($this->plugin->hasUnitTests() || $this->plugin->hasBehatFeatures()) {
-            $processes[] = new Process('composer install -n', $this->moodle->directory, null, null, null);
+            $processes[] = new Process('composer install --no-interaction --prefer-dist', $this->moodle->directory, null, null, null);
         }
         $processes[] = new Process('npm install -g jshint csslint shifter@0.4.6', null, null, null, null);
 

@@ -9,6 +9,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci add-plugin` command. Allows for installing plugin dependencies.
 - `doc/AddExtraPlugins.md` documentation on how to use the `add-plugin` command.
 
+### Changed
+- The `.travis.dist.yml` file now uses the Composer `--prefer-dist` option.
+
 ## [1.4.1] - 2016-03-14
 ### Changed
 - Updated Moodle coding standard with latest changes.

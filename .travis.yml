@@ -24,7 +24,7 @@ install:
   - phpenv config-rm xdebug.ini
 
   - composer selfupdate
-  - composer install -n
+  - composer install --no-interaction --prefer-dist
 
   # Mimic how a Moodle plugin would be run.
   - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
