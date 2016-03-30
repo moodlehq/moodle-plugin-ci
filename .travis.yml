@@ -18,6 +18,8 @@ matrix:
   include:
     - php: 7.0
       env: MOODLE_BRANCH=MOODLE_30_STABLE DB=pgsql COVERAGE=true
+    - php: 7.0
+      env: MOODLE_BRANCH=master DB=pgsql COVERAGE=false
 
 install:
   # Several tools complain about xdebug slowdown.
