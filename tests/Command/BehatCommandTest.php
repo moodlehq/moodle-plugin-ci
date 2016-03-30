@@ -35,6 +35,7 @@ class BehatCommandTest extends \PHPUnit_Framework_TestCase
 
         $fs = new Filesystem();
         $fs->mkdir($this->moodleDir);
+        $fs->mirror(__DIR__.'/../Fixture/moodle', $this->moodleDir);
         $fs->mkdir($this->moodleDir.'/behat');
         $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
         $fs->touch($this->moodleDir.'/behat/behat.yml');

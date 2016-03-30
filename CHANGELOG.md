@@ -12,6 +12,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Changed
 - The `.travis.dist.yml` file now uses the Composer `--prefer-dist` option.
 
+### Fixed
+- Behat command to be compatible with Behat 3 which is used in Moodle 3.1. 
+
 ## [1.4.1] - 2016-03-14
 ### Changed
 - Updated Moodle coding standard with latest changes.

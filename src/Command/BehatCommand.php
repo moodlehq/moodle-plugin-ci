@@ -47,13 +47,14 @@ class BehatCommand extends AbstractMoodleCommand
             return $this->outputSkip($output, 'No Behat features to run, free pass!');
         }
 
+        $colors = $this->moodle->getBranch() >= 31 ? '--colors' : '--ansi';
         $config = $this->moodle->getBehatDataDirectory().'/behat/behat.yml';
         if (!file_exists($config)) {
             throw new \RuntimeException('Behat config file not found.  Behat must not have been installed.');
         }
 
         $process = $this->execute->passThrough(
-            sprintf('%s/vendor/bin/behat --ansi --config %s --tags @%s', $this->moodle->directory, $config, $this->plugin->getComponent()),
+            sprintf('%s/vendor/bin/behat %s --config %s --tags @%s', $this->moodle->directory, $colors, $config, $this->plugin->getComponent()),
             $this->moodle->directory
         );
 
