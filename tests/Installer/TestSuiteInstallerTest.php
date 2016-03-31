@@ -32,9 +32,18 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
         $this->tempDir   = sys_get_temp_dir().'/moodle-plugin-ci/TestSuiteInstallerTest'.time();
         $this->pluginDir = $this->tempDir.'/plugin';
 
+        $phpunit = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
+</phpunit>
+XML;
+
         $fs = new Filesystem();
         $fs->mkdir($this->tempDir);
         $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
+        $fs->dumpFile($this->pluginDir.'/phpunit.xml', $phpunit);
+
+        $this->pluginDir = realpath($this->pluginDir);
     }
 
     protected function tearDown()
@@ -53,6 +62,19 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
         $installer->install();
 
         $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
+
+        $expected = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <file>$this->pluginDir/classes/math.php</file>
+            <file>$this->pluginDir/lib.php</file>
+        </whitelist>
+    </filter>
+</phpunit>
+XML;
+        $this->assertEquals($expected, file_get_contents($this->pluginDir.'/phpunit.xml'));
     }
 
     public function testBehatProcesses()

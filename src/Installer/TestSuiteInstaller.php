@@ -16,6 +16,9 @@ use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Process\Execute;
 use Moodlerooms\MoodlePluginCI\Process\MoodleProcess;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Process\Process;
 
 /**
@@ -87,6 +90,8 @@ class TestSuiteInstaller extends AbstractInstaller
         $this->getOutput()->step('Building configs');
 
         $this->execute->mustRunAll($this->getPostInstallProcesses());
+
+        $this->injectPHPUnitFilter();
     }
 
     public function stepCount()
@@ -159,5 +164,102 @@ class TestSuiteInstaller extends AbstractInstaller
         }
 
         return $processes;
+    }
+
+    /**
+     * Inject filter XML into the plugin's PHPUnit configuration file.
+     */
+    private function injectPHPUnitFilter()
+    {
+        $config = $this->plugin->directory.'/phpunit.xml';
+        if (!is_file($config)) {
+            return;
+        }
+
+        $files     = $this->getCoverageFiles();
+        $filterXml = $this->getFilterXml($files);
+        $contents  = str_replace('</phpunit>', $filterXml.'</phpunit>', file_get_contents($config), $count);
+
+        if ($count !== 1) {
+            throw new \RuntimeException('Failed to inject settings into plugin phpunit.xml file');
+        }
+
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($config, $contents);
+    }
+
+    /**
+     * Get all files we want to add to code coverage.
+     *
+     * @return array
+     */
+    private function getCoverageFiles()
+    {
+        $finder = Finder::create()
+            ->name('*.php')
+            ->notName('*_test.php')
+            ->notName('version.php')
+            ->notName('settings.php')
+            ->notPath('lang')
+            ->notPath('vendor');
+
+        $files = $this->plugin->getFiles($finder);
+
+        return $this->removeDbFiles($this->plugin->directory.'/db', $files);
+    }
+
+    /**
+     * Remove DB files that should not or cannot be covered by unit tests.
+     *
+     * @param string $dbPath
+     * @param array  $files
+     *
+     * @return array
+     */
+    private function removeDbFiles($dbPath, array $files)
+    {
+        if (!is_dir($dbPath)) {
+            return $files;
+        }
+        /* @var SplFileInfo[] $dbFiles */
+        $dbFiles = Finder::create()->files()->in($dbPath)->name('*.php')
+            ->notName('caches.php')
+            ->notName('events.php')
+            ->notName('upgradelib.php');
+
+        foreach ($dbFiles as $dbFile) {
+            $key = array_search($dbFile->getRealPath(), $files);
+
+            if ($key !== false) {
+                unset($files[$key]);
+            }
+        }
+
+        return $files;
+    }
+
+    /**
+     * Given a list of files, create the filter XML used by PHPUnit for code coverage.
+     *
+     * @param array $files
+     *
+     * @return string
+     */
+    private function getFilterXml(array $files)
+    {
+        $includes = [];
+        foreach ($files as $file) {
+            $includes[] = sprintf('<file>%s</file>', $file);
+        }
+        $includes = implode("\n            ", $includes);
+
+        return <<<XML
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            $includes
+        </whitelist>
+    </filter>
+
+XML;
     }
 }

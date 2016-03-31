@@ -180,7 +180,7 @@ class MoodlePlugin
         $files = [];
         foreach ($finder as $file) {
             /* @var \SplFileInfo $file */
-            $files[] = $file->getRealpath();
+            $files[] = $file->getRealPath();
         }
 
         return $files;
