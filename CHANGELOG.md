@@ -11,6 +11,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Changed
 - The `.travis.dist.yml` file now uses the Composer `--prefer-dist` option.
+- PHPUnit installer now builds component configs.
+- When the `phpunit` command is run, it will prefer the component's `phpunit.xml` configuration.
 
 ### Fixed
 - Behat command to be compatible with Behat 3 which is used in Moodle 3.1. 

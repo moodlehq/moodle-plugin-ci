@@ -46,8 +46,14 @@ class PHPUnitCommand extends AbstractMoodleCommand
         if (!$this->plugin->hasUnitTests()) {
             return $this->outputSkip($output, 'No PHPUnit tests to run, free pass!');
         }
+        if (is_file($this->plugin->directory.'/phpunit.xml')) {
+            $runOption = sprintf('--configuration %s', $this->plugin->directory);
+        } else {
+            $runOption = sprintf('--testsuite %s_testsuite', $this->plugin->getComponent());
+        }
+
         $process = $this->execute->passThrough(
-            sprintf('%s/vendor/bin/phpunit --colors --testsuite %s_testsuite', $this->moodle->directory, $this->plugin->getComponent()),
+            sprintf('%s/vendor/bin/phpunit --colors %s', $this->moodle->directory, $runOption),
             $this->moodle->directory
         );
 
