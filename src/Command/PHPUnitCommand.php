@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -30,7 +31,9 @@ class PHPUnitCommand extends AbstractMoodleCommand
         parent::configure();
 
         $this->setName('phpunit')
-            ->setDescription('Run PHPUnit on a plugin');
+            ->setDescription('Run PHPUnit on a plugin')
+            ->addOption('coverage-text', null, InputOption::VALUE_NONE, 'Generate and print code coverage report in text format')
+            ->addOption('coverage-clover', null, InputOption::VALUE_NONE, 'Generate code coverage report in Clover XML format');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -46,17 +49,68 @@ class PHPUnitCommand extends AbstractMoodleCommand
         if (!$this->plugin->hasUnitTests()) {
             return $this->outputSkip($output, 'No PHPUnit tests to run, free pass!');
         }
-        if (is_file($this->plugin->directory.'/phpunit.xml')) {
-            $runOption = sprintf('--configuration %s', $this->plugin->directory);
-        } else {
-            $runOption = sprintf('--testsuite %s_testsuite', $this->plugin->getComponent());
-        }
 
+        $binary  = $this->resolveBinary($input);
+        $options = $this->resolveOptions($input);
         $process = $this->execute->passThrough(
-            sprintf('%s/vendor/bin/phpunit --colors %s', $this->moodle->directory, $runOption),
+            sprintf('%s%s/vendor/bin/phpunit --colors %s', $binary, $this->moodle->directory, $options),
             $this->moodle->directory
         );
 
         return $process->isSuccessful() ? 0 : 1;
+    }
+
+    /**
+     * Resolve options for PHPUnit command.
+     *
+     * @param InputInterface $input
+     *
+     * @return string
+     */
+    private function resolveOptions(InputInterface $input)
+    {
+        $options = [];
+        if ($this->coverageEnabled() && $input->getOption('coverage-text')) {
+            $options[] = '--coverage-text';
+        }
+        if ($this->coverageEnabled() && $input->getOption('coverage-clover')) {
+            $options[] = sprintf('--coverage-clover %s/coverage.xml', getcwd());
+        }
+        if (is_file($this->plugin->directory.'/phpunit.xml')) {
+            $options[] = sprintf('--configuration %s', $this->plugin->directory);
+        } else {
+            $options[] = sprintf('--testsuite %s_testsuite', $this->plugin->getComponent());
+        }
+
+        return implode(' ', $options);
+    }
+
+    /**
+     * Use phpdbg if we are generating code coverage.
+     *
+     * @param InputInterface $input
+     *
+     * @return string
+     */
+    private function resolveBinary(InputInterface $input)
+    {
+        if (!$this->coverageEnabled()) {
+            return '';
+        }
+        if (!$input->getOption('coverage-text') && !$input->getOption('coverage-clover')) {
+            return '';
+        }
+
+        return 'phpdbg -qrr ';
+    }
+
+    /**
+     * Only allow coverage when using PHP7.
+     *
+     * @return bool
+     */
+    private function coverageEnabled()
+    {
+        return version_compare(PHP_VERSION, '7.0.0', '>=');
     }
 }
