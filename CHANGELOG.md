@@ -5,10 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [1.5.0] - 2016-04-01
 ### Added
 - `moodle-plugin-ci add-plugin` command. Allows for installing plugin dependencies.
 - `doc/AddExtraPlugins.md` documentation on how to use the `add-plugin` command.
-- _Generating code coverage_ help document.
+- `doc/CodeCoverage.md` documentation on how to generate code coverage for a plugin.
 - `--coverage-text` option to `phpunit` command to print text code coverage.
 - `--coverage-clover` option to `phpunit` command to create a code coverage XML file.
 - `moodle-plugin-ci coveralls-upload` command to upload code coverage to Coveralls.
@@ -18,7 +21,6 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - The `.travis.dist.yml` file now uses the Composer `--prefer-dist` option.
 - PHPUnit installer now builds component configs.
 - When the `phpunit` command is run, it will prefer the component's `phpunit.xml` configuration.
-
 
 ## [1.4.1] - 2016-03-14
 ### Changed
@@ -87,7 +89,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.4.1...master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.0...master
+[1.5.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.4.1...1.5.0
 [1.4.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.3.1...1.4.0
 [1.3.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.3.0...1.3.1

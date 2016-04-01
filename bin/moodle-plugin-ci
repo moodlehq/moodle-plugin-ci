@@ -54,7 +54,7 @@ if (file_exists(ENV_FILE)) {
     $env->load();
 }
 
-$application = new Application('Moodle Plugin CI', '1.4.1');
+$application = new Application('Moodle Plugin CI', '1.5.0');
 $application->add(new AddConfigCommand());
 $application->add(new AddPluginCommand(ENV_FILE));
 $application->add(new BehatCommand());
