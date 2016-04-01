@@ -8,14 +8,17 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 - `moodle-plugin-ci add-plugin` command. Allows for installing plugin dependencies.
 - `doc/AddExtraPlugins.md` documentation on how to use the `add-plugin` command.
+- _Generating code coverage_ help document.
+- `--coverage-text` option to `phpunit` command to print text code coverage.
+- `--coverage-clover` option to `phpunit` command to create a code coverage XML file.
+- `moodle-plugin-ci coveralls-upload` command to upload code coverage to Coveralls.
 
-### Changed
+### Fixed
+- Behat command to be compatible with Behat 3 which is used in Moodle 3.1.
 - The `.travis.dist.yml` file now uses the Composer `--prefer-dist` option.
 - PHPUnit installer now builds component configs.
 - When the `phpunit` command is run, it will prefer the component's `phpunit.xml` configuration.
 
-### Fixed
-- Behat command to be compatible with Behat 3 which is used in Moodle 3.1. 
 
 ## [1.4.1] - 2016-03-14
 ### Changed
