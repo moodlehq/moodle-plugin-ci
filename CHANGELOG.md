@@ -7,6 +7,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [1.5.2] - 2016-04-07
+### Fixed
+- Inspection bugs and a bug introduced in 1.5.1.
+
 ## [1.5.1] - 2016-04-07
 ### Changed
 - Upgraded PHP_CodeSniffer to 2.6.0.
@@ -93,7 +97,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.1...master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.2...master
+[1.5.2]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.4.1...1.5.0
 [1.4.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.4.0...1.4.1
