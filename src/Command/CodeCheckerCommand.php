@@ -27,8 +27,6 @@ use Symfony\Component\Finder\Finder;
  */
 class CodeCheckerCommand extends AbstractPluginCommand
 {
-    use ExecuteTrait;
-
     /**
      * The coding standard to use.
      *
@@ -55,7 +53,6 @@ class CodeCheckerCommand extends AbstractPluginCommand
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
-        $this->initializeExecute($output, $this->getHelper('process'));
 
         // Resolve the coding standard.
         $resolver       = new StandardResolver();
