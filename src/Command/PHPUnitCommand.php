@@ -70,10 +70,10 @@ class PHPUnitCommand extends AbstractMoodleCommand
     private function resolveOptions(InputInterface $input)
     {
         $options = [];
-        if ($this->coverageEnabled() && $input->getOption('coverage-text')) {
+        if ($this->supportsCoverage() && $input->getOption('coverage-text')) {
             $options[] = '--coverage-text';
         }
-        if ($this->coverageEnabled() && $input->getOption('coverage-clover')) {
+        if ($this->supportsCoverage() && $input->getOption('coverage-clover')) {
             $options[] = sprintf('--coverage-clover %s/coverage.xml', getcwd());
         }
         if (is_file($this->plugin->directory.'/phpunit.xml')) {
@@ -94,7 +94,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
      */
     private function resolveBinary(InputInterface $input)
     {
-        if (!$this->coverageEnabled()) {
+        if (!$this->supportsCoverage()) {
             return '';
         }
         if (!$input->getOption('coverage-text') && !$input->getOption('coverage-clover')) {
@@ -109,7 +109,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
      *
      * @return bool
      */
-    private function coverageEnabled()
+    private function supportsCoverage()
     {
         return version_compare(PHP_VERSION, '7.0.0', '>=');
     }

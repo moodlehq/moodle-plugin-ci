@@ -81,7 +81,7 @@ class Moodle
     /**
      * Normalize the component into the type and plugin name.
      *
-     * @param $component
+     * @param string $component
      *
      * @return array
      */

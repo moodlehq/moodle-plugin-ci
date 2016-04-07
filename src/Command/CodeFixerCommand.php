@@ -23,12 +23,20 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodeFixerCommand extends CodeCheckerCommand
 {
+    use ExecuteTrait;
+
     protected function configure()
     {
         parent::configure();
 
         $this->setName('phpcbf')
             ->setDescription('Run Code Beautifier and Fixer on a plugin');
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        parent::initialize($input, $output);
+        $this->initializeExecute($output, $this->getHelper('process'));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
