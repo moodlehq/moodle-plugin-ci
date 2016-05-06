@@ -13,6 +13,7 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Installer\ConfigDumper;
 use Moodlerooms\MoodlePluginCI\Installer\PluginInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Symfony\Component\Filesystem\Filesystem;
@@ -43,7 +44,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
     {
         $fixture   = __DIR__.'/../Fixture/moodle-local_travis';
         $plugin    = new MoodlePlugin($fixture);
-        $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin);
+        $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installer->install();
 
         $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
@@ -58,7 +59,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
     {
         $fixture    = realpath(__DIR__.'/../Fixture/moodle-local_travis');
         $plugin     = new MoodlePlugin($fixture);
-        $installer  = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin);
+        $installer  = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installDir = $installer->installPluginIntoMoodle($plugin);
 
         $this->assertTrue(is_dir($installDir));
@@ -85,7 +86,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
 
         $fixture   = realpath(__DIR__.'/../Fixture/moodle-local_travis');
         $plugin    = new MoodlePlugin($fixture);
-        $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin);
+        $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installer->installPluginIntoMoodle($plugin);
     }
 
@@ -97,16 +98,29 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
             'notNames' => ['*-m.js', 'bad.php'],
         ]];
 
-        $installer = new PluginInstaller(
-            new DummyMoodle($this->tempDir),
-            new MoodlePlugin($this->tempDir),
-            $expected['filter']['notPaths'],
-            $expected['filter']['notNames']
-        );
+        $dumper = new ConfigDumper();
+        $dumper->addSection('filter', 'notPaths', ['foo/bar', 'very/bad.php']);
+        $dumper->addSection('filter', 'notNames', ['*-m.js', 'bad.php']);
 
-        $installer->createIgnoreFile($filename);
+        $installer = new PluginInstaller(new DummyMoodle($this->tempDir), new MoodlePlugin($this->tempDir), '', $dumper);
+        $installer->createConfigFile($filename);
 
         $this->assertFileExists($filename);
         $this->assertEquals($expected, Yaml::parse($filename));
+    }
+
+    public function testScanForPlugins()
+    {
+        $fixture = __DIR__.'/../Fixture/moodle-local_travis';
+
+        $fs = new Filesystem();
+        $fs->mirror($fixture, $this->tempDir.'/moodle-local_travis');
+
+        $plugin    = new MoodlePlugin($fixture);
+        $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, $this->tempDir, new ConfigDumper());
+
+        $plugins = $installer->scanForPlugins();
+        $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\Bridge\MoodlePluginCollection', $plugins);
+        $this->assertCount(1, $plugins);
     }
 }

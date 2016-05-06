@@ -14,6 +14,7 @@ namespace Moodlerooms\MoodlePluginCI\Bridge;
 
 use Moodlerooms\MoodlePluginCI\Parser\CodeParser;
 use Moodlerooms\MoodlePluginCI\Parser\StatementFilter;
+use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Scalar\String_;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
@@ -44,6 +45,13 @@ class MoodlePlugin
      * @var string
      */
     protected $component;
+
+    /**
+     * Cached dependencies.
+     *
+     * @var string
+     */
+    protected $dependencies;
 
     /**
      * @param string $directory Absolute path to a Moodle plugin
@@ -85,6 +93,42 @@ class MoodlePlugin
         $this->component = $assign->expr->value;
 
         return $this->component;
+    }
+
+    /**
+     * Get a plugin's dependencies.
+     *
+     * @return array
+     */
+    public function getDependencies()
+    {
+        // Simple cache.
+        if (is_array($this->dependencies)) {
+            return $this->dependencies;
+        }
+        $this->dependencies = [];
+
+        $filter = new StatementFilter();
+        $parser = new CodeParser();
+
+        $statements = $parser->parseFile($this->directory.'/version.php');
+
+        try {
+            $assign = $filter->findFirstPropertyFetchAssignment($statements, 'plugin', 'dependencies');
+        } catch (\Exception $e) {
+            try {
+                $assign = $filter->findFirstPropertyFetchAssignment($statements, 'module', 'dependencies');
+            } catch (\Exception $e) {
+                return $this->dependencies;
+            }
+        }
+
+        if (!$assign->expr instanceof Array_) {
+            throw new \RuntimeException('The $plugin->dependencies must be assigned to an array in the version.php file.');
+        }
+        $this->dependencies = $filter->arrayStringKeys($assign->expr);
+
+        return $this->dependencies;
     }
 
     /**

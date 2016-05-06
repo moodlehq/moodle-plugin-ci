@@ -14,6 +14,7 @@ namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Installer\ConfigDumper;
 use Moodlerooms\MoodlePluginCI\Installer\Database\DatabaseResolver;
 use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
 use Moodlerooms\MoodlePluginCI\Installer\Install;
@@ -147,14 +148,17 @@ class InstallCommand extends Command
             $pluginsDir = realpath($validate->directory($pluginsDir));
         }
 
+        $dumper = new ConfigDumper();
+        $dumper->addSection('filter', 'notNames', $this->csvToArray($input->getOption('not-paths')));
+        $dumper->addSection('filter', 'notPaths', $this->csvToArray($input->getOption('not-names')));
+
         $factory             = new InstallerFactory();
         $factory->moodle     = new Moodle($input->getOption('moodle'));
         $factory->plugin     = new MoodlePlugin($pluginDir);
         $factory->execute    = $this->execute;
         $factory->branch     = $validate->moodleBranch($input->getOption('branch'));
         $factory->dataDir    = $input->getOption('data');
-        $factory->notPaths   = $this->csvToArray($input->getOption('not-paths'));
-        $factory->notNames   = $this->csvToArray($input->getOption('not-names'));
+        $factory->dumper     = $dumper;
         $factory->pluginsDir = $pluginsDir;
         $factory->database   = $resolver->resolveDatabase(
             $input->getOption('db-type'),

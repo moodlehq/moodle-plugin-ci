@@ -14,91 +14,141 @@ namespace Moodlerooms\MoodlePluginCI\Installer;
 
 use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Bridge\MoodlePluginCollection;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
- * Moodle plugin installer.
+ * Moodle plugins installer.
  *
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class PluginInstaller extends AbstractPluginInstaller
+class PluginInstaller extends AbstractInstaller
 {
+    /**
+     * @var Moodle
+     */
+    private $moodle;
+
     /**
      * @var MoodlePlugin
      */
     private $plugin;
 
     /**
-     * @var array
+     * @var string
      */
-    private $notPaths;
+    private $extraPluginsDir;
 
     /**
-     * @var array
+     * @var ConfigDumper
      */
-    private $notNames;
+    private $configDumper;
 
     /**
      * @param Moodle       $moodle
      * @param MoodlePlugin $plugin
-     * @param array        $notPaths
-     * @param array        $notNames
+     * @param string       $extraPluginsDir
+     * @param ConfigDumper $configDumper
      */
-    public function __construct(Moodle $moodle, MoodlePlugin $plugin, array $notPaths = [], array $notNames = [])
+    public function __construct(Moodle $moodle, MoodlePlugin $plugin, $extraPluginsDir, ConfigDumper $configDumper)
     {
-        $this->plugin   = $plugin;
-        $this->notPaths = $notPaths;
-        $this->notNames = $notNames;
-
-        parent::__construct($moodle);
+        $this->moodle          = $moodle;
+        $this->plugin          = $plugin;
+        $this->extraPluginsDir = $extraPluginsDir;
+        $this->configDumper    = $configDumper;
     }
 
     public function install()
     {
-        $this->getOutput()->step('Install '.$this->plugin->getComponent());
+        $this->getOutput()->step('Install plugins');
 
-        $installDir = $this->installPluginIntoMoodle($this->plugin);
-        $this->createIgnoreFile($installDir.'/.moodle-plugin-ci.yml');
+        $plugins = $this->scanForPlugins();
+        $plugins->add($this->plugin);
+        $sorted = $plugins->sortByDependencies();
 
-        // Update plugin so other installers use the installed path.
-        $this->plugin->directory = $installDir;
+        foreach ($sorted->all() as $plugin) {
+            $directory = $this->installPluginIntoMoodle($plugin);
 
-        $this->addEnv('PLUGIN_DIR', $installDir);
+            if ($plugin->getComponent() === $this->plugin->getComponent()) {
+                $this->addEnv('PLUGIN_DIR', $directory);
+                $this->createConfigFile($directory.'/.moodle-plugin-ci.yml');
+
+                // Update plugin so other installers use the installed path.
+                $this->plugin->directory = $directory;
+            }
+        }
     }
 
     /**
-     * Create an ignore file.
-     *
-     * @param string $filename The file to create
+     * @return MoodlePluginCollection
      */
-    public function createIgnoreFile($filename)
+    public function scanForPlugins()
     {
-        if (file_exists($filename)) {
-            $this->getOutput()->debug('Ignore file already exists in plugin, skipping creation of ignore file.');
+        $plugins = new MoodlePluginCollection();
 
-            return;
+        if (empty($this->extraPluginsDir)) {
+            return $plugins;
         }
 
-        $ignores = [];
-        if (!empty($this->notPaths)) {
-            $ignores['notPaths'] = $this->notPaths;
-        }
-        if (!empty($this->notNames)) {
-            $ignores['notNames'] = $this->notNames;
-        }
-        if (empty($ignores)) {
-            $this->getOutput()->debug('No file ignores to write out, skipping creation of ignore file.');
-
-            return;
+        /** @var SplFileInfo[] $files */
+        $files = Finder::create()->directories()->in($this->extraPluginsDir)->depth(0);
+        foreach ($files as $file) {
+            $plugins->add(new MoodlePlugin($file->getRealPath()));
         }
 
-        $dump = Yaml::dump(['filter' => $ignores]);
+        return $plugins;
+    }
 
+    /**
+     * Install the plugin into Moodle.
+     *
+     * @param MoodlePlugin $plugin
+     *
+     * @return string
+     */
+    public function installPluginIntoMoodle(MoodlePlugin $plugin)
+    {
+        $directory = $this->moodle->getComponentInstallDirectory($plugin->getComponent());
+
+        if (is_dir($directory)) {
+            throw new \RuntimeException('Plugin is already installed in standard Moodle');
+        }
+
+        $this->getOutput()->info(sprintf('Copying plugin from %s to %s', $plugin->directory, $directory));
+
+        // Install the plugin.
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($filename, $dump);
+        $filesystem->mirror($plugin->directory, $directory);
 
-        $this->getOutput()->debug('Created ignore file at '.$filename);
+        return $directory;
+    }
+
+    /**
+     * Create plugin config file.
+     *
+     * @param string $toFile
+     */
+    public function createConfigFile($toFile)
+    {
+        if (file_exists($toFile)) {
+            $this->getOutput()->debug('Config file already exists in plugin, skipping creation of config file.');
+
+            return;
+        }
+        if (!$this->configDumper->hasConfig()) {
+            $this->getOutput()->debug('No config to write out, skipping creation of config file.');
+
+            return;
+        }
+        $this->configDumper->dump($toFile);
+        $this->getOutput()->debug('Created config file at '.$toFile);
+    }
+
+    public function stepCount()
+    {
+        return 1;
     }
 }

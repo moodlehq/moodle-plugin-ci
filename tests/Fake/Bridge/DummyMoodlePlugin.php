@@ -20,8 +20,6 @@ use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
  */
 class DummyMoodlePlugin extends MoodlePlugin
 {
-    public function getComponent()
-    {
-        return 'local_travis';
-    }
+    public $component    = 'local_travis';
+    public $dependencies = ['mod_forum'];
 }

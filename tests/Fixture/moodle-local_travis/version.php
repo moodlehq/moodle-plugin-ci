@@ -25,7 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 /** @var object $plugin */
-$plugin->version   = 2015071000;
-$plugin->requires  = 2014051200;  // Moodle 2.7.
-$plugin->component = 'local_travis';
-$plugin->maturity  = MATURITY_STABLE;
+$plugin->version      = 2015071000;
+$plugin->requires     = 2014051200;  // Moodle 2.7.
+$plugin->component    = 'local_travis';
+$plugin->dependencies = ['mod_forum' => ANY_VERSION];
+$plugin->maturity     = MATURITY_STABLE;

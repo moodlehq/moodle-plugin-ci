@@ -5,7 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Fixed
+- When installing plugins, now install in order based on `$plugin->dependencies` definitions.
 
 ## [1.5.2] - 2016-04-07
 ### Fixed

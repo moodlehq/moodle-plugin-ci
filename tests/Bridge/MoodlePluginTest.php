@@ -56,6 +56,12 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('local_travis', $plugin->getComponent());
     }
 
+    public function testGetDependencies()
+    {
+        $plugin = new MoodlePlugin($this->pluginDir);
+        $this->assertEquals(['mod_forum'], $plugin->getDependencies());
+    }
+
     public function testHasUnitTests()
     {
         $plugin = new MoodlePlugin($this->pluginDir);
