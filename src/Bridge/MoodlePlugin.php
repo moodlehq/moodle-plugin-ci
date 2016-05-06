@@ -49,7 +49,7 @@ class MoodlePlugin
     /**
      * Cached dependencies.
      *
-     * @var string
+     * @var array
      */
     protected $dependencies;
 
