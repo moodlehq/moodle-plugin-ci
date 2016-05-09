@@ -59,6 +59,9 @@ class Moodle
         if (!defined('IGNORE_COMPONENT_CACHE')) {
             define('IGNORE_COMPONENT_CACHE', true);
         }
+        if (!defined('CACHE_DISABLE_ALL')) {
+            define('CACHE_DISABLE_ALL', true);
+        }
         if (!defined('ABORT_AFTER_CONFIG')) {
             // Need this since Moodle will not be fully installed.
             define('ABORT_AFTER_CONFIG', true);
