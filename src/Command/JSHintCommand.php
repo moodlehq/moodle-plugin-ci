@@ -45,7 +45,7 @@ class JSHintCommand extends AbstractPluginCommand
         $this->outputHeading($output, 'JSHint on %s');
 
         $files = $this->plugin->getRelativeFiles(
-            Finder::create()->name('*.js')->notName('*-min.js')->notPath('yui/build')
+            Finder::create()->name('*.js')->notName('*-min.js')->notPath('yui/build')->notPath('amd/build')
         );
 
         if (count($files) === 0) {

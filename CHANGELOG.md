@@ -7,6 +7,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Fixed
 - When installing plugins, now install in order based on `$plugin->dependencies` definitions.
+- Ignore `amd/build` directory.
 
 ## [1.5.2] - 2016-04-07
 ### Fixed
