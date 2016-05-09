@@ -111,6 +111,8 @@ class PluginInstaller extends AbstractInstaller
      */
     public function installPluginIntoMoodle(MoodlePlugin $plugin)
     {
+        $this->getOutput()->info(sprintf('Installing %s', $plugin->getComponent()));
+
         $directory = $this->moodle->getComponentInstallDirectory($plugin->getComponent());
 
         if (is_dir($directory)) {
