@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [1.5.3] - 2016-05-11
 ### Fixed
 - When installing plugins, now install in order based on `$plugin->dependencies` definitions.
 - Ignore `amd/build` directory.
@@ -99,7 +102,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.2...master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.3...master
+[1.5.3]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.2...1.5.3
 [1.5.2]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.4.1...1.5.0
