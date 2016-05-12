@@ -17,6 +17,7 @@ use Moodlerooms\MoodlePluginCI\Installer\TestSuiteInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -42,6 +43,11 @@ XML;
         $fs->mkdir($this->tempDir);
         $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
         $fs->dumpFile($this->pluginDir.'/phpunit.xml', $phpunit);
+
+        $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
+
+        $fs = new Filesystem();
+        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
 
         $this->pluginDir = realpath($this->pluginDir);
     }

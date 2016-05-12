@@ -16,6 +16,8 @@ use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
@@ -27,7 +29,24 @@ class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->pluginDir = __DIR__.'/../Fixture/moodle-local_travis';
+        $this->pluginDir = sys_get_temp_dir().'/moodle-plugin-ci/TestSuiteInstallerTest'.time();
+
+        $fs = new Filesystem();
+        $fs->mkdir($this->pluginDir);
+        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
+
+        $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
+
+        $fs = new Filesystem();
+        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
+
+        $this->pluginDir = realpath($this->pluginDir);
+    }
+
+    protected function tearDown()
+    {
+        $fs = new Filesystem();
+        $fs->remove($this->pluginDir);
     }
 
     protected function executeCommand($pluginDir = null)

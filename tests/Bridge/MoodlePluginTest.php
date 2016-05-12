@@ -131,7 +131,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
     public function testGetFiles()
     {
         // Ignore some files for better testing.
-        $config = ['filter' => ['notNames' => ['version.php'], 'notPaths' => ['test']]];
+        $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
 
         $fs = new Filesystem();
         $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
@@ -145,12 +145,20 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
             $this->pluginDir.'/db/access.php',
             $this->pluginDir.'/lang/en/local_travis.php',
             $this->pluginDir.'/lib.php',
+            $this->pluginDir.'/tests/lib_test.php',
+            $this->pluginDir.'/version.php',
         ];
         $this->assertEquals($expected, $plugin->getFiles($finder));
     }
 
     public function testGetRelativeFiles()
     {
+        // Ignore some files for better testing.
+        $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
+
+        $fs = new Filesystem();
+        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
+
         $finder = new Finder();
         $finder->name('*.php')->sortByName();
 

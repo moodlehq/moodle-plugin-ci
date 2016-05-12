@@ -10,16 +10,22 @@ php:
  - 5.4
 
 env:
-  - MOODLE_BRANCH=MOODLE_29_STABLE DB=pgsql COVERAGE=false
-  - MOODLE_BRANCH=MOODLE_28_STABLE DB=pgsql COVERAGE=false
-  - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli COVERAGE=false
+  global:
+    - IGNORE_PATHS=ignore
+    - IGNORE_NAMES=ignore_name.php
+    - COVERAGE=false
+    - DB=pgsql
+  matrix:
+    - MOODLE_BRANCH=MOODLE_29_STABLE
+    - MOODLE_BRANCH=MOODLE_28_STABLE
+    - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli
 
 matrix:
   include:
     - php: 7.0
-      env: MOODLE_BRANCH=MOODLE_30_STABLE DB=pgsql COVERAGE=true
+      env: MOODLE_BRANCH=MOODLE_30_STABLE COVERAGE=true
     - php: 7.0
-      env: MOODLE_BRANCH=master DB=pgsql COVERAGE=false
+      env: MOODLE_BRANCH=master
 
 install:
   # Several tools complain about xdebug slowdown.
