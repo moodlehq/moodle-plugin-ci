@@ -149,8 +149,8 @@ class InstallCommand extends Command
         }
 
         $dumper = new ConfigDumper();
-        $dumper->addSection('filter', 'notNames', $this->csvToArray($input->getOption('not-paths')));
-        $dumper->addSection('filter', 'notPaths', $this->csvToArray($input->getOption('not-names')));
+        $dumper->addSection('filter', 'notPaths', $this->csvToArray($input->getOption('not-paths')));
+        $dumper->addSection('filter', 'notNames', $this->csvToArray($input->getOption('not-names')));
 
         $factory             = new InstallerFactory();
         $factory->moodle     = new Moodle($input->getOption('moodle'));

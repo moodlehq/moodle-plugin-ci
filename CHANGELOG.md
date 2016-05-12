@@ -7,6 +7,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [1.5.4] - 2016-05-12
+### Fixed
+- Regression from 1.5.3 with ignore paths and names.
+
 ## [1.5.3] - 2016-05-11
 ### Fixed
 - When installing plugins, now install in order based on `$plugin->dependencies` definitions.
@@ -102,7 +106,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.3...master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.4...master
+[1.5.4]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.3...1.5.4
 [1.5.3]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.2...1.5.3
 [1.5.2]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.0...1.5.1
