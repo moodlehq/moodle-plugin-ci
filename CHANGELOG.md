@@ -9,6 +9,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci validate` command no longer requires `blockname:addinstance` and `blockname:myaddinstance` for
   blocks because depending on allowed formats and block class overrides, they may not actually be required.
 
+### Changed
+- `moodle-plugin-ci validate` command now has more specific requirements for repository plugins.
+
 ## [1.5.4] - 2016-05-12
 ### Fixed
 - Regression from 1.5.3 with ignore paths and names.

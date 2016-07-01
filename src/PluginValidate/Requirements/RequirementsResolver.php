@@ -33,13 +33,14 @@ class RequirementsResolver
     public function resolveRequirements(Plugin $plugin, $moodleVersion)
     {
         $map = [
-            'auth'   => new AuthRequirements($plugin, $moodleVersion),
-            'block'  => new BlockRequirements($plugin, $moodleVersion),
-            'filter' => new FilterRequirements($plugin, $moodleVersion),
-            'format' => new FormatRequirements($plugin, $moodleVersion),
-            'mod'    => new ModuleRequirements($plugin, $moodleVersion),
-            'qtype'  => new QuestionRequirements($plugin, $moodleVersion),
-            'theme'  => new ThemeRequirements($plugin, $moodleVersion),
+            'auth'       => new AuthRequirements($plugin, $moodleVersion),
+            'block'      => new BlockRequirements($plugin, $moodleVersion),
+            'filter'     => new FilterRequirements($plugin, $moodleVersion),
+            'format'     => new FormatRequirements($plugin, $moodleVersion),
+            'mod'        => new ModuleRequirements($plugin, $moodleVersion),
+            'qtype'      => new QuestionRequirements($plugin, $moodleVersion),
+            'repository' => new RepositoryRequirements($plugin, $moodleVersion),
+            'theme'      => new ThemeRequirements($plugin, $moodleVersion),
         ];
 
         if (array_key_exists($plugin->type, $map)) {
