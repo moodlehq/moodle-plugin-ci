@@ -5,7 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Fixed
+- `moodle-plugin-ci validate` command no longer requires `blockname:addinstance` and `blockname:myaddinstance` for
+  blocks because depending on allowed formats and block class overrides, they may not actually be required.
 
 ## [1.5.4] - 2016-05-12
 ### Fixed

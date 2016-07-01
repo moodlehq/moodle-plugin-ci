@@ -36,18 +36,4 @@ class BlockRequirements extends GenericRequirements
             FileTokens::create($this->plugin->component.'.php')->mustHave($this->plugin->component),
         ];
     }
-
-    public function getRequiredStrings()
-    {
-        return parent::getRequiredStrings()
-            ->mustHave($this->plugin->name.':addinstance')
-            ->mustHave($this->plugin->name.':myaddinstance');
-    }
-
-    public function getRequiredCapabilities()
-    {
-        return parent::getRequiredCapabilities()
-            ->mustHave('block/'.$this->plugin->name.':addinstance')
-            ->mustHave('block/'.$this->plugin->name.':myaddinstance');
-    }
 }
