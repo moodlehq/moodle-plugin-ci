@@ -73,15 +73,17 @@ class CodeCheckerCommand extends AbstractPluginCommand
             return $this->outputSkip($output);
         }
 
-        $sniffer = new \PHP_CodeSniffer();
-        $sniffer->setCli(new CodeSnifferCLI([
+        // Must define this before the sniffer due to odd code inclusion resulting in sniffer being included twice.
+        $cli = new CodeSnifferCLI([
             'reports'      => ['full' => null],
             'colors'       => true,
             'encoding'     => 'utf-8',
             'showProgress' => true,
             'reportWidth'  => 120,
-        ]));
+        ]);
 
+        $sniffer = new \PHP_CodeSniffer();
+        $sniffer->setCli($cli);
         $sniffer->process($files, $this->standard);
         $results = $sniffer->reporting->printReport('full', false, $sniffer->cli->getCommandLineValues(), null, 120);
 
