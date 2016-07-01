@@ -62,4 +62,5 @@ script:
   - moodle-plugin-ci behat
 
 after_script:
-  - if [ "$COVERAGE" = true ]; then ocular code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [ "$COVERAGE" = true ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ "$COVERAGE" = true ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
