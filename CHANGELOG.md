@@ -7,6 +7,11 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [1.5.6] - 2016-10-06
+### Changed
+- Upgraded PHP_CodeSniffer to `2.6.2`.
+- Updated Moodle coding standard with latest changes from `v2.5.4`.
+
 ## [1.5.5] - 2016-07-05
 ### Fixed
 - `moodle-plugin-ci validate` command no longer requires `blockname:addinstance` and `blockname:myaddinstance` for
@@ -114,8 +119,9 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.5...master
-[1.5.4]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.4...1.5.5
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.6...master
+[1.5.6]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.5...1.5.6
+[1.5.5]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.4...1.5.5
 [1.5.4]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.3...1.5.4
 [1.5.3]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.2...1.5.3
 [1.5.2]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.1...1.5.2
