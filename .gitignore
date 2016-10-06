@@ -9,3 +9,4 @@ nbproject/
 .cache
 composer.phar
 phpunit.xml
+.php_cs.cache

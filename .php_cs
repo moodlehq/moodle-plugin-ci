@@ -10,14 +10,15 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$finder = Symfony\CS\Finder\DefaultFinder::create()
+$finder = Symfony\CS\Finder::create()
     ->exclude('tests/Fixture')
     ->exclude('moodle')
     ->exclude('moodledata')
     ->name('moodle-plugin-ci')
     ->in(__DIR__);
 
-return Symfony\CS\Config\Config::create()
+return Symfony\CS\Config::create()
+    ->setUsingCache(true)
     ->fixers([
         'align_equals',
         'align_double_arrow',
