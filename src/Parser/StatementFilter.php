@@ -128,8 +128,8 @@ class StatementFilter
      * EG: Find $foo->bar = something.
      *
      * @param array       $statements    PHP statements
-     * @param string      $variable      The variable name, EG: foo in $foo->bar.
-     * @param string      $property      The property name, EG: bar in $foo->bar.
+     * @param string      $variable      The variable name, EG: foo in $foo->bar
+     * @param string      $property      The property name, EG: bar in $foo->bar
      * @param string|null $notFoundError Use this error when not found
      *
      * @return Assign

@@ -46,14 +46,14 @@ class MoodleConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testInjectLineIntoConfig()
     {
-        $before = <<<EOT
+        $before = <<<'EOT'
 // Random lines 1
 // Custom configuration lines are added here:
 // Extra config.
 // Random lines 2
 EOT;
 
-        $expected = <<<EOT
+        $expected = <<<'EOT'
 // Random lines 1
 // Custom configuration lines are added here:
 New Line

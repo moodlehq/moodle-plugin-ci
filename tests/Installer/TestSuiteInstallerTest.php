@@ -33,7 +33,7 @@ class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
         $this->tempDir   = sys_get_temp_dir().'/moodle-plugin-ci/TestSuiteInstallerTest'.time();
         $this->pluginDir = $this->tempDir.'/plugin';
 
-        $phpunit = <<<XML
+        $phpunit = <<<'XML'
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit>
 </phpunit>

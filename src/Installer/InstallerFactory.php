@@ -69,7 +69,7 @@ class InstallerFactory
     /**
      * Given a big bag of install options, add installers to the collection.
      *
-     * @param InstallerCollection $installers Installers will be added to this.
+     * @param InstallerCollection $installers Installers will be added to this
      */
     public function addInstallers(InstallerCollection $installers)
     {

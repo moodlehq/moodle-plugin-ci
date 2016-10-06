@@ -35,7 +35,7 @@ class Vendors
     private $xml;
 
     /**
-     * @param string $path Absolute path to a thirdpartylibs.xml file.
+     * @param string $path Absolute path to a thirdpartylibs.xml file
      */
     public function __construct($path)
     {
