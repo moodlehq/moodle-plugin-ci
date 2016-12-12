@@ -69,6 +69,7 @@ class InstallCommand extends Command
     {
         // Travis CI configures some things by environment variables, default to those if available.
         $type   = getenv('DB') !== false ? getenv('DB') : null;
+        $repo   = getenv('MOODLE_REPO') !== false ? getenv('MOODLE_REPO') : null;
         $branch = getenv('MOODLE_BRANCH') !== false ? getenv('MOODLE_BRANCH') : null;
         $plugin = getenv('TRAVIS_BUILD_DIR') !== false ? getenv('TRAVIS_BUILD_DIR') : null;
         $paths  = getenv('IGNORE_PATHS') !== false ? getenv('IGNORE_PATHS') : null;
@@ -79,6 +80,7 @@ class InstallCommand extends Command
             ->setDescription('Install everything required for CI testing')
             ->addOption('moodle', null, InputOption::VALUE_REQUIRED, 'Clone Moodle to this directory', 'moodle')
             ->addOption('data', null, InputOption::VALUE_REQUIRED, 'Directory create for Moodle data files', 'moodledata')
+            ->addOption('repo', null, InputOption::VALUE_REQUIRED, 'Moodle repositry to clone', $repo)
             ->addOption('branch', null, InputOption::VALUE_REQUIRED, 'Moodle git branch to clone, EG: MOODLE_29_STABLE', $branch)
             ->addOption('plugin', null, InputOption::VALUE_REQUIRED, 'Path to Moodle plugin', $plugin)
             ->addOption('db-type', null, InputOption::VALUE_REQUIRED, 'Database type, mysqli or pgsql', $type)
@@ -156,7 +158,8 @@ class InstallCommand extends Command
         $factory->moodle     = new Moodle($input->getOption('moodle'));
         $factory->plugin     = new MoodlePlugin($pluginDir);
         $factory->execute    = $this->execute;
-        $factory->branch     = $validate->moodleBranch($input->getOption('branch'));
+        $factory->repo       = $input->getOption('repo');
+        $factory->branch     = $validate->moodleBranch($input->getOption('branch'), $factory->repo);
         $factory->dataDir    = $input->getOption('data');
         $factory->dumper     = $dumper;
         $factory->pluginsDir = $pluginsDir;

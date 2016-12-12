@@ -76,9 +76,9 @@ class Validate
      *
      * @return string
      */
-    public function moodleBranch($branch)
+    public function moodleBranch($branch, $repo)
     {
-        if ($branch !== 'master' && preg_match('/^MOODLE_\d\d_STABLE$/', $branch) !== 1) {
+        if (!$repo && $branch !== 'master' && preg_match('/^MOODLE_\d\d_STABLE$/', $branch) !== 1) {
             throw new \InvalidArgumentException(sprintf('Invalid Moodle branch: %s', $branch));
         }
 

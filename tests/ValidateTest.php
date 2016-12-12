@@ -78,7 +78,7 @@ class ValidateTest extends \PHPUnit_Framework_TestCase
     public function testMoodleBranch($branch)
     {
         $validate = new Validate();
-        $this->assertEquals($branch, $validate->moodleBranch($branch), "Validate that $branch is valid");
+        $this->assertEquals($branch, $validate->moodleBranch($branch, null), "Validate that $branch is valid");
     }
 
     /**
@@ -90,7 +90,7 @@ class ValidateTest extends \PHPUnit_Framework_TestCase
     public function testMoodleBranchInvalid($branch)
     {
         $validate = new Validate();
-        $this->assertEquals($branch, $validate->moodleBranch($branch), "Validate that $branch is NOT valid");
+        $this->assertEquals($branch, $validate->moodleBranch($branch, null), "Validate that $branch is NOT valid");
     }
 
     public function moodleBranchProvider()

@@ -49,7 +49,8 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
             $moodle,
             new MoodleConfig(),
             'MOODLE_27_STABLE',
-            $dataDir
+            $dataDir,
+            null
         );
         $installer->install();
 
