@@ -7,6 +7,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Fixed
 - `moodle-plugin-ci install` when installing multiple plugins that have circular dependencies.
+- Stalled Travis jobs when Behat is required.
 
 ### Changed
 - The validation of the `MOODLE_BRANCH` value has been relaxed.  Can be any branch or tag.

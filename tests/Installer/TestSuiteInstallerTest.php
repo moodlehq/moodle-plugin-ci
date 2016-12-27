@@ -92,7 +92,7 @@ XML;
         );
 
         $this->assertNotEmpty($installer->getBehatInstallProcesses());
-        $this->assertCount(5, $installer->getPostInstallProcesses());
+        $this->assertCount(3, $installer->getPostInstallProcesses());
 
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests/behat');
@@ -110,12 +110,12 @@ XML;
         );
 
         $this->assertNotEmpty($installer->getUnitTestInstallProcesses());
-        $this->assertCount(5, $installer->getPostInstallProcesses());
+        $this->assertCount(3, $installer->getPostInstallProcesses());
 
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/tests/lib_test.php');
 
         $this->assertEmpty($installer->getUnitTestInstallProcesses());
-        $this->assertCount(3, $installer->getPostInstallProcesses());
+        $this->assertCount(1, $installer->getPostInstallProcesses());
     }
 }

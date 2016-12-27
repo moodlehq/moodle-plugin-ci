@@ -117,6 +117,9 @@ class TestSuiteInstaller extends AbstractInstaller
             $this->getSeleniumJarPath()
         );
 
+        $this->addEnv('MOODLE_SELENIUM_JAR', $this->getSeleniumJarPath());
+        $this->addEnv('MOODLE_START_BEHAT_SERVERS', 'YES');
+
         return [
             new Process($curl, null, null, null, 120),
             new MoodleProcess(sprintf('%s --install', $this->getBehatUtility())),
@@ -150,11 +153,6 @@ class TestSuiteInstaller extends AbstractInstaller
 
         if ($this->plugin->hasBehatFeatures()) {
             $this->getOutput()->debug('Enabling Behat');
-
-            $binDir = realpath(__DIR__.'/../../bin');
-
-            $processes[] = new Process(sprintf('%s/start-selenium %s', $binDir, $this->getSeleniumJarPath()));
-            $processes[] = new Process(sprintf('%s/start-web-server', $binDir), $this->moodle->directory);
             $processes[] = new MoodleProcess(sprintf('%s --enable', $this->getBehatUtility()));
         }
         if ($this->plugin->hasUnitTests()) {

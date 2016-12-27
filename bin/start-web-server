@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-set -ev
-php -S localhost:8000 > /dev/null 2> /dev/null &
