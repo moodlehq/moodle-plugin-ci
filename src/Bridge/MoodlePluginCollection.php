@@ -65,7 +65,7 @@ class MoodlePluginCollection implements \Countable
             }
         }
 
-        $sorter  = new StringSort($elements);
+        $sorter  = new StringSort($elements, false);
         $results = $sorter->sort();
 
         $sorted = new self();

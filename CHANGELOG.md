@@ -5,7 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Fixed
+- `moodle-plugin-ci install` when installing multiple plugins that have circular dependencies.
 
 ## [1.5.6] - 2016-10-06
 ### Changed
