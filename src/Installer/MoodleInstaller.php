@@ -51,6 +51,11 @@ class MoodleInstaller extends AbstractInstaller
     /**
      * @var string
      */
+    private $repo;
+
+    /**
+     * @var string
+     */
     private $branch;
 
     /**
@@ -63,23 +68,19 @@ class MoodleInstaller extends AbstractInstaller
      * @param AbstractDatabase $database
      * @param Moodle           $moodle
      * @param MoodleConfig     $config
+     * @param string           $repo
      * @param string           $branch
      * @param string           $dataDir
      */
-    public function __construct(Execute $execute, AbstractDatabase $database, Moodle $moodle, MoodleConfig $config, $branch, $dataDir, $repo)
+    public function __construct(Execute $execute, AbstractDatabase $database, Moodle $moodle, MoodleConfig $config, $repo, $branch, $dataDir)
     {
         $this->execute  = $execute;
         $this->database = $database;
         $this->moodle   = $moodle;
         $this->config   = $config;
+        $this->repo     = $repo;
         $this->branch   = $branch;
         $this->dataDir  = $dataDir;
-
-        if ($repo) {
-            $this->repo = $repo;
-        } else {
-            $this->repo = 'git://github.com/moodle/moodle';
-        }
     }
 
     public function install()

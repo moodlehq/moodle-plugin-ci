@@ -70,18 +70,37 @@ class Validate
     }
 
     /**
-     * Validate Moodle branch name.
+     * Validate git branch name.
      *
      * @param string $branch
      *
      * @return string
      */
-    public function moodleBranch($branch, $repo)
+    public function gitBranch($branch)
     {
-        if (!$repo && $branch !== 'master' && preg_match('/^MOODLE_\d\d_STABLE$/', $branch) !== 1) {
-            throw new \InvalidArgumentException(sprintf('Invalid Moodle branch: %s', $branch));
+        $options = ['options' => ['regexp' => '/^[a-zA-Z0-9\/\+\._-]+$/']];
+        if (filter_var($branch, FILTER_VALIDATE_REGEXP, $options) === false) {
+            throw new \InvalidArgumentException(sprintf("Invalid characters found in git branch name '%s'. Use only letters, numbers, underscore, hyphen and forward slashes.", $branch));
         }
 
         return $branch;
+    }
+
+    /**
+     * Validate git URL.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    public function gitUrl($url)
+    {
+        // Source/credit: https://github.com/jonschlinkert/is-git-url/blob/master/index.js
+        $options = ['options' => ['regexp' => '/(?:git|ssh|https?|git@[\w\.]+):(?:\/\/)?[\w\.@:\/~_-]+\.git(?:\/?|\#[\d\w\.\-_]+?)$/']];
+        if (filter_var($url, FILTER_VALIDATE_REGEXP, $options) === false) {
+            throw new \InvalidArgumentException(sprintf('Invalid URL: %s', $url));
+        }
+
+        return $url;
     }
 }

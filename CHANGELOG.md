@@ -8,6 +8,13 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Fixed
 - `moodle-plugin-ci install` when installing multiple plugins that have circular dependencies.
 
+### Changed
+- The validation of the `MOODLE_BRANCH` value has been relaxed.  Can be any branch or tag.
+
+### Added
+- Can use `MOODLE_REPO` environment variable to override Moodle's git clone URL.  This is considered
+  more of an advanced or debugging feature and should not need to be used often.
+
 ## [1.5.6] - 2016-10-06
 ### Changed
 - Upgraded PHP_CodeSniffer to `2.6.2`.

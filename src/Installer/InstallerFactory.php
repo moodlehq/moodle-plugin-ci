@@ -49,6 +49,11 @@ class InstallerFactory
     /**
      * @var string
      */
+    public $repo;
+
+    /**
+     * @var string
+     */
     public $branch;
 
     /**
@@ -67,18 +72,13 @@ class InstallerFactory
     public $pluginsDir;
 
     /**
-     * @var string
-     */
-    public $repo;
-
-    /**
      * Given a big bag of install options, add installers to the collection.
      *
      * @param InstallerCollection $installers Installers will be added to this
      */
     public function addInstallers(InstallerCollection $installers)
     {
-        $installers->add(new MoodleInstaller($this->execute, $this->database, $this->moodle, new MoodleConfig(), $this->branch, $this->dataDir, $this->repo));
+        $installers->add(new MoodleInstaller($this->execute, $this->database, $this->moodle, new MoodleConfig(), $this->repo, $this->branch, $this->dataDir));
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->pluginsDir, $this->dumper));
         $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute));
 

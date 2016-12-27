@@ -48,9 +48,9 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
             new MySQLDatabase(),
             $moodle,
             new MoodleConfig(),
+            'git@github.com:moodle/moodle.git',
             'MOODLE_27_STABLE',
-            $dataDir,
-            null
+            $dataDir
         );
         $installer->install();
 

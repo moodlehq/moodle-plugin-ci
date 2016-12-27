@@ -73,44 +73,82 @@ class ValidateTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $branch
      *
-     * @dataProvider moodleBranchProvider
+     * @dataProvider gitBranchProvider
      */
-    public function testMoodleBranch($branch)
+    public function testGitBranch($branch)
     {
         $validate = new Validate();
-        $this->assertEquals($branch, $validate->moodleBranch($branch, null), "Validate that $branch is valid");
+        $this->assertEquals($branch, $validate->gitBranch($branch), "Validate that $branch is valid");
     }
 
     /**
      * @param string $branch
      *
-     * @dataProvider invalidMoodleBranchProvider
+     * @dataProvider invalidGitBranchProvider
      * @expectedException \InvalidArgumentException
      */
-    public function testMoodleBranchInvalid($branch)
+    public function testGitBranchInvalid($branch)
     {
         $validate = new Validate();
-        $this->assertEquals($branch, $validate->moodleBranch($branch, null), "Validate that $branch is NOT valid");
+        $validate->gitBranch($branch);
     }
 
-    public function moodleBranchProvider()
+    /**
+     * @param string $url
+     *
+     * @dataProvider urlProvider
+     */
+    public function testUrl($url)
+    {
+        $validate = new Validate();
+        $this->assertEquals($url, $validate->gitUrl($url), "Validate that $url is valid");
+    }
+
+    /**
+     * @param string $url
+     *
+     * @dataProvider invalidUrlProvider
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidUrl($url)
+    {
+        $validate = new Validate();
+        $validate->gitUrl($url);
+    }
+
+    public function gitBranchProvider()
     {
         return [
             ['master'],
             ['MOODLE_27_STABLE'],
             ['MOODLE_28_STABLE'],
             ['MOODLE_29_STABLE'],
+            ['v3.2.0'], // We allow tags.
         ];
     }
 
-    public function invalidMoodleBranchProvider()
+    public function invalidGitBranchProvider()
     {
         return [
-            ['master_bar'],
-            ['MOODLE_27_STABLE_STUFF'],
-            ['THIS_MOODLE_28_STABLE'],
-            ['MOODLE_299_STABLE'],
-            ['random'],
+            ['bad!'],
+            ['stuff#'],
+        ];
+    }
+
+    public function urlProvider()
+    {
+        return [
+            ['git@github.com:moodle/moodle.git'],
+            ['https://github.com/moodle/moodle.git'],
+        ];
+    }
+
+    public function invalidUrlProvider()
+    {
+        return [
+            ['foo/bar'],
+            ['baz'],
+            ['http://google.com'],
         ];
     }
 }
