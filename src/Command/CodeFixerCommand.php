@@ -48,7 +48,9 @@ class CodeFixerCommand extends CodeCheckerCommand
             return $this->outputSkip($output, 'No files found to process.');
         }
 
-        $command = sprintf('phpcbf --encoding=utf-8 --colors --standard=%s %s', $this->standard, implode(' ', $files));
+        $colors = $output->isDecorated() ? '--colors' : '';
+
+        $command = sprintf('phpcbf --encoding=utf-8 %s --standard=%s %s', $colors, $this->standard, implode(' ', $files));
         $process = $this->execute->passThrough($command, $this->plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;

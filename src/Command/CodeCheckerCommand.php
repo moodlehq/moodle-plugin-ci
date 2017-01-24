@@ -76,7 +76,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
         // Must define this before the sniffer due to odd code inclusion resulting in sniffer being included twice.
         $cli = new CodeSnifferCLI([
             'reports'      => ['full' => null],
-            'colors'       => true,
+            'colors'       => $output->isDecorated(),
             'encoding'     => 'utf-8',
             'showProgress' => true,
             'reportWidth'  => 120,

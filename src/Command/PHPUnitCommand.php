@@ -50,10 +50,11 @@ class PHPUnitCommand extends AbstractMoodleCommand
             return $this->outputSkip($output, 'No PHPUnit tests to run, free pass!');
         }
 
+        $colors  = $output->isDecorated() ? '--colors' : '';
         $binary  = $this->resolveBinary($input);
         $options = $this->resolveOptions($input);
         $process = $this->execute->passThrough(
-            sprintf('%s%s/vendor/bin/phpunit --colors %s', $binary, $this->moodle->directory, $options),
+            sprintf('%s%s/vendor/bin/phpunit %s %s', $binary, $this->moodle->directory, $colors, $options),
             $this->moodle->directory
         );
 
