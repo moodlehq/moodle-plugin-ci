@@ -35,6 +35,15 @@ class Execute
      */
     private $helper;
 
+    /**
+     * Sleep for .2 seconds to avoid race conditions in Moodle scripts when running them in parallel.
+     *
+     * Example failure, making cache directories.
+     *
+     * @var int
+     */
+    public $parallelWaitTime = 200000;
+
     public function __construct(OutputInterface $output, ProcessHelper $helper)
     {
         $this->output = $output;
@@ -76,6 +85,7 @@ class Execute
         }
         foreach ($processes as $process) {
             $process->start();
+            usleep($this->parallelWaitTime);
         }
         foreach ($processes as $process) {
             $process->wait();

@@ -86,6 +86,8 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         ];
 
         $execute = new Execute(new NullOutput(), $helper);
+
+        $execute->parallelWaitTime = 1;
         $execute->mustRunAll($processes);
 
         foreach ($processes as $process) {
@@ -109,6 +111,8 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         ];
 
         $execute = new Execute(new NullOutput(), $helper);
+
+        $execute->parallelWaitTime = 1;
         $execute->mustRunAll($processes);
     }
 
