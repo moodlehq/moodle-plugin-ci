@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [1.5.7] - 2017-02-06
 ### Fixed
 - `moodle-plugin-ci install` when installing multiple plugins that have circular dependencies.
 - Stalled Travis jobs when Behat is required.
@@ -128,7 +131,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.6...master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.7...master
+[1.5.7]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.6...1.5.7
 [1.5.6]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.5...1.5.6
 [1.5.5]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.4...1.5.5
 [1.5.4]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.3...1.5.4
