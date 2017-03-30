@@ -32,6 +32,6 @@ class VendorInstallerTest extends \PHPUnit_Framework_TestCase
         );
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
+        $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
     }
 }

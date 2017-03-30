@@ -68,7 +68,7 @@ class InstallCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
     }
 
     /**
@@ -80,7 +80,7 @@ class InstallCommandTest extends \PHPUnit_Framework_TestCase
     public function testCsvToArray($value, array $expected)
     {
         $command = new InstallCommand($this->tempDir.'/.env');
-        $this->assertEquals($expected, $command->csvToArray($value), "Converting this value: '$value'");
+        $this->assertSame($expected, $command->csvToArray($value), "Converting this value: '$value'");
     }
 
     public function csvToArrayProvider()

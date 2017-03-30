@@ -52,7 +52,7 @@ class FilterRequirementsTest extends \PHPUnit_Framework_TestCase
         $files = $this->requirements->getRequiredFiles();
 
         $this->assertNotEmpty($files);
-        $this->assertTrue(in_array('filter.php', $files));
+        $this->assertTrue(in_array('filter.php', $files, true));
         foreach ($files as $file) {
             $this->assertInternalType('string', $file);
         }
@@ -72,6 +72,6 @@ class FilterRequirementsTest extends \PHPUnit_Framework_TestCase
     {
         $fileToken = $this->requirements->getRequiredStrings();
         $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
-        $this->assertEquals('lang/en/filter_activitynames.php', $fileToken->file);
+        $this->assertSame('lang/en/filter_activitynames.php', $fileToken->file);
     }
 }

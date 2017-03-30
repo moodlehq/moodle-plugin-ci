@@ -34,11 +34,9 @@ class DatabaseResolverTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \DomainException
-     */
     public function testTypeError()
     {
+        $this->expectException(\DomainException::class);
         $resolver = new DatabaseResolver();
         $resolver->resolveDatabase('foo');
     }
@@ -59,9 +57,9 @@ class DatabaseResolverTest extends \PHPUnit_Framework_TestCase
             $database
         );
 
-        $this->assertEquals($name, $database->name);
-        $this->assertEquals($user, $database->user);
-        $this->assertEquals($pass, $database->pass);
-        $this->assertEquals($host, $database->host);
+        $this->assertSame($name, $database->name);
+        $this->assertSame($user, $database->user);
+        $this->assertSame($pass, $database->pass);
+        $this->assertSame($host, $database->host);
     }
 }

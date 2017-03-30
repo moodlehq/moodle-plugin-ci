@@ -34,6 +34,6 @@ class InstallTest extends \PHPUnit_Framework_TestCase
         $manager = new Install($output);
         $manager->runInstallation($installers);
 
-        $this->assertEquals($installer->stepCount(), $output->getStepCount());
+        $this->assertSame($installer->stepCount(), $output->getStepCount());
     }
 }

@@ -71,13 +71,13 @@ class ModuleRequirementsTest extends \PHPUnit_Framework_TestCase
     {
         $fileToken = $this->requirements->getRequiredStrings();
         $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
-        $this->assertEquals('lang/en/forum.php', $fileToken->file);
+        $this->assertSame('lang/en/forum.php', $fileToken->file);
     }
 
     public function testGetRequiredCapabilities()
     {
         $fileToken = $this->requirements->getRequiredCapabilities();
         $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
-        $this->assertEquals('db/access.php', $fileToken->file);
+        $this->assertSame('db/access.php', $fileToken->file);
     }
 }

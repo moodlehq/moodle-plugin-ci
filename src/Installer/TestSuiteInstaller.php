@@ -226,7 +226,7 @@ class TestSuiteInstaller extends AbstractInstaller
             ->notName('upgradelib.php');
 
         foreach ($dbFiles as $dbFile) {
-            $key = array_search($dbFile->getRealPath(), $files);
+            $key = array_search($dbFile->getRealPath(), $files, true);
 
             if ($key !== false) {
                 unset($files[$key]);

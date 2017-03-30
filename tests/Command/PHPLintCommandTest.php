@@ -55,22 +55,20 @@ class PHPLintCommandTest extends \PHPUnit_Framework_TestCase
         $this->expectOutputRegex('/No syntax error found/');
         $commandTester = $this->executeCommand();
 
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
     }
 
     public function testExecuteNoFiles()
     {
         // Just random directory with no PHP files.
         $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertRegExp('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoPlugin()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand('/path/to/no/plugin');
     }
 }

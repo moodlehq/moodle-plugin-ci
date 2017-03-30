@@ -51,6 +51,6 @@ class QuestionRequirementsTest extends \PHPUnit_Framework_TestCase
     {
         $fileTokens = $this->requirements->getRequiredTablePrefix();
         $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileTokens);
-        $this->assertEquals('db/install.xml', $fileTokens->file);
+        $this->assertSame('db/install.xml', $fileTokens->file);
     }
 }

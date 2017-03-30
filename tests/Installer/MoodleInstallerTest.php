@@ -54,7 +54,7 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
         );
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
+        $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
 
         $this->assertTrue(is_dir($dataDir));
         $this->assertTrue(is_dir($dataDir.'/phpu_moodledata'));
@@ -63,7 +63,7 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
 
         $installDir = realpath($this->tempDir);
 
-        $this->assertEquals($installDir, $moodle->directory, 'Moodle directory should be absolute path after install');
-        $this->assertEquals(['MOODLE_DIR' => $installDir], $installer->getEnv());
+        $this->assertSame($installDir, $moodle->directory, 'Moodle directory should be absolute path after install');
+        $this->assertSame(['MOODLE_DIR' => $installDir], $installer->getEnv());
     }
 }

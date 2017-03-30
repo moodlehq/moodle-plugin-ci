@@ -69,15 +69,13 @@ class CoverallsUploadCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertFileExists($this->pluginDir.'/build/logs/clover.xml');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoPlugin()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir.'/no/plugin');
     }
 
@@ -87,7 +85,7 @@ class CoverallsUploadCommandTest extends \PHPUnit_Framework_TestCase
         $fs->remove($this->moodleDir.'/coverage.xml');
 
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertRegExp('/Did not find coverage file/', $commandTester->getDisplay());
     }
 }

@@ -52,7 +52,7 @@ class FormatRequirementsTest extends \PHPUnit_Framework_TestCase
         $files = $this->requirements->getRequiredFiles();
 
         $this->assertNotEmpty($files);
-        $this->assertTrue(in_array('format.php', $files));
+        $this->assertTrue(in_array('format.php', $files, true));
         foreach ($files as $file) {
             $this->assertInternalType('string', $file);
         }

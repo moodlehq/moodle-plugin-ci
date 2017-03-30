@@ -59,10 +59,10 @@ class AddPluginCommandTest extends \PHPUnit_Framework_TestCase
             '--storage' => $this->tempDir.'/plugins',
         ]);
 
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertTrue(is_dir($this->tempDir.'/plugins'));
         $this->assertFileExists($this->tempDir.'/.env');
-        $this->assertEquals(
+        $this->assertSame(
             sprintf("EXTRA_PLUGINS_DIR=%s/plugins\n", realpath($this->tempDir)),
             file_get_contents($this->tempDir.'/.env')
         );
@@ -76,20 +76,19 @@ class AddPluginCommandTest extends \PHPUnit_Framework_TestCase
             '--storage' => $this->tempDir.'/plugins',
         ]);
 
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertTrue(is_dir($this->tempDir.'/plugins'));
         $this->assertFileExists($this->tempDir.'/.env');
-        $this->assertEquals(
+        $this->assertSame(
             sprintf("EXTRA_PLUGINS_DIR=%s/plugins\n", realpath($this->tempDir)),
             file_get_contents($this->tempDir.'/.env')
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteBothProjectAndClone()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $commandTester = $this->getCommandTester();
         $commandTester->execute([
             'project'   => 'user/moodle-mod_foo',
@@ -98,11 +97,10 @@ class AddPluginCommandTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testExecuteMissingProjectAndClone()
     {
+        $this->expectException(\RuntimeException::class);
+
         $commandTester = $this->getCommandTester();
         $commandTester->execute([
             '--storage' => $this->tempDir.'/plugins',

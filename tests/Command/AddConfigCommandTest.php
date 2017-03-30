@@ -60,14 +60,14 @@ class AddConfigCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertRegExp('/\$CFG->foo = "bar";\n/', file_get_contents($this->tempDir.'/config.php'));
     }
 
     public function testExecuteSyntaxError()
     {
         $commandTester = $this->executeCommand('$CFG->foo = "bar"');
-        $this->assertEquals(1, $commandTester->getStatusCode());
+        $this->assertSame(1, $commandTester->getStatusCode());
         $this->assertRegExp('/Syntax error found in 1 file/', $commandTester->getDisplay());
     }
 }

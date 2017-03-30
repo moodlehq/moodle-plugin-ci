@@ -41,7 +41,7 @@ class MoodleConfigTest extends \PHPUnit_Framework_TestCase
         $config   = new MoodleConfig();
         $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
 
-        $this->assertEquals(file_get_contents(__DIR__.'/../Fixture/example-config.php'), $contents);
+        $this->assertSame(file_get_contents(__DIR__.'/../Fixture/example-config.php'), $contents);
     }
 
     public function testInjectLineIntoConfig()
@@ -63,14 +63,12 @@ EOT;
 
         $config   = new MoodleConfig();
         $contents = $config->injectLine($before, 'New Line');
-        $this->assertEquals($expected, $contents);
+        $this->assertSame($expected, $contents);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testInjectLineIntoConfigMissingPlaceholder()
     {
+        $this->expectException(\RuntimeException::class);
         $config = new MoodleConfig();
         $config->injectLine('Bad param', 'New Line');
     }
@@ -83,23 +81,20 @@ EOT;
         $config   = new MoodleConfig();
         $contents = $config->read($this->tempDir.'/test.txt');
 
-        $this->assertEquals('Test', $contents);
+        $this->assertSame('Test', $contents);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testReadFileNotFound()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $config = new MoodleConfig();
         $config->read($this->tempDir.'/test.txt');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testReadFail()
     {
+        $this->expectException(\RuntimeException::class);
+
         $fs = new Filesystem();
         $fs->dumpFile($this->tempDir.'/test.txt', 'Test');
         $fs->chmod($this->tempDir.'/test.txt', 0222);

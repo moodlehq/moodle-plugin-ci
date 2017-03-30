@@ -64,9 +64,9 @@ class MoodlePlugin
     /**
      * Get a plugin's component name.
      *
-     * @return string
-     *
      * @throws \RuntimeException
+     *
+     * @return string
      */
     public function getComponent()
     {

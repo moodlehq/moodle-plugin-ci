@@ -53,13 +53,13 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
     public function testGetComponent()
     {
         $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertEquals('local_travis', $plugin->getComponent());
+        $this->assertSame('local_travis', $plugin->getComponent());
     }
 
     public function testGetDependencies()
     {
         $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertEquals(['mod_forum'], $plugin->getDependencies());
+        $this->assertSame(['mod_forum'], $plugin->getDependencies());
     }
 
     public function testHasUnitTests()
@@ -98,14 +98,13 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
     {
         $plugin   = new MoodlePlugin($this->pluginDir);
         $expected = ['vendor.php', 'vendor', 'vendor_glob1.php', 'vendor_glob2.php'];
-        $this->assertEquals($expected, $plugin->getThirdPartyLibraryPaths());
+        $this->assertSame($expected, $plugin->getThirdPartyLibraryPaths());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testGetThirdPartyLibraryPathsError()
     {
+        $this->expectException(\RuntimeException::class);
+
         // Overwrite third party libs XML with a broken one.
         $fs = new Filesystem();
         $fs->copy(__DIR__.'/../Fixture/broken-thirdpartylibs.xml', $this->pluginDir.'/thirdpartylibs.xml', true);
@@ -125,7 +124,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($expected));
 
         $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertEquals($expected['filter'], $plugin->getIgnores());
+        $this->assertSame($expected['filter'], $plugin->getIgnores());
     }
 
     public function testGetFiles()
@@ -148,7 +147,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
             $this->pluginDir.'/tests/lib_test.php',
             $this->pluginDir.'/version.php',
         ];
-        $this->assertEquals($expected, $plugin->getFiles($finder));
+        $this->assertSame($expected, $plugin->getFiles($finder));
     }
 
     public function testGetRelativeFiles()
@@ -171,6 +170,6 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
             'tests/lib_test.php',
             'version.php',
         ];
-        $this->assertEquals($expected, $plugin->getRelativeFiles($finder));
+        $this->assertSame($expected, $plugin->getRelativeFiles($finder));
     }
 }

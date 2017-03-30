@@ -65,7 +65,7 @@ class ShifterCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
     }
 
     public function testExecuteNoSource()
@@ -74,37 +74,33 @@ class ShifterCommandTest extends \PHPUnit_Framework_TestCase
         $fs->remove($this->pluginDir.'/yui/src');
 
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertRegExp('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testExecuteNoBuild()
     {
+        $this->expectException(\RuntimeException::class);
+
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/yui/build');
 
         $this->executeCommand();
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testExecuteShifterFail()
     {
+        $this->expectException(\RuntimeException::class);
+
         $fs = new Filesystem();
         $fs->remove($this->pluginDir.'/yui/buildci');
 
         $this->executeCommand();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoPlugin()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->pluginDir.'/no/plugin');
     }
 }

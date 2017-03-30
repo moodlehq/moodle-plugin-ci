@@ -46,7 +46,7 @@ class EnvDumperTest extends \PHPUnit_Framework_TestCase
         $expected = 'TEST=value'.PHP_EOL.'FOO=bar'.PHP_EOL;
 
         $this->assertFileExists($toFile);
-        $this->assertEquals($expected, file_get_contents($toFile));
+        $this->assertSame($expected, file_get_contents($toFile));
     }
 
     public function testNoDump()

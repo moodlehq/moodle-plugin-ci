@@ -50,11 +50,11 @@ class InstallerCollectionTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             'FOO'  => 'bar',
-            'BAT'  => 'baz',
             'THIS' => 'that',
+            'BAT'  => 'baz',
         ];
 
-        $this->assertEquals($expected, $installers->mergeEnv());
+        $this->assertSame($expected, $installers->mergeEnv());
     }
 
     public function testTotalSteps()
@@ -66,6 +66,6 @@ class InstallerCollectionTest extends \PHPUnit_Framework_TestCase
         $installers->add(new DummyInstaller());
         $installers->add(new DummyInstaller());
 
-        $this->assertEquals($installers->sumStepCount(), $installer->stepCount() * 3);
+        $this->assertSame($installers->sumStepCount(), $installer->stepCount() * 3);
     }
 }

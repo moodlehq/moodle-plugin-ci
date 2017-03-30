@@ -70,7 +70,7 @@ class PHPUnitCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
     }
 
     public function testExecuteNoTests()
@@ -79,23 +79,19 @@ class PHPUnitCommandTest extends \PHPUnit_Framework_TestCase
         $fs->remove($this->pluginDir.'/tests/lib_test.php');
 
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertRegExp('/No PHPUnit tests to run, free pass!/', $commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoPlugin()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir.'/no/plugin');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoMoodle()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir.'/no/moodle');
     }
 }

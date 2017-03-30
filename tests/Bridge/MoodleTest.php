@@ -23,6 +23,6 @@ class MoodleTest extends \PHPUnit_Framework_TestCase
     public function testGetBranch()
     {
         $moodle = new Moodle(__DIR__.'/../Fixture/moodle');
-        $this->assertEquals(29, $moodle->getBranch());
+        $this->assertSame(29, $moodle->getBranch());
     }
 }

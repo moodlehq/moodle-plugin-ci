@@ -47,12 +47,12 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
+        $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
 
         $installDir = $this->tempDir.'/local/travis';
 
-        $this->assertEquals($installDir, $plugin->directory, 'Plugin directory should be absolute path after install');
-        $this->assertEquals(['PLUGIN_DIR' => $installDir], $installer->getEnv());
+        $this->assertSame($installDir, $plugin->directory, 'Plugin directory should be absolute path after install');
+        $this->assertSame(['PLUGIN_DIR' => $installDir], $installer->getEnv());
     }
 
     public function testInstallPluginIntoMoodle()
@@ -76,11 +76,10 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testInstallPluginIntoMoodleAlreadyExists()
     {
+        $this->expectException(\RuntimeException::class);
+
         $filesystem = new Filesystem();
         $filesystem->mkdir($this->tempDir.'/local/travis');
 
@@ -106,7 +105,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
         $installer->createConfigFile($filename);
 
         $this->assertFileExists($filename);
-        $this->assertEquals($expected, Yaml::parse(file_get_contents($filename)));
+        $this->assertSame($expected, Yaml::parse(file_get_contents($filename)));
     }
 
     public function testScanForPlugins()

@@ -67,7 +67,7 @@ XML;
         );
         $installer->install();
 
-        $this->assertEquals($installer->stepCount(), $installer->getOutput()->getStepCount());
+        $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
 
         $expected = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -80,7 +80,7 @@ XML;
     </filter>
 </phpunit>
 XML;
-        $this->assertEquals($expected, file_get_contents($this->pluginDir.'/phpunit.xml'));
+        $this->assertSame($expected, file_get_contents($this->pluginDir.'/phpunit.xml'));
     }
 
     public function testBehatProcesses()

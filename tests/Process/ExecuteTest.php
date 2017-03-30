@@ -20,6 +20,7 @@ use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -95,11 +96,10 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @expectedException \Symfony\Component\Process\Exception\ProcessFailedException
-     */
     public function testMustRunAllFail()
     {
+        $this->expectException(ProcessFailedException::class);
+
         $helper = new ProcessHelper();
         $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
 
@@ -123,6 +123,6 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $process = $execute->passThrough('php -r "echo 42;"');
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
-        $this->assertEquals(' RUN  php -r "echo 42;"'.PHP_EOL.'42', $output->fetch());
+        $this->assertSame(' RUN  php -r "echo 42;"'.PHP_EOL.'42', $output->fetch());
     }
 }

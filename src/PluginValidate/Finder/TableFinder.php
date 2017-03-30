@@ -42,7 +42,7 @@ class TableFinder implements FinderInterface
         $tables = [];
         $xml    = simplexml_load_file($file);
         foreach ($xml->xpath('TABLES/TABLE') as $element) {
-            if (!is_null($element['NAME'])) {
+            if (null !== $element['NAME']) {
                 $tables[] = (string) $element['NAME'];
             }
         }

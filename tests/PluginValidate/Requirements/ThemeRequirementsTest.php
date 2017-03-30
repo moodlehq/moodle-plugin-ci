@@ -52,7 +52,7 @@ class ThemeRequirementsTest extends \PHPUnit_Framework_TestCase
         $files = $this->requirements->getRequiredFiles();
 
         $this->assertNotEmpty($files);
-        $this->assertTrue(in_array('config.php', $files));
+        $this->assertTrue(in_array('config.php', $files, true));
         foreach ($files as $file) {
             $this->assertInternalType('string', $file);
         }

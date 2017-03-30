@@ -31,16 +31,16 @@ class InstallOutputTest extends \PHPUnit_Framework_TestCase
         $output      = new InstallOutput(null, $progressBar);
 
         $output->start('Start', 5);
-        $this->assertEquals(5, $progressBar->getMaxSteps());
-        $this->assertEquals('Start', $progressBar->getMessage('message'));
+        $this->assertSame(5, $progressBar->getMaxSteps());
+        $this->assertSame('Start', $progressBar->getMessage('message'));
 
         $output->step('Step 1');
-        $this->assertEquals(1, $progressBar->getProgress());
-        $this->assertEquals('Step 1', $progressBar->getMessage('message'));
+        $this->assertSame(1, $progressBar->getProgress());
+        $this->assertSame('Step 1', $progressBar->getMessage('message'));
 
         $output->end('End');
-        $this->assertEquals(5, $progressBar->getProgress());
-        $this->assertEquals('End', $progressBar->getMessage('message'));
+        $this->assertSame(5, $progressBar->getProgress());
+        $this->assertSame('End', $progressBar->getMessage('message'));
     }
 
     public function testLogInfo()
@@ -49,7 +49,7 @@ class InstallOutputTest extends \PHPUnit_Framework_TestCase
         $installOutput  = new InstallOutput(new ConsoleLogger($bufferedOutput));
 
         $installOutput->info('Testing log');
-        $this->assertEquals('[info] Testing log'.PHP_EOL, $bufferedOutput->fetch());
+        $this->assertSame('[info] Testing log'.PHP_EOL, $bufferedOutput->fetch());
     }
 
     public function testQuietLogInfo()
@@ -67,7 +67,7 @@ class InstallOutputTest extends \PHPUnit_Framework_TestCase
         $installOutput  = new InstallOutput(new ConsoleLogger($bufferedOutput));
 
         $installOutput->debug('Testing log');
-        $this->assertEquals('[debug] Testing log'.PHP_EOL, $bufferedOutput->fetch());
+        $this->assertSame('[debug] Testing log'.PHP_EOL, $bufferedOutput->fetch());
     }
 
     public function testQuietLogDebug()

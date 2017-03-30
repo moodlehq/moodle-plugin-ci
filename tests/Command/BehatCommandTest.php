@@ -75,7 +75,7 @@ class BehatCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
     }
 
     public function testExecuteNoFeatures()
@@ -84,34 +84,29 @@ class BehatCommandTest extends \PHPUnit_Framework_TestCase
         $fs->remove($this->pluginDir.'/tests/behat');
 
         $commandTester = $this->executeCommand();
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertRegExp('/No Behat features to run, free pass!/', $commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testExecuteNoConfig()
     {
+        $this->expectException(\RuntimeException::class);
+
         $fs = new Filesystem();
         $fs->remove($this->moodleDir.'/behat/behat.yml');
 
         $this->executeCommand();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoPlugin()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir.'/no/plugin');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExecuteNoMoodle()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir.'/no/moodle');
     }
 }

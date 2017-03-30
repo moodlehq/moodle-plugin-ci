@@ -29,6 +29,6 @@ class PostgresDatabaseTest extends \PHPUnit_Framework_TestCase
         $database->host = 'TestHost';
 
         $expected = 'psql -c \'CREATE DATABASE "TestName";\' -U \'TestUser\' -h \'TestHost\'';
-        $this->assertEquals($expected, $database->getCreateDatabaseCommand());
+        $this->assertSame($expected, $database->getCreateDatabaseCommand());
     }
 }

@@ -47,9 +47,9 @@ class CodeParser
      *
      * @param string $path File path
      *
-     * @return \PhpParser\Node[]
-     *
      * @throws \Exception
+     *
+     * @return \PhpParser\Node[]
      */
     public function parseFile($path)
     {

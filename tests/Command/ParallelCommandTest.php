@@ -49,7 +49,7 @@ class ParallelCommandTest extends \PHPUnit_Framework_TestCase
             'foo' => new Process('php -r "usleep(100);"'),
             'bar' => new Process('php -r "usleep(100);"'),
         ]);
-        $this->assertEquals(0, $commandTester->getStatusCode());
+        $this->assertSame(0, $commandTester->getStatusCode());
     }
 
     public function testExecuteFailedProcess()
@@ -58,7 +58,7 @@ class ParallelCommandTest extends \PHPUnit_Framework_TestCase
             'foo' => new Process('php -r "fwrite(STDERR, \"Write to error\n\"); exit(1);"'),
         ]);
 
-        $this->assertEquals(1, $commandTester->getStatusCode());
+        $this->assertSame(1, $commandTester->getStatusCode());
         $this->assertRegExp('/Command foo failed/', $commandTester->getDisplay());
         $this->assertRegExp('/Error output for foo command/', $commandTester->getDisplay());
         $this->assertRegExp('/Write to error/', $commandTester->getDisplay());

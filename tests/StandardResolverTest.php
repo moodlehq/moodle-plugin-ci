@@ -37,20 +37,16 @@ class StandardResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($resolver->resolve('moodle'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testResolveUnknown()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $resolver = new StandardResolver();
         $resolver->resolve('foo');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testResolveNotFound()
     {
+        $this->expectException(\RuntimeException::class);
         $resolver = new StandardResolver(['moodle' => [__DIR__.'/bad/location']]);
         $resolver->resolve('moodle');
     }
