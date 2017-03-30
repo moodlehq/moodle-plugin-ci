@@ -1,4 +1,4 @@
-<?php  // Moodle configuration file
+<?php // Moodle configuration file
 
 unset($CFG);
 global $CFG;
@@ -11,7 +11,7 @@ $CFG->dbname    = 'moodle';
 $CFG->dbuser    = 'root';
 $CFG->dbpass    = '';
 $CFG->prefix    = 'mdl_';
-$CFG->dboptions = array();
+$CFG->dboptions = [];
 
 $CFG->wwwroot  = 'http://localhost/moodle';
 $CFG->dataroot = '/path/to/moodledata';
@@ -24,31 +24,34 @@ $CFG->debug        = (E_ALL | E_STRICT);
 $CFG->debugdisplay = 1;
 
 // No emails.
-$CFG->noemailever = true;
+$CFG->noemailever    = true;
+$CFG->noreplyaddress = 'noreply@localhost.local';
 
 // PHPUnit settings.
 $CFG->phpunit_prefix   = 'phpu_';
 $CFG->phpunit_dataroot = '/path/to/moodledata/phpu_moodledata';
 
 // Behat settings.
-$CFG->behat_prefix   = 'behat_';
-$CFG->behat_dataroot = '/path/to/moodledata/behat_moodledata';
-$CFG->behat_wwwroot  = 'http://localhost:8000';
-$CFG->behat_config   = array(
-    'default' => array(
-        'extensions' => array(
-            'Behat\MinkExtension\Extension' => array(
-                'selenium2' => array(
+$CFG->behat_prefix        = 'behat_';
+$CFG->behat_dataroot      = '/path/to/moodledata/behat_moodledata';
+$CFG->behat_wwwroot       = 'http://localhost:8000';
+$CFG->behat_faildump_path = '/path/to/moodledata/behat_dump';
+$CFG->behat_profiles      = [
+    'default' => [
+        'browser'    => 'firefox',
+        'wd_host'    => 'http://localhost:4444/wd/hub',
+        'extensions' => [
+            'Behat\MinkExtension' => [
+                'selenium2' => [
                     'browser' => 'firefox',
-                    'wd_host' => 'http://localhost:4444/wd/hub'
-                )
-            )
-        )
-    ),
-);
+                ]
+            ]
+        ]
+    ]
+];
 
 // Extra config.
 
-require_once(dirname(__FILE__) . '/lib/setup.php');
+require_once(__DIR__.'/lib/setup.php');
 // There is no php closing tag in this file,
 // it is intentional because it prevents trailing whitespace problems!

@@ -54,6 +54,10 @@ class DummyExecute extends Execute
 
     public function passThroughProcess(Process $process)
     {
-        return $process;
+        if ($process instanceof DummyProcess) {
+            return $process;
+        }
+
+        return new DummyProcess($process->getCommandLine(), $process->getWorkingDirectory(), null, null, $process->getTimeout());
     }
 }

@@ -38,7 +38,6 @@ class BehatCommandTest extends \PHPUnit_Framework_TestCase
         $fs->mirror(__DIR__.'/../Fixture/moodle', $this->moodleDir);
         $fs->mkdir($this->moodleDir.'/behat');
         $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-        $fs->touch($this->moodleDir.'/behat/behat.yml');
     }
 
     protected function tearDown()
@@ -86,16 +85,6 @@ class BehatCommandTest extends \PHPUnit_Framework_TestCase
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertRegExp('/No Behat features to run, free pass!/', $commandTester->getDisplay());
-    }
-
-    public function testExecuteNoConfig()
-    {
-        $this->expectException(\RuntimeException::class);
-
-        $fs = new Filesystem();
-        $fs->remove($this->moodleDir.'/behat/behat.yml');
-
-        $this->executeCommand();
     }
 
     public function testExecuteNoPlugin()

@@ -15,7 +15,9 @@ namespace Moodlerooms\MoodlePluginCI\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Run Behat tests.
@@ -48,6 +50,8 @@ class BehatCommand extends AbstractMoodleCommand
         $this->setName('behat')
             ->addOption('start-servers', null, InputOption::VALUE_NONE, 'Start Selenium and PHP servers')
             ->addOption('jar', null, InputOption::VALUE_REQUIRED, 'Path to Selenium Jar file', $jar)
+            ->addOption('auto-rerun', null, InputOption::VALUE_REQUIRED, 'Number of times to rerun failures', 2)
+            ->addOption('dump', null, InputOption::VALUE_NONE, 'Print contents of Behat failure HTML files')
             ->setDescription('Run Behat on a plugin');
     }
 
@@ -72,21 +76,26 @@ class BehatCommand extends AbstractMoodleCommand
 
         $servers && $this->startServerProcesses($input->getOption('jar'));
 
-        $colors = '';
-        if ($output->isDecorated()) {
-            $colors = $this->moodle->getBranch() >= 31 ? '--colors' : '--ansi';
-        }
-        $config = $this->moodle->getBehatDataDirectory().'/behat/behat.yml';
-        if (!file_exists($config)) {
-            throw new \RuntimeException('Behat config file not found.  Behat must not have been installed.');
-        }
+        $builder = ProcessBuilder::create()
+            ->setPrefix('php')
+            ->add('admin/tool/behat/cli/run.php')
+            ->add('--tags=@'.$this->plugin->getComponent())
+            ->add('--auto-rerun='.$input->getOption('auto-rerun'))
+            ->add('--verbose')
+            ->add('-vvv')
+            ->setWorkingDirectory($this->moodle->directory)
+            ->setTimeout(null);
 
-        $process = $this->execute->passThrough(
-            sprintf('%s/vendor/bin/behat %s --config %s --tags @%s', $this->moodle->directory, $colors, $config, $this->plugin->getComponent()),
-            $this->moodle->directory
-        );
+        if ($output->isDecorated()) {
+            $builder->add('--colors');
+        }
+        $process = $this->execute->passThroughProcess($builder->getProcess());
 
         $servers && $this->stopServerProcesses();
+
+        if ($input->getOption('dump')) {
+            $this->dumpFailures($output);
+        }
 
         return $process->isSuccessful() ? 0 : 1;
     }
@@ -122,6 +131,21 @@ class BehatCommand extends AbstractMoodleCommand
 
         foreach ($this->servers as $process) {
             $process->stop();
+        }
+    }
+
+    private function dumpFailures(OutputInterface $output)
+    {
+        $dumpDir = $this->moodle->getConfig('behat_faildump_path');
+        if (is_dir($dumpDir)) {
+            $files = Finder::create()->name('*.html')->in($dumpDir)->getIterator();
+            foreach ($files as $file) {
+                $output->writeln([
+                    sprintf('<comment>===== %s =====</comment>', $file->getFilename()),
+                    $file->getContents(),
+                    sprintf('<comment>===== %s =====</comment>', $file->getFilename()),
+                ]);
+            }
         }
     }
 }

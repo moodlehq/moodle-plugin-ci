@@ -36,9 +36,4 @@ class DummyMoodle extends Moodle
     {
         return $this->directory.'/local/travis';
     }
-
-    public function getBehatDataDirectory()
-    {
-        return $this->directory;
-    }
 }

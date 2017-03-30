@@ -58,14 +58,7 @@ class TestSuiteInstaller extends AbstractInstaller
      */
     private function getBehatUtility()
     {
-        // Moodle 2.9 or later use this one.
-        $behatUtility = $this->moodle->directory.'/admin/tool/behat/cli/util_single_run.php';
-        if (!file_exists($behatUtility)) {
-            // Moodle 2.8 or earlier use this one.
-            $behatUtility = $this->moodle->directory.'/admin/tool/behat/cli/util.php';
-        }
-
-        return $behatUtility;
+        return $this->moodle->directory.'/admin/tool/behat/cli/util_single_run.php';
     }
 
     /**
@@ -113,7 +106,7 @@ class TestSuiteInstaller extends AbstractInstaller
         $this->getOutput()->debug('Download Selenium, start servers and initialize Behat');
 
         $curl = sprintf(
-            'curl -o %s http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar',
+            'curl -o %s http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar',
             $this->getSeleniumJarPath()
         );
 

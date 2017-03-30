@@ -97,10 +97,12 @@ class MoodleInstaller extends AbstractInstaller
         $this->getOutput()->step('Moodle assets');
 
         $this->getOutput()->debug('Creating Moodle data directories');
+
+        $dirs = [$this->dataDir, $this->dataDir.'/phpu_moodledata', $this->dataDir.'/behat_moodledata', $this->dataDir.'/behat_dump'];
+
         $filesystem = new Filesystem();
-        $filesystem->mkdir($this->dataDir);
-        $filesystem->mkdir($this->dataDir.'/phpu_moodledata');
-        $filesystem->mkdir($this->dataDir.'/behat_moodledata');
+        $filesystem->mkdir($dirs);
+        $filesystem->chmod($dirs, 0777);
 
         $this->getOutput()->debug('Create Moodle database');
         $this->execute->mustRun($this->database->getCreateDatabaseCommand());
