@@ -77,7 +77,7 @@ class Execute
      */
     public function runAll($processes)
     {
-        if (OutputInterface::VERBOSITY_VERY_VERBOSE <= $this->output->getVerbosity()) {
+        if ($this->output->isVeryVerbose()) {
             // If verbose, then do not run in parallel so we get sane debug output.
             array_map([$this, 'run'], $processes);
 
@@ -132,7 +132,7 @@ class Execute
      */
     public function passThroughProcess(Process $process)
     {
-        if (OutputInterface::VERBOSITY_VERY_VERBOSE <= $this->output->getVerbosity()) {
+        if ($this->output->isVeryVerbose()) {
             $this->output->writeln(sprintf('<bg=blue;fg=white;> RUN </> <fg=blue>%s</>', $process->getCommandLine()));
         }
         $process->run(function ($type, $buffer) {

@@ -106,7 +106,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
         $installer->createConfigFile($filename);
 
         $this->assertFileExists($filename);
-        $this->assertEquals($expected, Yaml::parse($filename));
+        $this->assertEquals($expected, Yaml::parse(file_get_contents($filename)));
     }
 
     public function testScanForPlugins()

@@ -25,6 +25,12 @@ use Stecman\Component\Symfony\Console\BashCompletion\CompletionHandler;
  */
 class CompletionCommand extends BaseCompletionCommand
 {
+    protected function configure()
+    {
+        parent::configure();
+        $this->setHidden(true);
+    }
+
     protected function configureCompletion(CompletionHandler $handler)
     {
         // Completion for plugin argument/option to file system paths.

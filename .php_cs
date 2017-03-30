@@ -25,5 +25,7 @@ return Symfony\CS\Config::create()
         'ordered_use',
         'short_array_syntax',
         '-psr0',
+        '-empty_return',
+        '-no_empty_comment',
     ])
     ->finder($finder);

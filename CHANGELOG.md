@@ -5,7 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Changed
+- BREAKING: requires PHP5.6 or later.
+- BREAKING: requires Moodle 3.2 or later.
 
 ## [1.5.8] - 2017-03-30
 ### Fixed

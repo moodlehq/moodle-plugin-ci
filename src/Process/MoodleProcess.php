@@ -53,7 +53,7 @@ class MoodleProcess extends Process
         return $isSuccessful;
     }
 
-    public function mustRun($callback = null)
+    public function mustRun(callable $callback = null)
     {
         parent::mustRun($callback);
 

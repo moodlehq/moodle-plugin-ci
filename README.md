@@ -22,7 +22,7 @@ Supported tests and code analysis tools:
 [![License](https://poser.pugx.org/moodlerooms/moodle-plugin-ci/license)](https://packagist.org/packages/moodlerooms/moodle-plugin-ci)
 
 # Requirements
-**PHP 5.4** or later and **Moodle 2.7** or later.
+**PHP 5.6** or later and **Moodle 3.2** or later.
 
 In addition, the plugin being tested must have a [version.php](https://docs.moodle.org/dev/version.php) file
 and `$plugin->component` must be defined within it.

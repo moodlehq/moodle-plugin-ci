@@ -7,7 +7,7 @@ cache:
     - $HOME/.composer/cache
 
 php:
- - 5.4
+ - 5.6
 
 env:
   global:
@@ -16,16 +16,12 @@ env:
     - COVERAGE=false
     - DB=pgsql
   matrix:
-    - MOODLE_BRANCH=MOODLE_29_STABLE
-    - MOODLE_BRANCH=MOODLE_28_STABLE
-    - MOODLE_BRANCH=MOODLE_27_STABLE DB=mysqli
+    - MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli
 
 matrix:
   include:
-    - php: 5.6
-      env: MOODLE_BRANCH=MOODLE_30_STABLE
-    - php: 7.0
-      env: MOODLE_BRANCH=MOODLE_31_STABLE COVERAGE=true
+    - php: 7.1
+      env: MOODLE_BRANCH=master COVERAGE=true
 
 install:
   # Several tools complain about xdebug slowdown.

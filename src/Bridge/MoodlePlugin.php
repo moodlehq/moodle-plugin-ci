@@ -186,7 +186,7 @@ class MoodlePlugin
             return [];
         }
 
-        $config = Yaml::parse($configFile);
+        $config = Yaml::parse(file_get_contents($configFile));
 
         return array_key_exists('filter', $config) ? $config['filter'] : [];
     }
