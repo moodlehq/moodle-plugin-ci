@@ -2,6 +2,12 @@ language: php
 
 sudo: false
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+      - oracle-java8-set-default
+
 cache:
   directories:
     - $HOME/.composer/cache
@@ -27,6 +33,8 @@ install:
   # Several tools complain about xdebug slowdown.
   - phpenv config-rm xdebug.ini
 
+  - nvm install node
+
   - composer selfupdate
   - composer install --no-interaction --prefer-dist
 
@@ -51,6 +59,7 @@ script:
   - moodle-plugin-ci phpmd
   - moodle-plugin-ci codechecker
   - moodle-plugin-ci validate
+  - moodle-plugin-ci mustache
   - moodle-plugin-ci phpunit --coverage-text
   - moodle-plugin-ci behat
 
