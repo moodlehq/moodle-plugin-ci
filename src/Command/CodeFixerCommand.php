@@ -49,8 +49,9 @@ class CodeFixerCommand extends CodeCheckerCommand
         }
 
         $colors = $output->isDecorated() ? '--colors' : '';
+        $phpCBF = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_codechecker/pear/PHP/scripts/phpcbf');
 
-        $command = sprintf('phpcbf --encoding=utf-8 %s --standard=%s %s', $colors, $this->standard, implode(' ', $files));
+        $command = sprintf('%s --encoding=utf-8 %s --standard=%s %s', $phpCBF, $colors, $this->standard, implode(' ', $files));
         $process = $this->execute->passThrough($command, $this->plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;

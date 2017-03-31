@@ -34,8 +34,7 @@ class StandardResolver
     {
         $defaultStandards = [
             'moodle' => [
-                __DIR__.'/../../../moodlerooms/moodle-coding-standard/moodle', // Global Composer install.
-                __DIR__.'/../vendor/moodlerooms/moodle-coding-standard/moodle', // Local Composer install.
+                __DIR__.'/../vendor/moodlehq/moodle-local_codechecker/moodle',
             ],
         ];
 

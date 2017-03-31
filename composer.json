@@ -12,10 +12,42 @@
       "role": "Developer"
     }
   ],
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "moodlehq/moodle-local_codechecker",
+        "version": "2.5.4",
+        "source": {
+          "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
+          "type": "git",
+          "reference": "v2.5.4"
+        },
+        "autoload": {
+          "classmap": [
+            "pear/PHP/CodeSniffer.php",
+            "pear/PHP/CodeSniffer/CLI.php"
+          ]
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "moodlehq/moodle-local_ci",
+        "version": "1.0.1",
+        "source": {
+          "url": "https://github.com/moodlehq/moodle-local_ci.git",
+          "type": "git",
+          "reference": "e812f2492d7fc9276de9e2e22ffd22d4c8dd9c83"
+        }
+      }
+    }
+  ],
   "require": {
     "php": ">=5.6.0",
-    "moodlerooms/moodle-coding-standard": "^2.0.0",
-    "squizlabs/php_codesniffer": "^2.6",
+    "moodlehq/moodle-local_codechecker": "2.5.4",
+    "moodlehq/moodle-local_ci": "1.0.1",
     "sebastian/phpcpd": "^3.0",
     "phpmd/phpmd": "^2.2",
     "symfony/filesystem": "^3.2",
@@ -54,6 +86,9 @@
     "bin/moodle-plugin-ci"
   ],
   "scripts": {
+    "post-install-cmd": "@local-ci-install",
+    "post-update-cmd": "@local-ci-install",
+    "post-create-project-cmd": "@local-ci-install",
     "test-all": [
       "@lint",
       "@test",
@@ -61,6 +96,10 @@
     ],
     "test": "phpunit",
     "lint": "parallel-lint src tests bin/moodle-plugin-ci",
-    "fix": "php-cs-fixer fix -v || true"
+    "fix": "php-cs-fixer fix -v || true",
+    "local-ci-install": [
+      "@composer remove --no-update --working-dir=vendor/moodlehq/moodle-local_ci squizlabs/php_codesniffer",
+      "@composer update --prefer-dist --optimize-autoloader --working-dir=vendor/moodlehq/moodle-local_ci"
+    ]
   }
 }
