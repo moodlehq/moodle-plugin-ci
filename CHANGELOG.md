@@ -9,6 +9,11 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - BREAKING: requires PHP5.6 or later.
 - BREAKING: requires Moodle 3.2 or later.
 
+## Removed
+- `moodle-plugin-ci csslint` command.  Replaced with `grunt` command.
+- `moodle-plugin-ci jshint` command.  Replaced with `grunt` command.
+- `moodle-plugin-ci shifter` command.  Replaced with `grunt` command.
+
 ### Added
 - `--dump` option to `behat` command to print Behat HTML failure captures.
 - `--auto-reurn` option to `behat` automatically rerun failures, defaults to `2`.

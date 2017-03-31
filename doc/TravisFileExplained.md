@@ -77,13 +77,6 @@ script:
 # This step runs the Moodle Code Checker to make sure that your plugin conforms to the
 # Moodle coding standards.  It is highly recommended that you keep this step.
   - moodle-plugin-ci codechecker
-# This step runs CSS Lint on the CSS files in your plugin.
-  - moodle-plugin-ci csslint
-# This step runs YUI Shifter on the YUI modules in your plugin.  This also checks to make
-# sure that the YUI modules have been shifted.
-  - moodle-plugin-ci shifter
-# This step runs JSHint on the Javascript files in your plugin.
-  - moodle-plugin-ci jshint
 # This step runs some light validation on the plugin file structure and code.  Validation can be plugin specific.
   - moodle-plugin-ci validate
 # This step runs the PHPUnit tests of your plugin.  If your plugin has PHPUnit tests,

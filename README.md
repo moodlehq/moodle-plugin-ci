@@ -10,9 +10,6 @@ Supported tests and code analysis tools:
 * [PHP Linting](https://github.com/JakubOnderka/PHP-Parallel-Lint)
 * [PHP Copy/Paste Detector](https://github.com/sebastianbergmann/phpcpd)
 * [PHP Mess Detector](http://phpmd.org)
-* [CSS Lint](https://github.com/CSSLint/csslint)
-* [JSHint](http://www.jshint.com/)
-* [Shifter](https://docs.moodle.org/dev/YUI/Shifter)
 
 [![Latest Stable Version](https://poser.pugx.org/moodlerooms/moodle-plugin-ci/v/stable)](https://packagist.org/packages/moodlerooms/moodle-plugin-ci)
 [![Build Status](https://travis-ci.org/moodlerooms/moodle-plugin-ci.svg?branch=master)](https://travis-ci.org/moodlerooms/moodle-plugin-ci)
