@@ -10,14 +10,16 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - BREAKING: requires Moodle 3.2 or later.
 
 ## Removed
-- `moodle-plugin-ci csslint` command.  Replaced with `grunt` command.
-- `moodle-plugin-ci jshint` command.  Replaced with `grunt` command.
-- `moodle-plugin-ci shifter` command.  Replaced with `grunt` command.
+- BREAKING: removed `moodle-plugin-ci csslint` command.  Replaced with `grunt` command.
+- BREAKING: removed `moodle-plugin-ci jshint` command.  Replaced with `grunt` command.
+- BREAKING: removed `moodle-plugin-ci shifter` command.  Replaced with `grunt` command.
 
 ### Added
+- `moodle-plugin-ci mustache` which lints your Mustache template files.
 - `--dump` option to `behat` command to print Behat HTML failure captures.
 - `--auto-reurn` option to `behat` automatically rerun failures, defaults to `2`.
-- `moodle-plugin-ci mustache` which lints your Mustache template files.
+- The `.travis.dist.yml` now has steps to install Java 8.
+- The `.travis.dist.yml` now has steps to install latest version of NodeJS and NPM.
 
 ## [1.5.8] - 2017-03-30
 ### Fixed

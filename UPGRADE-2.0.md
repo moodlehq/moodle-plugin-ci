@@ -1,19 +1,16 @@
 # Upgrading from 1.X to 2.0
 
-This document outlines major changes in the new version and how one might upgrade to the new version.
+This document outlines the steps one should take when upgrading to the new major version.
 
-## Requirements
+## Step 1: Review new requirements
 
 Requirements have changed, this project now requires PHP 5.6 or later and Moodle 3.2 or later.
 
-## Updates that you will need to make
+## Step 2: Review the change log
 
-The following commands were removed:
+Detailed information about what changed in version 2 can be found in the [change log](CHANGELOG.md).
 
-* `moodle-plugin-ci csslint`
-* `moodle-plugin-ci jshint`
-* `moodle-plugin-ci shifter`
+## Step 3: Review Travis configuration file 
 
-The following commands were added:
-
-* `moodle-plugin-ci mustache`
+Review the updated [.travis.dist.yml](.travis.dist.yml) and update your `.travis.yml` file in your plugin.
+For detailed information about the `.travis.dist.yml` file, please see this [help document](doc/TravisFileExplained.md).
