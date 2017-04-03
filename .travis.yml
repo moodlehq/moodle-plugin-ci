@@ -30,9 +30,7 @@ matrix:
       env: MOODLE_BRANCH=master COVERAGE=true
 
 install:
-  # Several tools complain about xdebug slowdown.
   - phpenv config-rm xdebug.ini
-
   - nvm install node
 
   - composer selfupdate
