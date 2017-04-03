@@ -10,6 +10,13 @@ language: php
 # This tells Travis CI to use its new architecture.  Everything is better!
 sudo: false
 
+# Installs extra APT packages.  Java 8 is only required for Mustache command.
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+      - oracle-java8-set-default
+
 # This tells Travis CI to cache Composer's cache.  Speeds up build times.
 cache:
   directories:
@@ -42,6 +49,8 @@ before_install:
 # This disables XDebug which should speed up the build.  One reason to remove this
 # line is if you are trying to generate code coverage with PHPUnit.
   - phpenv config-rm xdebug.ini
+# This installs the latest version of NodeJS which is used by Grunt, etc.
+  - nvm install node
 # Currently we are inside of the clone of your repository.  We move up two
 # directories to build the project.
   - cd ../..
@@ -79,6 +88,8 @@ script:
   - moodle-plugin-ci codechecker
 # This step runs some light validation on the plugin file structure and code.  Validation can be plugin specific.
   - moodle-plugin-ci validate
+# This step validates the HTML and Javascript in your Mustache templates.
+  - moodle-plugin-ci mustache
 # This step runs the PHPUnit tests of your plugin.  If your plugin has PHPUnit tests,
 # then it is highly recommended that you keep this step.
   - moodle-plugin-ci phpunit

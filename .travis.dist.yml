@@ -2,6 +2,12 @@ language: php
 
 sudo: false
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+      - oracle-java8-set-default
+
 cache:
   directories:
     - $HOME/.composer/cache
@@ -21,6 +27,7 @@ env:
 
 before_install:
   - phpenv config-rm xdebug.ini
+  - nvm install node
   - cd ../..
   - composer selfupdate
   - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^1
@@ -35,5 +42,6 @@ script:
   - moodle-plugin-ci phpmd
   - moodle-plugin-ci codechecker
   - moodle-plugin-ci validate
+  - moodle-plugin-ci mustache
   - moodle-plugin-ci phpunit
   - moodle-plugin-ci behat

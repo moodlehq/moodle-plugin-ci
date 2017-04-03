@@ -6,7 +6,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 ### Changed
-- BREAKING: requires PHP5.6 or later.
+- BREAKING: requires PHP 5.6 or later.
 - BREAKING: requires Moodle 3.2 or later.
 
 ## Removed
@@ -17,6 +17,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 - `--dump` option to `behat` command to print Behat HTML failure captures.
 - `--auto-reurn` option to `behat` automatically rerun failures, defaults to `2`.
+- `moodle-plugin-ci mustache` which lints your Mustache template files.
 
 ## [1.5.8] - 2017-03-30
 ### Fixed

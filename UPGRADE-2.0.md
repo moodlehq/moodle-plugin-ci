@@ -4,11 +4,16 @@ This document outlines major changes in the new version and how one might upgrad
 
 ## Requirements
 
-Requirements have changed, this project now requires PHP5.6 or later and Moodle 3.2 or later.
+Requirements have changed, this project now requires PHP 5.6 or later and Moodle 3.2 or later.
 
 ## Updates that you will need to make
 
-* The following commands were removed:
-  *  `moodle-plugin-ci csslint`
-  *  `moodle-plugin-ci jshint`
-  *  `moodle-plugin-ci shifter`
+The following commands were removed:
+
+* `moodle-plugin-ci csslint`
+* `moodle-plugin-ci jshint`
+* `moodle-plugin-ci shifter`
+
+The following commands were added:
+
+* `moodle-plugin-ci mustache`
