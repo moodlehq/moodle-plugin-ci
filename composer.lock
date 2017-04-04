@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b8a4692c766a41c409833737b3f23bc6",
+    "content-hash": "a84db70b54811b733693d389521f7f1a",
     "packages": [
         {
             "name": "jakub-onderka/php-console-color",

@@ -46,8 +46,8 @@
   ],
   "require": {
     "php": ">=5.6.0",
-    "moodlehq/moodle-local_codechecker": "2.5.4",
-    "moodlehq/moodle-local_ci": "1.0.2",
+    "moodlehq/moodle-local_codechecker": "^2.5.4",
+    "moodlehq/moodle-local_ci": "^1.0.2",
     "sebastian/phpcpd": "^3.0",
     "phpmd/phpmd": "^2.2",
     "symfony/filesystem": "^3.2",
