@@ -34,7 +34,6 @@ install:
   - phpenv config-rm xdebug.ini
   - nvm install node
 
-  - composer selfupdate
   - composer install --no-interaction --prefer-dist
 
   # Mimic how a Moodle plugin would be run.
