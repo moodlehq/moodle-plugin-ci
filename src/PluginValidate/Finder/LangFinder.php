@@ -17,9 +17,6 @@ use PhpParser\Node\Scalar\String_;
 
 /**
  * Finds Moodle language strings in a file.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class LangFinder extends AbstractParserFinder
 {

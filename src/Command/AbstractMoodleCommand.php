@@ -19,9 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Abstract Moodle Command.
  *
  * This command interacts with Moodle and a plugin.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 abstract class AbstractMoodleCommand extends AbstractPluginCommand
 {

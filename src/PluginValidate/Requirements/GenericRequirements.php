@@ -18,9 +18,6 @@ use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens;
  * Generic plugin requirements.
  *
  * This is used by default, so update wisely.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class GenericRequirements extends AbstractRequirements
 {

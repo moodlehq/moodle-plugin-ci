@@ -19,9 +19,6 @@ use Symfony\Component\Process\Process;
 
 /**
  * Runs a process and generates output if necessary.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class Execute
 {

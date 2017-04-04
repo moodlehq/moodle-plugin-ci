@@ -20,9 +20,6 @@ namespace Moodlerooms\MoodlePluginCI\Bridge;
  * via its own CLI script.
  *
  * This was inspired by moodle-local_codechecker.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class CodeSnifferCLI extends \PHP_CodeSniffer_CLI
 {

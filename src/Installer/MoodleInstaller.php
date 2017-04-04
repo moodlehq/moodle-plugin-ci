@@ -22,9 +22,6 @@ use Symfony\Component\Process\Process;
 
 /**
  * Installer.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class MoodleInstaller extends AbstractInstaller
 {

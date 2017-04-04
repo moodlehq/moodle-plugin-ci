@@ -16,9 +16,6 @@ use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
 
 /**
  * Must override to avoid using Moodle API.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class DummyMoodle extends Moodle
 {

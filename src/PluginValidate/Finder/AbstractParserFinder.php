@@ -19,9 +19,6 @@ use Moodlerooms\MoodlePluginCI\Parser\StatementFilter;
  * Abstract finder.
  *
  * Parses PHP files to find tokens within them.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 abstract class AbstractParserFinder implements FinderInterface
 {

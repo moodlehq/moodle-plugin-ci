@@ -17,9 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Run PHP Code Beautifier and Fixer on a plugin.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class CodeFixerCommand extends CodeCheckerCommand
 {

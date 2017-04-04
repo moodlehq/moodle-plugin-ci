@@ -16,9 +16,6 @@ namespace Moodlerooms\MoodlePluginCI\PluginValidate\Finder;
  * Finder interface.
  *
  * Finds tokens in a file.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 interface FinderInterface
 {

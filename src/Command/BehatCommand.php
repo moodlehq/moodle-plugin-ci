@@ -21,9 +21,6 @@ use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Run Behat tests.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class BehatCommand extends AbstractMoodleCommand
 {

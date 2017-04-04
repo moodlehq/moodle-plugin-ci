@@ -17,9 +17,6 @@ use Moodlerooms\MoodlePluginCI\PluginValidate\Plugin;
 
 /**
  * Abstract plugin requirements.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 abstract class AbstractRequirements
 {

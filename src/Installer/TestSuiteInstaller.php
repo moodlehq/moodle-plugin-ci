@@ -23,9 +23,6 @@ use Symfony\Component\Process\Process;
 
 /**
  * PHPUnit and Behat installer.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class TestSuiteInstaller extends AbstractInstaller
 {

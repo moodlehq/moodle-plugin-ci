@@ -26,9 +26,6 @@ use Symfony\Component\Yaml\Yaml;
  * and uses Moodle API to get information about
  * the plugin.  Very important, the plugin may not
  * be installed into Moodle.
- *
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class MoodlePlugin
 {
