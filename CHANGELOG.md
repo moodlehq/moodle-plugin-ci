@@ -13,6 +13,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - BREAKING: removed `moodle-plugin-ci csslint` command.  Replaced with `grunt` command.
 - BREAKING: removed `moodle-plugin-ci jshint` command.  Replaced with `grunt` command.
 - BREAKING: removed `moodle-plugin-ci shifter` command.  Replaced with `grunt` command.
+- The Composer self update step from `.travis.dist.yml`.
 
 ### Added
 - Defining ignore files per command, see [help document](doc/IgnoringFiles.md) for details. 
