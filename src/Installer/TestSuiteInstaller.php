@@ -191,7 +191,11 @@ class TestSuiteInstaller extends AbstractInstaller
             ->notPath('lang')
             ->notPath('vendor');
 
+        $this->plugin->context = 'phpunit'; // Bit of a hack, but ensure we respect PHPUnit ignores.
+
         $files = $this->plugin->getFiles($finder);
+
+        $this->plugin->context = ''; // Revert.
 
         return $this->removeDbFiles($this->plugin->directory.'/db', $files);
     }

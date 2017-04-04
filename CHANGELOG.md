@@ -15,6 +15,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - BREAKING: removed `moodle-plugin-ci shifter` command.  Replaced with `grunt` command.
 
 ### Added
+- Defining ignore files per command, see [help document](doc/IgnoringFiles.md) for details. 
 - `moodle-plugin-ci mustache` which lints your Mustache template files.
 - `--dump` option to `behat` command to print Behat HTML failure captures.
 - `--auto-reurn` option to `behat` automatically rerun failures, defaults to `2`.

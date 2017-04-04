@@ -37,6 +37,16 @@ class MoodlePlugin
     public $directory;
 
     /**
+     * The context in which we are running.
+     *
+     * EG: this is the command name and it should only
+     * be used for reading configs.
+     *
+     * @var string
+     */
+    public $context = '';
+
+    /**
      * Cached component string.
      *
      * @var string
@@ -184,6 +194,11 @@ class MoodlePlugin
         }
 
         $config = Yaml::parse(file_get_contents($configFile));
+
+        // Search for context (AKA command) specific filter first.
+        if (!empty($this->context) && array_key_exists('filter-'.$this->context, $config)) {
+            return $config['filter-'.$this->context];
+        }
 
         return array_key_exists('filter', $config) ? $config['filter'] : [];
     }

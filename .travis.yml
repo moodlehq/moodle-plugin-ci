@@ -19,6 +19,7 @@ env:
   global:
     - IGNORE_PATHS=ignore
     - IGNORE_NAMES=ignore_name.php
+    - MUSTACHE_IGNORE_NAMES=broken.mustache
     - COVERAGE=false
     - DB=pgsql
   matrix:

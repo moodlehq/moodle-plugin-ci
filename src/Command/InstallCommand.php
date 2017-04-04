@@ -147,10 +147,6 @@ class InstallCommand extends Command
             $pluginsDir = realpath($validate->directory($pluginsDir));
         }
 
-        $dumper = new ConfigDumper();
-        $dumper->addSection('filter', 'notPaths', $this->csvToArray($input->getOption('not-paths')));
-        $dumper->addSection('filter', 'notNames', $this->csvToArray($input->getOption('not-names')));
-
         $factory             = new InstallerFactory();
         $factory->moodle     = new Moodle($input->getOption('moodle'));
         $factory->plugin     = new MoodlePlugin($pluginDir);
@@ -158,7 +154,7 @@ class InstallCommand extends Command
         $factory->repo       = $validate->gitUrl($input->getOption('repo'));
         $factory->branch     = $validate->gitBranch($input->getOption('branch'));
         $factory->dataDir    = $input->getOption('data');
-        $factory->dumper     = $dumper;
+        $factory->dumper     = $this->initializePluginConfigDumper($input);
         $factory->pluginsDir = $pluginsDir;
         $factory->database   = $resolver->resolveDatabase(
             $input->getOption('db-type'),
@@ -169,6 +165,38 @@ class InstallCommand extends Command
         );
 
         return $factory;
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @return ConfigDumper
+     */
+    public function initializePluginConfigDumper(InputInterface $input)
+    {
+        $dumper = new ConfigDumper();
+        $dumper->addSection('filter', 'notPaths', $this->csvToArray($input->getOption('not-paths')));
+        $dumper->addSection('filter', 'notNames', $this->csvToArray($input->getOption('not-names')));
+
+        foreach ($this->getApplication()->all() as $command) {
+            if (!$command instanceof AbstractPluginCommand) {
+                continue;
+            }
+
+            $prefix   = strtoupper($command->getName());
+            $envPaths = $prefix.'_IGNORE_PATHS';
+            $envNames = $prefix.'_IGNORE_NAMES';
+
+            $paths    = getenv($envPaths) !== false ? getenv($envPaths) : null;
+            $names    = getenv($envNames) !== false ? getenv($envNames) : null;
+
+            if (!empty($paths) || !empty($names)) {
+                $dumper->addSection('filter-'.$command->getName(), 'notPaths', $this->csvToArray($paths));
+                $dumper->addSection('filter-'.$command->getName(), 'notNames', $this->csvToArray($names));
+            }
+        }
+
+        return $dumper;
     }
 
     /**

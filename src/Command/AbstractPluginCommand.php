@@ -44,6 +44,9 @@ abstract class AbstractPluginCommand extends Command
             $validate     = new Validate();
             $pluginDir    = realpath($validate->directory($input->getArgument('plugin')));
             $this->plugin = new MoodlePlugin($pluginDir);
+
+            // This allows for command specific configs.
+            $this->plugin->context = $this->getName();
         }
     }
 

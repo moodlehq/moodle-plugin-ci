@@ -13,10 +13,12 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\InstallCommand;
+use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
 use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Installer\DummyInstall;
 use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class InstallCommandTest extends MoodleTestCase
@@ -58,6 +60,41 @@ class InstallCommandTest extends MoodleTestCase
     {
         $command = new InstallCommand($this->tempDir.'/.env');
         $this->assertSame($expected, $command->csvToArray($value), "Converting this value: '$value'");
+    }
+
+    public function testInitializePluginConfigDumper()
+    {
+        putenv('PHPLINT_IGNORE_NAMES=foo.php,bar.php');
+        putenv('PHPLINT_IGNORE_PATHS=bat,fiz/buz');
+
+        $command          = new InstallCommand($this->tempDir.'/.env');
+        $command->install = new DummyInstall(new InstallOutput());
+
+        $lintCommand         = new PHPLintCommand();
+        $lintCommand->plugin = $this->pluginDir;
+
+        $application = new Application();
+        $application->add($command);
+        $application->add($lintCommand);
+
+        $actual = $this->tempDir.'/config.yml';
+
+        $input  = new ArrayInput(['--not-paths' => 'global/path', '--not-names' => 'global_name.php'], $command->getDefinition());
+        $dumper = $command->initializePluginConfigDumper($input);
+        $dumper->dump($actual);
+
+        $expected = $this->dumpFile('expected.yml', <<<'EOT'
+filter:
+    notPaths: [global/path]
+    notNames: [global_name.php]
+filter-phplint:
+    notPaths: [bat, fiz/buz]
+    notNames: [foo.php, bar.php]
+
+EOT
+);
+
+        $this->assertFileEquals($expected, $actual);
     }
 
     public function csvToArrayProvider()

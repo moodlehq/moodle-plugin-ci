@@ -22,3 +22,22 @@ Both environment variables take a CSV value.  For `IGNORE_PATHS`, it takes relat
 can be a simple string like `foo/bar` or a regular expression like `/^foo\/bar/`.  For `IGNORE_NAMES`, it takes
 file names to ignore.  File names can be a simple string like `foo.php`, a glob like `*.php` or a regular expression
 like `/\.php$/`.
+
+If you need to specify ignore paths for a specific command, then you can define additional environment variables.  The
+variable names are the same as above, but prefixed with `COMMANDNAME_`.  Example:
+
+```yml
+env:
+ global:
+  - MOODLE_BRANCH=MOODLE_29_STABLE
+  - IGNORE_PATHS=vendor/widget,javascript/min-lib.js
+  - IGNORE_NAMES=*-m.js,bad_lib.php
+  - PHPUNIT_IGNORE_PATHS=$IGNORE_PATHS,cli
+ matrix:
+  - DB=pgsql
+  - DB=mysqli
+```
+
+In the above example, we are adding the `cli` path to our ignore paths for the PHPUnit command.  Please note that this
+is a complete override and there is no merging with `IGNORE_PATHS` and `IGNORE_NAMES`.  So, in the above, the PHPUnit
+command would not ignore the file names defined in `IGNORE_NAMES`.
