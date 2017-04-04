@@ -46,7 +46,7 @@ class VendorInstaller extends AbstractInstaller
 
     public function install()
     {
-        $this->getOutput()->step('Install dependencies');
+        $this->getOutput()->step('Install global dependencies');
 
         $processes = [];
         if ($this->plugin->hasUnitTests() || $this->plugin->hasBehatFeatures()) {
@@ -55,10 +55,19 @@ class VendorInstaller extends AbstractInstaller
         $processes[] = new Process('npm install -g --no-progress grunt vnu-jar', null, null, null, null);
 
         $this->execute->mustRunAll($processes);
+
+        $this->getOutput()->step('Install npm dependencies');
+
+        $this->execute->mustRun(new Process('npm install --no-progress', $this->moodle->directory, null, null, null));
+        if ($this->plugin->hasNodeDependencies()) {
+            $this->execute->mustRun(new Process('npm install --no-progress', $this->plugin->directory, null, null, null));
+        }
+
+        $this->execute->mustRun(new Process('grunt ignorefiles', $this->moodle->directory, null, null, null));
     }
 
     public function stepCount()
     {
-        return 1;
+        return 2;
     }
 }

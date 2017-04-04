@@ -22,6 +22,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `--auto-reurn` option to `behat` automatically rerun failures, defaults to `2`.
 - The `.travis.dist.yml` now has steps to install Java 8.
 - The `.travis.dist.yml` now has steps to install latest version of NodeJS and NPM.
+- The `.travis.dist.yml` now has a step to cache the npm cache.
 
 ## [1.5.8] - 2017-03-30
 ### Fixed

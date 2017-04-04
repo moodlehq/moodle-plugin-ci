@@ -17,10 +17,11 @@ addons:
       - oracle-java8-installer
       - oracle-java8-set-default
 
-# This tells Travis CI to cache Composer's cache.  Speeds up build times.
+# This tells Travis CI to cache npm's and Composer's caches.  Speeds up build times.
 cache:
   directories:
     - $HOME/.composer/cache
+    - $HOME/.npm
 
 # Determines which versions of PHP to test our project against.  Each version listed
 # here will create a separate build and run the tests against that version of PHP.

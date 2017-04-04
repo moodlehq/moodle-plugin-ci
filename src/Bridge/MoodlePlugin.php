@@ -165,6 +165,16 @@ class MoodlePlugin
     }
 
     /**
+     * Determine if the plugin has any Nodejs dependencies.
+     *
+     * @return bool
+     */
+    public function hasNodeDependencies()
+    {
+        return is_file($this->directory.'/package.json');
+    }
+
+    /**
      * Get paths to 3rd party libraries within the plugin.
      *
      * @return array
