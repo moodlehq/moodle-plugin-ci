@@ -8,6 +8,7 @@ Supported tests and code analysis tools:
 * [Behat](http://behat.org/)
 * [Moodle Code Checker](https://github.com/moodlehq/moodle-local_codechecker)
 * Mustache Linting
+* Grunt tasks
 * [PHP Linting](https://github.com/JakubOnderka/PHP-Parallel-Lint)
 * [PHP Copy/Paste Detector](https://github.com/sebastianbergmann/phpcpd)
 * [PHP Mess Detector](http://phpmd.org)

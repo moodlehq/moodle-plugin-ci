@@ -18,6 +18,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 - Defining ignore files per command, see [help document](doc/IgnoringFiles.md) for details. 
 - `moodle-plugin-ci mustache` which lints your Mustache template files.
+- `moodle-plugin-ci grunt` which runs Grunt tasks on the plugin.
 - `--dump` option to `behat` command to print Behat HTML failure captures.
 - `--auto-reurn` option to `behat` automatically rerun failures, defaults to `2`.
 - The `.travis.dist.yml` now has steps to install Java 8.

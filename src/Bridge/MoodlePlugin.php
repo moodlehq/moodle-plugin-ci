@@ -145,8 +145,7 @@ class MoodlePlugin
      */
     public function hasUnitTests()
     {
-        $finder = new Finder();
-        $result = $finder->files()->in($this->directory)->path('tests')->name('*_test.php')->count();
+        $result = Finder::create()->files()->in($this->directory)->path('tests')->name('*_test.php')->count();
 
         return $result !== 0;
     }
@@ -158,10 +157,23 @@ class MoodlePlugin
      */
     public function hasBehatFeatures()
     {
-        $finder = new Finder();
-        $result = $finder->files()->in($this->directory)->path('tests/behat')->name('*.feature')->count();
+        $result = Finder::create()->files()->in($this->directory)->path('tests/behat')->name('*.feature')->count();
 
         return $result !== 0;
+    }
+
+    /**
+     * Determine if the plugin has any files with a given name pattern.
+     *
+     * @param string $pattern File name pattern
+     *
+     * @return bool
+     */
+    public function hasFilesWithName($pattern)
+    {
+        $result = $this->getFiles(Finder::create()->name($pattern));
+
+        return count($result) !== 0;
     }
 
     /**

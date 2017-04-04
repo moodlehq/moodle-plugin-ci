@@ -89,6 +89,9 @@ script:
   - moodle-plugin-ci validate
 # This step validates the HTML and Javascript in your Mustache templates.
   - moodle-plugin-ci mustache
+# This step runs Grunt tasks on the plugin.  By default, it tries to run tasks relevant to your plugin and Moodle
+# version, but you can run specific tasks by passing them as arguments, EG: moodle-plugin-ci grunt -t task1 -t task2 
+  - moodle-plugin-ci grunt
 # This step runs the PHPUnit tests of your plugin.  If your plugin has PHPUnit tests,
 # then it is highly recommended that you keep this step.
   - moodle-plugin-ci phpunit
