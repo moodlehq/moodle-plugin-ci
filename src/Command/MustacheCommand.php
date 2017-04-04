@@ -48,7 +48,7 @@ class MustacheCommand extends AbstractMoodleCommand
     {
         $this->outputHeading($output, 'Mustache Lint on %s');
 
-        $files = $this->plugin->getRelativeFiles(Finder::create()->name('*.mustache'));
+        $files = $this->plugin->getFiles(Finder::create()->name('*.mustache'));
         if (count($files) === 0) {
             return $this->outputSkip($output);
         }
@@ -61,7 +61,7 @@ class MustacheCommand extends AbstractMoodleCommand
                 ProcessBuilder::create()
                     ->setPrefix('php')
                     ->add($linter)
-                    ->add('--filename='.$this->plugin->directory.'/'.$file)
+                    ->add('--filename='.$file)
                     ->add('--validator='.$this->jarFile)
                     ->add('--basename='.$this->moodle->directory)
                     ->setTimeout(null)
