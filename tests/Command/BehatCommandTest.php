@@ -15,33 +15,12 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 use Moodlerooms\MoodlePluginCI\Command\BehatCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Filesystem\Filesystem;
 
-class BehatCommandTest extends \PHPUnit_Framework_TestCase
+class BehatCommandTest extends MoodleTestCase
 {
-    private $moodleDir;
-    private $pluginDir;
-
-    protected function setUp()
-    {
-        $this->moodleDir = sys_get_temp_dir().'/moodle-plugin-ci/BehatCommandTest'.time();
-        $this->pluginDir = $this->moodleDir.'/local/travis';
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle', $this->moodleDir);
-        $fs->mkdir($this->moodleDir.'/behat');
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->moodleDir);
-    }
-
     protected function executeCommand($pluginDir = null, $moodleDir = null)
     {
         if ($pluginDir === null) {
@@ -75,8 +54,7 @@ class BehatCommandTest extends \PHPUnit_Framework_TestCase
 
     public function testExecuteNoFeatures()
     {
-        $fs = new Filesystem();
-        $fs->remove($this->pluginDir.'/tests/behat');
+        $this->fs->remove($this->pluginDir.'/tests/behat');
 
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());

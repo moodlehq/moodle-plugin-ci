@@ -14,31 +14,13 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\PHPUnitCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
 
-class PHPUnitCommandTest extends \PHPUnit_Framework_TestCase
+class PHPUnitCommandTest extends MoodleTestCase
 {
-    private $moodleDir;
-    private $pluginDir;
-
-    protected function setUp()
-    {
-        $this->moodleDir = sys_get_temp_dir().'/moodle-plugin-ci/PHPUnitCommandTest'.time();
-        $this->pluginDir = $this->moodleDir.'/local/travis';
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->moodleDir);
-    }
-
     protected function executeCommand($pluginDir = null, $moodleDir = null)
     {
         if ($pluginDir === null) {

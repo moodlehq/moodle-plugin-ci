@@ -14,35 +14,19 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
-class CodeCheckerCommandTest extends \PHPUnit_Framework_TestCase
+class CodeCheckerCommandTest extends MoodleTestCase
 {
-    private $pluginDir;
-
     protected function setUp()
     {
-        $this->pluginDir = sys_get_temp_dir().'/moodle-plugin-ci/TestSuiteInstallerTest'.time();
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->pluginDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
+        parent::setUp();
 
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
-
-        $fs = new Filesystem();
-        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
-
-        $this->pluginDir = realpath($this->pluginDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->pluginDir);
+        $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
     protected function executeCommand($pluginDir = null)

@@ -14,26 +14,16 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\AddConfigCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
+use Moodlerooms\MoodlePluginCI\Tests\FilesystemTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Filesystem\Filesystem;
 
-class AddConfigCommandTest extends \PHPUnit_Framework_TestCase
+class AddConfigCommandTest extends FilesystemTestCase
 {
-    private $tempDir;
-
     protected function setUp()
     {
-        $this->tempDir = sys_get_temp_dir().'/moodle-plugin-ci/AddConfigCommandTest'.time();
-
-        $fs = new Filesystem();
-        $fs->copy(__DIR__.'/../Fixture/example-config.php', $this->tempDir.'/config.php');
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
+        parent::setUp();
+        $this->fs->copy(__DIR__.'/../Fixture/example-config.php', $this->tempDir.'/config.php');
     }
 
     protected function executeCommand($line = '$CFG->foo = "bar";')

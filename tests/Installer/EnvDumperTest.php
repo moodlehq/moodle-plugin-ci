@@ -13,26 +13,10 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 
 use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
-use Symfony\Component\Filesystem\Filesystem;
+use Moodlerooms\MoodlePluginCI\Tests\FilesystemTestCase;
 
-class EnvDumperTest extends \PHPUnit_Framework_TestCase
+class EnvDumperTest extends FilesystemTestCase
 {
-    private $tempDir;
-
-    protected function setUp()
-    {
-        $this->tempDir = sys_get_temp_dir().'/moodle-plugin-ci/EnvDumperTest'.time();
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->tempDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
-    }
-
     public function testDump()
     {
         $toFile = $this->tempDir.'/.env';

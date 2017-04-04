@@ -16,42 +16,24 @@ use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Installer\TestSuiteInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
-use Symfony\Component\Filesystem\Filesystem;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Yaml\Yaml;
 
-class TestSuiteInstallerTest extends \PHPUnit_Framework_TestCase
+class TestSuiteInstallerTest extends MoodleTestCase
 {
-    private $tempDir;
-    private $pluginDir;
-
     protected function setUp()
     {
-        $this->tempDir   = sys_get_temp_dir().'/moodle-plugin-ci/TestSuiteInstallerTest'.time();
-        $this->pluginDir = $this->tempDir.'/plugin';
+        parent::setUp();
 
+        $config  = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
         $phpunit = <<<'XML'
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit>
 </phpunit>
 XML;
 
-        $fs = new Filesystem();
-        $fs->mkdir($this->tempDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-        $fs->dumpFile($this->pluginDir.'/phpunit.xml', $phpunit);
-
-        $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
-
-        $fs = new Filesystem();
-        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
-
-        $this->pluginDir = realpath($this->pluginDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
+        $this->fs->dumpFile($this->pluginDir.'/phpunit.xml', $phpunit);
+        $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
     public function testInstall()
@@ -90,8 +72,7 @@ XML;
         $this->assertNotEmpty($installer->getBehatInstallProcesses());
         $this->assertCount(3, $installer->getPostInstallProcesses());
 
-        $fs = new Filesystem();
-        $fs->remove($this->pluginDir.'/tests/behat');
+        $this->fs->remove($this->pluginDir.'/tests/behat');
 
         $this->assertEmpty($installer->getBehatInstallProcesses());
         $this->assertCount(2, $installer->getPostInstallProcesses());
@@ -108,8 +89,7 @@ XML;
         $this->assertNotEmpty($installer->getUnitTestInstallProcesses());
         $this->assertCount(3, $installer->getPostInstallProcesses());
 
-        $fs = new Filesystem();
-        $fs->remove($this->pluginDir.'/tests/lib_test.php');
+        $this->fs->remove($this->pluginDir.'/tests/lib_test.php');
 
         $this->assertEmpty($installer->getUnitTestInstallProcesses());
         $this->assertCount(1, $installer->getPostInstallProcesses());

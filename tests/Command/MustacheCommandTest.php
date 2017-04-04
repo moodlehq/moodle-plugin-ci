@@ -15,32 +15,12 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 use Moodlerooms\MoodlePluginCI\Command\MustacheCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Filesystem\Filesystem;
 
-class MustacheCommandTest extends \PHPUnit_Framework_TestCase
+class MustacheCommandTest extends MoodleTestCase
 {
-    private $moodleDir;
-    private $pluginDir;
-
-    protected function setUp()
-    {
-        $this->moodleDir = sys_get_temp_dir().'/moodle-plugin-ci/MustacheCommandTest'.time();
-        $this->pluginDir = $this->moodleDir.'/local/travis';
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle', $this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->moodleDir);
-    }
-
     protected function executeCommand($pluginDir = null, $moodleDir = null)
     {
         if ($pluginDir === null) {

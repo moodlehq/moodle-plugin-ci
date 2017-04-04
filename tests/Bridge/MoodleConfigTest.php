@@ -14,24 +14,10 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Bridge;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MoodleConfig;
 use Moodlerooms\MoodlePluginCI\Installer\Database\MySQLDatabase;
-use Symfony\Component\Filesystem\Filesystem;
+use Moodlerooms\MoodlePluginCI\Tests\FilesystemTestCase;
 
-class MoodleConfigTest extends \PHPUnit_Framework_TestCase
+class MoodleConfigTest extends FilesystemTestCase
 {
-    private $tempDir;
-
-    protected function setUp()
-    {
-        $this->tempDir = sys_get_temp_dir().'/moodle-plugin-ci/MoodleConfigTest'.time();
-        mkdir($this->tempDir, 0777, true);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
-    }
-
     public function testCreateContents()
     {
         $config   = new MoodleConfig();
@@ -71,8 +57,7 @@ EOT;
 
     public function testRead()
     {
-        $fs = new Filesystem();
-        $fs->dumpFile($this->tempDir.'/test.txt', 'Test');
+        $this->dumpFile('test.txt', 'Test');
 
         $config   = new MoodleConfig();
         $contents = $config->read($this->tempDir.'/test.txt');
@@ -91,12 +76,11 @@ EOT;
     {
         $this->expectException(\RuntimeException::class);
 
-        $fs = new Filesystem();
-        $fs->dumpFile($this->tempDir.'/test.txt', 'Test');
-        $fs->chmod($this->tempDir.'/test.txt', 0222);
+        $tempFile = $this->dumpFile('test.txt', 'Test');
+        $this->fs->chmod($tempFile, 0222);
 
         $config = new MoodleConfig();
-        $config->read($this->tempDir.'/test.txt');
+        $config->read($tempFile);
     }
 
     public function testDump()

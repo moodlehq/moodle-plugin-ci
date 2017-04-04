@@ -13,39 +13,12 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Bridge;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
-use Symfony\Component\Filesystem\Filesystem;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
-class MoodlePluginTest extends \PHPUnit_Framework_TestCase
+class MoodlePluginTest extends MoodleTestCase
 {
-    private $tempDir;
-    private $pluginDir;
-    private $moodleDir;
-
-    protected function setUp()
-    {
-        $this->tempDir   = sys_get_temp_dir().'/moodle-plugin-ci/BridgeMoodlePluginTest'.time();
-        $this->pluginDir = $this->tempDir.'/moodle-local_travis';
-        $this->moodleDir = $this->tempDir.'/moodle';
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->tempDir);
-        $fs->mkdir($this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-
-        // Paths we get later from PHP use the "real" path.
-        $this->tempDir   = realpath($this->tempDir);
-        $this->pluginDir = realpath($this->pluginDir);
-        $this->moodleDir = realpath($this->moodleDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
-    }
-
     public function testGetComponent()
     {
         $plugin = new MoodlePlugin($this->pluginDir);
@@ -67,8 +40,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
     public function testNoUnitTests()
     {
         // Remove the only unit test file.
-        $fs = new Filesystem();
-        $fs->remove($this->pluginDir.'/tests/lib_test.php');
+        $this->fs->remove($this->pluginDir.'/tests/lib_test.php');
 
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertFalse($plugin->hasUnitTests());
@@ -83,8 +55,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
     public function testNoBehatFeatures()
     {
         // Remove the only unit test file.
-        $fs = new Filesystem();
-        $fs->remove($this->pluginDir.'/tests/behat/login.feature');
+        $this->fs->remove($this->pluginDir.'/tests/behat/login.feature');
 
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertFalse($plugin->hasBehatFeatures());
@@ -102,8 +73,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         $this->expectException(\RuntimeException::class);
 
         // Overwrite third party libs XML with a broken one.
-        $fs = new Filesystem();
-        $fs->copy(__DIR__.'/../Fixture/broken-thirdpartylibs.xml', $this->pluginDir.'/thirdpartylibs.xml', true);
+        $this->fs->copy(__DIR__.'/../Fixture/broken-thirdpartylibs.xml', $this->pluginDir.'/thirdpartylibs.xml', true);
 
         $plugin = new MoodlePlugin($this->pluginDir);
         $plugin->getThirdPartyLibraryPaths();
@@ -116,8 +86,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
             'notNames' => ['*-m.js', 'bad.php'],
         ]];
 
-        $fs = new Filesystem();
-        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($expected));
+        $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($expected));
 
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertSame($expected['filter'], $plugin->getIgnores());
@@ -128,8 +97,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         // Ignore some files for better testing.
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
 
-        $fs = new Filesystem();
-        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
+        $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
 
         $finder = new Finder();
         $finder->name('*.php');
@@ -151,8 +119,7 @@ class MoodlePluginTest extends \PHPUnit_Framework_TestCase
         // Ignore some files for better testing.
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
 
-        $fs = new Filesystem();
-        $fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
+        $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
 
         $finder = new Finder();
         $finder->name('*.php')->sortByName();

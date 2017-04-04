@@ -15,31 +15,12 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 use Moodlerooms\MoodlePluginCI\Command\InstallCommand;
 use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Installer\DummyInstall;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Filesystem\Filesystem;
 
-class InstallCommandTest extends \PHPUnit_Framework_TestCase
+class InstallCommandTest extends MoodleTestCase
 {
-    private $tempDir;
-    private $pluginDir;
-
-    protected function setUp()
-    {
-        $this->tempDir   = sys_get_temp_dir().'/moodle-plugin-ci/InstallCommandTest'.time();
-        $this->pluginDir = $this->tempDir.'/plugin';
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->tempDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
-    }
-
     protected function executeCommand()
     {
         $command          = new InstallCommand($this->tempDir.'/.env');

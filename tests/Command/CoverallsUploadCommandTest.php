@@ -14,31 +14,17 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\CoverallsUploadCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
 
-class CoverallsUploadCommandTest extends \PHPUnit_Framework_TestCase
+class CoverallsUploadCommandTest extends MoodleTestCase
 {
-    private $moodleDir;
-    private $pluginDir;
-
     protected function setUp()
     {
-        $this->moodleDir = sys_get_temp_dir().'/moodle-plugin-ci/CoverallsUploadCommandTest'.time();
-        $this->pluginDir = $this->moodleDir.'/local/travis';
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle', $this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-        $fs->touch($this->moodleDir.'/coverage.xml');
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->moodleDir);
+        parent::setUp();
+        $this->fs->touch($this->moodleDir.'/coverage.xml');
     }
 
     protected function executeCommand($pluginDir = null)

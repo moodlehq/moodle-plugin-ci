@@ -14,28 +14,12 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\AddPluginCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
+use Moodlerooms\MoodlePluginCI\Tests\FilesystemTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Filesystem\Filesystem;
 
-class AddPluginCommandTest extends \PHPUnit_Framework_TestCase
+class AddPluginCommandTest extends FilesystemTestCase
 {
-    private $tempDir;
-
-    protected function setUp()
-    {
-        $this->tempDir = sys_get_temp_dir().'/moodle-plugin-ci/AddPluginCommandTest'.time();
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->tempDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
-    }
-
     protected function getCommandTester()
     {
         $command          = new AddPluginCommand($this->tempDir.'/.env');

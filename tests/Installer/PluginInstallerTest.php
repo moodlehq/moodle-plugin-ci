@@ -16,26 +16,12 @@ use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Installer\ConfigDumper;
 use Moodlerooms\MoodlePluginCI\Installer\PluginInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
-use Symfony\Component\Filesystem\Filesystem;
+use Moodlerooms\MoodlePluginCI\Tests\FilesystemTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
-class PluginInstallerTest extends \PHPUnit_Framework_TestCase
+class PluginInstallerTest extends FilesystemTestCase
 {
-    private $tempDir;
-
-    protected function setUp()
-    {
-        $this->tempDir = sys_get_temp_dir().'/moodle-plugin-ci/PluginInstallerTest'.time();
-        mkdir($this->tempDir, 0777, true);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
-    }
-
     public function testInstall()
     {
         $fixture   = __DIR__.'/../Fixture/moodle-local_travis';
@@ -76,8 +62,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $filesystem = new Filesystem();
-        $filesystem->mkdir($this->tempDir.'/local/travis');
+        $this->fs->mkdir($this->tempDir.'/local/travis');
 
         $fixture   = realpath(__DIR__.'/../Fixture/moodle-local_travis');
         $plugin    = new MoodlePlugin($fixture);
@@ -108,8 +93,7 @@ class PluginInstallerTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = __DIR__.'/../Fixture/moodle-local_travis';
 
-        $fs = new Filesystem();
-        $fs->mirror($fixture, $this->tempDir.'/moodle-local_travis');
+        $this->fs->mirror($fixture, $this->tempDir.'/moodle-local_travis');
 
         $plugin    = new MoodlePlugin($fixture);
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, $this->tempDir, new ConfigDumper());

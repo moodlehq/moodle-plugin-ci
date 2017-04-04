@@ -17,24 +17,10 @@ use Moodlerooms\MoodlePluginCI\Installer\Database\MySQLDatabase;
 use Moodlerooms\MoodlePluginCI\Installer\MoodleInstaller;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
-use Symfony\Component\Filesystem\Filesystem;
+use Moodlerooms\MoodlePluginCI\Tests\FilesystemTestCase;
 
-class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
+class MoodleInstallerTest extends FilesystemTestCase
 {
-    private $tempDir;
-
-    protected function setUp()
-    {
-        $this->tempDir = sys_get_temp_dir().'/moodle-plugin-ci/MoodleInstallerTest'.time();
-        mkdir($this->tempDir, 0777, true);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->tempDir);
-    }
-
     public function testInstall()
     {
         $dataDir   = $this->tempDir.'/moodledata';
@@ -56,10 +42,7 @@ class MoodleInstallerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_dir($dataDir.'/phpu_moodledata'));
         $this->assertTrue(is_dir($dataDir.'/behat_moodledata'));
         $this->assertTrue(is_file($this->tempDir.'/config.php'));
-
-        $installDir = realpath($this->tempDir);
-
-        $this->assertSame($installDir, $moodle->directory, 'Moodle directory should be absolute path after install');
-        $this->assertSame(['MOODLE_DIR' => $installDir], $installer->getEnv());
+        $this->assertSame($this->tempDir, $moodle->directory, 'Moodle directory should be absolute path after install');
+        $this->assertSame(['MOODLE_DIR' => $this->tempDir], $installer->getEnv());
     }
 }

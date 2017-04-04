@@ -14,32 +14,12 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\ValidateCommand;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
+use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Filesystem\Filesystem;
 
-class ValidateCommandTest extends \PHPUnit_Framework_TestCase
+class ValidateCommandTest extends MoodleTestCase
 {
-    private $moodleDir;
-    private $pluginDir;
-
-    protected function setUp()
-    {
-        $this->moodleDir = sys_get_temp_dir().'/moodle-plugin-ci/PHPUnitCommandTest'.time();
-        $this->pluginDir = $this->moodleDir.'/local/travis';
-
-        $fs = new Filesystem();
-        $fs->mkdir($this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle', $this->moodleDir);
-        $fs->mirror(__DIR__.'/../Fixture/moodle-local_travis', $this->pluginDir);
-    }
-
-    protected function tearDown()
-    {
-        $fs = new Filesystem();
-        $fs->remove($this->moodleDir);
-    }
-
     protected function executeCommand()
     {
         $command         = new ValidateCommand();
