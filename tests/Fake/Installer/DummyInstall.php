@@ -15,10 +15,6 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Fake\Installer;
 use Moodlerooms\MoodlePluginCI\Installer\Install;
 use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class DummyInstall extends Install
 {
     public function runInstallation(InstallerCollection $installers)

@@ -16,10 +16,6 @@ use Moodlerooms\MoodlePluginCI\Process\MoodleDebugException;
 use Moodlerooms\MoodlePluginCI\Process\MoodlePhpException;
 use Moodlerooms\MoodlePluginCI\Process\MoodleProcess;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class MoodleProcessTest extends \PHPUnit_Framework_TestCase
 {
     private $outputWithDebugging;

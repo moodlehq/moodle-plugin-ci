@@ -14,10 +14,6 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Installer\Database;
 
 use Moodlerooms\MoodlePluginCI\Installer\Database\DatabaseResolver;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class DatabaseResolverTest extends \PHPUnit_Framework_TestCase
 {
     public function testType()

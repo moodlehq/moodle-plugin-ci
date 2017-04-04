@@ -15,10 +15,6 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
 use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
 use Symfony\Component\Filesystem\Filesystem;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class EnvDumperTest extends \PHPUnit_Framework_TestCase
 {
     private $tempDir;

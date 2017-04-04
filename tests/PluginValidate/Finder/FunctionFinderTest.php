@@ -15,10 +15,6 @@ namespace Moodlerooms\MoodlePluginCI\Tests\PluginValidate\Finder;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FunctionFinder;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class FunctionFinderTest extends \PHPUnit_Framework_TestCase
 {
     public function testFindTokens()

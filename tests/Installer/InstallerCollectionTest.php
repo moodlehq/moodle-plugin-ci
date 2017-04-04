@@ -16,10 +16,6 @@ use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
 use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Installer\DummyInstaller;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class InstallerCollectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testAll()

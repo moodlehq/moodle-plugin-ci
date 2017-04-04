@@ -15,10 +15,6 @@ namespace Moodlerooms\MoodlePluginCI\Tests\PluginValidate;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Plugin;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class RequirementsResolverTest extends \PHPUnit_Framework_TestCase
 {
     public function testResolveRequirements()

@@ -14,10 +14,6 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class DummyMoodlePlugin extends MoodlePlugin
 {
     public $component    = 'local_travis';

@@ -15,10 +15,6 @@ namespace Moodlerooms\MoodlePluginCI\Tests\Bridge;
 use Moodlerooms\MoodlePluginCI\Bridge\MoodlePluginCollection;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class MoodlePluginCollectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testSortByDependencies()

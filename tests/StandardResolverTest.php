@@ -14,10 +14,6 @@ namespace Moodlerooms\MoodlePluginCI\Tests;
 
 use Moodlerooms\MoodlePluginCI\StandardResolver;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class StandardResolverTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasStandard()

@@ -16,10 +16,6 @@ use Moodlerooms\MoodlePluginCI\PluginValidate\Plugin;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\FormatRequirements;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-/**
- * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class FormatRequirementsTest extends \PHPUnit_Framework_TestCase
 {
     /**
