@@ -47,7 +47,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
             return $this->outputSkip($output, 'No PHPUnit tests to run, free pass!');
         }
 
-        $colors  = $output->isDecorated() ? '--colors' : '';
+        $colors  = $output->isDecorated() ? '--colors="always"' : '';
         $binary  = $this->resolveBinary($input);
         $options = $this->resolveOptions($input);
         $process = $this->execute->passThrough(
