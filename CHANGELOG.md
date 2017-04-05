@@ -8,6 +8,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Changed
 - BREAKING: requires PHP 5.6 or later.
 - BREAKING: requires Moodle 3.2 or later.
+- `moodle-plugin-ci codechecker` command no longer processes Javascript files.  Use the new `grunt` command instead.
 
 ## Removed
 - BREAKING: removed `moodle-plugin-ci csslint` command.  Replaced with `grunt` command.

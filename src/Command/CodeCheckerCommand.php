@@ -58,7 +58,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
             $this->standard = $resolver->resolve($this->standard);
         }
 
-        $this->finder = Finder::create()->notPath('yui/build')->notPath('amd/build')->name('*.php')->name('*.js')->notName('*-min.js');
+        $this->finder = Finder::create()->name('*.php');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
