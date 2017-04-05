@@ -187,8 +187,8 @@ class InstallCommand extends Command
             $envPaths = $prefix.'_IGNORE_PATHS';
             $envNames = $prefix.'_IGNORE_NAMES';
 
-            $paths    = getenv($envPaths) !== false ? getenv($envPaths) : null;
-            $names    = getenv($envNames) !== false ? getenv($envNames) : null;
+            $paths = getenv($envPaths) !== false ? getenv($envPaths) : null;
+            $names = getenv($envNames) !== false ? getenv($envNames) : null;
 
             if (!empty($paths) || !empty($names)) {
                 $dumper->addSection('filter-'.$command->getName(), 'notPaths', $this->csvToArray($paths));

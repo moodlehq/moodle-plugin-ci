@@ -52,7 +52,7 @@ class GruntCommand extends AbstractMoodleCommand
         $this->backupPlugin();
 
         $code  = 0;
-        $fs    = new Filesystem();
+        $files = new Filesystem();
         $tasks = $input->getOption('tasks');
 
         foreach ($tasks as $taskName) {
@@ -69,7 +69,7 @@ class GruntCommand extends AbstractMoodleCommand
 
             // Remove build directory so we can detect files that should be deleted.
             if (!empty($task->buildDirectory)) {
-                $fs->remove($this->plugin->directory.'/'.$task->buildDirectory);
+                $files->remove($this->plugin->directory.'/'.$task->buildDirectory);
             }
 
             $process = $this->execute->passThroughProcess($builder->getProcess());
@@ -102,8 +102,7 @@ class GruntCommand extends AbstractMoodleCommand
      */
     public function backupPlugin()
     {
-        $fs = new Filesystem();
-        $fs->mirror($this->plugin->directory, $this->getBackupDir());
+        (new Filesystem())->mirror($this->plugin->directory, $this->getBackupDir());
     }
 
     /**
@@ -111,8 +110,7 @@ class GruntCommand extends AbstractMoodleCommand
      */
     public function restorePlugin()
     {
-        $fs = new Filesystem();
-        $fs->mirror($this->getBackupDir(), $this->plugin->directory, null, ['delete' => true, 'override' => true]);
+        (new Filesystem())->mirror($this->getBackupDir(), $this->plugin->directory, null, ['delete' => true, 'override' => true]);
     }
 
     /**
