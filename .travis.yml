@@ -28,6 +28,9 @@ env:
 
 matrix:
   include:
+    - php: 7.0
+      env: MOODLE_BRANCH=MOODLE_32_STABLE
+  include:
     - php: 7.1
       env: MOODLE_BRANCH=master COVERAGE=true
 
