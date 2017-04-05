@@ -9,6 +9,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - BREAKING: requires PHP 5.6 or later.
 - BREAKING: requires Moodle 3.2 or later.
 - `moodle-plugin-ci codechecker` command no longer processes Javascript files.  Use the new `grunt` command instead.
+- The `.travis.dist.yml` now installs Version 2 of this tool.
 
 ## Removed
 - BREAKING: removed `moodle-plugin-ci csslint` command.  Replaced with `grunt` command.
@@ -19,7 +20,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 - Defining ignore files per command, see [help document](doc/IgnoringFiles.md) for details. 
 - `moodle-plugin-ci mustache` which lints your Mustache template files.
-- `moodle-plugin-ci grunt` which runs Grunt tasks on the plugin.
+- `moodle-plugin-ci grunt` which runs Grunt tasks on the plugin. See [help document](doc/TravisFileExplained.md)
+  for more details about the command.
 - `--dump` option to `behat` command to print Behat HTML failure captures.
 - `--auto-reurn` option to `behat` automatically rerun failures, defaults to `2`.
 - The `.travis.dist.yml` now has steps to install Java 8.
