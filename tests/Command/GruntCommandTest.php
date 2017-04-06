@@ -13,10 +13,13 @@
 namespace Moodlerooms\MoodlePluginCI\Tests\Command;
 
 use Moodlerooms\MoodlePluginCI\Command\GruntCommand;
+use Moodlerooms\MoodlePluginCI\Model\GruntTaskModel;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
+use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
 use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class GruntCommandTest extends MoodleTestCase
@@ -26,6 +29,7 @@ class GruntCommandTest extends MoodleTestCase
         $command          = new GruntCommand();
         $command->moodle  = new DummyMoodle($this->moodleDir);
         $command->execute = new DummyExecute();
+        $command->tempDir = $this->tempDir;
 
         $application = new Application();
         $application->add($command);
@@ -40,9 +44,154 @@ class GruntCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
+    protected function newCommand()
+    {
+        $command          = new GruntCommand();
+        $command->moodle  = new DummyMoodle($this->moodleDir);
+        $command->plugin  = new DummyMoodlePlugin($this->pluginDir);
+        $command->tempDir = $this->tempDir;
+
+        return $command;
+    }
+
     public function testExecute()
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
+    }
+
+    public function testToGruntTaskWithAMD()
+    {
+        $command = $this->newCommand();
+
+        $task = $command->toGruntTask('amd');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('amd', $task->taskName);
+        $this->assertSame('amd/build', $task->buildDirectory);
+        $this->assertSame($this->pluginDir.'/amd', $task->workingDirectory);
+
+        $this->fs->remove($this->pluginDir.'/amd');
+
+        $this->assertNull($command->toGruntTask('amd'));
+    }
+
+    public function testToGruntTaskWithYUI()
+    {
+        $command = $this->newCommand();
+
+        $task = $command->toGruntTask('yui');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('yui', $task->taskName);
+        $this->assertSame('yui/build', $task->buildDirectory);
+        $this->assertSame($this->pluginDir.'/yui/src', $task->workingDirectory);
+
+        $task = $command->toGruntTask('shifter');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('shifter', $task->taskName);
+        $this->assertSame('yui/build', $task->buildDirectory);
+        $this->assertSame($this->pluginDir.'/yui/src', $task->workingDirectory);
+
+        $this->fs->remove($this->pluginDir.'/yui');
+
+        $this->assertNull($command->toGruntTask('yui'));
+        $this->assertNull($command->toGruntTask('shifter'));
+    }
+
+    public function testToGruntTaskWithGherkin()
+    {
+        $command = $this->newCommand();
+
+        $task = $command->toGruntTask('gherkinlint');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('gherkinlint', $task->taskName);
+        $this->assertSame('', $task->buildDirectory);
+        $this->assertSame($this->moodleDir, $task->workingDirectory);
+
+        /** @var DummyMoodle $moodle */
+        $moodle         = $command->moodle;
+        $moodle->branch = 30;
+
+        $this->assertNull($command->toGruntTask('gherkinlint'));
+
+        $moodle->branch = 33;
+
+        $this->assertInstanceOf(GruntTaskModel::class, $command->toGruntTask('gherkinlint'), 'Should work again');
+
+        $this->fs->remove($this->pluginDir.'/tests/behat');
+
+        $this->assertNull($command->toGruntTask('gherkinlint'));
+    }
+
+    public function testToGruntTaskWithStyles()
+    {
+        $command = $this->newCommand();
+
+        $task = $command->toGruntTask('stylelint:css');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('stylelint:css', $task->taskName);
+        $this->assertSame('', $task->buildDirectory);
+        $this->assertSame($this->moodleDir, $task->workingDirectory);
+
+        $this->fs->remove($this->pluginDir.'/styles.css');
+
+        $this->assertNull($command->toGruntTask('stylelint:css'));
+        $this->assertNull($command->toGruntTask('stylelint:less'));
+        $this->assertNull($command->toGruntTask('stylelint:scss'));
+    }
+
+    public function testToGruntTaskDefaultTask()
+    {
+        $command = $this->newCommand();
+
+        $task = $command->toGruntTask('foo');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('foo', $task->taskName);
+        $this->assertSame('', $task->buildDirectory);
+        $this->assertSame($this->moodleDir, $task->workingDirectory);
+
+        $this->fs->touch($this->pluginDir.'/Gruntfile.js');
+
+        $task = $command->toGruntTask('foo');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('foo', $task->taskName);
+        $this->assertSame('', $task->buildDirectory);
+        $this->assertSame($this->pluginDir, $task->workingDirectory);
+    }
+
+    public function testValidatePluginFiles()
+    {
+        $command = $this->newCommand();
+        $command->backupPlugin();
+
+        $emptyOutput = new BufferedOutput();
+
+        $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
+        $this->assertSame('', $emptyOutput->fetch());
+
+        $this->fs->dumpFile($this->pluginDir.'/styles.css', 'changed');
+
+        $output = new BufferedOutput();
+        $this->assertSame(1, $command->validatePluginFiles($output));
+        $this->assertSame("File is stale and needs to be rebuilt: styles.css\n", $output->fetch());
+
+        $command->restorePlugin();
+        $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
+        $this->assertSame('', $emptyOutput->fetch());
+
+        $this->fs->remove($this->pluginDir.'/amd/build/keys.min.js');
+
+        $output = new BufferedOutput();
+        $this->assertSame(1, $command->validatePluginFiles($output));
+        $this->assertSame("File no longer generated and likely should be deleted: amd/build/keys.min.js\n", $output->fetch());
+
+        $command->restorePlugin();
+        $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
+        $this->assertSame('', $emptyOutput->fetch());
+
+        $this->fs->touch($this->pluginDir.'/amd/build/new.min.js');
+
+        $output = new BufferedOutput();
+        $this->assertSame(1, $command->validatePluginFiles($output));
+        $this->assertSame("File is newly generated and needs to be added: amd/build/new.min.js\n", $output->fetch());
     }
 }

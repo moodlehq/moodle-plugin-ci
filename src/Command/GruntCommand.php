@@ -27,7 +27,10 @@ class GruntCommand extends AbstractMoodleCommand
 {
     use ExecuteTrait;
 
-    protected $backups = [];
+    /**
+     * @var string
+     */
+    public $tempDir;
 
     protected function configure()
     {
@@ -44,6 +47,7 @@ class GruntCommand extends AbstractMoodleCommand
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
+        $this->tempDir = $this->tempDir ?: sys_get_temp_dir();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -94,7 +98,7 @@ class GruntCommand extends AbstractMoodleCommand
      */
     private function getBackupDir()
     {
-        return sys_get_temp_dir().'/moodle-plugin-ci-grunt-backup';
+        return $this->tempDir.'/moodle-plugin-ci-grunt-backup';
     }
 
     /**
@@ -134,6 +138,7 @@ class GruntCommand extends AbstractMoodleCommand
             if (!file_exists($compareFile)) {
                 $output->writeln(sprintf('<error>File no longer generated and likely should be deleted: %s</error>', $file->getRelativePathname()));
                 $code = 1;
+                continue;
             }
 
             if (sha1_file($file->getPathname()) !== sha1_file($compareFile)) {

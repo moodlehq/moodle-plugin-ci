@@ -19,6 +19,8 @@ use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
  */
 class DummyMoodle extends Moodle
 {
+    public $branch = 33;
+
     public function requireConfig()
     {
         // Don't do anything.
@@ -32,5 +34,10 @@ class DummyMoodle extends Moodle
     public function getComponentInstallDirectory($component)
     {
         return $this->directory.'/local/travis';
+    }
+
+    public function getBranch()
+    {
+        return $this->branch;
     }
 }
