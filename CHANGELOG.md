@@ -27,6 +27,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - The `.travis.dist.yml` now has steps to install Java 8.
 - The `.travis.dist.yml` now has steps to install latest version of NodeJS and NPM.
 - The `.travis.dist.yml` now has a step to cache the NPM cache.
+- `moodle-plugin-ci savepoints` command which checks your plugin's upgrade steps.
 
 ## [1.5.8] - 2017-03-30
 ### Fixed

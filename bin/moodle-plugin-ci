@@ -27,6 +27,7 @@ use Moodlerooms\MoodlePluginCI\Command\MustacheCommand;
 use Moodlerooms\MoodlePluginCI\Command\ParallelCommand;
 use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
 use Moodlerooms\MoodlePluginCI\Command\PHPUnitCommand;
+use Moodlerooms\MoodlePluginCI\Command\SavePointsCommand;
 use Moodlerooms\MoodlePluginCI\Command\ValidateCommand;
 use Symfony\Component\Console\Application;
 
@@ -69,5 +70,6 @@ $application->add(new MustacheCommand());
 $application->add(new ParallelCommand());
 $application->add(new PHPLintCommand());
 $application->add(new PHPUnitCommand());
+$application->add(new SavePointsCommand());
 $application->add(new ValidateCommand());
 $application->run();

@@ -106,6 +106,7 @@ class MoodlePluginTest extends MoodleTestCase
         $expected = [
             $this->pluginDir.'/classes/math.php',
             $this->pluginDir.'/db/access.php',
+            $this->pluginDir.'/db/upgrade.php',
             $this->pluginDir.'/lang/en/local_travis.php',
             $this->pluginDir.'/lib.php',
             $this->pluginDir.'/tests/lib_test.php',
@@ -128,6 +129,7 @@ class MoodlePluginTest extends MoodleTestCase
         $expected = [
             'classes/math.php',
             'db/access.php',
+            'db/upgrade.php',
             'lang/en/local_travis.php',
             'lib.php',
             'tests/lib_test.php',
