@@ -14,3 +14,4 @@
 /CONTRIBUTING.md    export-ignore
 /phpunit.xml.dist   export-ignore
 /README.md          export-ignore
+/UPGRADE-*.md       export-ignore
