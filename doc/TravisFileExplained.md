@@ -87,6 +87,8 @@ script:
   - moodle-plugin-ci codechecker
 # This step runs some light validation on the plugin file structure and code.  Validation can be plugin specific.
   - moodle-plugin-ci validate
+# This step validates your plugin's upgrade steps.
+  - moodle-plugin-ci savepoints
 # This step validates the HTML and Javascript in your Mustache templates.
   - moodle-plugin-ci mustache
 # This step runs Grunt tasks on the plugin.  By default, it tries to run tasks relevant to your plugin and Moodle
