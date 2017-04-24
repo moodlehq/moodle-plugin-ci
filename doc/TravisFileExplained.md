@@ -10,8 +10,9 @@ language: php
 # This tells Travis CI to use its new architecture.  Everything is better!
 sudo: false
 
-# Installs extra APT packages.  Java 8 is only required for Mustache command.
+# Installs updated version of PostgreSQL and installs extra APT packages.  Java 8 is only required for Mustache command.
 addons:
+  postgresql: "9.3"
   apt:
     packages:
       - oracle-java8-installer
