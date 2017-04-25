@@ -10,6 +10,12 @@
       "email": "mark@moodlerooms.com",
       "homepage": "http://moodlerooms.com",
       "role": "Developer"
+    },
+    {
+      "name": "Sam Chaffee",
+      "email": "sam@moodlerooms.com",
+      "homepage": "http://moodlerooms.com",
+      "role": "Developer"
     }
   ],
   "repositories": [
