@@ -24,7 +24,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   for more details about the command.
 - `moodle-plugin-ci savepoints` command which checks your plugin's upgrade steps.
 - `--dump` option to `behat` command to print Behat HTML failure captures.
-- `--auto-reurn` option to `behat` automatically rerun failures, defaults to 2 reruns.
+- `--auto-rerun` option to `behat` automatically rerun failures, defaults to 2 reruns.
 - The `.travis.dist.yml` now has steps to install Java 8.
 - The `.travis.dist.yml` now has steps to install latest version of NodeJS and NPM.
 - The `.travis.dist.yml` now has a step to cache the NPM cache.
