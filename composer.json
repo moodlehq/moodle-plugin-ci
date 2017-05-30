@@ -23,11 +23,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_codechecker",
-        "version": "2.5.4",
+        "version": "2.7.0",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
           "type": "git",
-          "reference": "v2.5.4"
+          "reference": "v2.7.0"
         },
         "autoload": {
           "classmap": [
@@ -41,11 +41,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_ci",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "source": {
-          "url": "https://github.com/mrmark/moodle-local_ci.git",
+          "url": "https://github.com/moodlehq/moodle-local_ci.git",
           "type": "git",
-          "reference": "45db61329db76a136dd8d9c6d1fa349035e663d9"
+          "reference": "ea72c5f7c937014c1401a833e697afb3d95af7be"
         }
       }
     }
@@ -70,8 +70,7 @@
     "marcj/topsort": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^5.7",
-    "friendsofphp/php-cs-fixer": "^2.0"
+    "phpunit/phpunit": "^5.7"
   },
   "config": {
     "platform": {
@@ -95,14 +94,6 @@
     "post-install-cmd": "@local-ci-install",
     "post-update-cmd": "@local-ci-install",
     "post-create-project-cmd": "@local-ci-install",
-    "test-all": [
-      "@lint",
-      "@test",
-      "@fix"
-    ],
-    "test": "phpunit",
-    "lint": "parallel-lint src tests bin/moodle-plugin-ci",
-    "fix": "php-cs-fixer fix -v || true",
     "local-ci-install": [
       "@composer remove --no-update --working-dir=vendor/moodlehq/moodle-local_ci squizlabs/php_codesniffer",
       "@composer update --prefer-dist --optimize-autoloader --working-dir=vendor/moodlehq/moodle-local_ci"

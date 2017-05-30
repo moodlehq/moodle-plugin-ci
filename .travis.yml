@@ -35,7 +35,6 @@ matrix:
 install:
   - phpenv config-rm xdebug.ini
   - nvm install node
-
   - composer install --no-interaction --prefer-dist
 
   # Mimic how a Moodle plugin would be run.

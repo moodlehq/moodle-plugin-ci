@@ -19,7 +19,7 @@ Fork the project, create a feature branch, and send us a pull request.  Prior to
 please ensure that these commands are ran successfully:
 
 ``` bash
-$ composer test-all
+$ make test
 ```
 
 Ways to improve your chances of getting your contribution accepted:
