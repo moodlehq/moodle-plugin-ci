@@ -65,4 +65,9 @@ class GenericRequirements extends AbstractRequirements
     {
         return FileTokens::create('db/install.xml')->mustHave($this->plugin->component);
     }
+
+    public function getRequiredBehatTags()
+    {
+        return $this->behatTagsFactory(['@'.$this->plugin->type, '@'.$this->plugin->component]);
+    }
 }

@@ -82,6 +82,22 @@ class FileTokens
     }
 
     /**
+     * Require that a the file has all of these tokens.
+     *
+     * @param array $tokens
+     *
+     * @return FileTokens
+     */
+    public function mustHaveAll(array $tokens)
+    {
+        foreach ($tokens as $token) {
+            $this->mustHave($token);
+        }
+
+        return $this;
+    }
+
+    /**
      * Require that a the file has any of the passed tokens.
      *
      * @param array $tokens

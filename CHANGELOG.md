@@ -12,6 +12,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci codechecker` now runs the PHP Compatibility coding standard.  This will now check for
   PHP compatibility issues for the **currently** running PHP version.  This makes it important to run this command
   on your lowest and highest supported PHP version.  EG: on PHP 5.6 and 7.1.
+- `moodle-plugin-ci validate` command now validates tags in Behat feature files.  EG: mod_forum should have @mod
+  and @mod_forum tags in each feature file. 
 - The `.travis.dist.yml` now installs Version 2 of this tool.
 - Updated Moodle coding standard to v2.7.0.
 

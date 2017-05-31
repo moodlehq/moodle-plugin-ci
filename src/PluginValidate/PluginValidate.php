@@ -12,6 +12,7 @@
 
 namespace Moodlerooms\MoodlePluginCI\PluginValidate;
 
+use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\BehatTagFinder;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\CapabilityFinder;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\ClassFinder;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens;
@@ -62,7 +63,7 @@ class PluginValidate
      */
     public function addError($message)
     {
-        $this->messages[] = sprintf("\xE2\x9D\x8C %s", $message);
+        $this->messages[] = sprintf('<fg=red>X %s</>', $message);
         $this->isValid    = false;
     }
 
@@ -71,7 +72,7 @@ class PluginValidate
      */
     public function addSuccess($message)
     {
-        $this->messages[] = sprintf("<info>\xE2\x9C\x94</info> %s", $message);
+        $this->messages[] = sprintf('<info>></info> %s', $message);
     }
 
     /**
@@ -111,6 +112,7 @@ class PluginValidate
         $this->findRequiredTokens(new CapabilityFinder(), [$this->requirements->getRequiredCapabilities()]);
         $this->findRequiredTokens(new TableFinder(), [$this->requirements->getRequiredTables()]);
         $this->findRequiredTokens(new TablePrefixFinder(), [$this->requirements->getRequiredTablePrefix()]);
+        $this->findRequiredTokens(new BehatTagFinder(), $this->requirements->getRequiredBehatTags());
     }
 
     /**

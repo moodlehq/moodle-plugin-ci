@@ -14,6 +14,7 @@ namespace Moodlerooms\MoodlePluginCI\PluginValidate\Requirements;
 
 use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use Moodlerooms\MoodlePluginCI\PluginValidate\Plugin;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Abstract plugin requirements.
@@ -40,6 +41,25 @@ abstract class AbstractRequirements
     {
         $this->plugin        = $plugin;
         $this->moodleVersion = $moodleVersion;
+    }
+
+    /**
+     * Factory method for generating FileTokens instances for all feature files in a plugin.
+     *
+     * @param array $tags
+     *
+     * @return FileTokens[]
+     */
+    protected function behatTagsFactory(array $tags)
+    {
+        $fileTokens = [];
+
+        $files = Finder::create()->files()->in($this->plugin->directory)->path('tests/behat')->name('*.feature')->getIterator();
+        foreach ($files as $file) {
+            $fileTokens[] = FileTokens::create($file->getRelativePathname())->mustHaveAll($tags);
+        }
+
+        return $fileTokens;
     }
 
     /**
@@ -90,4 +110,11 @@ abstract class AbstractRequirements
      * @return FileTokens
      */
     abstract public function getRequiredTablePrefix();
+
+    /**
+     * Required Behat tags for feature files.
+     *
+     * @return FileTokens[]
+     */
+    abstract public function getRequiredBehatTags();
 }
