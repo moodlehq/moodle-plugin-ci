@@ -47,8 +47,7 @@ class MustacheCommand extends AbstractMoodleCommand
             return $this->outputSkip($output);
         }
 
-        $linter  = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_ci/mustache_lint/mustache_lint.php');
-        $jarFile = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_ci/node_modules/vnu-jar/build/dist/vnu.jar');
+        $linter = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_ci/mustache_lint/mustache_lint.php');
 
         $code = 0;
         foreach ($files as $file) {
@@ -57,7 +56,7 @@ class MustacheCommand extends AbstractMoodleCommand
                     ->setPrefix('php')
                     ->add($linter)
                     ->add('--filename='.$file)
-                    ->add('--validator='.$jarFile)
+                    ->add('--validator='.$this->resolveJarFile())
                     ->add('--basename='.$this->moodle->directory)
                     ->setTimeout(null)
                     ->getProcess()
@@ -69,5 +68,41 @@ class MustacheCommand extends AbstractMoodleCommand
         }
 
         return $code;
+    }
+
+    /**
+     * @return string
+     */
+    private function resolveJarFile()
+    {
+        // Check if locally installed.
+        $file = __DIR__.'/../../vendor/moodlehq/moodle-local_ci/node_modules/vnu-jar/build/dist/vnu.jar';
+        if (is_file($file)) {
+            return realpath($file);
+        }
+
+        // Check for global install.
+        $this->validateJarVersion();
+
+        $process = $this->execute->mustRun('npm -g prefix');
+        $file    = trim($process->getOutput()).'/lib/node_modules/vnu-jar/build/dist/vnu.jar';
+
+        if (!is_file($file)) {
+            throw new \RuntimeException(sprintf('Failed to find %s', $file));
+        }
+
+        return $file;
+    }
+
+    private function validateJarVersion()
+    {
+        $json = json_decode($this->execute->mustRun('npm -g list --json')->getOutput(), true);
+        if (!isset($json['dependencies']['vnu-jar']['version'])) {
+            throw new \RuntimeException('Failed to find vnu-jar');
+        }
+        $version = $json['dependencies']['vnu-jar']['version'];
+        if (!version_compare($version, '17.3.0', '>=') && !version_compare($version, '18.0.0', '<')) {
+            throw new \RuntimeException('Global install of vnu-jar does not match version constraints: vnu-jar@>=17.3.0 <18.0.0');
+        }
     }
 }
