@@ -35,7 +35,7 @@ matrix:
 install:
   - phpenv config-rm xdebug.ini
   - nvm install node
-  - composer install --no-interaction --prefer-dist
+  - make init
 
   # Mimic how a Moodle plugin would be run.
   - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
@@ -46,11 +46,7 @@ install:
   - moodle-plugin-ci install
 
 script:
-  - composer validate
-  - composer lint
-  - php-cs-fixer --dry-run -v fix
-  - if [ "$COVERAGE" = true ]; then phpdbg -qrr $(which phpunit) --coverage-clover coverage.clover; fi
-  - if [ "$COVERAGE" = false ]; then phpunit; fi
+  - make validate
 
   # This is basically "integration" testing.
   - moodle-plugin-ci phplint
@@ -65,5 +61,4 @@ script:
   - moodle-plugin-ci behat
 
 after_script:
-  - if [ "$COVERAGE" = true ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [ "$COVERAGE" = true ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [ $COVERAGE = true ]; then make upload-code-coverage; fi
