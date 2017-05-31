@@ -11,7 +11,6 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use Dotenv\Dotenv;
 use Moodlerooms\MoodlePluginCI\Command\AddConfigCommand;
 use Moodlerooms\MoodlePluginCI\Command\AddPluginCommand;
 use Moodlerooms\MoodlePluginCI\Command\BehatCommand;
@@ -30,6 +29,7 @@ use Moodlerooms\MoodlePluginCI\Command\PHPUnitCommand;
 use Moodlerooms\MoodlePluginCI\Command\SavePointsCommand;
 use Moodlerooms\MoodlePluginCI\Command\ValidateCommand;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Dotenv\Dotenv;
 
 // Global install.
 if (file_exists(__DIR__.'/../../../autoload.php')) {
@@ -43,15 +43,14 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
     die(1);
 }
 
-define('ENV_DIR', dirname(__DIR__));
-define('ENV_FILE', ENV_DIR.'/.env');
+define('ENV_FILE', dirname(__DIR__).'/.env');
 
 if (file_exists(ENV_FILE)) {
     // Use this file because PHP cannot write to the environment.
     // These are used to allow the install command to relay important
     // information to the other commands so they can run with no args.
-    $env = new Dotenv(ENV_DIR);
-    $env->load();
+    $env = new Dotenv();
+    $env->load(ENV_FILE);
 }
 
 $application = new Application('Moodle Plugin CI', '2.0.0');
