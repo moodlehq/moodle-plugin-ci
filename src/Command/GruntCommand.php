@@ -30,7 +30,7 @@ class GruntCommand extends AbstractMoodleCommand
     /**
      * @var string
      */
-    public $tempDir;
+    public $backupDir;
 
     protected function configure()
     {
@@ -47,7 +47,7 @@ class GruntCommand extends AbstractMoodleCommand
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
-        $this->tempDir = $this->tempDir ?: sys_get_temp_dir();
+        $this->backupDir = $this->backupDir ?: sys_get_temp_dir().'/moodle-plugin-ci-grunt-backup-'.time();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -87,18 +87,9 @@ class GruntCommand extends AbstractMoodleCommand
         }
 
         $this->restorePlugin();
+        (new Filesystem())->remove($this->backupDir);
 
         return $code;
-    }
-
-    /**
-     * Backup directory location.
-     *
-     * @return string
-     */
-    private function getBackupDir()
-    {
-        return $this->tempDir.'/moodle-plugin-ci-grunt-backup';
     }
 
     /**
@@ -106,7 +97,7 @@ class GruntCommand extends AbstractMoodleCommand
      */
     public function backupPlugin()
     {
-        (new Filesystem())->mirror($this->plugin->directory, $this->getBackupDir());
+        (new Filesystem())->mirror($this->plugin->directory, $this->backupDir);
     }
 
     /**
@@ -114,7 +105,7 @@ class GruntCommand extends AbstractMoodleCommand
      */
     public function restorePlugin()
     {
-        (new Filesystem())->mirror($this->getBackupDir(), $this->plugin->directory, null, ['delete' => true, 'override' => true]);
+        (new Filesystem())->mirror($this->backupDir, $this->plugin->directory, null, ['delete' => true, 'override' => true]);
     }
 
     /**
@@ -128,11 +119,10 @@ class GruntCommand extends AbstractMoodleCommand
      */
     public function validatePluginFiles(OutputInterface $output)
     {
-        $backupDir = $this->getBackupDir();
-        $code      = 0;
+        $code = 0;
 
         // Look for modified files or files that should be deleted.
-        $files = Finder::create()->files()->in($backupDir)->name('*.js')->name('*.css')->getIterator();
+        $files = Finder::create()->files()->in($this->backupDir)->name('*.js')->name('*.css')->getIterator();
         foreach ($files as $file) {
             $compareFile = $this->plugin->directory.'/'.$file->getRelativePathname();
             if (!file_exists($compareFile)) {
@@ -150,7 +140,7 @@ class GruntCommand extends AbstractMoodleCommand
         // Look for newly generated files.
         $files = Finder::create()->files()->in($this->plugin->directory)->name('*.js')->name('*.css')->getIterator();
         foreach ($files as $file) {
-            if (!file_exists($backupDir.'/'.$file->getRelativePathname())) {
+            if (!file_exists($this->backupDir.'/'.$file->getRelativePathname())) {
                 $output->writeln(sprintf('<error>File is newly generated and needs to be added: %s</error>', $file->getRelativePathname()));
                 $code = 1;
             }

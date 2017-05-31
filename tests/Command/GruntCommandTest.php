@@ -26,10 +26,10 @@ class GruntCommandTest extends MoodleTestCase
 {
     protected function executeCommand()
     {
-        $command          = new GruntCommand();
-        $command->moodle  = new DummyMoodle($this->moodleDir);
-        $command->execute = new DummyExecute();
-        $command->tempDir = $this->tempDir;
+        $command            = new GruntCommand();
+        $command->moodle    = new DummyMoodle($this->moodleDir);
+        $command->execute   = new DummyExecute();
+        $command->backupDir = $this->tempDir.'/backup';
 
         $application = new Application();
         $application->add($command);
@@ -46,10 +46,10 @@ class GruntCommandTest extends MoodleTestCase
 
     protected function newCommand()
     {
-        $command          = new GruntCommand();
-        $command->moodle  = new DummyMoodle($this->moodleDir);
-        $command->plugin  = new DummyMoodlePlugin($this->pluginDir);
-        $command->tempDir = $this->tempDir;
+        $command            = new GruntCommand();
+        $command->moodle    = new DummyMoodle($this->moodleDir);
+        $command->plugin    = new DummyMoodlePlugin($this->pluginDir);
+        $command->backupDir = $this->tempDir.'/backup';
 
         return $command;
     }
