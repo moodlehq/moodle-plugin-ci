@@ -24,11 +24,6 @@ class MustacheCommand extends AbstractMoodleCommand
 {
     use ExecuteTrait;
 
-    /**
-     * @var string
-     */
-    public $jarFile;
-
     protected function configure()
     {
         parent::configure();
@@ -41,7 +36,6 @@ class MustacheCommand extends AbstractMoodleCommand
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
-        $this->jarFile = $this->jarFile ?: $this->resolveJarFile();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -53,7 +47,8 @@ class MustacheCommand extends AbstractMoodleCommand
             return $this->outputSkip($output);
         }
 
-        $linter = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_ci/mustache_lint/mustache_lint.php');
+        $linter  = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_ci/mustache_lint/mustache_lint.php');
+        $jarFile = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_ci/node_modules/vnu-jar/build/dist/vnu.jar');
 
         $code = 0;
         foreach ($files as $file) {
@@ -62,7 +57,7 @@ class MustacheCommand extends AbstractMoodleCommand
                     ->setPrefix('php')
                     ->add($linter)
                     ->add('--filename='.$file)
-                    ->add('--validator='.$this->jarFile)
+                    ->add('--validator='.$jarFile)
                     ->add('--basename='.$this->moodle->directory)
                     ->setTimeout(null)
                     ->getProcess()
@@ -74,17 +69,5 @@ class MustacheCommand extends AbstractMoodleCommand
         }
 
         return $code;
-    }
-
-    public function resolveJarFile()
-    {
-        $process = $this->execute->mustRun('npm -g prefix');
-        $file    = trim($process->getOutput()).'/lib/node_modules/vnu-jar/build/dist/vnu.jar';
-
-        if (!is_file($file)) {
-            throw new \RuntimeException(sprintf('Failed to find %s', $file));
-        }
-
-        return $file;
     }
 }

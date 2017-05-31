@@ -96,7 +96,8 @@
     "post-create-project-cmd": "@local-ci-install",
     "local-ci-install": [
       "@composer remove --no-update --working-dir=vendor/moodlehq/moodle-local_ci squizlabs/php_codesniffer",
-      "@composer update --prefer-dist --optimize-autoloader --working-dir=vendor/moodlehq/moodle-local_ci"
+      "@composer update --prefer-dist --optimize-autoloader --working-dir=vendor/moodlehq/moodle-local_ci",
+      "cd vendor/moodlehq/moodle-local_ci && npm install --no-progress"
     ]
   }
 }

@@ -33,7 +33,6 @@ class MustacheCommandTest extends MoodleTestCase
         $command          = new MustacheCommand();
         $command->moodle  = new DummyMoodle($moodleDir);
         $command->execute = new DummyExecute();
-        $command->jarFile = '/path/to/jar';
 
         $application = new Application();
         $application->add($command);
