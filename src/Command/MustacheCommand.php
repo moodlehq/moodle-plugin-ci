@@ -14,6 +14,7 @@ namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -47,16 +48,22 @@ class MustacheCommand extends AbstractMoodleCommand
             return $this->outputSkip($output);
         }
 
-        $linter = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_ci/mustache_lint/mustache_lint.php');
+        $linter  = __DIR__.'/../../vendor/moodlehq/moodle-local_ci/mustache_lint/mustache_lint.php';
+        $jarFile = $this->resolveJarFile();
+
+        // This is a workaround to execute mustache_lint.php file from within a phar.
+        $filesystem = new Filesystem();
+        $wrapper    = tempnam(sys_get_temp_dir(), 'mustache-linter-wrapper');
+        $filesystem->dumpFile($wrapper, "<?php include '$linter';");
 
         $code = 0;
         foreach ($files as $file) {
             $process = $this->execute->passThroughProcess(
                 ProcessBuilder::create()
                     ->setPrefix('php')
-                    ->add($linter)
+                    ->add($wrapper)
                     ->add('--filename='.$file)
-                    ->add('--validator='.$this->resolveJarFile())
+                    ->add('--validator='.$jarFile)
                     ->add('--basename='.$this->moodle->directory)
                     ->setTimeout(null)
                     ->getProcess()
@@ -66,6 +73,8 @@ class MustacheCommand extends AbstractMoodleCommand
                 $code = 1;
             }
         }
+
+        $filesystem->remove($wrapper);
 
         return $code;
     }

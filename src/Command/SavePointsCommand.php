@@ -43,9 +43,9 @@ class SavePointsCommand extends AbstractPluginCommand
             return $this->outputSkip($output);
         }
 
-        $fs            = new Filesystem();
-        $upgradetester = realpath(__DIR__.'/../../vendor/moodlehq/moodle-local_ci/check_upgrade_savepoints/check_upgrade_savepoints.php');
-        $fs->copy($upgradetester, $this->plugin->directory.'/check_upgrade_savepoints.php');
+        $filesystem    = new Filesystem();
+        $upgradetester = __DIR__.'/../../vendor/moodlehq/moodle-local_ci/check_upgrade_savepoints/check_upgrade_savepoints.php';
+        $filesystem->copy($upgradetester, $this->plugin->directory.'/check_upgrade_savepoints.php');
 
         $process = $this->execute->passThroughProcess(
             ProcessBuilder::create()
@@ -62,7 +62,7 @@ class SavePointsCommand extends AbstractPluginCommand
             $code = 1;
         }
 
-        $fs->remove($this->plugin->directory.'/check_upgrade_savepoints.php');
+        $filesystem->remove($this->plugin->directory.'/check_upgrade_savepoints.php');
 
         return $code;
     }

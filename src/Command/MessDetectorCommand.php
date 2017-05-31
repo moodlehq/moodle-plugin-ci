@@ -13,7 +13,6 @@
 namespace Moodlerooms\MoodlePluginCI\Command;
 
 use Moodlerooms\MoodlePluginCI\Bridge\MessDetectorRenderer;
-use Moodlerooms\MoodlePluginCI\Validate;
 use PHPMD\PHPMD;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
@@ -31,11 +30,9 @@ class MessDetectorCommand extends AbstractMoodleCommand
     {
         parent::configure();
 
-        $rules = realpath(__DIR__.'/../../res/config/phpmd.xml');
-
         $this->setName('phpmd')
             ->setDescription('Run PHP Mess Detector on a plugin')
-            ->addOption('rules', 'r', InputOption::VALUE_REQUIRED, 'Path to PHP Mess Detector rule set', $rules);
+            ->addOption('rules', 'r', InputOption::VALUE_REQUIRED, 'Path to PHP Mess Detector rule set');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -46,8 +43,7 @@ class MessDetectorCommand extends AbstractMoodleCommand
         if (count($files) === 0) {
             return $this->outputSkip($output);
         }
-        $validate = new Validate();
-        $rules    = realpath($validate->filePath($input->getOption('rules')));
+        $rules = $input->getOption('rules') ?: __DIR__.'/../../res/config/phpmd.xml';
 
         $renderer = new MessDetectorRenderer($output, $this->moodle->directory);
         $renderer->setWriter(new StreamWriter(STDOUT));
