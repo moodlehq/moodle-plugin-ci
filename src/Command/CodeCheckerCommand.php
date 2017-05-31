@@ -79,6 +79,8 @@ class CodeCheckerCommand extends AbstractPluginCommand
             'reportWidth'  => 120,
         ]);
 
+        \PHP_CodeSniffer::setConfigData('testVersion', PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION, true);
+
         $sniffer = new \PHP_CodeSniffer();
         $sniffer->setCli($cli);
         $sniffer->process($files, $this->standard);
