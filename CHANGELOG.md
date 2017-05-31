@@ -10,6 +10,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - BREAKING: requires Moodle 3.2 or later.
 - `moodle-plugin-ci codechecker` command no longer processes Javascript files.  Use the new `grunt` command instead.
 - The `.travis.dist.yml` now installs Version 2 of this tool.
+- Updated Moodle coding standard to v2.7.0.
 
 ### Removed
 - BREAKING: removed `moodle-plugin-ci csslint` command.  Replaced with `grunt` command.
