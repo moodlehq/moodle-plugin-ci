@@ -14,10 +14,6 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-php:
- - 5.6
- - 7.0
-
 env:
   global:
     - IGNORE_PATHS=ignore
@@ -29,8 +25,11 @@ env:
 
 matrix:
   include:
+    - php: 5.6
+    - php: 7.0
+      env: MOODLE_BRANCH=MOODLE_33_STABLE DB=mysqli
     - php: 7.1
-      env: MOODLE_BRANCH=master DB=mysqli COVERAGE=true
+      env: MOODLE_BRANCH=master COVERAGE=true
 
 install:
   - phpenv config-rm xdebug.ini
