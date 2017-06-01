@@ -3,22 +3,27 @@ PHPUNIT  := vendor/bin/phpunit
 FIXER    := php build/php-cs-fixer.phar
 
 .PHONY:test
-test: vendor/autoload.php build/php-cs-fixer.phar
+test: test-fixer test-phpunit
+
+.PHONY:test-fixer
+test-fixer: build/php-cs-fixer.phar
 	$(FIXER) fix -v || true
+
+.PHONY:test-phpunit
+test-phpunit: vendor/autoload.php
 	$(PHPUNIT)
 
 .PHONY:validate
-validate: vendor/autoload.php build/php-cs-fixer.phar
-	$(COMPOSER) validate
+validate: build/php-cs-fixer.phar build/coverage.clover
 	$(FIXER) fix --dry-run --stop-on-violation
-	$(PHPUNIT)
+	$(COMPOSER) validate
+
+build/coverage.clover: vendor/autoload.php
+	phpdbg -qrr $(PHPUNIT) --coverage-clover build/coverage.clover
 
 .PHONEY:upload-code-coverage
 upload-code-coverage: build/ocular.phar build/coverage.clover
 	cd build && php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-
-build/coverage.clover: vendor/autoload.php
-	phpdbg -qrr $(PHPUNIT) --coverage-clover build/coverage.clover
 
 .PHONY: init
 init: vendor/autoload.php
@@ -49,12 +54,12 @@ build/ocular.phar:
 build/moodle-plugin-ci.phar: build/box.phar
 	$(COMPOSER) install --no-dev --prefer-dist --classmap-authoritative --quiet
 	php -d phar.readonly=false build/box.phar build
-	$(COMPOSER) install --quiet
+	$(COMPOSER) install --prefer-dist --quiet
 
 composer.lock: composer.json
-	$(COMPOSER) install --quiet
+	$(COMPOSER) install --prefer-dist
 	touch $@
 
 vendor/autoload.php: composer.lock
-	$(COMPOSER) install --quiet
+	$(COMPOSER) install --prefer-dist
 	touch $@
