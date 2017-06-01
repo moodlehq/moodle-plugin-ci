@@ -43,13 +43,13 @@ clean:
 
 # Update download URL from https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases
 build/php-cs-fixer.phar:
-	curl -LsS https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.3.2/php-cs-fixer.phar -o build/php-cs-fixer.phar
+	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.3.2/php-cs-fixer.phar -o build/php-cs-fixer.phar
 
 build/box.phar:
 	@cd build && curl -LSs https://box-project.github.io/box2/installer.php | php
 
 build/ocular.phar:
-	wget https://scrutinizer-ci.com/ocular.phar
+	curl -LSs https://scrutinizer-ci.com/ocular.phar -o build/ocular.phar
 
 build/moodle-plugin-ci.phar: build/box.phar
 	$(COMPOSER) install --no-dev --prefer-dist --classmap-authoritative --quiet
