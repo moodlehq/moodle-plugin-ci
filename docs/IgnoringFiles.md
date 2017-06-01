@@ -1,11 +1,19 @@
-# Ignoring files
+---
+layout: page
+title: Ignoring files
+---
 
 For some of the code analysis tools, it is important to ignore some files within the plugin because they might not be
 fixable, like a third party library.  The all code analysis commands in this project ignore files and directories
 listed in the [thirdpartylibs.xml](https://docs.moodle.org/dev/Plugin_files#thirdpartylibs.xml) plugin file.
 
+Specifically for the `codechecker` command, you can ignore a single line, a section of a file or the whole file by
+using specific PHP comments.  For details see this
+[PHP_CodeSniffer wiki page](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage).
+
 In addition, you can ignore additional files by defining `IGNORE_PATHS` and/or `IGNORE_NAMES` environment variables
-in your `.travis.yml` file.  Example:
+in your `.travis.yml` file.  These environment variables wont work for Grunt tasks, but will for everything else.
+Example:
 
 ```yml
 env:
@@ -38,6 +46,7 @@ env:
   - DB=mysqli
 ```
 
-In the above example, we are adding the `cli` path to our ignore paths for the PHPUnit command.  Please note that this
-is a complete override and there is no merging with `IGNORE_PATHS` and `IGNORE_NAMES`.  So, in the above, the PHPUnit
-command would not ignore the file names defined in `IGNORE_NAMES`.
+In the above example, we are adding the `cli` path to our ignore paths for the PHPUnit command (this is also how you
+can ignore files for code coverage).  Please note that this is a complete override and there is no merging with
+`IGNORE_PATHS` and `IGNORE_NAMES`.  So, in the above, the PHPUnit command would not ignore the file names
+defined in `IGNORE_NAMES`.

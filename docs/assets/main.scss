@@ -1,0 +1,19 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@import "minima";
+
+.footer-heading,
+.footer-col-1 {
+  display: none;
+}
+
+.footer-col-2 {
+  width: 45%;
+}
+
+.footer-col-3 {
+  width: 45%;
+  text-align: right;
+}

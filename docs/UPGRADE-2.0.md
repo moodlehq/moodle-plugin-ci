@@ -1,4 +1,7 @@
-# Upgrading from 1.X to 2.0
+---
+layout: page
+title: Upgrading from 1.X to 2.0
+---
 
 This document outlines the steps one should take when upgrading to the new major version.
 
@@ -12,10 +15,11 @@ Detailed information about what changed in Version 2 can be found in the [change
 
 ## Step 3: Review the Travis CI configuration file 
 
-Review the updated [.travis.dist.yml](.travis.dist.yml) and update your `.travis.yml` file in your plugin.
-For detailed information about the contents of `.travis.dist.yml` file, please see this
-[help document](doc/TravisFileExplained.md).  **Please carefully** review the updated `.travis.dist.yml` as
-some steps have been removed and others added, like installation of Java 8, upgrade of NodeJS, etc.
+Review the updated [.travis.dist.yml](https://github.com/moodlerooms/moodle-plugin-ci/blob/master/.travis.dist.yml)
+and update your `.travis.yml` file in your plugin. For detailed information about the contents of `.travis.dist.yml`
+file, please see this [help document](TravisFileExplained.md).  **Please carefully** review the updated
+`.travis.dist.yml` as some steps have been removed and others added, like installation of Java 8,
+upgrade of NodeJS, etc.
 
 ## FAQ
 

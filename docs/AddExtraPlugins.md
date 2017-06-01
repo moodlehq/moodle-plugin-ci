@@ -1,4 +1,7 @@
-# Adding extra plugins
+---
+layout: page
+title: Adding extra plugins
+---
 
 Sometimes the plugin that you are testing may depend on another plugin or even several other plugins.  This project
 provides a way to Git clone the extra plugins and add them to the Moodle test site. Here is an example of how to use

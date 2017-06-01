@@ -1,4 +1,7 @@
-# Testing a plugin against PHP7
+---
+layout: page
+title: Testing a plugin against PHP7
+---
 
 Travis CI makes it very easy to test your plugin in multiple versions of PHP and PHP7 is no different.  The only trick
 to testing your plugin in PHP7 is that you must ensure that you are testing against Moodle 3 stable or later as

@@ -1,4 +1,7 @@
-# Generating code coverage
+---
+layout: page
+title: Generating code coverage
+---
 
 Currently, code coverage is only generated for builds that are running on PHP7 or later.  Code coverage generation
 is significantly faster and easier to produce in PHP7.
@@ -22,9 +25,12 @@ script:
   - cat coverage.xml
 ```
 
-You can of course use both options at the same time if you like.
+You can of course use both options at the same time if you like.  Sometimes it is nice to exclude files from code
+coverage stats, for example, CLI scripts that would never be executed by PHPUnit.  You can exclude files by using
+the environment variables described in this [help document](IgnoringFiles.md) in the section about
+command specific ignores.
 
-# Coveralls integration
+## Coveralls integration
 
 Text based coverage and a coverage XML file are fine, but how about a detailed report that tracks coverage over time?
 To do exactly that, this project supports an integration with [Coveralls](https://coveralls.io), though you could

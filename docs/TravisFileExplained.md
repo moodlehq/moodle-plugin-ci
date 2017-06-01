@@ -1,7 +1,11 @@
-# Travis CI file explained
+---
+layout: page
+title: Travis CI file explained
+---
 
-Below is the [.travis.dist.yml](../.travis.dist.yml) file but with comments added to explain what each section is doing.
-For additional help, see [Travis CI's documentation](http://docs.travis-ci.com/user/getting-started/).
+Below is the [.travis.dist.yml](https://github.com/moodlerooms/moodle-plugin-ci/blob/master/.travis.dist.yml)
+file but with comments added to explain what each section is doing. For additional help,
+see [Travis CI's documentation](http://docs.travis-ci.com/user/getting-started/).
 
 ```yaml
 # This is the language of our project.
@@ -10,7 +14,8 @@ language: php
 # This tells Travis CI to use its new architecture.  Everything is better!
 sudo: false
 
-# Installs updated version of PostgreSQL and installs extra APT packages.  Java 8 is only required for Mustache command.
+# Installs updated version of PostgreSQL and installs extra APT packages.
+# Java 8 is only required for Mustache command.
 addons:
   postgresql: "9.3"
   apt:
@@ -18,14 +23,15 @@ addons:
       - oracle-java8-installer
       - oracle-java8-set-default
 
-# This tells Travis CI to cache NPM's and Composer's caches.  Speeds up build times.
+# Cache NPM's and Composer's caches to speed up build times.
 cache:
   directories:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-# Determines which versions of PHP to test our project against.  Each version listed
-# here will create a separate build and run the tests against that version of PHP.
+# Determines which versions of PHP to test our project against.  Each version
+# listed here will create a separate build and run the tests against that
+# version of PHP.
 php:
  - 5.6
  - 7.0
@@ -36,10 +42,11 @@ env:
  global:
 # This line determines which version of Moodle to test against.
   - MOODLE_BRANCH=MOODLE_32_STABLE
-# This matrix is used for testing against multiple databases.  So for each version of
-# PHP being tested, one build will be created for each database listed here.  EG: for
-# PHP 5.6, one build will be created using PHP 5.6 and pgsql.  In addition, another
-# build will be created using PHP 5.6 and mysqli.
+# This matrix is used for testing against multiple databases.  So for
+# each version of PHP being tested, one build will be created for each
+# database listed here.  EG: for PHP 5.6, one build will be created
+# using PHP 5.6 and pgsql.  In addition, another build will be created
+# using PHP 5.6 and mysqli.
  matrix:
   - DB=pgsql
   - DB=mysqli
@@ -66,7 +73,7 @@ install:
 #    - Create Moodle config.php, database, etc.
 #    - Copy your plugin(s) into Moodle.
 #    - Run Composer install within Moodle.
-#    - Run NPM install within Moodle and in your plugin if it has a "package.json" file.
+#    - Run NPM install in Moodle and in your plugin if it has a "package.json".
 #    - Run "grunt ignorefiles" within Moodle to update ignore file lists.
 #    - If your plugin has Behat features, then Behat will be setup.
 #    - If your plugin has unit tests, then PHPUnit will be setup.
@@ -78,29 +85,38 @@ install:
 script:
 # This step lints your PHP files to check for syntax errors.
   - moodle-plugin-ci phplint
-# This step runs the PHP Copy/Paste Detector on your plugin. This helps to find code duplication.
+# This step runs the PHP Copy/Paste Detector on your plugin.
+# This helps to find code duplication.
   - moodle-plugin-ci phpcpd
-# This step runs the PHP Mess Detector on your plugin. This helps to find potential
-# problems with your code which can result in refactoring opportunities.
+# This step runs the PHP Mess Detector on your plugin. This helps to find
+# potential problems with your code which can result in
+# refactoring opportunities.
   - moodle-plugin-ci phpmd
-# This step runs the Moodle Code Checker to make sure that your plugin conforms to the
-# Moodle coding standards.  It is highly recommended that you keep this step.
+# This step runs the Moodle Code Checker to make sure that your plugin
+# conforms to the Moodle coding standards.  It is highly recommended
+# that you keep this step.
   - moodle-plugin-ci codechecker
-# This step runs some light validation on the plugin file structure and code.  Validation can be plugin specific.
+# This step runs some light validation on the plugin file structure
+# and code.  Validation can be plugin specific.
   - moodle-plugin-ci validate
 # This step validates your plugin's upgrade steps.
   - moodle-plugin-ci savepoints
 # This step validates the HTML and Javascript in your Mustache templates.
   - moodle-plugin-ci mustache
-# This step runs Grunt tasks on the plugin.  By default, it tries to run tasks relevant to your plugin and Moodle
-# version, but you can run specific tasks by passing them as options, EG: moodle-plugin-ci grunt -t task1 -t task2 
+# This step runs Grunt tasks on the plugin.  By default, it tries to run
+# tasks relevant to your plugin and Moodle version, but you can run
+# specific tasks by passing them as options,
+# EG: moodle-plugin-ci grunt -t task1 -t task2 
   - moodle-plugin-ci grunt
-# This step runs the PHPUnit tests of your plugin.  If your plugin has PHPUnit tests,
-# then it is highly recommended that you keep this step.
+# This step runs the PHPUnit tests of your plugin.  If your plugin has
+# PHPUnit tests, then it is highly recommended that you keep this step.
   - moodle-plugin-ci phpunit
-# This step runs the Behat tests of your plugin.  If your plugin has Behat tests, then it is highly recommended that
-# you keep this step.  There are two important options that you may want to use:
-#   - The auto rerun option allows you to rerun failures X number of times, default is 2, EG usage: --auto-rerun 3
-#   - The dump option allows you to print the failure HTML to the console, handy for debugging, EG usage: --dump
+# This step runs the Behat tests of your plugin.  If your plugin has
+# Behat tests, then it is highly recommended that you keep this step.
+# There are two important options that you may want to use:
+#   - The auto rerun option allows you to rerun failures X number of times,
+#     default is 2, EG usage: --auto-rerun 3
+#   - The dump option allows you to print the failure HTML to the console,
+#     handy for debugging, EG usage: --dump
   - moodle-plugin-ci behat
 ```

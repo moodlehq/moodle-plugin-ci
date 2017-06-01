@@ -1,4 +1,8 @@
-# Change Log
+---
+layout: page
+title: Change log
+---
+
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
@@ -24,9 +28,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - The Composer self update step from `.travis.dist.yml`.
 
 ### Added
-- Defining ignore files per command, see [help document](doc/IgnoringFiles.md) for details. 
+- Defining ignore files per command, see [help document](IgnoringFiles.md) for details. 
 - `moodle-plugin-ci mustache` command which lints your Mustache template files.
-- `moodle-plugin-ci grunt` command which runs Grunt tasks on the plugin. See [help document](doc/TravisFileExplained.md)
+- `moodle-plugin-ci grunt` command which runs Grunt tasks on the plugin. See [help document](TravisFileExplained.md)
   for more details about the command.
 - `moodle-plugin-ci savepoints` command which checks your plugin's upgrade steps.
 - `--dump` option to `behat` command to print Behat HTML failure captures.
