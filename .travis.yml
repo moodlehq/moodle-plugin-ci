@@ -14,22 +14,16 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.npm
 
+php:
+ - 7.1
+
 env:
   global:
     - IGNORE_PATHS=ignore
     - IGNORE_NAMES=ignore_name.php
     - MUSTACHE_IGNORE_NAMES=broken.mustache
-    - COVERAGE=false
     - DB=pgsql
-    - MOODLE_BRANCH=MOODLE_32_STABLE
-
-matrix:
-  include:
-    - php: 5.6
-    - php: 7.0
-      env: MOODLE_BRANCH=MOODLE_33_STABLE DB=mysqli
-    - php: 7.1
-      env: MOODLE_BRANCH=master COVERAGE=true
+    - MOODLE_BRANCH=master
 
 install:
   - phpenv config-rm xdebug.ini
@@ -45,7 +39,7 @@ install:
   - moodle-plugin-ci install
 
 script:
-  - make validate
+  - make test-phpunit
 
   # This is basically "integration" testing.
   - moodle-plugin-ci phplint
@@ -59,5 +53,26 @@ script:
   - moodle-plugin-ci phpunit --coverage-text
   - moodle-plugin-ci behat
 
-after_script:
-  - if [ $COVERAGE = true ]; then make upload-code-coverage; fi
+jobs:
+  include:
+    - stage: Tests
+      addons: skip
+      install:
+        - phpenv config-rm xdebug.ini
+        - make init
+      script:
+        - make validate
+      after_script:
+        - make upload-code-coverage
+    - stage: Integration tests
+    - php: 7.0
+      env: MOODLE_BRANCH=MOODLE_33_STABLE
+    - php: 5.6
+      env: MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli
+    - stage: Deploy
+      addons: skip
+      install: skip
+      script: skip
+      before_deploy:
+        - make build/moodle-plugin-ci.phar
+        - php build/moodle-plugin-ci.phar list
