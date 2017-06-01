@@ -27,6 +27,7 @@ use Moodlerooms\MoodlePluginCI\Command\ParallelCommand;
 use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
 use Moodlerooms\MoodlePluginCI\Command\PHPUnitCommand;
 use Moodlerooms\MoodlePluginCI\Command\SavePointsCommand;
+use Moodlerooms\MoodlePluginCI\Command\SelfUpdateCommand;
 use Moodlerooms\MoodlePluginCI\Command\ValidateCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
@@ -43,6 +44,7 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
     die(1);
 }
 
+define('MOODLE_PLUGIN_CI_BOXED', '@is_boxed@');
 define('ENV_FILE', dirname(__DIR__).'/.env');
 
 if (file_exists(ENV_FILE)) {
@@ -71,4 +73,9 @@ $application->add(new PHPLintCommand());
 $application->add(new PHPUnitCommand());
 $application->add(new SavePointsCommand());
 $application->add(new ValidateCommand());
+
+// Only add the self update command if we are boxed as a phar.
+if (MOODLE_PLUGIN_CI_BOXED === 'BOXED') {
+    $application->add(new SelfUpdateCommand());
+}
 $application->run();
