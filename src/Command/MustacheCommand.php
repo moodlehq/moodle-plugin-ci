@@ -54,7 +54,7 @@ class MustacheCommand extends AbstractMoodleCommand
         // This is a workaround to execute mustache_lint.php file from within a phar.
         $filesystem = new Filesystem();
         $wrapper    = tempnam(sys_get_temp_dir(), 'mustache-linter-wrapper');
-        $filesystem->dumpFile($wrapper, "<?php include '$linter';");
+        $filesystem->dumpFile($wrapper, sprintf('<?php include \'%s\';', $linter));
 
         $code = 0;
         foreach ($files as $file) {
