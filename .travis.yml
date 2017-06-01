@@ -76,3 +76,12 @@ jobs:
       before_deploy:
         - make build/moodle-plugin-ci.phar
         - php build/moodle-plugin-ci.phar list
+      deploy:
+        provider: releases
+        api_key:
+          secure: 1A6XanGYBX2fjDfQF96LK8otHz9Sh9g29eq7O+4ntAFyN5hYTVxJBdtp6LFkoeEHeQJtHpl/vmw+htavL5UXcYHqLsX+suXH8JML0Bg5sTA/HIhksetl226PtbdJabD/5AerLzqf+PiHGagzBBqscUqkVl7DdHEVkC/OQCDNcB5onFNqSRlCP50WFyXHBr4TccrUuvHK+jKcG4AFMLU7f2Bo2j5NBQW+ucY/RdNczXrRo4et9JHZJRocPFxQMpOnV7fTrQaHlt+HQe5FikNM28Vh44uVj7ZGYLWZNmtQb9K3Fq9t+atObMcYjsjBbnqypzm8BUNDx2YfsZvcpNOEtksYx6rE58EXQgJCBod7azjt4ulIrKPNOK64A9s6SX/ZQ68VEGYCYlC412kWC6SwPp77iDRLv4Z0MpmvtZfJ1LbkvMx22SRJGBSD24INvLxh4XnfUN0qQ021HUNIbTQ8cBuTGzMWf7W2nYjEGbTVV1fTMcFFy8IXOhnodM1s5kbMDRjASxkNpMBbbhfh4b3WnBhoi+Ecqjq4DFhU7YLHdjLF1pkuRHoBn1I7vNbO+JaEMtTQHokDxBGe4hIehkGxs04Q//2tI7DsWyVLhCTStoC9OqQMTZmAJCUUVV/L9HV7HS6ZqgkBlPBvpld3g8cMqRVN19p4B09WyMQcK8usJEw=
+        file: build/moodle-plugin-ci.phar
+        skip_cleanup: true
+        on:
+          repo: moodlerooms/moodle-plugin-ci
+          tags: true
