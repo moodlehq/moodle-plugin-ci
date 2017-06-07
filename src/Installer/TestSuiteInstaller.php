@@ -157,7 +157,7 @@ class TestSuiteInstaller extends AbstractInstaller
     /**
      * Inject filter XML into the plugin's PHPUnit configuration file.
      */
-    private function injectPHPUnitFilter()
+    public function injectPHPUnitFilter()
     {
         $config = $this->plugin->directory.'/phpunit.xml';
         if (!is_file($config)) {
@@ -166,7 +166,16 @@ class TestSuiteInstaller extends AbstractInstaller
 
         $files     = $this->getCoverageFiles();
         $filterXml = $this->getFilterXml($files);
-        $contents  = str_replace('</phpunit>', $filterXml.'</phpunit>', file_get_contents($config), $count);
+        $subject   = file_get_contents($config);
+        $count     = 0;
+
+        // Replace existing filter.
+        $contents = preg_replace('/<filter>(.|\n)*<\/filter>/m', trim($filterXml), $subject, 1, $count);
+
+        // Or if no existing filter, inject the filter.
+        if ($count === 0) {
+            $contents  = str_replace('</phpunit>', $filterXml.'</phpunit>', $subject, $count);
+        }
 
         if ($count !== 1) {
             throw new \RuntimeException('Failed to inject settings into plugin phpunit.xml file');
@@ -193,7 +202,7 @@ class TestSuiteInstaller extends AbstractInstaller
 
         $this->plugin->context = 'phpunit'; // Bit of a hack, but ensure we respect PHPUnit ignores.
 
-        $files = $this->plugin->getFiles($finder);
+        $files = $this->plugin->getRelativeFiles($finder);
 
         $this->plugin->context = ''; // Revert.
 
@@ -220,7 +229,7 @@ class TestSuiteInstaller extends AbstractInstaller
             ->notName('upgradelib.php');
 
         foreach ($dbFiles as $dbFile) {
-            $key = array_search($dbFile->getRealPath(), $files, true);
+            $key = array_search('db/'.$dbFile->getRelativePathname(), $files, true);
 
             if ($key !== false) {
                 unset($files[$key]);

@@ -25,14 +25,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
     {
         parent::setUp();
 
-        $config  = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
-        $phpunit = <<<'XML'
-<?xml version="1.0" encoding="UTF-8"?>
-<phpunit>
-</phpunit>
-XML;
-
-        $this->fs->dumpFile($this->pluginDir.'/phpunit.xml', $phpunit);
+        $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
         $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
@@ -46,19 +39,6 @@ XML;
         $installer->install();
 
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
-
-        $expected = <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<phpunit>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <file>$this->pluginDir/classes/math.php</file>
-            <file>$this->pluginDir/lib.php</file>
-        </whitelist>
-    </filter>
-</phpunit>
-XML;
-        $this->assertSame($expected, file_get_contents($this->pluginDir.'/phpunit.xml'));
     }
 
     public function testBehatProcesses()
@@ -93,5 +73,25 @@ XML;
 
         $this->assertEmpty($installer->getUnitTestInstallProcesses());
         $this->assertCount(1, $installer->getPostInstallProcesses());
+    }
+
+    public function testPHPUnitXMLFile()
+    {
+        $xmlFile   = $this->pluginDir.'/phpunit.xml';
+        $installer = new TestSuiteInstaller(
+            new DummyMoodle(''),
+            new MoodlePlugin($this->pluginDir),
+            new DummyExecute()
+        );
+
+        // Test Moodle 3.2 PHPUnit XML file.
+        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-32.xml', $xmlFile, true);
+        $installer->injectPHPUnitFilter();
+        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
+
+        // Test Moodle 3.3 PHPUnit XML file.
+        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-33.xml', $xmlFile, true);
+        $installer->injectPHPUnitFilter();
+        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
     }
 }

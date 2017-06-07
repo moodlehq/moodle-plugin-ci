@@ -9,8 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-
-No unreleased changes.
+### Fixed
+- PHPUnit code coverage whitelist for Moodle 3.3 or later.
 
 ## [2.0.0] - 2017-06-01
 ### Changed

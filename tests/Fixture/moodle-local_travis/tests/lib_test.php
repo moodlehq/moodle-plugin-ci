@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use local_travis\math;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__.'/../lib.php');
@@ -33,13 +35,42 @@ require_once(__DIR__.'/../lib.php');
  * @copyright Copyright (c) 2015 Moodlerooms Inc. (http://www.moodlerooms.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_travis_phpunit_test extends basic_testcase {
+class local_travis_lib_testcase extends basic_testcase {
     /**
-     * Test our math skills.
+     * Test addition.
      */
     public function test_local_travis_add() {
         $this->assertEquals(4, local_travis_add(2, 2));
         $this->assertEquals(2, local_travis_add(4, -2));
         $this->assertEquals(0, local_travis_add(-4, 4));
+    }
+
+    /**
+     * Test subtraction.
+     */
+    public function test_local_travis_subtract() {
+        $this->assertEquals(0, local_travis_subtract(2, 2));
+        $this->assertEquals(6, local_travis_subtract(4, -2));
+        $this->assertEquals(-8, local_travis_subtract(-4, 4));
+    }
+
+    /**
+     * Test math class.
+     */
+    public function test_local_travis_math() {
+        $math = new local_travis_math();
+        $this->assertEquals(4, $math->add(2, 2));
+        $this->assertEquals(2, $math->add(4, -2));
+        $this->assertEquals(0, $math->add(-4, 4));
+    }
+
+    /**
+     * Test math class.
+     */
+    public function test_local_travis_math_class() {
+        $math = new math();
+        $this->assertEquals(4, $math->add(2, 2));
+        $this->assertEquals(2, $math->add(4, -2));
+        $this->assertEquals(0, $math->add(-4, 4));
     }
 }
