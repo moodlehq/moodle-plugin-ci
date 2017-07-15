@@ -22,10 +22,11 @@ class PostgresDatabase extends AbstractDatabase
 
     public function getCreateDatabaseCommand()
     {
+        $pass     = !empty($this->pass) ? 'env PGPASSWORD='.escapeshellarg($this->pass).' ' : '';
         $user     = escapeshellarg($this->user);
         $host     = escapeshellarg($this->host);
         $createDB = escapeshellarg(sprintf('CREATE DATABASE "%s";', $this->name));
 
-        return sprintf('psql -c %s -U %s -h %s', $createDB, $user, $host);
+        return sprintf('%spsql -c %s -U %s -h %s', $pass, $createDB, $user, $host);
     }
 }
