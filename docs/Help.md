@@ -14,6 +14,7 @@ changed.  Also a good place to look for new goodies.
 * [Add extra Moodle configs](AddExtraConfig.html): how to add extra configs to Moodle `config.php`.
 * [Add extra plugins](AddExtraPlugins.html): how to add plugin dependencies to Moodle.
 * [Ignoring files](IgnoringFiles.html): how to ignore files that might be causing failures.
+* [Using Chrome with Behat](Chrome.md): how to use Chrome instead of Firefox for Behat.
 * [Testing a plugin against PHP7](PHP7.html): how to test your plugin against PHP7.
 * [Generating code coverage](CodeCoverage.html): how to generate code coverage of your plugin.
 

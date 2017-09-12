@@ -45,6 +45,7 @@ class BehatCommand extends AbstractMoodleCommand
         $jar = getenv('MOODLE_SELENIUM_JAR') !== false ? getenv('MOODLE_SELENIUM_JAR') : null;
 
         $this->setName('behat')
+            ->addOption('profile', 'p', InputOption::VALUE_REQUIRED, 'Behat profile to use', 'default')
             ->addOption('start-servers', null, InputOption::VALUE_NONE, 'Start Selenium and PHP servers')
             ->addOption('jar', null, InputOption::VALUE_REQUIRED, 'Path to Selenium Jar file', $jar)
             ->addOption('auto-rerun', null, InputOption::VALUE_REQUIRED, 'Number of times to rerun failures', 2)
@@ -71,12 +72,13 @@ class BehatCommand extends AbstractMoodleCommand
             $servers = $input->getOption('start-servers');
         }
 
-        $servers && $this->startServerProcesses($input->getOption('jar'));
+        $servers && $this->startServerProcesses($input->getOption('jar'), $input);
 
         $builder = ProcessBuilder::create()
             ->setPrefix('php')
             ->add('admin/tool/behat/cli/run.php')
             ->add('--tags=@'.$this->plugin->getComponent())
+            ->add('--profile='.$input->getOption('profile'))
             ->add('--auto-rerun='.$input->getOption('auto-rerun'))
             ->add('--verbose')
             ->add('-vvv')
@@ -97,12 +99,21 @@ class BehatCommand extends AbstractMoodleCommand
         return $process->isSuccessful() ? 0 : 1;
     }
 
-    private function startServerProcesses($seleniumJarFile)
+    private function startServerProcesses($seleniumJarFile, InputInterface $input)
     {
         if (!is_file($seleniumJarFile)) {
             throw new \InvalidArgumentException(sprintf('Invalid Selenium Jar file path: %s', $seleniumJarFile));
         }
-        $selenium = new Process(sprintf('xvfb-run -a --server-args="-screen 0 1024x768x24" java -jar %s', $seleniumJarFile));
+        $cmd = sprintf('xvfb-run -a --server-args="-screen 0 1024x768x24" java -jar %s', $seleniumJarFile);
+        if ($input->getOption('profile') === 'chrome') {
+            $driver = '/usr/lib/chromium-browser/chromedriver';
+            if (!file_exists($driver)) {
+                throw new \RuntimeException('chromedriver not found, please install it, see help docs');
+            }
+            $cmd .= ' -Dwebdriver.chrome.driver='.$driver;
+        }
+
+        $selenium = new Process($cmd);
         $selenium->setTimeout(0);
         $selenium->disableOutput();
         $selenium->start();

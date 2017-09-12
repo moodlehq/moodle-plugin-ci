@@ -15,6 +15,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   environment from Precise to Trusy.  On Trusty, the default Firefox version is 55, which is not
   compatible with Selenium.
 
+### Added
+- Can now use Chrome with Behat, see [help document](Chrome.md) for details.
+
 ### Changed
 - Set password via environment when connecting with Postgres.
 
@@ -42,7 +45,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - The Composer self update step from `.travis.dist.yml`.
 
 ### Added
-- Defining ignore files per command, see [help document](IgnoringFiles.md) for details. 
+- Defining ignore files per command, see [help document](IgnoringFiles.md) for details.
 - `moodle-plugin-ci mustache` command which lints your Mustache template files.
 - `moodle-plugin-ci grunt` command which runs Grunt tasks on the plugin. See [help document](TravisFileExplained.md)
   for more details about the command.

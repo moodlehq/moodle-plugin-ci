@@ -15,7 +15,7 @@ In addition, you can ignore additional files by defining `IGNORE_PATHS` and/or `
 in your `.travis.yml` file.  These environment variables wont work for Grunt tasks, but will for everything else.
 Example:
 
-```yml
+```yaml
 env:
  global:
   - MOODLE_BRANCH=MOODLE_29_STABLE
@@ -34,7 +34,7 @@ like `/\.php$/`.
 If you need to specify ignore paths for a specific command, then you can define additional environment variables.  The
 variable names are the same as above, but prefixed with `COMMANDNAME_`.  Example:
 
-```yml
+```yaml
 env:
  global:
   - MOODLE_BRANCH=MOODLE_29_STABLE

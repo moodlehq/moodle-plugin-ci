@@ -9,6 +9,7 @@ addons:
     packages:
       - oracle-java8-installer
       - oracle-java8-set-default
+      - chromium-chromedriver
 
 cache:
   directories:
@@ -25,6 +26,7 @@ env:
     - MUSTACHE_IGNORE_NAMES=broken.mustache
     - DB=pgsql
     - MOODLE_BRANCH=master
+    - PROFILE=chrome
 
 install:
   - phpenv config-rm xdebug.ini
@@ -52,7 +54,7 @@ script:
   - moodle-plugin-ci mustache
   - moodle-plugin-ci grunt
   - moodle-plugin-ci phpunit --coverage-text
-  - moodle-plugin-ci behat
+  - moodle-plugin-ci behat --profile $PROFILE
 
 jobs:
   include:
@@ -69,7 +71,7 @@ jobs:
     - php: 7.0
       env: MOODLE_BRANCH=MOODLE_33_STABLE
     - php: 5.6
-      env: MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli
+      env: MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli PROFILE=default
     - stage: Deploy
       addons: skip
       install: skip

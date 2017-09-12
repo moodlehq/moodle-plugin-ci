@@ -7,7 +7,7 @@ Sometimes a plugin may require extra config in the Moodle `config.php` file beca
 non-standard service.  This project provides a way to update the `config.php` file with the `add-config` command.  Here
 is an example of how to use it in your `.travis.yml` file:
 
-```yml
+```yaml
 install:
   - moodle-plugin-ci install
   - moodle-plugin-ci add-config '$CFG->foo = "bar";'
