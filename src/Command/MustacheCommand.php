@@ -58,9 +58,15 @@ class MustacheCommand extends AbstractMoodleCommand
 
         $code = 0;
         foreach ($files as $file) {
+            // _JAVA_OPTIONS is something Travis CI started to set in Trusty.  This breaks Mustache because
+            // the output from vnu.jar needs to be captured and JSON decoded.  When _JAVA_OPTIONS is present,
+            // then a message like "Picked up _JAVA_OPTIONS..." is printed which breaks JSON decoding.
             $process = $this->execute->passThroughProcess(
                 ProcessBuilder::create()
-                    ->setPrefix('php')
+                    ->add('env')
+                    ->add('-u')
+                    ->add('_JAVA_OPTIONS')
+                    ->add('php')
                     ->add($wrapper)
                     ->add('--filename='.$file)
                     ->add('--validator='.$jarFile)

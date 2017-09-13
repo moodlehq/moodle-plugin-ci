@@ -14,6 +14,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   `.travis.yml` file to get Behat running again.  This is because Travis CI changed their default
   environment from Precise to Trusy.  On Trusty, the default Firefox version is 55, which is not
   compatible with Selenium.
+- Fixed `moodle-plugin-ci mustache` command when `_JAVA_OPTIONS` environment variable is set.
+  This is now set by default in Trusty builds.
 
 ### Added
 - Can now use Chrome with Behat, see [help document](Chrome.md) for details.
