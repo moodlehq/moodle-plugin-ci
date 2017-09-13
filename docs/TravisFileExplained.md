@@ -14,9 +14,11 @@ language: php
 # This tells Travis CI to use its new architecture.  Everything is better!
 sudo: false
 
-# Installs updated version of PostgreSQL and installs extra APT packages.
-# Java 8 is only required for Mustache command.
+# Installs the required version of Firefox for Behat, an updated version
+# of PostgreSQL and extra APT packages. Java 8 is only required
+# for Mustache command.
 addons:
+  firefox: "47.0.1"
   postgresql: "9.3"
   apt:
     packages:

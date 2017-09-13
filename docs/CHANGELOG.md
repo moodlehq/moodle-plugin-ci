@@ -9,6 +9,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Fixed
+- ACTION REQUIRED: added `firefox: "47.0.1"` to `.travis.dist.yml` and you must add it to your
+  `.travis.yml` file to get Behat running again.  This is because Travis CI changed their default
+  environment from Precise to Trusy.  On Trusty, the default Firefox version is 55, which is not
+  compatible with Selenium.
+
 ### Changed
 - Set password via environment when connecting with Postgres.
 
