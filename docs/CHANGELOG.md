@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [2.1.1]
 ### Fixed
 - `moodle-plugin-ci validate` now properly validates all table name prefixes in the plugin's
   `db/install.xml` file.  Before, if any table name was properly prefixed, this would pass.
@@ -192,7 +195,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.1.0...master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.1.1...master
+[2.1.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.0.1...2.1.0
 [2.0.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.5.8...2.0.0
