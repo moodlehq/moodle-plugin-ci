@@ -154,4 +154,14 @@ class FileTokens
 
         return true;
     }
+
+    /**
+     * Reset found state on all tokens.
+     */
+    public function resetTokens()
+    {
+        foreach ($this->tokens as $token) {
+            $token->reset();
+        }
+    }
 }

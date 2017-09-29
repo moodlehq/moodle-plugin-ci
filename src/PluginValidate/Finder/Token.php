@@ -44,6 +44,14 @@ class Token
     }
 
     /**
+     * Reset token found state.
+     */
+    public function reset()
+    {
+        $this->found = false;
+    }
+
+    /**
      * @return bool
      */
     public function hasTokenBeenFound()

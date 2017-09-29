@@ -9,7 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Fixed
+- `moodle-plugin-ci validate` now properly validates all table name prefixes in the plugin's
+  `db/install.xml` file.  Before, if any table name was properly prefixed, this would pass.
 
 ## [2.1.0] - 2017-09-13
 ### Fixed
