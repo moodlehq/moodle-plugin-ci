@@ -9,7 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Fixed
+- `moodle-plugin-ci validate` now only regards required language strings as present if they are assigned to the `$string` array. Before, other array variables were accepted although Moodle would not recognise them.  
 
 ## [2.1.1]
 ### Fixed
