@@ -11,6 +11,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Fixed
 - `moodle-plugin-ci validate` now only regards required language strings as present if they are assigned to the `$string` array. Before, other array variables were accepted although Moodle would not recognise them.  
+- `moodle-plugin-ci install` now provides an option `--skip-db-install` to skip DB installation if execution of unit tests and behat test will not be required.
 
 ## [2.1.1]
 ### Fixed

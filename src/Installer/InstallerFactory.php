@@ -69,6 +69,11 @@ class InstallerFactory
     public $pluginsDir;
 
     /**
+     * @var bool
+     */
+    public $skipDbInstall;
+
+    /**
      * Given a big bag of install options, add installers to the collection.
      *
      * @param InstallerCollection $installers Installers will be added to this
@@ -79,7 +84,9 @@ class InstallerFactory
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->pluginsDir, $this->dumper));
         $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute));
 
-        if ($this->plugin->hasBehatFeatures() || $this->plugin->hasUnitTests()) {
+        if ($this->skipDbInstall) {
+            return;
+        } elseif ($this->plugin->hasBehatFeatures() || $this->plugin->hasUnitTests()) {
             $installers->add(new TestSuiteInstaller($this->moodle, $this->plugin, $this->execute));
         }
     }

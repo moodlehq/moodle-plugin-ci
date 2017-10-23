@@ -87,7 +87,8 @@ class InstallCommand extends Command
             ->addOption('db-host', null, InputOption::VALUE_REQUIRED, 'Database host', 'localhost')
             ->addOption('not-paths', null, InputOption::VALUE_REQUIRED, 'CSV of file paths to exclude', $paths)
             ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names)
-            ->addOption('extra-plugins', null, InputOption::VALUE_REQUIRED, 'Directory of extra plugins to install', $extra);
+            ->addOption('extra-plugins', null, InputOption::VALUE_REQUIRED, 'Directory of extra plugins to install', $extra)
+            ->addOption('skip-db-install', null, InputOption::VALUE_REQUIRED, 'Skip DB installation, e.g. if only static analyses are required', false);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -163,6 +164,7 @@ class InstallCommand extends Command
             $input->getOption('db-pass'),
             $input->getOption('db-host')
         );
+        $factory->skipDbInstall = $input->getOption('skip-db-install');
 
         return $factory;
     }
