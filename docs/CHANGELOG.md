@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [2.2.0] - 2017-11-03
 ### Changed
 - ACTION REQUIRED: changed the `nvm install node` to `nvm install 8.9` and `nvm use 8.9` in
   the [.travis.dist.yml] and you must update your `.travis.yml` file to get Grunt commands
@@ -206,7 +209,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.1.1...master
+[Unreleased]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.2.0...master
+[2.2.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.1.1...2.2.0
 [2.1.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.0.1...2.1.0
 [2.0.1]: https://github.com/moodlerooms/moodle-plugin-ci/compare/2.0.0...2.0.1
