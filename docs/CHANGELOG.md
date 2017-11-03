@@ -22,7 +22,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci install` now provides an option `--no-init` to skip initialization of the Behat and PHPUnit
   test suites.  Only use this option if execution of these tests are not required.
 
-## [2.1.1]
+## [2.1.1] - 2017-09-29
 ### Fixed
 - `moodle-plugin-ci validate` now properly validates all table name prefixes in the plugin's
   `db/install.xml` file.  Before, if any table name was properly prefixed, this would pass.
