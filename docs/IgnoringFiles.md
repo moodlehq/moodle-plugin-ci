@@ -18,7 +18,7 @@ Example:
 ```yaml
 env:
  global:
-  - MOODLE_BRANCH=MOODLE_29_STABLE
+  - MOODLE_BRANCH=MOODLE_32_STABLE
   - IGNORE_PATHS=vendor/widget,javascript/min-lib.js
   - IGNORE_NAMES=*-m.js,bad_lib.php
  matrix:
@@ -37,7 +37,7 @@ variable names are the same as above, but prefixed with `COMMANDNAME_`.  Example
 ```yaml
 env:
  global:
-  - MOODLE_BRANCH=MOODLE_29_STABLE
+  - MOODLE_BRANCH=MOODLE_32_STABLE
   - IGNORE_PATHS=vendor/widget,javascript/min-lib.js
   - IGNORE_NAMES=*-m.js,bad_lib.php
   - PHPUNIT_IGNORE_PATHS=$IGNORE_PATHS,cli
