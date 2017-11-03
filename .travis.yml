@@ -30,7 +30,8 @@ env:
 
 install:
   - phpenv config-rm xdebug.ini
-  - nvm install node
+  - nvm install 8.9
+  - nvm use 8.9
   - make init
 
   # Mimic how a Moodle plugin would be run.

@@ -9,6 +9,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- ACTION REQUIRED: changed the `nvm install node` to `nvm install 8.9` and `nvm use 8.9` in
+  the [.travis.dist.yml] and you must update your `.travis.yml` file to get Grunt commands
+  running again.  These commands match what the Moodle project is currently using.
+
 ### Fixed
 - `moodle-plugin-ci validate` now only regards required language strings as present if they are assigned to the
   `$string` array. Before, other array variables were accepted although Moodle would not recognise them.  
@@ -24,7 +29,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [2.1.0] - 2017-09-13
 ### Fixed
-- ACTION REQUIRED: added `firefox: "47.0.1"` to `.travis.dist.yml` and you must add it to your
+- ACTION REQUIRED: added `firefox: "47.0.1"` to [.travis.dist.yml] and you must add it to your
   `.travis.yml` file to get Behat running again.  This is because Travis CI changed their default
   environment from Precise to Trusy.  On Trusty, the default Firefox version is 55, which is not
   compatible with Selenium.
@@ -221,3 +226,4 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 [1.3.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/moodlerooms/moodle-plugin-ci/compare/1.0.0...1.1.0
+[.travis.dist.yml]: https://github.com/moodlerooms/moodle-plugin-ci/blob/master/.travis.dist.yml

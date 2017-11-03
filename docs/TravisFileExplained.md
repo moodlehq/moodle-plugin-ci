@@ -57,8 +57,9 @@ env:
 before_install:
 # This disables XDebug which should speed up the build.
   - phpenv config-rm xdebug.ini
-# This installs the latest version of NodeJS which is used by Grunt, etc.
-  - nvm install node
+# This installs NodeJS which is used by Grunt, etc.
+  - nvm install 8.9
+  - nvm use 8.9
 # Currently we are inside of the clone of your repository.  We move up two
 # directories to build the project.
   - cd ../..
