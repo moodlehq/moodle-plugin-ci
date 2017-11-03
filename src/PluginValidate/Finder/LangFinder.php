@@ -35,7 +35,7 @@ class LangFinder extends AbstractParserFinder
             if ($assign->var instanceof ArrayDimFetch) {
                 // Verify that the array name is $string.
                 $arrayName = $assign->var->var;
-                if (!($arrayName instanceof Variable) || $arrayName->name !== 'string') {
+                if (!$arrayName instanceof Variable || $arrayName->name !== 'string') {
                     continue;
                 }
                 // Grab the array index.
