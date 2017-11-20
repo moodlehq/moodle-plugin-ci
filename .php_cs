@@ -27,6 +27,7 @@ return PhpCsFixer\Config::create()
         '@Symfony:risky'                        => true,
         'array_syntax'                          => ['syntax' => 'short'],
         'combine_consecutive_unsets'            => true,
+        'combine_consecutive_issets'            => true,
         'general_phpdoc_annotation_remove'      => ['expectedException', 'expectedExceptionMessage', 'expectedExceptionMessageRegExp'],
         'header_comment'                        => ['header' => $header],
         'heredoc_to_nowdoc'                     => true,
@@ -43,7 +44,9 @@ return PhpCsFixer\Config::create()
         'strict_comparison'                     => true,
         'strict_param'                          => true,
         'binary_operator_spaces'                => ['align_equals' => true, 'align_double_arrow' => true],
-
+        'align_multiline_comment'               => true,
+        'yoda_style'                            => false,
+        'compact_nullable_typehint'             => true,
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

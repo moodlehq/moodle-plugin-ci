@@ -32,12 +32,12 @@ use Moodlerooms\MoodlePluginCI\Command\ValidateCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
 
-// Global install.
 if (file_exists(__DIR__.'/../../../autoload.php')) {
+    // Global install.
     /** @noinspection PhpIncludeInspection */
     require_once __DIR__.'/../../../autoload.php';
-// Project install.
 } elseif (file_exists(__DIR__.'/../vendor/autoload.php')) {
+    // Project install.
     require_once __DIR__.'/../vendor/autoload.php';
 } else {
     fwrite(STDERR, 'Failed to find Composer\'s autoload file. You might need to run Composer\'s install on this project'.PHP_EOL);
