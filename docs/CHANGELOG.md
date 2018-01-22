@@ -9,7 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Changed
+- Updated project dependencies.  Most notably, Moodle Code Checker v2.7.1.
 
 ## [2.2.0] - 2017-11-03
 ### Changed
