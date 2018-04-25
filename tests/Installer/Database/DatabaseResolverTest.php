@@ -28,6 +28,10 @@ class DatabaseResolverTest extends \PHPUnit_Framework_TestCase
             'Moodlerooms\MoodlePluginCI\Installer\Database\PostgresDatabase',
             $resolver->resolveDatabase('pgsql')
         );
+        $this->assertInstanceOf(
+            'Moodlerooms\MoodlePluginCI\Installer\Database\MariaDBDatabase',
+            $resolver->resolveDatabase('mariadb')
+        );
     }
 
     public function testTypeError()

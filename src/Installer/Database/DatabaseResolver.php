@@ -60,7 +60,7 @@ class DatabaseResolver
                 return $database;
             }
         }
-        throw new \DomainException(sprintf('Unknown database type (%s). Please use mysqli or pgsql.', $type));
+        throw new \DomainException(sprintf('Unknown database type (%s). Please use mysqli, pgsql or mariadb.', $type));
     }
 
     /**
@@ -68,6 +68,6 @@ class DatabaseResolver
      */
     private function getDatabases()
     {
-        return [new MySQLDatabase(), new PostgresDatabase()];
+        return [new MySQLDatabase(), new PostgresDatabase(), new MariaDBDatabase()];
     }
 }
