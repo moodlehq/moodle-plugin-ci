@@ -103,6 +103,7 @@ class MoodlePluginTest extends MoodleTestCase
         $finder->name('*.php');
 
         $plugin   = new MoodlePlugin($this->pluginDir);
+        $files    = $plugin->getFiles($finder);
         $expected = [
             $this->pluginDir.'/classes/math.php',
             $this->pluginDir.'/db/access.php',
@@ -112,7 +113,10 @@ class MoodlePluginTest extends MoodleTestCase
             $this->pluginDir.'/tests/lib_test.php',
             $this->pluginDir.'/version.php',
         ];
-        $this->assertSame($expected, $plugin->getFiles($finder));
+
+        sort($files);
+
+        $this->assertSame($expected, $files);
     }
 
     public function testGetRelativeFiles()
