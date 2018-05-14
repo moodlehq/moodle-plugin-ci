@@ -11,8 +11,9 @@ see [Travis CI's documentation](http://docs.travis-ci.com/user/getting-started/)
 # This is the language of our project.
 language: php
 
-# This tells Travis CI to use its new architecture.  Everything is better!
-sudo: false
+# If using Behat, then this should be true due to an issue with Travis CI.
+# If not using Behat, recommended to use `sudo: false` as it is faster.
+sudo: true
 
 # Installs the required version of Firefox for Behat, an updated version
 # of PostgreSQL and extra APT packages. Java 8 is only required

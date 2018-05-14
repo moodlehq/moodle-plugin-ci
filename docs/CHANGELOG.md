@@ -10,6 +10,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 ### Changed
+- Recommending `sudo: true` when using Behat. See
+  [#70](https://github.com/moodlerooms/moodle-plugin-ci/issues/70) for details.
 - Updated project dependencies.  Most notably, Moodle Code Checker v2.7.1.
 
 ### Added
