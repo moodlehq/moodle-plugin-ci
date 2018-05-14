@@ -12,6 +12,11 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Changed
 - Updated project dependencies.  Most notably, Moodle Code Checker v2.7.1.
 
+### Added
+- Support for MariaDB.  To use, set `DB=mariadb` in your build.  In additon, see
+  [database setup](https://docs.travis-ci.com/user/database-setup/#MariaDB)
+  documentation for how to add MariaDB to your build.
+
 ## [2.2.0] - 2017-11-03
 ### Changed
 - ACTION REQUIRED: changed the `nvm install node` to `nvm install 8.9` and `nvm use 8.9` in
