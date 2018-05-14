@@ -1,6 +1,7 @@
 language: php
 
-sudo: false
+# Behat no longer passes when false.
+sudo: true
 
 addons:
   firefox: "47.0.1"
