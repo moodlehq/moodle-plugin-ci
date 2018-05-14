@@ -72,13 +72,11 @@ jobs:
     - php: 7.1
       env: MOODLE_BRANCH=MOODLE_34_STABLE
     - php: 7.0
-      env: MOODLE_BRANCH=MOODLE_33_STABLE
-    - php: 5.6
-      env: MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli PROFILE=default
-    - php: 7.1
-      env: MOODLE_BRANCH=MOODLE_34_STABLE DB=mariadb
+      env: MOODLE_BRANCH=MOODLE_33_STABLE DB=mariadb
       addons:
         mariadb: 10.2
+    - php: 5.6
+      env: MOODLE_BRANCH=MOODLE_32_STABLE DB=mysqli PROFILE=default
     - stage: Deploy
       addons: skip
       install: skip
