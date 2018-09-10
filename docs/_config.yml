@@ -1,6 +1,6 @@
 title: Moodle Plugin CI
 description: Moodle plugin + Travis CI
-github_username: moodlerooms/moodle-plugin-ci
+github_username: blackboard-open-source/moodle-plugin-ci
 theme: minima
 header_pages:
   - CHANGELOG.md

@@ -6,15 +6,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate;
 
-use Moodlerooms\MoodlePluginCI\PluginValidate\Plugin;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\FormatRequirements;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
+use MoodlePluginCI\PluginValidate\Plugin;
+use MoodlePluginCI\PluginValidate\Requirements\FormatRequirements;
+use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class FormatRequirementsTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +38,7 @@ class FormatRequirementsTest extends \PHPUnit_Framework_TestCase
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\FormatRequirements',
+            'MoodlePluginCI\PluginValidate\Requirements\FormatRequirements',
             $resolver->resolveRequirements(new Plugin('', 'format', '', ''), 29)
         );
     }
@@ -60,7 +60,7 @@ class FormatRequirementsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($classes);
         foreach ($classes as $class) {
-            $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+            $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
         }
     }
 }

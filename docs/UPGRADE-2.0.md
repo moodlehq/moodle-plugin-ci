@@ -15,7 +15,7 @@ Detailed information about what changed in Version 2 can be found in the [change
 
 ## Step 3: Review the Travis CI configuration file 
 
-Review the updated [.travis.dist.yml](https://github.com/moodlerooms/moodle-plugin-ci/blob/master/.travis.dist.yml)
+Review the updated [.travis.dist.yml](https://github.com/blackboard-open-source/moodle-plugin-ci/blob/master/.travis.dist.yml)
 and update your `.travis.yml` file in your plugin. For detailed information about the contents of `.travis.dist.yml`
 file, please see this [help document](TravisFileExplained.md).  **Please carefully** review the updated
 `.travis.dist.yml` as some steps have been removed and others added, like installation of Java 8,
@@ -25,7 +25,7 @@ upgrade of NodeJS, etc.
 
 ### What is happening to Version 1?
 
-Version 1 still exists in the [v1](https://github.com/moodlerooms/moodle-plugin-ci/tree/v1) branch.  You can continue
+Version 1 still exists in the [v1](https://github.com/blackboard-open-source/moodle-plugin-ci/tree/v1) branch.  You can continue
 to use it, but it is no longer getting new features and may not receive additional updates.  In addition, it may start
 breaking in Moodle 3.2 or later.
 
@@ -53,8 +53,8 @@ env:
 
 before_install:
   # You must install the correct version of this project:
-  - if [ "$V2" = false ]; then composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^1; fi
-  - if [ "$V2" = true ]; then composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^2; fi
+  - if [ "$V2" = false ]; then composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^1; fi
+  - if [ "$V2" = true ]; then composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2; fi
 
 script:
   # Example of a Version 2 only command:

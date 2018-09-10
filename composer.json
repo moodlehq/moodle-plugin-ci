@@ -1,5 +1,5 @@
 {
-  "name": "moodlerooms/moodle-plugin-ci",
+  "name": "blackboard-open-source/moodle-plugin-ci",
   "description": "Assists with running Moodle plugins in Travis CI",
   "keywords": ["moodle", "travis", "ci", "testing"],
   "type": "project",
@@ -7,14 +7,14 @@
   "authors": [
     {
       "name": "Mark Nielsen",
-      "email": "mark@moodlerooms.com",
-      "homepage": "http://moodlerooms.com",
+      "email": "mark.nielsen@blackboard.com",
+      "homepage": "https://www.blackboard.com",
       "role": "Developer"
     },
     {
       "name": "Sam Chaffee",
-      "email": "sam@moodlerooms.com",
-      "homepage": "http://moodlerooms.com",
+      "email": "sam.chaffee@blackboard.com",
+      "homepage": "https://www.blackboard.com",
       "role": "Developer"
     }
   ],
@@ -80,12 +80,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Moodlerooms\\MoodlePluginCI\\": "src/"
+      "MoodlePluginCI\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Moodlerooms\\MoodlePluginCI\\Tests\\": "tests/"
+      "MoodlePluginCI\\Tests\\": "tests/"
     }
   },
   "bin": [

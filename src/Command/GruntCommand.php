@@ -6,13 +6,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Command;
+namespace MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\Model\GruntTaskModel;
+use MoodlePluginCI\Model\GruntTaskModel;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

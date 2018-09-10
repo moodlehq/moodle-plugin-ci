@@ -97,5 +97,5 @@ jobs:
         file: build/moodle-plugin-ci.phar
         skip_cleanup: true
         on:
-          repo: moodlerooms/moodle-plugin-ci
+          repo: blackboard-open-source/moodle-plugin-ci
           tags: true

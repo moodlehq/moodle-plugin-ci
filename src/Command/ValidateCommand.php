@@ -6,15 +6,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Command;
+namespace MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\PluginValidate\Plugin;
-use Moodlerooms\MoodlePluginCI\PluginValidate\PluginValidate;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
+use MoodlePluginCI\PluginValidate\Plugin;
+use MoodlePluginCI\PluginValidate\PluginValidate;
+use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

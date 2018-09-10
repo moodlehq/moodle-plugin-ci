@@ -6,14 +6,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Command;
+namespace MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
-use Moodlerooms\MoodlePluginCI\Validate;
+use MoodlePluginCI\Bridge\MoodlePlugin;
+use MoodlePluginCI\Validate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

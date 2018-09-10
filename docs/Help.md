@@ -25,7 +25,7 @@ changed.  Also a good place to look for new goodies.
 ## Other help
 
 If the above links do not help you, maybe someone
-[asked it already](https://github.com/moodlerooms/moodle-plugin-ci/issues?q=is%3Aissue%20label%3Aquestion).
+[asked it already](https://github.com/blackboard-open-source/moodle-plugin-ci/issues?q=is%3Aissue%20label%3Aquestion).
 If you still cannot find an answer, and Google has failed you as well, then please feel free
-to submit an [new issue](https://github.com/moodlerooms/moodle-plugin-ci/issues/new) providing
+to submit an [new issue](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/new) providing
 as many relevant details as possible.

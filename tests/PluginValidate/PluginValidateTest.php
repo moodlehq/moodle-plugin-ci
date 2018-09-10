@@ -6,16 +6,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate;
 
-use Moodlerooms\MoodlePluginCI\PluginValidate\Plugin;
-use Moodlerooms\MoodlePluginCI\PluginValidate\PluginValidate;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\GenericRequirements;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\ModuleRequirements;
+use MoodlePluginCI\PluginValidate\Plugin;
+use MoodlePluginCI\PluginValidate\PluginValidate;
+use MoodlePluginCI\PluginValidate\Requirements\GenericRequirements;
+use MoodlePluginCI\PluginValidate\Requirements\ModuleRequirements;
 
 class PluginValidateTest extends \PHPUnit_Framework_TestCase
 {

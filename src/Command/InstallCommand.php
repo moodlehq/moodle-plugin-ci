@@ -6,22 +6,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Command;
+namespace MoodlePluginCI\Command;
 
-use Moodlerooms\MoodlePluginCI\Bridge\Moodle;
-use Moodlerooms\MoodlePluginCI\Bridge\MoodlePlugin;
-use Moodlerooms\MoodlePluginCI\Installer\ConfigDumper;
-use Moodlerooms\MoodlePluginCI\Installer\Database\DatabaseResolver;
-use Moodlerooms\MoodlePluginCI\Installer\EnvDumper;
-use Moodlerooms\MoodlePluginCI\Installer\Install;
-use Moodlerooms\MoodlePluginCI\Installer\InstallerCollection;
-use Moodlerooms\MoodlePluginCI\Installer\InstallerFactory;
-use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
-use Moodlerooms\MoodlePluginCI\Validate;
+use MoodlePluginCI\Bridge\Moodle;
+use MoodlePluginCI\Bridge\MoodlePlugin;
+use MoodlePluginCI\Installer\ConfigDumper;
+use MoodlePluginCI\Installer\Database\DatabaseResolver;
+use MoodlePluginCI\Installer\EnvDumper;
+use MoodlePluginCI\Installer\Install;
+use MoodlePluginCI\Installer\InstallerCollection;
+use MoodlePluginCI\Installer\InstallerFactory;
+use MoodlePluginCI\Installer\InstallOutput;
+use MoodlePluginCI\Validate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;

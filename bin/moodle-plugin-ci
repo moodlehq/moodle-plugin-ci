@@ -7,28 +7,28 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use Moodlerooms\MoodlePluginCI\Command\AddConfigCommand;
-use Moodlerooms\MoodlePluginCI\Command\AddPluginCommand;
-use Moodlerooms\MoodlePluginCI\Command\BehatCommand;
-use Moodlerooms\MoodlePluginCI\Command\CodeCheckerCommand;
-use Moodlerooms\MoodlePluginCI\Command\CodeFixerCommand;
-use Moodlerooms\MoodlePluginCI\Command\CompletionCommand;
-use Moodlerooms\MoodlePluginCI\Command\CopyPasteDetectorCommand;
-use Moodlerooms\MoodlePluginCI\Command\CoverallsUploadCommand;
-use Moodlerooms\MoodlePluginCI\Command\GruntCommand;
-use Moodlerooms\MoodlePluginCI\Command\InstallCommand;
-use Moodlerooms\MoodlePluginCI\Command\MessDetectorCommand;
-use Moodlerooms\MoodlePluginCI\Command\MustacheCommand;
-use Moodlerooms\MoodlePluginCI\Command\ParallelCommand;
-use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
-use Moodlerooms\MoodlePluginCI\Command\PHPUnitCommand;
-use Moodlerooms\MoodlePluginCI\Command\SavePointsCommand;
-use Moodlerooms\MoodlePluginCI\Command\SelfUpdateCommand;
-use Moodlerooms\MoodlePluginCI\Command\ValidateCommand;
+use MoodlePluginCI\Command\AddConfigCommand;
+use MoodlePluginCI\Command\AddPluginCommand;
+use MoodlePluginCI\Command\BehatCommand;
+use MoodlePluginCI\Command\CodeCheckerCommand;
+use MoodlePluginCI\Command\CodeFixerCommand;
+use MoodlePluginCI\Command\CompletionCommand;
+use MoodlePluginCI\Command\CopyPasteDetectorCommand;
+use MoodlePluginCI\Command\CoverallsUploadCommand;
+use MoodlePluginCI\Command\GruntCommand;
+use MoodlePluginCI\Command\InstallCommand;
+use MoodlePluginCI\Command\MessDetectorCommand;
+use MoodlePluginCI\Command\MustacheCommand;
+use MoodlePluginCI\Command\ParallelCommand;
+use MoodlePluginCI\Command\PHPLintCommand;
+use MoodlePluginCI\Command\PHPUnitCommand;
+use MoodlePluginCI\Command\SavePointsCommand;
+use MoodlePluginCI\Command\SelfUpdateCommand;
+use MoodlePluginCI\Command\ValidateCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
 

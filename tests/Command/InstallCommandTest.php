@@ -6,17 +6,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Tests\Command;
+namespace MoodlePluginCI\Tests\Command;
 
-use Moodlerooms\MoodlePluginCI\Command\InstallCommand;
-use Moodlerooms\MoodlePluginCI\Command\PHPLintCommand;
-use Moodlerooms\MoodlePluginCI\Installer\InstallOutput;
-use Moodlerooms\MoodlePluginCI\Tests\Fake\Installer\DummyInstall;
-use Moodlerooms\MoodlePluginCI\Tests\MoodleTestCase;
+use MoodlePluginCI\Command\InstallCommand;
+use MoodlePluginCI\Command\PHPLintCommand;
+use MoodlePluginCI\Installer\InstallOutput;
+use MoodlePluginCI\Tests\Fake\Installer\DummyInstall;
+use MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Tester\CommandTester;

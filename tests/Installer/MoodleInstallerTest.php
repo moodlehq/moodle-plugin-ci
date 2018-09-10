@@ -6,18 +6,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Tests\Installer;
+namespace MoodlePluginCI\Tests\Installer;
 
-use Moodlerooms\MoodlePluginCI\Bridge\MoodleConfig;
-use Moodlerooms\MoodlePluginCI\Installer\Database\MySQLDatabase;
-use Moodlerooms\MoodlePluginCI\Installer\MoodleInstaller;
-use Moodlerooms\MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
-use Moodlerooms\MoodlePluginCI\Tests\Fake\Process\DummyExecute;
-use Moodlerooms\MoodlePluginCI\Tests\FilesystemTestCase;
+use MoodlePluginCI\Bridge\MoodleConfig;
+use MoodlePluginCI\Installer\Database\MySQLDatabase;
+use MoodlePluginCI\Installer\MoodleInstaller;
+use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
+use MoodlePluginCI\Tests\Fake\Process\DummyExecute;
+use MoodlePluginCI\Tests\FilesystemTestCase;
 
 class MoodleInstallerTest extends FilesystemTestCase
 {

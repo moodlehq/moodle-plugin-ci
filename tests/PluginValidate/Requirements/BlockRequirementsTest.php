@@ -6,15 +6,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate;
 
-use Moodlerooms\MoodlePluginCI\PluginValidate\Plugin;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\BlockRequirements;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
+use MoodlePluginCI\PluginValidate\Plugin;
+use MoodlePluginCI\PluginValidate\Requirements\BlockRequirements;
+use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class BlockRequirementsTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +38,7 @@ class BlockRequirementsTest extends \PHPUnit_Framework_TestCase
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\BlockRequirements',
+            'MoodlePluginCI\PluginValidate\Requirements\BlockRequirements',
             $resolver->resolveRequirements(new Plugin('', 'block', '', ''), 29)
         );
     }
@@ -59,7 +59,7 @@ class BlockRequirementsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($functions);
         foreach ($functions as $function) {
-            $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $function);
+            $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $function);
         }
     }
 
@@ -69,21 +69,21 @@ class BlockRequirementsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($classes);
         foreach ($classes as $class) {
-            $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+            $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
         }
     }
 
     public function testGetRequiredStrings()
     {
         $fileToken = $this->requirements->getRequiredStrings();
-        $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('lang/en/block_html.php', $fileToken->file);
     }
 
     public function testGetRequiredCapabilities()
     {
         $fileToken = $this->requirements->getRequiredCapabilities();
-        $this->assertInstanceOf('Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('db/access.php', $fileToken->file);
     }
 }

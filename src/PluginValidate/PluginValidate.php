@@ -6,22 +6,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * Copyright (c) 2018 Blackboard Inc. (http://www.blackboard.com)
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace Moodlerooms\MoodlePluginCI\PluginValidate;
+namespace MoodlePluginCI\PluginValidate;
 
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\BehatTagFinder;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\CapabilityFinder;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\ClassFinder;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FileTokens;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FinderInterface;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\FunctionFinder;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\LangFinder;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\TableFinder;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Finder\TablePrefixFinder;
-use Moodlerooms\MoodlePluginCI\PluginValidate\Requirements\AbstractRequirements;
+use MoodlePluginCI\PluginValidate\Finder\BehatTagFinder;
+use MoodlePluginCI\PluginValidate\Finder\CapabilityFinder;
+use MoodlePluginCI\PluginValidate\Finder\ClassFinder;
+use MoodlePluginCI\PluginValidate\Finder\FileTokens;
+use MoodlePluginCI\PluginValidate\Finder\FinderInterface;
+use MoodlePluginCI\PluginValidate\Finder\FunctionFinder;
+use MoodlePluginCI\PluginValidate\Finder\LangFinder;
+use MoodlePluginCI\PluginValidate\Finder\TableFinder;
+use MoodlePluginCI\PluginValidate\Finder\TablePrefixFinder;
+use MoodlePluginCI\PluginValidate\Requirements\AbstractRequirements;
 
 /**
  * Validates a plugin against a set of requirements.

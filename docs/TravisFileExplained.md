@@ -3,7 +3,7 @@ layout: page
 title: Travis CI file explained
 ---
 
-Below is the [.travis.dist.yml](https://github.com/moodlerooms/moodle-plugin-ci/blob/master/.travis.dist.yml)
+Below is the [.travis.dist.yml](https://github.com/blackboard-open-source/moodle-plugin-ci/blob/master/.travis.dist.yml)
 file but with comments added to explain what each section is doing. For additional help,
 see [Travis CI's documentation](http://docs.travis-ci.com/user/getting-started/).
 
@@ -65,7 +65,7 @@ before_install:
 # directories to build the project.
   - cd ../..
 # Install this project into a directory called "ci".
-  - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^2
+  - composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2
 # Update the $PATH so scripts from this project can be called easily.
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
