@@ -20,7 +20,7 @@ sudo: true
 # for Mustache command.
 addons:
   firefox: "47.0.1"
-  postgresql: "9.3"
+  postgresql: "9.4"
   apt:
     packages:
       - oracle-java8-installer
@@ -36,7 +36,6 @@ cache:
 # listed here will create a separate build and run the tests against that
 # version of PHP.
 php:
- - 5.6
  - 7.0
  - 7.1
 
@@ -44,7 +43,7 @@ php:
 env:
  global:
 # This line determines which version of Moodle to test against.
-  - MOODLE_BRANCH=MOODLE_32_STABLE
+  - MOODLE_BRANCH=MOODLE_35_STABLE
 # This matrix is used for testing against multiple databases.  So for
 # each version of PHP being tested, one build will be created for each
 # database listed here.  EG: for PHP 5.6, one build will be created

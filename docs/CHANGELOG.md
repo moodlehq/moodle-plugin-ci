@@ -15,6 +15,7 @@ No unreleased changes.
 ### Changed
 - ACTION REQUIRED: project organization renamed to `blackboard-open-source`. You must
   update your `.travis.yml` to use `blackboard-open-source/moodle-plugin-ci`
+- Updated [.travis.dist.yml] to build Moodle 3.5: removed PHP 5.6 and upgrade to Postgresql 9.4.
 - Updated project dependencies.
 
 ## [2.3.0] - 2018-05-14
