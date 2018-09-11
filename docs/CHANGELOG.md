@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [2.4.0] - 2018-09-11
 ### Changed
 - ACTION REQUIRED: project organization renamed to `blackboard-open-source`. You must
   update your `.travis.yml` to use `blackboard-open-source/moodle-plugin-ci`
@@ -223,7 +226,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.3.0...master
+[Unreleased]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.4.0...master
+[2.4.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.3.0...2.4.0
 [2.3.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.2.0...2.3.0
 [2.2.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.1.1...2.2.0
 [2.1.1]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.1.0...2.1.1
