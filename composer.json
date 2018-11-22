@@ -48,12 +48,25 @@
           "reference": "ea72c5f7c937014c1401a833e697afb3d95af7be"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "moodlehq/moodle-local_moodlecheck",
+        "version": "1.0.0",
+        "source": {
+          "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
+          "type": "git",
+          "reference": "272187600c71a7833086c48f6ea40e7287074a7b"
+        }
+      }
     }
   ],
   "require": {
     "php": ">=5.6.0",
     "moodlehq/moodle-local_codechecker": "^2.5.4",
     "moodlehq/moodle-local_ci": "^1.0.2",
+    "moodlehq/moodle-local_moodlecheck": "^1.0.0",
     "sebastian/phpcpd": "^3.0",
     "phpmd/phpmd": "^2.2",
     "symfony/dotenv": "^3.3",
