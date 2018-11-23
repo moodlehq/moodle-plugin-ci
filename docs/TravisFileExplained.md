@@ -98,6 +98,8 @@ script:
 # conforms to the Moodle coding standards.  It is highly recommended
 # that you keep this step.
   - moodle-plugin-ci codechecker
+# This step runs Moodle PHPDoc checker on your plugin.
+  - moodle-plugin-ci phpdoc
 # This step runs some light validation on the plugin file structure
 # and code.  Validation can be plugin specific.
   - moodle-plugin-ci validate
