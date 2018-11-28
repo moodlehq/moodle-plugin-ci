@@ -41,8 +41,10 @@ php:
 # This section sets up the environment variables for the build.
 env:
  global:
-# This line determines which version of Moodle to test against.
+# This line determines which version branch of Moodle to test against.
   - MOODLE_BRANCH=MOODLE_35_STABLE
+# Optionally, it is possible to specify a different Moodle repo to use:
+# - MOODLE_REPO=git://github.com/username/moodle.git
 # This matrix is used for testing against multiple databases.  So for
 # each version of PHP being tested, one build will be created for each
 # database listed here.  EG: for PHP 5.6, one build will be created
