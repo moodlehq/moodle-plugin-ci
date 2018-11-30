@@ -23,8 +23,7 @@ addons:
   postgresql: "9.4"
   apt:
     packages:
-      - oracle-java8-installer
-      - oracle-java8-set-default
+      - openjdk-8-jre-headless
 
 # Cache NPM's and Composer's caches to speed up build times.
 cache:
