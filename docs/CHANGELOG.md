@@ -9,7 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Changed
+- Updated [.travis.dist.yml] to install `openjdk-8-jre-headless` instead of
+  `oracle-java8-installer` and `oracle-java8-set-default` packages. See
+  [#83](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/83) for details.
 
 ## [2.4.0] - 2018-09-11
 ### Changed
