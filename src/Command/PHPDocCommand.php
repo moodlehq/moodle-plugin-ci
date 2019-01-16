@@ -12,11 +12,11 @@
 
 namespace MoodlePluginCI\Command;
 
+use MoodlePluginCI\Bridge\MoodlePlugin;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\ProcessBuilder;
-use MoodlePluginCI\Bridge\MoodlePlugin;
 
 class PHPDocCommand extends AbstractMoodleCommand
 {
@@ -42,8 +42,8 @@ class PHPDocCommand extends AbstractMoodleCommand
 
         // We need local_moodlecheck plugin to run this check.
         $pluginlocation  = __DIR__.'/../../vendor/moodlehq/moodle-local_moodlecheck';
-        $plugin = new MoodlePlugin($pluginlocation);
-        $directory = $this->moodle->getComponentInstallDirectory($plugin->getComponent());
+        $plugin          = new MoodlePlugin($pluginlocation);
+        $directory       = $this->moodle->getComponentInstallDirectory($plugin->getComponent());
         if (!is_dir($directory)) {
             // Copy plugin into Moodle if it does not exist.
             $filesystem = new Filesystem();
@@ -54,7 +54,7 @@ class PHPDocCommand extends AbstractMoodleCommand
             ProcessBuilder::create()
                 ->setPrefix('php')
                 ->add('local/moodlecheck/cli/moodlecheck.php')
-                ->add('-p=' . $this->plugin->directory)
+                ->add('-p='.$this->plugin->directory)
                 ->add('-f=text')
                 ->setTimeout(null)
                 ->setWorkingDirectory($this->moodle->directory)
@@ -69,6 +69,7 @@ class PHPDocCommand extends AbstractMoodleCommand
         // moodlecheck.php does not return valid exit status,
         // We have to parse output to see if there are errors.
         $results = $process->getOutput();
+
         return (preg_match('/\s+Line/', $results)) ? 1 : 0;
     }
 }

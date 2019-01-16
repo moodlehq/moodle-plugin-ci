@@ -13,6 +13,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - Updated [.travis.dist.yml] to install `openjdk-8-jre-headless` instead of
   `oracle-java8-installer` and `oracle-java8-set-default` packages. See
   [#83](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/83) for details.
+- Add `moodle-plugin-ci phpdoc` check which executes
+  [moodlehq/moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck.git)
+  on the plugin.
 
 ## [2.4.0] - 2018-09-11
 ### Changed

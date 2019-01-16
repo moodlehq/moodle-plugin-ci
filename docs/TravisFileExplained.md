@@ -43,8 +43,6 @@ env:
  global:
 # This line determines which version branch of Moodle to test against.
   - MOODLE_BRANCH=MOODLE_35_STABLE
-# Optionally, it is possible to specify a different Moodle repo to use:
-# - MOODLE_REPO=git://github.com/username/moodle.git
 # This matrix is used for testing against multiple databases.  So for
 # each version of PHP being tested, one build will be created for each
 # database listed here.  EG: for PHP 5.6, one build will be created
@@ -53,6 +51,10 @@ env:
  matrix:
   - DB=pgsql
   - DB=mysqli
+
+# Optionally, it is possible to specify a different Moodle repo to use
+# (git://github.com/moodle/moodle.git is used by default):
+# - MOODLE_REPO=git://github.com/username/moodle.git
 
 # This lists steps that are run before the installation step. 
 before_install:
