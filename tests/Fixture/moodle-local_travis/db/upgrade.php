@@ -24,8 +24,15 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Execute local_travis upgrade from the given old version.
+ *
+ * @param int $oldversion
+ * @return bool
+ */
 function xmldb_local_travis_upgrade($oldversion) {
     if ($oldversion < 2011033101) {
         upgrade_plugin_savepoint(true, 2011033101, 'local', 'travis');
     }
+    return true;
 }
