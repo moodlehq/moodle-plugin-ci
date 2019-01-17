@@ -16,6 +16,7 @@ use MoodlePluginCI\Bridge\MoodlePlugin;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\ProcessBuilder;
 
 class PHPDocCommand extends AbstractMoodleCommand
@@ -34,6 +35,7 @@ class PHPDocCommand extends AbstractMoodleCommand
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
+        $this->finder = Finder::create()->name('*.php');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -50,11 +52,16 @@ class PHPDocCommand extends AbstractMoodleCommand
             $filesystem->mirror($plugin->directory, $directory);
         }
 
+        $files = $this->plugin->getFiles($this->finder);
+        if (count($files) === 0) {
+            return $this->outputSkip($output);
+        }
+
         $process = $this->execute->passThroughProcess(
             ProcessBuilder::create()
                 ->setPrefix('php')
                 ->add('local/moodlecheck/cli/moodlecheck.php')
-                ->add('-p='.$this->plugin->directory)
+                ->add('-p='.implode(',', $files))
                 ->add('-f=text')
                 ->setTimeout(null)
                 ->setWorkingDirectory($this->moodle->directory)
