@@ -17,7 +17,7 @@ cache:
     - $HOME/.npm
 
 php:
- - 7.2
+ - 7.3
 
 env:
   global:
@@ -70,7 +70,9 @@ jobs:
       after_script:
         - make upload-code-coverage
     - stage: Integration tests
-    - php: 7.1
+    - php: 7.3
+      env: MOODLE_BRANCH=MOODLE_36_STABLE
+    - php: 7.2
       env: MOODLE_BRANCH=MOODLE_35_STABLE
     - php: 7.1
       env: MOODLE_BRANCH=MOODLE_34_STABLE
