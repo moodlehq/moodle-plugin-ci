@@ -23,11 +23,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_codechecker",
-        "version": "2.7.1",
+        "version": "2.9.3",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
           "type": "git",
-          "reference": "v2.7.1"
+          "reference": "v2.9.3"
         },
         "autoload": {
           "classmap": [
