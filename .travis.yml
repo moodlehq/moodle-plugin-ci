@@ -67,8 +67,6 @@ jobs:
         - make init
       script:
         - make validate
-      after_script:
-        - make upload-code-coverage
     - stage: Integration tests
     - php: 7.3
       env: MOODLE_BRANCH=MOODLE_36_STABLE
