@@ -1,9 +1,0 @@
-filter:
-  excluded_paths:
-    - 'tests/*'
-    - 'bin/*'
-
-tools:
-  external_code_coverage:
-    timeout: 600
-    runs: 1
