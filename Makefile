@@ -37,7 +37,7 @@ clean:
 
 # Update download URL from https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases
 build/php-cs-fixer.phar:
-	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.8.0/php-cs-fixer.phar -o build/php-cs-fixer.phar
+	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.14.2/php-cs-fixer.phar -o build/php-cs-fixer.phar
 
 build/box.phar:
 	@cd build && curl -LSs https://box-project.github.io/box2/installer.php | php

@@ -47,6 +47,7 @@ return PhpCsFixer\Config::create()
         'align_multiline_comment'               => true,
         'yoda_style'                            => false,
         'compact_nullable_typehint'             => true,
+        'native_function_invocation'            => false,
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()
