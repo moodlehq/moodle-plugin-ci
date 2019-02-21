@@ -4,7 +4,7 @@ FIXER    := php build/php-cs-fixer.phar
 PSALM    := php build/psalm.phar
 
 .PHONY:test
-test: test-fixer test-phpunit
+test: test-fixer psalm test-phpunit
 
 .PHONY:test-fixer
 test-fixer: build/php-cs-fixer.phar
@@ -15,7 +15,7 @@ test-phpunit: vendor/autoload.php
 	$(PHPUNIT)
 
 .PHONY:validate
-validate: build/php-cs-fixer.phar vendor/autoload.php
+validate: build/php-cs-fixer.phar vendor/autoload.php psalm
 	$(FIXER) fix --dry-run --stop-on-violation
 	$(COMPOSER) validate
 	phpdbg -qrr $(PHPUNIT) --coverage-text
@@ -28,8 +28,9 @@ psalm: build/psalm.phar
 psalm-update-baseline: build/psalm.phar
 	$(PSALM) --update-baseline
 
+# Downloads everything we need for testing, used by Travis.
 .PHONY: init
-init: vendor/autoload.php
+init: vendor/autoload.php build/php-cs-fixer.phar build/psalm.phar
 
 .PHONY: update
 update: build/php-cs-fixer.phar
