@@ -16,6 +16,7 @@ This project supports the following testing frameworks and code analysis tools:
 * [PHPUnit](https://phpunit.de)
 * [Behat](http://behat.org/)
 * [Moodle Code Checker](https://github.com/moodlehq/moodle-local_codechecker)
+* [Moodle PHPdoc check](https://github.com/moodlehq/moodle-local_moodlecheck)
 * [Mustache Linting](https://docs.moodle.org/dev/Templates)
 * [Grunt tasks](https://docs.moodle.org/dev/Grunt)
 * [PHP Linting](https://github.com/JakubOnderka/PHP-Parallel-Lint)

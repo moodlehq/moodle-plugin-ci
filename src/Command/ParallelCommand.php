@@ -64,6 +64,7 @@ class ParallelCommand extends AbstractMoodleCommand
             'phpcpd'      => new Process(sprintf('%s phpcpd --ansi %s', $bin, $plugin)),
             'phpmd'       => new Process(sprintf('%s phpmd --ansi -m %s %s', $bin, $moodle, $plugin)),
             'codechecker' => new Process(sprintf('%s codechecker --ansi %s', $bin, $plugin)),
+            'phpdoc'      => new Process(sprintf('%s phpdoc --ansi %s', $bin, $plugin)),
             'validate'    => new Process(sprintf('%s validate --ansi -m %s %s', $bin, $moodle, $plugin)),
             'savepoints'  => new Process(sprintf('%s savepoints --ansi %s', $bin, $plugin)),
             'mustache'    => new Process(sprintf('%s mustache --ansi -m %s %s', $bin, $moodle, $plugin)),
