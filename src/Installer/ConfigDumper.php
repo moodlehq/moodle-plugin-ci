@@ -22,11 +22,19 @@ class ConfigDumper
 {
     private $values = [];
 
+    /**
+     * @return bool
+     */
     public function hasConfig()
     {
         return !empty($this->values);
     }
 
+    /**
+     * @param string       $section
+     * @param string       $name
+     * @param string|array $value
+     */
     public function addSection($section, $name, $value)
     {
         if (empty($value)) {

@@ -53,7 +53,7 @@ class Vendors
         $base  = dirname($this->path);
         $paths = [];
         foreach ($this->xml->xpath('/libraries/library/location') as $location) {
-            $location = (string) trim($location, '/');
+            $location = trim((string) $location, '/');
             $location = $base.'/'.$location;
 
             if (strpos($location, '*') !== false) {

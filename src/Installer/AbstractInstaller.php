@@ -18,7 +18,7 @@ namespace MoodlePluginCI\Installer;
 abstract class AbstractInstaller
 {
     /**
-     * @var InstallOutput
+     * @var InstallOutput|null
      */
     private $output;
 

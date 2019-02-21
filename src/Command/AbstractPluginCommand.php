@@ -33,7 +33,8 @@ abstract class AbstractPluginCommand extends Command
 
     protected function configure()
     {
-        $plugin = getenv('PLUGIN_DIR') !== false ? getenv('PLUGIN_DIR') : null;
+        $plugin = getenv('PLUGIN_DIR');
+        $plugin = $plugin === false ? null : $plugin;
         $mode   = $plugin === null ? InputArgument::REQUIRED : InputArgument::OPTIONAL;
         $this->addArgument('plugin', $mode, 'Path to the plugin', $plugin);
     }
@@ -50,12 +51,22 @@ abstract class AbstractPluginCommand extends Command
         }
     }
 
+    /**
+     * @param OutputInterface $output
+     * @param string          $message
+     */
     protected function outputHeading(OutputInterface $output, $message)
     {
         $message = sprintf($message, $this->plugin->getComponent());
         $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>%s</>', $message));
     }
 
+    /**
+     * @param OutputInterface $output
+     * @param string|null     $message
+     *
+     * @return int
+     */
     protected function outputSkip(OutputInterface $output, $message = null)
     {
         $message = $message ?: 'No relevant files found to process, free pass!';

@@ -23,6 +23,11 @@ class PHPDocCommand extends AbstractMoodleCommand
 {
     use ExecuteTrait;
 
+    /**
+     * @var Finder
+     */
+    private $finder;
+
     protected function configure()
     {
         parent::configure();

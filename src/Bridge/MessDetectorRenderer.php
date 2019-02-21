@@ -34,6 +34,10 @@ class MessDetectorRenderer extends AbstractRenderer
      */
     private $basePath;
 
+    /**
+     * @param OutputInterface $output
+     * @param string          $basePath
+     */
     public function __construct(OutputInterface $output, $basePath)
     {
         $this->output   = $output;

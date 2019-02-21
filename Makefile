@@ -1,6 +1,7 @@
 COMPOSER := composer
 PHPUNIT  := vendor/bin/phpunit
 FIXER    := php build/php-cs-fixer.phar
+PSALM    := php build/psalm.phar
 
 .PHONY:test
 test: test-fixer test-phpunit
@@ -18,6 +19,14 @@ validate: build/php-cs-fixer.phar vendor/autoload.php
 	$(FIXER) fix --dry-run --stop-on-violation
 	$(COMPOSER) validate
 	phpdbg -qrr $(PHPUNIT) --coverage-text
+
+.PHONY:psalm
+psalm: build/psalm.phar
+	$(PSALM)
+
+.PHONY:psalm-update-baseline
+psalm-update-baseline: build/psalm.phar
+	$(PSALM) --update-baseline
 
 .PHONY: init
 init: vendor/autoload.php
@@ -38,6 +47,10 @@ clean:
 # Update download URL from https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases
 build/php-cs-fixer.phar:
 	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.14.2/php-cs-fixer.phar -o build/php-cs-fixer.phar
+
+# Update download URL from https://github.com/vimeo/psalm/releases
+build/psalm.phar:
+	curl -LSs https://github.com/vimeo/psalm/releases/download/3.0.17/psalm.phar -o build/psalm.phar
 
 build/box.phar:
 	@cd build && curl -LSs https://box-project.github.io/box2/installer.php | php

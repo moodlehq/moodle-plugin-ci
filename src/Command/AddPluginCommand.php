@@ -34,6 +34,9 @@ class AddPluginCommand extends Command
      */
     private $envFile;
 
+    /**
+     * @param string $envFile
+     */
     public function __construct($envFile)
     {
         parent::__construct();

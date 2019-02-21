@@ -56,6 +56,9 @@ class InstallCommand extends Command
      */
     private $envFile;
 
+    /**
+     * @param string $envFile
+     */
     public function __construct($envFile)
     {
         parent::__construct();
@@ -192,8 +195,10 @@ class InstallCommand extends Command
             $paths = getenv($envPaths) !== false ? getenv($envPaths) : null;
             $names = getenv($envNames) !== false ? getenv($envNames) : null;
 
-            if (!empty($paths) || !empty($names)) {
+            if (!empty($paths)) {
                 $dumper->addSection('filter-'.$command->getName(), 'notPaths', $this->csvToArray($paths));
+            }
+            if (!empty($names)) {
                 $dumper->addSection('filter-'.$command->getName(), 'notNames', $this->csvToArray($names));
             }
         }

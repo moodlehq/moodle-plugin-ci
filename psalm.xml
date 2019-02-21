@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<psalm
+    totallyTyped="false"
+    requireVoidReturnType="false"
+    allowPhpStormGenerics="true"
+    errorBaseline="psalm-baseline.xml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <DeprecatedMethod errorLevel="info" />
+        <DeprecatedProperty errorLevel="info" />
+        <DeprecatedClass errorLevel="info" />
+        <DeprecatedConstant errorLevel="info" />
+        <DeprecatedInterface errorLevel="info" />
+        <DeprecatedTrait errorLevel="info" />
+
+        <MissingClosureReturnType errorLevel="suppress" />
+        <MissingPropertyType errorLevel="suppress" />
+
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <MissingConstructor errorLevel="info" />
+        <MissingClosureParamType errorLevel="suppress" />
+
+        <DocblockTypeContradiction errorLevel="suppress" />
+        <RedundantConditionGivenDocblockType errorLevel="suppress" />
+
+        <!-- Doing an include to Moodle -->
+        <UnresolvableInclude errorLevel="info">
+            <errorLevel type="suppress">
+                <file name="src/Bridge/Moodle.php"/>
+            </errorLevel>
+        </UnresolvableInclude>
+
+        <!-- Invalid PHPDoc on Symfony process helper -->
+        <PossiblyInvalidArgument>
+            <errorLevel type="suppress">
+                <file name="src/Process/Execute.php"/>
+            </errorLevel>
+        </PossiblyInvalidArgument>
+
+        <!-- These are due to how PhpParser classes work with properties -->
+        <PossiblyNullOperand>
+            <errorLevel type="suppress">
+                <file name="src/Parser/StatementFilter.php"/>
+            </errorLevel>
+        </PossiblyNullOperand>
+
+        <!-- Psalm is not finding inherited PHPDoc -->
+        <MissingReturnType>
+            <errorLevel type="suppress">
+                <directory name="src/PluginValidate/Requirements"/>
+                <file name="src/Command/CodeFixerCommand.php"/>
+            </errorLevel>
+        </MissingReturnType>
+
+        <!-- CodeSniffer has some bad PHPDoc -->
+        <InvalidPropertyAssignmentValue>
+            <errorLevel type="suppress">
+                <file name="src/Bridge/CodeSnifferCLI.php"/>
+            </errorLevel>
+        </InvalidPropertyAssignmentValue>
+
+        <!-- CodeSniffer has some bad PHPDoc -->
+        <NullArgument>
+            <errorLevel type="suppress">
+                <file name="src/Command/CodeFixerCommand.php"/>
+                <file name="src/Command/CodeCheckerCommand.php"/>
+            </errorLevel>
+        </NullArgument>
+
+        <!-- It is defined in Moodle itself -->
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <file name="src/Bridge/Moodle.php"/>
+            </errorLevel>
+        </UndefinedClass>
+    </issueHandlers>
+</psalm>

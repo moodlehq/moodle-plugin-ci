@@ -25,7 +25,7 @@ class CodeSnifferCLI extends \PHP_CodeSniffer_CLI
 {
     private $overrideCommandLineValues = [];
 
-    public function __construct($override = [])
+    public function __construct(array $override = [])
     {
         $this->errorSeverity   = 1;
         $this->warningSeverity = 1;

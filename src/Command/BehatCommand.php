@@ -101,6 +101,10 @@ class BehatCommand extends AbstractMoodleCommand
         return $process->isSuccessful() ? 0 : 1;
     }
 
+    /**
+     * @param string         $seleniumJarFile
+     * @param InputInterface $input
+     */
     private function startServerProcesses($seleniumJarFile, InputInterface $input)
     {
         if (!is_file($seleniumJarFile)) {
