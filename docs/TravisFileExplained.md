@@ -126,5 +126,7 @@ script:
 #     default is 2, EG usage: --auto-rerun 3
 #   - The dump option allows you to print the failure HTML to the console,
 #     handy for debugging, EG usage: --dump
+#   - The suite option allows you to set the theme to use for behat test. If
+#     not specified, the default theme is used, EG usage: --suite boost
   - moodle-plugin-ci behat
 ```

@@ -22,6 +22,8 @@ No unreleased changes.
 - Add `moodle-plugin-ci phpdoc` check which executes
   [moodlehq/moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck)
   on the plugin.
+- `moodle-plugin-ci behat` now provides an option `--suite` to define the
+  theme to use while running the test.
 
 ## [2.4.0] - 2018-09-11
 ### Changed
