@@ -10,12 +10,13 @@ changed.  Also a good place to look for new goodies.
 
 ## Help topics
 
-* [Travis CI file explained](TravisFileExplained.html): every line of the `.travis.yml` file explained.
-* [Add extra Moodle configs](AddExtraConfig.html): how to add extra configs to Moodle `config.php`.
-* [Add extra plugins](AddExtraPlugins.html): how to add plugin dependencies to Moodle.
-* [Ignoring files](IgnoringFiles.html): how to ignore files that might be causing failures.
+* [Travis CI file explained](TravisFileExplained.md): every line of the `.travis.yml` file explained.
+* [Add extra Moodle configs](AddExtraConfig.md): how to add extra configs to Moodle `config.php`.
+* [Add extra plugins](AddExtraPlugins.md): how to add plugin dependencies to Moodle.
+* [Ignoring files](IgnoringFiles.md): how to ignore files that might be causing failures.
 * [Using Chrome with Behat](Chrome.md): how to use Chrome instead of Firefox for Behat.
-* [Generating code coverage](CodeCoverage.html): how to generate code coverage of your plugin.
+* [Generating code coverage](CodeCoverage.md): how to generate code coverage of your plugin.
+* [CLI commands and options](CLI.md): the available `moodle-plugin-ci` commands and their options.
 
 ## Upgrade guides
 

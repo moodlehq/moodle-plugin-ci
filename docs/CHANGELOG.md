@@ -9,7 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Added
+- New help document: [CLI commands and options](CLI.md)
 
 ## [2.5.0] - 2019-02-20
 ### Changed

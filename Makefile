@@ -2,9 +2,10 @@ COMPOSER := composer
 PHPUNIT  := vendor/bin/phpunit
 FIXER    := php build/php-cs-fixer.phar
 PSALM    := php build/psalm.phar
+CMDS     = $(wildcard src/Command/*.php)
 
 .PHONY:test
-test: test-fixer psalm test-phpunit
+test: test-fixer psalm test-phpunit check-docs
 
 .PHONY:test-fixer
 test-fixer: build/php-cs-fixer.phar
@@ -15,7 +16,7 @@ test-phpunit: vendor/autoload.php
 	$(PHPUNIT)
 
 .PHONY:validate
-validate: build/php-cs-fixer.phar vendor/autoload.php psalm
+validate: build/php-cs-fixer.phar vendor/autoload.php psalm check-docs
 	$(FIXER) fix --dry-run --stop-on-violation
 	$(COMPOSER) validate
 	phpdbg -qrr $(PHPUNIT) --coverage-text
@@ -27,6 +28,11 @@ psalm: build/psalm.phar
 .PHONY:psalm-update-baseline
 psalm-update-baseline: build/psalm.phar
 	$(PSALM) --update-baseline
+
+.PHONY:check-docs
+check-docs: docs/CLI.md
+	@echo "CHECKING if 'docs/CLI.md' needs to be committed due to changes.  If this fails, simply commit the changes."
+	git diff-files --quiet docs
 
 # Downloads everything we need for testing, used by Travis.
 .PHONY: init
@@ -65,3 +71,11 @@ vendor/autoload.php: composer.lock composer.json
 	$(COMPOSER) self-update
 	$(COMPOSER) install --no-suggest --no-progress
 	touch $@
+
+docs/CLI.md: $(CMDS)
+	@rm -f $@
+	@echo "<!-- AUTOMATICALLY GENERATED -->" >> $@
+	@echo "<!-- REGENERATE VIA: make $@ -->" >> $@
+	@echo "" >> $@
+	@php bin/moodle-plugin-ci list --format md > $@
+	@echo "REGENERATED $@"
