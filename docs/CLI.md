@@ -1,5 +1,9 @@
-Moodle Plugin CI @package_version@
-==================================
+---
+layout: page
+title: Moodle Plugin CI Commands
+---
+
+<!-- AUTOMATICALLY GENERATED VIA: make docs/CLI.md -->
 
 * [`add-config`](#add-config)
 * [`add-plugin`](#add-plugin)

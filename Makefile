@@ -74,8 +74,11 @@ vendor/autoload.php: composer.lock composer.json
 
 docs/CLI.md: $(CMDS)
 	@rm -f $@
-	@echo "<!-- AUTOMATICALLY GENERATED -->" >> $@
-	@echo "<!-- REGENERATE VIA: make $@ -->" >> $@
+	@echo "---" >> $@
+	@echo "layout: page" >> $@
+	@echo "title: Moodle Plugin CI Commands" >> $@
+	@echo "---" >> $@
 	@echo "" >> $@
-	@php bin/moodle-plugin-ci list --format md > $@
+	@echo "<!-- AUTOMATICALLY GENERATED VIA: make $@ -->" >> $@
+	@php bin/moodle-plugin-ci list --format md | sed 1,2d >> $@
 	@echo "REGENERATED $@"
