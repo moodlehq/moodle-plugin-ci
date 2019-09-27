@@ -41,11 +41,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_ci",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_ci.git",
           "type": "git",
-          "reference": "ea72c5f7c937014c1401a833e697afb3d95af7be"
+          "reference": "3c8a4e7ed8dd14732ff21070dd8baab48c87fb0b"
         }
       }
     },
