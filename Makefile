@@ -32,7 +32,7 @@ psalm-update-baseline: build/psalm.phar
 .PHONY:check-docs
 check-docs: docs/CLI.md
 	@echo "CHECKING if 'docs/CLI.md' needs to be committed due to changes.  If this fails, simply commit the changes."
-	git diff-files --quiet docs
+	git diff-files docs/CLI.md
 
 # Downloads everything we need for testing, used by Travis.
 .PHONY: init
