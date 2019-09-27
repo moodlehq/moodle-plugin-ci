@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## Changed
+- Updated [.travis.dist.yml] with a new `services` section to ensure databases start.
+
 ### Added
 - New help document: [CLI commands and options](CLI.md)
 

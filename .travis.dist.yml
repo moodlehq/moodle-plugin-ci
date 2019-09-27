@@ -9,6 +9,10 @@ addons:
     packages:
       - openjdk-8-jre-headless
 
+services:
+  - mysql
+  - postgresql
+
 cache:
   directories:
     - $HOME/.composer/cache

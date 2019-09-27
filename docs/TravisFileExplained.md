@@ -25,6 +25,11 @@ addons:
     packages:
       - openjdk-8-jre-headless
 
+# Ensure DB services are running.
+services:
+  - mysql
+  - postgresql
+
 # Cache NPM's and Composer's caches to speed up build times.
 cache:
   directories:
