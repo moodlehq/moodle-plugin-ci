@@ -15,6 +15,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   [#91](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/91).
 - Updated verion of `moodlehq/moodle-local_ci` to fix Mustache linting. See
   [#91](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/91).
+- Updated [.travis.dist.yml] to build Moodle 3.8: removed PHP 7.0 and added
+  7.2 and 7.3 (per release notes).
 
 ### Added
 - New help document: [CLI commands and options](CLI.md)
