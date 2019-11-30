@@ -67,6 +67,10 @@ jobs:
         - make validate
     - stage: Integration tests
     - php: 7.3
+      env: MOODLE_BRANCH=MOODLE_38_STABLE
+    - php: 7.3
+      env: MOODLE_BRANCH=MOODLE_37_STABLE
+    - php: 7.2
       env: MOODLE_BRANCH=MOODLE_36_STABLE
     - php: 7.2
       env: MOODLE_BRANCH=MOODLE_35_STABLE
