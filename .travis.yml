@@ -1,18 +1,12 @@
 language: php
 
-# Behat no longer passes when false.
-sudo: true
-
 addons:
-  firefox: "47.0.1"
   postgresql: "9.4"
-  apt:
-    packages:
-      - chromium-chromedriver
 
 services:
   - mysql
   - postgresql
+  - docker
 
 cache:
   directories:
@@ -36,7 +30,8 @@ install:
   - nvm install 8.9
   - nvm use 8.9
   - make init
-
+  # Start Selenium Standalone with Chrome/Firefox installed.
+  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm selenium/standalone-${PROFILE}:3
   # Mimic how a Moodle plugin would be run.
   - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
   - export PATH="$(cd bin; pwd):$(cd vendor/bin; pwd):$PATH"
