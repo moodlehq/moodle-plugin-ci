@@ -11,14 +11,8 @@ see [Travis CI's documentation](http://docs.travis-ci.com/user/getting-started/)
 # This is the language of our project.
 language: php
 
-# If using Behat, then this should be true due to an issue with Travis CI.
-# If not using Behat, recommended to use `sudo: false` as it is faster.
-sudo: true
-
-# Installs the required version of Firefox for Behat, an updated version
-# of PostgreSQL and extra APT packages.
+# Installs the updated version of PostgreSQL and extra APT packages.
 addons:
-  firefox: "47.0.1"
   postgresql: "9.4"
 
 # Ensure DB services are running.
@@ -72,6 +66,10 @@ before_install:
   - composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2
 # Update the $PATH so scripts from this project can be called easily.
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
+# Start Selenium Standalone server with Chrome/Firefox installed. If you
+# prefer to run Behat tests with Chrome profile (see Behat step details below),
+# use selenium/standalone-chrome:3 image instead.
+  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm selenium/standalone-firefox:3
 
 # This lists steps that are run for installation and setup.
 install:
@@ -123,12 +121,16 @@ script:
   - moodle-plugin-ci phpunit
 # This step runs the Behat tests of your plugin.  If your plugin has
 # Behat tests, then it is highly recommended that you keep this step.
-# There are two important options that you may want to use:
+# There are few important options that you may want to use:
 #   - The auto rerun option allows you to rerun failures X number of times,
 #     default is 2, EG usage: --auto-rerun 3
 #   - The dump option allows you to print the failure HTML to the console,
 #     handy for debugging, EG usage: --dump
 #   - The suite option allows you to set the theme to use for behat test. If
 #     not specified, the default theme is used, EG usage: --suite boost
+#   - The profile option allows you to set the browser driver to use,
+#     default is Firefox. If you need Chrome, set '--profile chrome' and make
+#     sure that you are using correct Selenium server docker image in
+#     before_install section above.
   - moodle-plugin-ci behat
 ```
