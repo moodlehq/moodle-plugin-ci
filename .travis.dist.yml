@@ -1,14 +1,12 @@
 language: php
 
-sudo: true
-
 addons:
-  firefox: "47.0.1"
   postgresql: "9.4"
 
 services:
   - mysql
   - postgresql
+  - docker
 
 cache:
   directories:
@@ -16,12 +14,13 @@ cache:
     - $HOME/.npm
 
 php:
- - 7.0
  - 7.1
+ - 7.2
+ - 7.3
 
 env:
  global:
-  - MOODLE_BRANCH=MOODLE_35_STABLE
+  - MOODLE_BRANCH=MOODLE_38_STABLE
  matrix:
   - DB=pgsql
   - DB=mysqli
@@ -33,6 +32,7 @@ before_install:
   - cd ../..
   - composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
+  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm selenium/standalone-firefox:3
 
 install:
   - moodle-plugin-ci install

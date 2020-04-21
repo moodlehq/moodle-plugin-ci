@@ -58,16 +58,6 @@ class TestSuiteInstaller extends AbstractInstaller
         return $this->moodle->directory.'/admin/tool/behat/cli/util_single_run.php';
     }
 
-    /**
-     * The location where the selenium.jar file is stored.
-     *
-     * @return string
-     */
-    private function getSeleniumJarPath()
-    {
-        return $this->moodle->directory.'/selenium.jar';
-    }
-
     public function install()
     {
         $this->getOutput()->step('Initialize test suite');
@@ -100,18 +90,9 @@ class TestSuiteInstaller extends AbstractInstaller
             return [];
         }
 
-        $this->getOutput()->debug('Download Selenium, start servers and initialize Behat');
-
-        $curl = sprintf(
-            'curl -o %s http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar',
-            $this->getSeleniumJarPath()
-        );
-
-        $this->addEnv('MOODLE_SELENIUM_JAR', $this->getSeleniumJarPath());
         $this->addEnv('MOODLE_START_BEHAT_SERVERS', 'YES');
 
         return [
-            new Process($curl, null, null, null, 120),
             new MoodleProcess(sprintf('%s --install', $this->getBehatUtility())),
         ];
     }

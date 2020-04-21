@@ -240,7 +240,7 @@ Run Behat on a plugin
 
 ### Usage
 
-* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--start-servers] [--jar JAR] [--auto-rerun AUTO-RERUN] [--dump] [--] <plugin>`
+* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--start-servers] [--auto-rerun AUTO-RERUN] [--dump] [--] <plugin>`
 
 Run Behat on a plugin
 
@@ -285,21 +285,12 @@ Behat suite to use (Moodle theme)
 
 #### `--start-servers`
 
-Start Selenium and PHP servers
+Start PHP server
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
 * Default: `false`
-
-#### `--jar`
-
-Path to Selenium Jar file
-
-* Accept value: yes
-* Is value required: yes
-* Is multiple: no
-* Default: `NULL`
 
 #### `--auto-rerun`
 

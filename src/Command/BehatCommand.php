@@ -27,13 +27,6 @@ class BehatCommand extends AbstractMoodleCommand
     use ExecuteTrait;
 
     /**
-     * Wait this many microseconds for Selenium server to start/stop.
-     *
-     * @var int
-     */
-    public $seleniumWaitTime = 5000000;
-
-    /**
      * @var Process[]
      */
     private $servers = [];
@@ -42,13 +35,10 @@ class BehatCommand extends AbstractMoodleCommand
     {
         parent::configure();
 
-        $jar = getenv('MOODLE_SELENIUM_JAR') !== false ? getenv('MOODLE_SELENIUM_JAR') : null;
-
         $this->setName('behat')
             ->addOption('profile', 'p', InputOption::VALUE_REQUIRED, 'Behat profile to use', 'default')
             ->addOption('suite', null, InputOption::VALUE_REQUIRED, 'Behat suite to use (Moodle theme)', 'default')
-            ->addOption('start-servers', null, InputOption::VALUE_NONE, 'Start Selenium and PHP servers')
-            ->addOption('jar', null, InputOption::VALUE_REQUIRED, 'Path to Selenium Jar file', $jar)
+            ->addOption('start-servers', null, InputOption::VALUE_NONE, 'Start PHP server')
             ->addOption('auto-rerun', null, InputOption::VALUE_REQUIRED, 'Number of times to rerun failures', 2)
             ->addOption('dump', null, InputOption::VALUE_NONE, 'Print contents of Behat failure HTML files')
             ->setDescription('Run Behat on a plugin');
@@ -73,7 +63,7 @@ class BehatCommand extends AbstractMoodleCommand
             $servers = $input->getOption('start-servers');
         }
 
-        $servers && $this->startServerProcesses($input->getOption('jar'), $input);
+        $servers && $this->startServerProcesses();
 
         $builder = ProcessBuilder::create()
             ->setPrefix('php')
@@ -101,48 +91,18 @@ class BehatCommand extends AbstractMoodleCommand
         return $process->isSuccessful() ? 0 : 1;
     }
 
-    /**
-     * @param string         $seleniumJarFile
-     * @param InputInterface $input
-     */
-    private function startServerProcesses($seleniumJarFile, InputInterface $input)
+    private function startServerProcesses()
     {
-        if (!is_file($seleniumJarFile)) {
-            throw new \InvalidArgumentException(sprintf('Invalid Selenium Jar file path: %s', $seleniumJarFile));
-        }
-        $cmd = sprintf('xvfb-run -a --server-args="-screen 0 1024x768x24" java -jar %s', $seleniumJarFile);
-        if ($input->getOption('profile') === 'chrome') {
-            $driver = '/usr/lib/chromium-browser/chromedriver';
-            if (!file_exists($driver)) {
-                throw new \RuntimeException('chromedriver not found, please install it, see help docs');
-            }
-            $cmd .= ' -Dwebdriver.chrome.driver='.$driver;
-        }
-
-        $selenium = new Process($cmd);
-        $selenium->setTimeout(0);
-        $selenium->disableOutput();
-        $selenium->start();
-
         $web = new Process('php -S localhost:8000', $this->moodle->directory);
         $web->setTimeout(0);
         $web->disableOutput();
         $web->start();
 
-        $this->servers = [$selenium, $web];
-
-        // Need to wait for Selenium to start up.  Not really sure how long that takes.
-        usleep($this->seleniumWaitTime);
+        $this->servers = [$web];
     }
 
     private function stopServerProcesses()
     {
-        $curl = 'curl http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer';
-        $this->execute->run(new Process($curl, null, null, null, 120));
-
-        // Wait for Selenium to shutdown.
-        usleep($this->seleniumWaitTime);
-
         foreach ($this->servers as $process) {
             $process->stop();
         }

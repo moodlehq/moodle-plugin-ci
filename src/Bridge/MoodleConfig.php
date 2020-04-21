@@ -45,7 +45,8 @@ class MoodleConfig
             '{{PHPUNITDATAROOT}}' => $dataDir.'/phpu_moodledata',
             '{{BEHATDATAROOT}}'   => $dataDir.'/behat_moodledata',
             '{{BEHATDUMP}}'       => $dataDir.'/behat_dump',
-            '{{BEHATWWWROOT}}'    => 'http://localhost:8000',
+            '{{BEHATWWWROOT}}'    => getenv('MOODLE_BEHAT_WWWROOT') ?: 'http://localhost:8000',
+            '{{BEHATWDHOST}}'     => getenv('MOODLE_BEHAT_WDHOST') ?: 'http://localhost:4444/wd/hub',
             '{{EXTRACONFIG}}'     => self::PLACEHOLDER,
         ];
 
