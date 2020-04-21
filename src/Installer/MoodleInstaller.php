@@ -91,6 +91,14 @@ class MoodleInstaller extends AbstractInstaller
         // Expand the path to Moodle so all other installers use absolute path.
         $this->moodle->directory = $this->expandPath($this->moodle->directory);
 
+        // If there are submodules, we clean up empty directories, since we
+        // don't initialise them properly anyway.
+        if (is_file($this->moodle->directory.'/.gitmodules')) {
+            $process = new Process(sprintf('git config -f %s --get-regexp \'^submodule\..*\.path$\' | awk \'{ print $2 }\' | xargs -i rmdir "%s/{}"', $this->moodle->directory.'/.gitmodules', $this->moodle->directory));
+            $process->setTimeout(null);
+            $this->execute->mustRun($process);
+        }
+
         $this->getOutput()->step('Moodle assets');
 
         $this->getOutput()->debug('Creating Moodle data directories');
