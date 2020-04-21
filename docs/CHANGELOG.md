@@ -19,6 +19,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   7.2 and 7.3 (per release notes).
 - Replaced Selenium in-built functionality with docker image for Selenium
   Standalone server. See [#99](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/99).
+- Updated version of `moodlehq/moodle-local_codechecker`.
 
 ### Added
 - New help document: [CLI commands and options](CLI.md)
