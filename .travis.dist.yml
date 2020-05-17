@@ -32,10 +32,11 @@ before_install:
   - cd ../..
   - composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
-  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm selenium/standalone-firefox:3
 
 install:
   - moodle-plugin-ci install
+  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm -v $HOME/build/moodle:$HOME/build/moodle selenium/standalone-firefox:2.53.1
+  - sleep 10
 
 script:
   - moodle-plugin-ci phplint

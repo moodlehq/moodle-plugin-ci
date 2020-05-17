@@ -66,10 +66,6 @@ before_install:
   - composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2
 # Update the $PATH so scripts from this project can be called easily.
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
-# Start Selenium Standalone server with Chrome/Firefox installed. If you
-# prefer to run Behat tests with Chrome profile (see Behat step details below),
-# use selenium/standalone-chrome:3 image instead.
-  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm selenium/standalone-firefox:3
 
 # This lists steps that are run for installation and setup.
 install:
@@ -84,6 +80,15 @@ install:
 #    - If your plugin has Behat features, then Behat will be setup.
 #    - If your plugin has unit tests, then PHPUnit will be setup.
   - moodle-plugin-ci install
+# Start Selenium Standalone server with Chrome/Firefox installed. If you
+# prefer to run Behat tests with Chrome profile (see Behat step details below),
+# use selenium/standalone-chrome:3 image instead. If you don't run Behat tests,
+# this step is not needed.
+  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm -v $HOME/build/moodle:$HOME/build/moodle selenium/standalone-firefox:2.53.1
+# Optional sleep interval, this is important if you run Behat tests as the first
+# step after docker instance creation - in some cases Selenium server might
+# not be ready yet, which will result in failure.
+  - sleep 10
 
 # This lists steps that are run for the purposes of testing.  Any of
 # these steps can be re-ordered or removed to your liking.  And of

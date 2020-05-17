@@ -23,22 +23,21 @@ env:
     - MUSTACHE_IGNORE_NAMES=broken.mustache
     - DB=pgsql
     - MOODLE_BRANCH=master
-    - PROFILE=chrome
 
 install:
   - phpenv config-rm xdebug.ini
   - nvm install 8.9
   - nvm use 8.9
   - make init
-  # Start Selenium Standalone with Chrome/Firefox installed.
-  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm selenium/standalone-${PROFILE}:3
   # Mimic how a Moodle plugin would be run.
   - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
   - export PATH="$(cd bin; pwd):$(cd vendor/bin; pwd):$PATH"
   - export TRAVIS_BUILD_DIR=$(cd ../moodle-local_travis; pwd)
-
   # Finally, the standard install step.
   - moodle-plugin-ci install
+  # Start Selenium Standalone with Chrome.
+  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm -v $HOME/build/moodle:$HOME/build/moodle selenium/standalone-chrome:3
+  - sleep 10
 
 script:
   - make test-phpunit
@@ -54,7 +53,7 @@ script:
   - moodle-plugin-ci grunt || [ "$MOODLE_BRANCH" != 'master' -a "$MOODLE_BRANCH" != 'MOODLE_38_STABLE' ]
   - moodle-plugin-ci phpdoc
   - moodle-plugin-ci phpunit --coverage-text
-  - moodle-plugin-ci behat --profile $PROFILE
+  - moodle-plugin-ci behat --profile chrome
 
 jobs:
   include:
