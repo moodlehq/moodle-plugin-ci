@@ -14,6 +14,7 @@ namespace MoodlePluginCI\Command;
 
 use MoodlePluginCI\Bridge\CodeSnifferCLI;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -23,10 +24,11 @@ class CodeFixerCommand extends CodeCheckerCommand
 {
     protected function configure()
     {
-        parent::configure();
+        AbstractPluginCommand::configure();
 
         $this->setName('phpcbf')
-            ->setDescription('Run Code Beautifier and Fixer on a plugin');
+            ->setDescription('Run Code Beautifier and Fixer on a plugin')
+            ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

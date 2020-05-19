@@ -380,7 +380,7 @@ Run Moodle Code Checker on a plugin
 
 ### Usage
 
-* `codechecker [-s|--standard STANDARD] [--] <plugin>`
+* `codechecker [-s|--standard STANDARD] [--max-warnings MAX-WARNINGS] [--] <plugin>`
 
 Run Moodle Code Checker on a plugin
 
@@ -404,6 +404,15 @@ The name or path of the coding standard to use
 * Is value required: yes
 * Is multiple: no
 * Default: `'moodle'`
+
+#### `--max-warnings`
+
+Number of warnings to trigger nonzero exit code - default: -1
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `-1`
 
 #### `--help|-h`
 
@@ -570,7 +579,7 @@ Run Grunt task on a plugin
 
 ### Usage
 
-* `grunt [-m|--moodle MOODLE] [-t|--tasks TASKS] [--] <plugin>`
+* `grunt [-m|--moodle MOODLE] [-t|--tasks TASKS] [--show-lint-warnings] [--max-lint-warnings MAX-LINT-WARNINGS] [--] <plugin>`
 
 Run Grunt task on a plugin
 
@@ -603,6 +612,24 @@ The Grunt tasks to run
 * Is value required: yes
 * Is multiple: yes
 * Default: `array (  0 => 'amd',  1 => 'yui',  2 => 'gherkinlint',  3 => 'stylelint:css',  4 => 'stylelint:less',  5 => 'stylelint:scss',)`
+
+#### `--show-lint-warnings`
+
+Show eslint warnings
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--max-lint-warnings`
+
+Maximum number of eslint warnings
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `''`
 
 #### `--help|-h`
 

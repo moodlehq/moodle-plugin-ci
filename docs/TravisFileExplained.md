@@ -101,6 +101,7 @@ script:
 # This step runs the Moodle Code Checker to make sure that your plugin
 # conforms to the Moodle coding standards.  It is highly recommended
 # that you keep this step.
+# To fail on warnings use --max-warnings 0
   - moodle-plugin-ci codechecker
 # This step runs Moodle PHPDoc checker on your plugin.
   - moodle-plugin-ci phpdoc
@@ -115,6 +116,7 @@ script:
 # tasks relevant to your plugin and Moodle version, but you can run
 # specific tasks by passing them as options,
 # EG: moodle-plugin-ci grunt -t task1 -t task2
+# To fail on eslint warnings use --max-lint-warnings 0
   - moodle-plugin-ci grunt
 # This step runs the PHPUnit tests of your plugin.  If your plugin has
 # PHPUnit tests, then it is highly recommended that you keep this step.
