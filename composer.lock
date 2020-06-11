@@ -254,11 +254,11 @@
         },
         {
             "name": "moodlehq/moodle-local_codechecker",
-            "version": "2.9.5",
+            "version": "2.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
-                "reference": "v2.9.5"
+                "reference": "v2.9.6"
             },
             "type": "library",
             "autoload": {
