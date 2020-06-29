@@ -13,7 +13,7 @@ language: php
 
 # Installs the updated version of PostgreSQL and extra APT packages.
 addons:
-  postgresql: "9.4"
+  postgresql: "9.5"
 
 # Ensure DB services are running.
 services:
@@ -30,7 +30,6 @@ cache:
 # listed here will create a separate build and run the tests against that
 # version of PHP.
 php:
- - 7.1
  - 7.2
  - 7.3
 
@@ -38,12 +37,12 @@ php:
 env:
  global:
 # This line determines which version branch of Moodle to test against.
-  - MOODLE_BRANCH=MOODLE_38_STABLE
+  - MOODLE_BRANCH=MOODLE_39_STABLE
 # This matrix is used for testing against multiple databases.  So for
 # each version of PHP being tested, one build will be created for each
-# database listed here.  EG: for PHP 7.1, one build will be created
-# using PHP 7.1 and pgsql.  In addition, another build will be created
-# using PHP 7.1 and mysqli.
+# database listed here.  EG: for PHP 7.3, one build will be created
+# using PHP 7.3 and pgsql.  In addition, another build will be created
+# using PHP 7.3 and mysqli.
  matrix:
   - DB=pgsql
   - DB=mysqli
@@ -64,7 +63,7 @@ before_install:
 # directories to build the project.
   - cd ../..
 # Install this project into a directory called "ci".
-  - composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2
+  - composer create-project -n --no-dev --prefer-dist moodlehq/plugin-ci ci ^2
 # Update the $PATH so scripts from this project can be called easily.
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 # Start Selenium Standalone server with Chrome/Firefox installed. If you
