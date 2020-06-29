@@ -29,9 +29,6 @@ abstract class AbstractInstaller
      */
     private $env = [];
 
-    /**
-     * @param InstallOutput $output
-     */
     public function setOutput(InstallOutput $output)
     {
         $this->output = $output;

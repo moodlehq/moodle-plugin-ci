@@ -117,8 +117,6 @@ class InstallCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
-     *
      * @return InstallOutput
      */
     public function initializeInstallOutput(OutputInterface $output)
@@ -135,8 +133,6 @@ class InstallCommand extends Command
 
     /**
      * Create a new installer factory from input options.
-     *
-     * @param InputInterface $input
      *
      * @return InstallerFactory
      */
@@ -173,8 +169,6 @@ class InstallCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     *
      * @return ConfigDumper
      */
     public function initializePluginConfigDumper(InputInterface $input)

@@ -61,13 +61,9 @@ class MoodleInstaller extends AbstractInstaller
     private $dataDir;
 
     /**
-     * @param Execute          $execute
-     * @param AbstractDatabase $database
-     * @param Moodle           $moodle
-     * @param MoodleConfig     $config
-     * @param string           $repo
-     * @param string           $branch
-     * @param string           $dataDir
+     * @param string $repo
+     * @param string $branch
+     * @param string $dataDir
      */
     public function __construct(Execute $execute, AbstractDatabase $database, Moodle $moodle, MoodleConfig $config, $repo, $branch, $dataDir)
     {

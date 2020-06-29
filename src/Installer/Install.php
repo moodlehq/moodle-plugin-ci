@@ -29,8 +29,6 @@ class Install
 
     /**
      * Run the entire install process.
-     *
-     * @param InstallerCollection $installers
      */
     public function runInstallation(InstallerCollection $installers)
     {

@@ -76,8 +76,6 @@ class ParallelCommand extends AbstractMoodleCommand
 
     /**
      * Run the processes in parallel.
-     *
-     * @param OutputInterface $output
      */
     private function runProcesses(OutputInterface $output)
     {
@@ -102,9 +100,6 @@ class ParallelCommand extends AbstractMoodleCommand
 
     /**
      * Report on the completed processes.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      *
      * @return int
      */

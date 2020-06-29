@@ -58,8 +58,6 @@ class FileTokens
     }
 
     /**
-     * @param Token $token
-     *
      * @return FileTokens
      */
     public function addToken(Token $token)
@@ -84,8 +82,6 @@ class FileTokens
     /**
      * Require that a the file has all of these tokens.
      *
-     * @param array $tokens
-     *
      * @return FileTokens
      */
     public function mustHaveAll(array $tokens)
@@ -99,8 +95,6 @@ class FileTokens
 
     /**
      * Require that a the file has any of the passed tokens.
-     *
-     * @param array $tokens
      *
      * @return FileTokens
      */

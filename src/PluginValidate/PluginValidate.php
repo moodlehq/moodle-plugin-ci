@@ -86,8 +86,7 @@ class PluginValidate
     /**
      * Add messages about finding or not finding tokens in a file.
      *
-     * @param string     $type
-     * @param FileTokens $fileTokens
+     * @param string $type
      */
     public function addMessagesFromTokens($type, FileTokens $fileTokens)
     {
@@ -117,8 +116,6 @@ class PluginValidate
 
     /**
      * Ensure a list of files exists.
-     *
-     * @param array $files
      */
     public function findRequiredFiles(array $files)
     {
@@ -134,8 +131,7 @@ class PluginValidate
     /**
      * Find required tokens in a file.
      *
-     * @param FinderInterface $finder
-     * @param FileTokens[]    $tokenCollection
+     * @param FileTokens[] $tokenCollection
      */
     public function findRequiredTokens(FinderInterface $finder, array $tokenCollection)
     {

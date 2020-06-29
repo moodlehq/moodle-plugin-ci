@@ -29,8 +29,7 @@ interface FinderInterface
     /**
      * Find tokens in a given file.
      *
-     * @param string     $file
-     * @param FileTokens $fileTokens
+     * @param string $file
      */
     public function findTokens($file, FileTokens $fileTokens);
 }

@@ -31,8 +31,6 @@ trait MoodleOptionTrait
     /**
      * Adds the 'moodle' option to a command.
      *
-     * @param Command $command
-     *
      * @return Command
      */
     protected function addMoodleOption(Command $command)
@@ -45,8 +43,6 @@ trait MoodleOptionTrait
 
     /**
      * Initialize the moodle property based on input if necessary.
-     *
-     * @param InputInterface $input
      */
     protected function initializeMoodle(InputInterface $input)
     {

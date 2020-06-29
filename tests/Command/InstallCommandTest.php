@@ -52,7 +52,6 @@ class InstallCommandTest extends MoodleTestCase
 
     /**
      * @param string $value
-     * @param array  $expected
      *
      * @dataProvider csvToArrayProvider
      */

@@ -61,8 +61,6 @@ class PHPUnitCommand extends AbstractMoodleCommand
     /**
      * Resolve options for PHPUnit command.
      *
-     * @param InputInterface $input
-     *
      * @return string
      */
     private function resolveOptions(InputInterface $input)
@@ -85,8 +83,6 @@ class PHPUnitCommand extends AbstractMoodleCommand
 
     /**
      * Use phpdbg if we are generating code coverage.
-     *
-     * @param InputInterface $input
      *
      * @return string
      */

@@ -123,8 +123,6 @@ class Execute
     /**
      * Run a process and send output, unaltered, immediately.
      *
-     * @param Process $process
-     *
      * @return Process
      */
     public function passThroughProcess(Process $process)

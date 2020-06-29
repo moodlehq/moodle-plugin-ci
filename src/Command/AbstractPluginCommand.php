@@ -52,8 +52,7 @@ abstract class AbstractPluginCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
-     * @param string          $message
+     * @param string $message
      */
     protected function outputHeading(OutputInterface $output, $message)
     {
@@ -62,8 +61,7 @@ abstract class AbstractPluginCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
-     * @param string|null     $message
+     * @param string|null $message
      *
      * @return int
      */

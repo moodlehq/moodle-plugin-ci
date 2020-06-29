@@ -46,8 +46,6 @@ abstract class AbstractRequirements
     /**
      * Factory method for generating FileTokens instances for all feature files in a plugin.
      *
-     * @param array $tags
-     *
      * @return FileTokens[]
      */
     protected function behatTagsFactory(array $tags)

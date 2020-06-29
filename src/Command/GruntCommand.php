@@ -123,8 +123,6 @@ class GruntCommand extends AbstractMoodleCommand
      *
      * Only checks JS and CSS files.
      *
-     * @param OutputInterface $output
-     *
      * @return int
      */
     public function validatePluginFiles(OutputInterface $output)

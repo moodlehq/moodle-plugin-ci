@@ -59,8 +59,7 @@ class AddConfigCommand extends Command
     /**
      * Check a single file for PHP syntax errors.
      *
-     * @param string          $file   Path to the file to lint
-     * @param OutputInterface $output
+     * @param string $file Path to the file to lint
      *
      * @return int
      */

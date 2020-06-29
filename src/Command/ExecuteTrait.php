@@ -28,9 +28,6 @@ trait ExecuteTrait
 
     /**
      * Initialize the execute property if necessary.
-     *
-     * @param OutputInterface $output
-     * @param ProcessHelper   $helper
      */
     protected function initializeExecute(OutputInterface $output, ProcessHelper $helper)
     {

@@ -35,8 +35,7 @@ class MessDetectorRenderer extends AbstractRenderer
     private $basePath;
 
     /**
-     * @param OutputInterface $output
-     * @param string          $basePath
+     * @param string $basePath
      */
     public function __construct(OutputInterface $output, $basePath)
     {
@@ -47,8 +46,6 @@ class MessDetectorRenderer extends AbstractRenderer
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
      */
     public function renderReport(Report $report)
     {

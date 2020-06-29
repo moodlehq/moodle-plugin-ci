@@ -25,8 +25,7 @@ class MoodleConfig
     /**
      * Create a Moodle config.
      *
-     * @param AbstractDatabase $database
-     * @param string           $dataDir  Absolute path to data directory
+     * @param string $dataDir Absolute path to data directory
      *
      * @return string
      */

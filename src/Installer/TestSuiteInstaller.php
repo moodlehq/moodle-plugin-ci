@@ -195,7 +195,6 @@ class TestSuiteInstaller extends AbstractInstaller
      * Remove DB files that should not or cannot be covered by unit tests.
      *
      * @param string $dbPath
-     * @param array  $files
      *
      * @return array
      */
@@ -223,8 +222,6 @@ class TestSuiteInstaller extends AbstractInstaller
 
     /**
      * Given a list of files, create the filter XML used by PHPUnit for code coverage.
-     *
-     * @param array $files
      *
      * @return string
      */

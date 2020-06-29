@@ -34,8 +34,6 @@ class InstallerCollection
 
     /**
      * Add an installer.
-     *
-     * @param AbstractInstaller $installer
      */
     public function add(AbstractInstaller $installer)
     {

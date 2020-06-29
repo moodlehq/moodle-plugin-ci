@@ -27,8 +27,6 @@ use PhpParser\Node\Stmt\Namespace_;
 class StatementFilter
 {
     /**
-     * @param array $statements
-     *
      * @return Function_[]
      */
     public function filterFunctions(array $statements)
@@ -41,8 +39,6 @@ class StatementFilter
     /**
      * Return class statements, does NOT return classes within namespaces!
      *
-     * @param array $statements
-     *
      * @return Class_[]
      */
     public function filterClasses(array $statements)
@@ -54,8 +50,6 @@ class StatementFilter
 
     /**
      * Returns class names, including those within namespaces (one level deep).
-     *
-     * @param array $statements
      *
      * @return array
      */
@@ -76,8 +70,6 @@ class StatementFilter
     }
 
     /**
-     * @param array $statements
-     *
      * @return Namespace_[]
      */
     public function filterNamespaces(array $statements)
@@ -88,8 +80,6 @@ class StatementFilter
     }
 
     /**
-     * @param array $statements
-     *
      * @return Assign[]
      */
     public function filterAssignments(array $statements)
@@ -102,7 +92,6 @@ class StatementFilter
     /**
      * Find first variable assignment with a given name.
      *
-     * @param array       $statements
      * @param string      $name
      * @param string|null $notFoundError
      *
@@ -151,8 +140,6 @@ class StatementFilter
 
     /**
      * Given an array, find all the string keys.
-     *
-     * @param Array_ $array
      *
      * @return array
      */

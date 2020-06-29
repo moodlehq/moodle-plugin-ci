@@ -22,8 +22,7 @@ class RequirementsResolver
     /**
      * Find the requirements for a given plugin type.
      *
-     * @param Plugin $plugin
-     * @param int    $moodleVersion
+     * @param int $moodleVersion
      *
      * @return AbstractRequirements
      */

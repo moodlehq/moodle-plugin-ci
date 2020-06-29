@@ -109,7 +109,6 @@ class InstallOutput
      * Log a message, shown in lower verbosity mode.
      *
      * @param string $message
-     * @param array  $context
      */
     public function info($message, array $context = [])
     {
@@ -122,7 +121,6 @@ class InstallOutput
      * Log a message, shown in highest verbosity mode.
      *
      * @param string $message
-     * @param array  $context
      */
     public function debug($message, array $context = [])
     {
