@@ -47,12 +47,28 @@
             </errorLevel>
         </PossiblyInvalidArgument>
 
-        <!-- These are due to how PhpParser classes work with properties -->
+        <!-- These are due to how Command classes work with properties -->
+        <PossiblyNullArgument>
+            <errorLevel type="suppress">
+                 <file name="src/Command/InstallCommand.php"/>
+            </errorLevel>
+        </PossiblyNullArgument>
+
+        <!-- These are due to how PhpParser and Command classes work with properties -->
         <PossiblyNullOperand>
             <errorLevel type="suppress">
-                <file name="src/Parser/StatementFilter.php"/>
+                 <file name="src/Parser/StatementFilter.php"/>
+                 <file name="src/Command/InstallCommand.php"/>
             </errorLevel>
         </PossiblyNullOperand>
+
+        <!-- These are due to how Command classes work with Application properties -->
+        <PossiblyNullReference>
+            <errorLevel type="suppress">
+                <file name="src/Command/InstallCommand.php"/>
+                <file name="src/Command/SelfUpdateCommand.php"/>
+            </errorLevel>
+        </PossiblyNullReference>
 
         <!-- Psalm is not finding inherited PHPDoc -->
         <MissingReturnType>
