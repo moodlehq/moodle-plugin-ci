@@ -34,7 +34,7 @@ before_install:
   - export PATH="$(cd bin; pwd):$(cd vendor/bin; pwd):$PATH"
   - export TRAVIS_BUILD_DIR=$(cd ../moodle-local_travis; pwd)
   # Start Selenium Standalone with Chrome.
-  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm -v $HOME/build/moodle:$HOME/build/moodle selenium/standalone-chrome:3
+  - docker run -d -p 127.0.0.1:4444:4444 --net=host --shm-size=2g -v $HOME/build/moodle:$HOME/build/moodle selenium/standalone-chrome:3
 
 install:
   - moodle-plugin-ci install
@@ -60,7 +60,6 @@ jobs:
     - stage: Tests
       addons: skip
       install:
-        - phpenv config-rm xdebug.ini
         - make init
       script:
         - make validate

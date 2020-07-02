@@ -70,7 +70,7 @@ before_install:
 # prefer to run Behat tests with Chrome profile (see Behat step details below),
 # use selenium/standalone-chrome:3 image instead. If you don't run Behat tests,
 # this step is not needed.
-  - docker run -d -p 127.0.0.1:4444:4444 --net=host -v /dev/shm:/dev/shm -v $HOME/build/moodle:$HOME/build/moodle selenium/standalone-firefox:2.53.1
+  - docker run -d -p 127.0.0.1:4444:4444 --net=host --shm-size=2g -v $HOME/build/moodle:$HOME/build/moodle selenium/standalone-firefox:2.53.1
 
 # This lists steps that are run for installation and setup.
 install:
