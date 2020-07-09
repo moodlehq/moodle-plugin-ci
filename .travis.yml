@@ -73,3 +73,19 @@ jobs:
       env: MOODLE_BRANCH=MOODLE_37_STABLE
     - php: 7.2
       env: MOODLE_BRANCH=MOODLE_35_STABLE
+    - stage: Deploy
+      addons: skip
+      install: skip
+      script: skip
+      before_deploy:
+        - make build/moodle-plugin-ci.phar
+        - php build/moodle-plugin-ci.phar list
+      deploy:
+        provider: releases
+        api_key:
+          secure: $GITHUB_OAUTH_ENCRYPTED_TOKEN
+        file: build/moodle-plugin-ci.phar
+        skip_cleanup: true
+        on:
+          repo: moodlehq/moodle-plugin-ci
+          tags: true
