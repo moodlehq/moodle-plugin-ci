@@ -44,7 +44,7 @@ class SelfUpdateCommand extends Command
         }
 
         $strategy = new GithubStrategy();
-        $strategy->setPackageName('blackboard-open-source/moodle-plugin-ci');
+        $strategy->setPackageName('moodlehq/moodle-plugin-ci');
         $strategy->setPharName('moodle-plugin-ci.phar');
         $strategy->setCurrentLocalVersion($this->getApplication()->getVersion());
         $strategy->setStability($stability);

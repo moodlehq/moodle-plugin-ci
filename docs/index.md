@@ -31,7 +31,7 @@ In addition, the plugin being tested must have a [version.php](https://docs.mood
 and `$plugin->component` must be defined within it.
 
 If you need to run your plugin in earlier versions of Moodle, then please use Version 1 of this tool.  Documentation
-and more information about Version 1 can be found in the [v1](https://github.com/blackboard-open-source/moodle-plugin-ci/tree/v1)
+and more information about Version 1 can be found in the [v1](https://github.com/moodlehq/moodle-plugin-ci/tree/v1)
 branch.  Please know that Version 1 is no longer getting new features and may not receive additional updates.
 
 ## Getting started
@@ -47,7 +47,7 @@ run a build to make sure nothing broke.
 
 ### Step 2
 
-Copy the [.travis.dist.yml](https://github.com/blackboard-open-source/moodle-plugin-ci/blob/master/.travis.dist.yml) file into the
+Copy the [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml) file into the
 root of your plugin and rename it to `.travis.yml`. Now might be a good time to review the `.travis.yml` contents and
 remove anything that is not needed.  See this [help document](TravisFileExplained.md) for an explanation about the
 contents of the this file. Once you have added the `.travis.yml` file, commit and push up to GitHub, to trigger a
@@ -87,4 +87,4 @@ Semantic Versioning.
 ## License
 
 This project is licensed under the GNU GPL v3 or later.  See the
-[LICENSE](https://github.com/blackboard-open-source/moodle-plugin-ci/blob/master/LICENSE) file for details.
+[LICENSE](https://github.com/moodlehq/moodle-plugin-ci/blob/master/LICENSE) file for details.

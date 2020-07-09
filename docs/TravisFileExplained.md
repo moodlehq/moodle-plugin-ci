@@ -3,7 +3,7 @@ layout: page
 title: Travis CI file explained
 ---
 
-Below is the [.travis.dist.yml](https://github.com/blackboard-open-source/moodle-plugin-ci/blob/master/.travis.dist.yml)
+Below is the [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
 file but with comments added to explain what each section is doing. For additional help,
 see [Travis CI's documentation](http://docs.travis-ci.com/user/getting-started/).
 
