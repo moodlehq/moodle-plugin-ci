@@ -59,7 +59,7 @@ jobs:
   include:
     - stage: Tests
       php: 7.3
-      addons: skip
+      before_install: skip
       install:
         - make init
       script:
@@ -74,7 +74,7 @@ jobs:
     - php: 7.2
       env: MOODLE_BRANCH=MOODLE_35_STABLE
     - stage: Deploy
-      addons: skip
+      before_install: skip
       install: skip
       script: skip
       before_deploy:
@@ -82,10 +82,9 @@ jobs:
         - php build/moodle-plugin-ci.phar list
       deploy:
         provider: releases
-        api_key:
-          secure: $GITHUB_OAUTH_ENCRYPTED_TOKEN
+        token: $GITHUB_OAUTH_ENCRYPTED_TOKEN
         file: build/moodle-plugin-ci.phar
-        skip_cleanup: true
+        cleanup: false
         on:
           repo: moodlehq/moodle-plugin-ci
           tags: true
