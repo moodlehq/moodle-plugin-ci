@@ -42,7 +42,7 @@ class MoodlePlugin
      * EG: this is the command name and it should only
      * be used for reading configs.
      *
-     * @var string
+     * @var string|null
      */
     public $context = '';
 

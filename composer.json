@@ -1,5 +1,5 @@
 {
-  "name": "blackboard-open-source/moodle-plugin-ci",
+  "name": "moodlehq/moodle-plugin-ci",
   "description": "Assists with running Moodle plugins in Travis CI",
   "keywords": ["moodle", "travis", "ci", "testing"],
   "type": "project",
@@ -75,8 +75,8 @@
     "symfony/console": "^3.3",
     "symfony/yaml": "^3.3",
     "symfony/process": "^3.3",
-    "jakub-onderka/php-parallel-lint": "^0.9",
-    "jakub-onderka/php-console-highlighter": "^0.3",
+    "php-parallel-lint/php-parallel-lint": "^0.9",
+    "php-parallel-lint/php-console-highlighter": "^0.3",
     "psr/log": "^1.0",
     "nikic/php-parser": "^3.0",
     "stecman/symfony-console-completion": "^0.7.0",
