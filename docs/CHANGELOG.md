@@ -9,15 +9,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-## Changed
+### Changed
+- TODO: Document all the changes to jump to this new release from previous 2.5.0, similarly to the docs explaining 1.x => 2.x changes.
+- ACTION REQUIRED: project organization renamed to moodlehq. You must update your `.travis.yml` to use `moodlehq/moodle-plugin-ci`
 - Updated [.travis.dist.yml] with a new `services` section to ensure databases start.
-- Updated [.travis.dist.yml] to remove `openjdk-8-jre-headless`. See
-  [#91](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/91).
-- Updated verion of `moodlehq/moodle-local_ci` to fix Mustache linting. See
-  [#91](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/91).
+- Updated [.travis.dist.yml] to remove `openjdk-8-jre-headless` and updated `moodlehq/moodle-local_ci` to fix Mustache linting. See [moodle-local_ci/pull#198](https://github.com/moodlehq/moodle-local_ci/pull/198).
 - Replaced Selenium in-built functionality with docker image for Selenium
-  Standalone server. See [#99](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/99).
-- Updated version of `moodlehq/moodle-local_codechecker` to 2.9.6
+  Standalone server. See [#107](https://github.com/blackboard-open-source/moodle-plugin-ci/pull/107).
+- Updated version of `moodlehq/moodle-local_codechecker` to v2.9.6
 - Updated [.travis.dist.yml] to build Moodle 3.9
 - Updated [.travis.dist.yml] to use nvm 14.0.0
 
@@ -254,28 +253,28 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.5.0...master
-[2.5.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.4.0...2.5.0
-[2.4.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.3.0...2.4.0
-[2.3.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.2.0...2.3.0
-[2.2.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.1.1...2.2.0
-[2.1.1]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.1.0...2.1.1
-[2.1.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.0.1...2.1.0
-[2.0.1]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/2.0.0...2.0.1
-[2.0.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.8...2.0.0
-[1.5.8]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.7...1.5.8
-[1.5.7]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.6...1.5.7
-[1.5.6]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.5...1.5.6
-[1.5.5]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.4...1.5.5
-[1.5.4]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.3...1.5.4
-[1.5.3]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.2...1.5.3
-[1.5.2]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.1...1.5.2
-[1.5.1]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.5.0...1.5.1
-[1.5.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.4.1...1.5.0
-[1.4.1]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.4.0...1.4.1
-[1.4.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.3.1...1.4.0
-[1.3.1]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.3.0...1.3.1
-[1.3.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.2.0...1.3.0
-[1.2.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.1.0...1.2.0
-[1.1.0]: https://github.com/blackboard-open-source/moodle-plugin-ci/compare/1.0.0...1.1.0
-[.travis.dist.yml]: https://github.com/blackboard-open-source/moodle-plugin-ci/blob/master/.travis.dist.yml
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.5.0...master
+[2.5.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.4.0...2.5.0
+[2.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.3.0...2.4.0
+[2.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.2.0...2.3.0
+[2.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.1.1...2.2.0
+[2.1.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.1.0...2.1.1
+[2.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.0.1...2.1.0
+[2.0.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.0.0...2.0.1
+[2.0.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.8...2.0.0
+[1.5.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.7...1.5.8
+[1.5.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.6...1.5.7
+[1.5.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.5...1.5.6
+[1.5.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.4...1.5.5
+[1.5.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.3...1.5.4
+[1.5.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.2...1.5.3
+[1.5.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.1...1.5.2
+[1.5.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.5.0...1.5.1
+[1.5.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.4.1...1.5.0
+[1.4.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.4.0...1.4.1
+[1.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.3.1...1.4.0
+[1.3.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.3.0...1.3.1
+[1.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.2.0...1.3.0
+[1.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.1.0...1.2.0
+[1.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.0.0...1.1.0
+[.travis.dist.yml]: https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml
