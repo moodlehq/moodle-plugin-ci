@@ -27,9 +27,30 @@ class BehatCommand extends AbstractMoodleCommand
     use ExecuteTrait;
 
     /**
-     * @var Process[]
+     * Selenium standalone Firefox image.
+     *
+     * @var string
      */
-    private $servers = [];
+    private $seleniumFirefoxImage = 'selenium/standalone-firefox:2.53.1';
+
+    /**
+     * Selenium standalone Chrome image.
+     *
+     * @var string
+     */
+    private $seleniumChromeImage = 'selenium/standalone-chrome:3';
+
+    /**
+     * Wait this many microseconds for Selenium server to start/stop.
+     *
+     * @var int
+     */
+    private $seleniumWaitTime = 5000000;
+
+    /**
+     * @var Process
+     */
+    private $webserver;
 
     protected function configure()
     {
@@ -38,7 +59,7 @@ class BehatCommand extends AbstractMoodleCommand
         $this->setName('behat')
             ->addOption('profile', 'p', InputOption::VALUE_REQUIRED, 'Behat profile to use', 'default')
             ->addOption('suite', null, InputOption::VALUE_REQUIRED, 'Behat suite to use (Moodle theme)', 'default')
-            ->addOption('start-servers', null, InputOption::VALUE_NONE, 'Start PHP server')
+            ->addOption('start-servers', null, InputOption::VALUE_NONE, 'Start Selenium and PHP servers')
             ->addOption('auto-rerun', null, InputOption::VALUE_REQUIRED, 'Number of times to rerun failures', 2)
             ->addOption('dump', null, InputOption::VALUE_NONE, 'Print contents of Behat failure HTML files')
             ->setDescription('Run Behat on a plugin');
@@ -63,7 +84,7 @@ class BehatCommand extends AbstractMoodleCommand
             $servers = $input->getOption('start-servers');
         }
 
-        $servers && $this->startServerProcesses();
+        $servers && $this->startServerProcesses($input);
 
         $builder = ProcessBuilder::create()
             ->setPrefix('php')
@@ -91,21 +112,40 @@ class BehatCommand extends AbstractMoodleCommand
         return $process->isSuccessful() ? 0 : 1;
     }
 
-    private function startServerProcesses()
+    /**
+     * @param InputInterface $input
+     */
+    private function startServerProcesses(InputInterface $input)
     {
+        // Test we have docker cli.
+        $process = $this->execute->run('docker -v');
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException('Docker is not available, can\'t start Selenium server');
+        }
+
+        // Start docker container using desired image.
+        $image = ($input->getOption('profile') === 'chrome') ? $this->seleniumChromeImage : $this->seleniumFirefoxImage;
+        $cmd   = sprintf('docker run -d --rm -p 127.0.0.1:4444:4444 --name=selenium --net=host --shm-size=2g -v %s:%s %s',
+            $this->moodle->directory, $this->moodle->directory, $image);
+        $this->execute->mustRun($cmd);
+
+        // Start web server.
         $web = new Process('php -S localhost:8000', $this->moodle->directory);
         $web->setTimeout(0);
         $web->disableOutput();
         $web->start();
+        $this->webserver = $web;
 
-        $this->servers = [$web];
+        // Need to wait for Selenium to start up. Not really sure how long that takes.
+        usleep($this->seleniumWaitTime);
     }
 
     private function stopServerProcesses()
     {
-        foreach ($this->servers as $process) {
-            $process->stop();
-        }
+        // Stop docker. This will also destroy container.
+        $this->execute->mustRun('docker stop selenium');
+        // Stop webserver.
+        $this->webserver->stop();
     }
 
     private function dumpFailures(OutputInterface $output)
