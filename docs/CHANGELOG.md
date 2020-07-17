@@ -14,8 +14,12 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - ACTION REQUIRED: project organization renamed to moodlehq. You must update your `.travis.yml` to use `moodlehq/moodle-plugin-ci`
 - Updated [.travis.dist.yml] with a new `services` section to ensure databases start.
 - Updated [.travis.dist.yml] to remove `openjdk-8-jre-headless` and updated `moodlehq/moodle-local_ci` to fix Mustache linting. See [moodle-local_ci/pull#198](https://github.com/moodlehq/moodle-local_ci/pull/198).
-- Replaced Selenium in-built functionality with docker image for Selenium
-  Standalone server. See [#107](https://github.com/blackboard-open-source/moodle-plugin-ci/pull/107).
+- `moodle-plugin-ci behat` is using Selenium docker container for built-in Selenium server.
+- ACTION REQUIRED: If you initiated Selenium server in docker container as
+  part of your test scenario (e.g. separate step in install stage similar to
+  one outlined in workaround
+  [blackboard-open-source/issue#110](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/110)),
+  this is no longer required, you can remove this step.
 - Updated version of `moodlehq/moodle-local_codechecker` to v2.9.6
 - Updated [.travis.dist.yml] to build Moodle 3.9
 - Updated [.travis.dist.yml] to use nvm 14.0.0

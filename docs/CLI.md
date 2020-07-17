@@ -285,7 +285,7 @@ Behat suite to use (Moodle theme)
 
 #### `--start-servers`
 
-Start PHP server
+Start Selenium and PHP servers
 
 * Accept value: no
 * Is value required: no

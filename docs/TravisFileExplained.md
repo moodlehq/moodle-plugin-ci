@@ -66,11 +66,6 @@ before_install:
   - composer create-project -n --no-dev --prefer-dist moodlehq/plugin-ci ci ^2
 # Update the $PATH so scripts from this project can be called easily.
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
-# Start Selenium Standalone server with Chrome/Firefox installed. If you
-# prefer to run Behat tests with Chrome profile (see Behat step details below),
-# use selenium/standalone-chrome:3 image instead. If you don't run Behat tests,
-# this step is not needed.
-  - docker run -d -p 127.0.0.1:4444:4444 --net=host --shm-size=2g -v $HOME/build/moodle:$HOME/build/moodle selenium/standalone-firefox:2.53.1
 
 # This lists steps that are run for installation and setup.
 install:
@@ -132,8 +127,6 @@ script:
 #   - The suite option allows you to set the theme to use for behat test. If
 #     not specified, the default theme is used, EG usage: --suite boost
 #   - The profile option allows you to set the browser driver to use,
-#     default is Firefox. If you need Chrome, set '--profile chrome' and make
-#     sure that you are using correct Selenium server docker image in
-#     before_install section above.
+#     default is Firefox. If you need Chrome, set '--profile chrome'.
   - moodle-plugin-ci behat
 ```
