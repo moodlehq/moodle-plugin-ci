@@ -90,6 +90,7 @@ class TestSuiteInstaller extends AbstractInstaller
             return [];
         }
 
+        // @see BehatCommand::execute()
         $this->addEnv('MOODLE_START_BEHAT_SERVERS', 'YES');
 
         return [

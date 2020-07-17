@@ -46,6 +46,26 @@ class VendorInstaller extends AbstractInstaller
 
     public function install()
     {
+        if ($this->canInstallNode()) {
+            $this->getOutput()->step('Installing Node.js version specified in .nvmrc');
+            $nvmDir  = getenv('NVM_DIR');
+            $cmd     = ". $nvmDir/nvm.sh && nvm install && nvm use && echo \"NVM_BIN=\$NVM_BIN\"";
+            $process = $this->execute->passThrough($cmd, $this->moodle->directory);
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException('Node.js installation failed.');
+            }
+            // Retrieve NVM_BIN from initialisation output, we will use it to
+            // substitute right Node.js environment in all future process runs.
+            // @see Execute::setNodeEnv()
+            preg_match('/^NVM_BIN=(.+)$/m', trim($process->getOutput()), $matches);
+            if (isset($matches[1]) && is_dir($matches[1])) {
+                $this->addEnv('RUNTIME_NVM_BIN', $matches[1]);
+                putenv('RUNTIME_NVM_BIN='.$matches[1]);
+            } else {
+                $this->getOutput()->debug('Can\'t retrieve NVM_BIN content from the command output.');
+            }
+        }
+
         $this->getOutput()->step('Install global dependencies');
 
         $processes = [];
@@ -68,6 +88,23 @@ class VendorInstaller extends AbstractInstaller
 
     public function stepCount()
     {
-        return 2;
+        return ($this->canInstallNode()) ? 3 : 2;
+    }
+
+    /**
+     * Check if we have everything needed to proceed with Node.js installation step.
+     *
+     * @return bool
+     */
+    public function canInstallNode()
+    {
+        // TODO: Check if currently installed Node.js is matching.
+        if (is_file($this->moodle->directory.'/.nvmrc')) {
+            $reqversion = file_get_contents($this->moodle->directory.'/.nvmrc');
+
+            return getenv('NVM_DIR') && getenv('NVM_BIN') && strpos(getenv('NVM_BIN'), $reqversion) === false;
+        }
+
+        return false;
     }
 }

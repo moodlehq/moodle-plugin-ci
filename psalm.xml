@@ -70,6 +70,20 @@
             </errorLevel>
         </PossiblyNullReference>
 
+        <!-- Psalm complains that getenv output can't be concatenated -->
+        <PossiblyFalseOperand>
+            <errorLevel type="suppress">
+                 <file name="src/Process/Execute.php"/>
+            </errorLevel>
+        </PossiblyFalseOperand>
+
+        <!-- Psalm complains that getenv output can't be concatenated -->
+        <PossiblyFalseArgument>
+            <errorLevel type="suppress">
+                 <file name="src/Installer/VendorInstaller.php"/>
+            </errorLevel>
+        </PossiblyFalseArgument>
+
         <!-- Psalm is not finding inherited PHPDoc -->
         <MissingReturnType>
             <errorLevel type="suppress">

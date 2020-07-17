@@ -17,21 +17,21 @@ use MoodlePluginCI\Installer\Database\MySQLDatabase;
 use MoodlePluginCI\Installer\MoodleInstaller;
 use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use MoodlePluginCI\Tests\Fake\Process\DummyExecute;
-use MoodlePluginCI\Tests\FilesystemTestCase;
+use MoodlePluginCI\Tests\MoodleTestCase;
 
-class MoodleInstallerTest extends FilesystemTestCase
+class MoodleInstallerTest extends MoodleTestCase
 {
     public function testInstall()
     {
         $dataDir   = $this->tempDir.'/moodledata';
-        $moodle    = new DummyMoodle($this->tempDir);
+        $moodle    = new DummyMoodle($this->moodleDir);
         $installer = new MoodleInstaller(
             new DummyExecute(),
             new MySQLDatabase(),
             $moodle,
             new MoodleConfig(),
             'git@github.com:moodle/moodle.git',
-            'MOODLE_27_STABLE',
+            'MOODLE_39_STABLE',
             $dataDir
         );
         $installer->install();

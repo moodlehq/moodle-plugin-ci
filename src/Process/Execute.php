@@ -48,6 +48,36 @@ class Execute
     }
 
     /**
+     * Sets Node.js environment for process.
+     *
+     * We call 'nvm use' as part of install routine, but we can't export env
+     * variable containing path to required version npm binary to make it
+     * available in each script run (CI step). To overcome that limitation,
+     * we store this path in RUNTIME_NVM_BIN custom variable (that install step
+     * dumps into .env file) and use it to substitute Node.js environment
+     * in processes we execute.
+     *
+     * @param Process $process An instance of Process
+     *
+     * @return Process
+     */
+    public function setNodeEnv(Process $process)
+    {
+        if (getenv('RUNTIME_NVM_BIN')) {
+            // Concatinate RUNTIME_NVM_BIN with PATH, so the correct version of
+            // npm binary is used within process.
+            $env = ['PATH' => getenv('RUNTIME_NVM_BIN').':'.getenv('PATH')];
+            $process->setEnv($env);
+            // Make sure we have all system env vars available too.
+            // TODO: Env vars are inherited by default in Symfony 4, next line
+            // can be removed after upgrade.
+            $process->inheritEnvironmentVariables(true);
+        }
+
+        return $process;
+    }
+
+    /**
      * @param string|array|Process $cmd   An instance of Process or an array of arguments to escape and run or a command to run
      * @param string|null          $error An error message that must be displayed if something went wrong
      *
@@ -55,6 +85,11 @@ class Execute
      */
     public function run($cmd, $error = null)
     {
+        if (!($cmd instanceof Process)) {
+            $cmd = new Process($cmd);
+        }
+        $this->setNodeEnv($cmd);
+
         return $this->helper->run($this->output, $cmd, $error);
     }
 
@@ -66,6 +101,11 @@ class Execute
      */
     public function mustRun($cmd, $error = null)
     {
+        if (!($cmd instanceof Process)) {
+            $cmd = new Process($cmd);
+        }
+        $this->setNodeEnv($cmd);
+
         return $this->helper->mustRun($this->output, $cmd, $error);
     }
 
@@ -81,7 +121,7 @@ class Execute
             return;
         }
         foreach ($processes as $process) {
-            $process->start();
+            $this->setNodeEnv($process)->start();
             usleep($this->parallelWaitTime);
         }
         foreach ($processes as $process) {
@@ -132,7 +172,7 @@ class Execute
         if ($this->output->isVeryVerbose()) {
             $this->output->writeln(sprintf('<bg=blue;fg=white;> RUN </> <fg=blue>%s</>', $process->getCommandLine()));
         }
-        $process->run(function ($type, $buffer) {
+        $this->setNodeEnv($process)->run(function ($type, $buffer) {
             $this->output->write($buffer);
         });
 

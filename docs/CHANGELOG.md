@@ -22,7 +22,11 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   this is no longer required, you can remove this step.
 - Updated version of `moodlehq/moodle-local_codechecker` to v2.9.6
 - Updated [.travis.dist.yml] to build Moodle 3.9
-- Updated [.travis.dist.yml] to use nvm 14.0.0
+- `moodle-plugin-ci install` installs Node.js (npm) using the version
+  specified in .nvmrc file. See
+  [#7](https://github.com/moodlehq/moodle-plugin-ci/issues/7)
+- ACTION REQUIRED: You may safely remove `nvm install <version>` and `nvm use
+  <version>` from .travis.yml for Moodle 3.5 and above, this is now a part of installation routine.
 
 ### Added
 - New help document: [CLI commands and options](CLI.md)

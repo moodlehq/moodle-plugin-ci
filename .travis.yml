@@ -26,8 +26,6 @@ env:
 
 before_install:
   - phpenv config-rm xdebug.ini
-  - nvm install 14.0.0
-  - nvm use 14.0.0
   - make init
   # Mimic how a Moodle plugin would be run.
   - cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
@@ -35,7 +33,7 @@ before_install:
   - export TRAVIS_BUILD_DIR=$(cd ../moodle-local_travis; pwd)
 
 install:
-  - moodle-plugin-ci install
+  - moodle-plugin-ci install -vvv
 
 script:
   - make test-phpunit

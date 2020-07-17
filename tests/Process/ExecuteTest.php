@@ -25,16 +25,60 @@ use Symfony\Component\Process\Process;
 
 class ExecuteTest extends \PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        // Define RUNTIME_NVM_BIN, so we check its value is added to PATH within
+        // process.
+        putenv('RUNTIME_NVM_BIN=/test/bin');
+    }
+
+    public function testSetNodeEnv()
+    {
+        $helper = new ProcessHelper();
+        $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
+
+        $execute = new Execute(new NullOutput(), $helper);
+        $pathenv = getenv('PATH');
+
+        // RUNTIME_NVM_BIN in undefined.
+        putenv('RUNTIME_NVM_BIN');
+        $process = new Process('env');
+        $process = $execute->setNodeEnv($process);
+        // We do not expect env set for process.
+        $this->assertEmpty($process->getEnv());
+        $process->run();
+        $this->assertTrue($process->isSuccessful());
+        // Expect path to match system one.
+        $this->assertContains('PATH='.$pathenv, $process->getOutput());
+        // Expect HOME is defined (system env vars present)
+        $this->assertRegExp('/^HOME=/m', $process->getOutput());
+
+        // RUNTIME_NVM_BIN is defined.
+        putenv('RUNTIME_NVM_BIN=/test/bin');
+        $process = $execute->setNodeEnv($process);
+        // Expect env is set for process.
+        $this->assertArrayHasKey('PATH', $process->getEnv());
+        $this->assertSame('/test/bin:'.$pathenv, $process->getEnv()['PATH']);
+        $process->run();
+        $this->assertTrue($process->isSuccessful());
+        // RUNTIME_NVM_BIN is defined, expect it to be first item in the PATH .
+        $this->assertContains('PATH=/test/bin:'.$pathenv, $process->getOutput());
+        // Expect HOME is defined too (system env vars present)
+        $this->assertRegExp('/^HOME=/m', $process->getOutput());
+    }
+
     public function testRun()
     {
         $helper = new ProcessHelper();
         $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
 
         $execute = new Execute(new NullOutput(), $helper);
-        $process = $execute->run('php -r "echo 42;"');
+        $process = $execute->run('env');
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
         $this->assertTrue($process->isSuccessful());
+        // RUNTIME_NVM_BIN is defined, expect it in the PATH.
+        $this->assertRegExp('/^PATH=\/test\/bin:/m', $process->getOutput());
     }
 
     public function testMustRun()
@@ -43,10 +87,12 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
 
         $execute = new Execute(new NullOutput(), $helper);
-        $process = $execute->mustRun('php -r "echo 42;"');
+        $process = $execute->mustRun('env');
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
         $this->assertTrue($process->isSuccessful());
+        // RUNTIME_NVM_BIN is defined, expect it in the PATH.
+        $this->assertRegExp('/^PATH=\/test\/bin:/m', $process->getOutput());
     }
 
     public function testRunAllVerbose()
@@ -56,8 +102,8 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
         /** @var Process[] $processes */
         $processes = [
-            new Process('php -r "echo 42;"'),
-            new Process('php -r "echo 42;"'),
+            new Process('env'),
+            new Process('env'),
         ];
 
         $output  = new BufferedOutput(OutputInterface::VERBOSITY_VERY_VERBOSE);
@@ -66,6 +112,8 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
         foreach ($processes as $process) {
             $this->assertTrue($process->isSuccessful());
+            // RUNTIME_NVM_BIN is defined, expect it in the PATH.
+            $this->assertRegExp('/^PATH=\/test\/bin:/m', $process->getOutput());
         }
         $this->assertNotEmpty($output->fetch());
     }
@@ -77,9 +125,9 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
         /** @var Process[] $processes */
         $processes = [
-            new Process('php -r "echo 42;"'),
-            new MoodleProcess('-r "echo 42;"'),
-            new Process('php -r "echo 42;"'),
+            new Process('env'),
+            new MoodleProcess('-r "echo \'PATH=\'.getenv(\'PATH\');"'),
+            new Process('env'),
         ];
 
         $execute = new Execute(new NullOutput(), $helper);
@@ -89,6 +137,8 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
         foreach ($processes as $process) {
             $this->assertTrue($process->isSuccessful());
+            // RUNTIME_NVM_BIN is defined, expect it in the PATH.
+            $this->assertRegExp('/^PATH=\/test\/bin:/m', $process->getOutput());
         }
     }
 
@@ -120,5 +170,9 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
         $this->assertSame(' RUN  php -r "echo 42;"'.PHP_EOL.'42', $output->fetch());
+
+        $process = $execute->passThrough('env');
+        // RUNTIME_NVM_BIN is defined, expect it in the PATH.
+        $this->assertRegExp('/^PATH=\/test\/bin:/m', $output->fetch());
     }
 }
