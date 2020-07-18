@@ -27,6 +27,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 - New help document: [CLI commands and options](CLI.md)
 
+### Removed
+- Support for PHP 5.x (7.0.0 is now required).
+
 ## [2.5.0] - 2019-02-20
 ### Changed
 - Updated [.travis.dist.yml] to install `openjdk-8-jre-headless` instead of
