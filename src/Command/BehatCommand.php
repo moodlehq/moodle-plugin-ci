@@ -127,7 +127,10 @@ class BehatCommand extends AbstractMoodleCommand
         $image = ($input->getOption('profile') === 'chrome') ? $this->seleniumChromeImage : $this->seleniumFirefoxImage;
         $cmd   = sprintf('docker run -d --rm -p 127.0.0.1:4444:4444 --name=selenium --net=host --shm-size=2g -v %s:%s %s',
             $this->moodle->directory, $this->moodle->directory, $image);
-        $this->execute->mustRun($cmd);
+        $docker = $this->execute->passThrough($cmd);
+        if (!$docker->isSuccessful()) {
+            throw new \RuntimeException('Can\'t start Selenium server');
+        }
 
         // Start web server.
         $web = new Process('php -S localhost:8000', $this->moodle->directory);
