@@ -14,7 +14,7 @@ cache:
     - $HOME/.npm
 
 php:
- - 7.3
+ - 7.4
 
 env:
   global:
@@ -64,13 +64,15 @@ jobs:
       script:
         - make validate
     - stage: Integration tests
-    - php: 7.3
+    - php: 7.4
       env: MOODLE_BRANCH=MOODLE_39_STABLE
-    - php: 7.3
+    - php: 7.4
       env: MOODLE_BRANCH=MOODLE_38_STABLE
     - php: 7.3
       env: MOODLE_BRANCH=MOODLE_37_STABLE
     - php: 7.2
+      env: MOODLE_BRANCH=MOODLE_35_STABLE
+    - php: 7.0
       env: MOODLE_BRANCH=MOODLE_35_STABLE
     - stage: Deploy
       before_install: skip
