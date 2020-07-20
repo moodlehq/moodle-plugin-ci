@@ -55,6 +55,10 @@ class VendorInstallerTest extends MoodleTestCase
 
         // Remove .nvmrc
         $this->fs->remove($this->moodleDir.'/.nvmrc');
-        $this->assertFalse($installer->canInstallNode());
+
+        // Expect .nvmrc pointing to legacy Node to be created.
+        $this->assertTrue($installer->canInstallNode());
+        $this->assertTrue(is_file($this->moodleDir.'/.nvmrc'));
+        $this->assertSame(file_get_contents($this->moodleDir.'/.nvmrc'), 'lts/carbon');
     }
 }

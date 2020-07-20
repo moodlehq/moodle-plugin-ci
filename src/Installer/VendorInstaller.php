@@ -37,6 +37,13 @@ class VendorInstaller extends AbstractInstaller
      */
     private $execute;
 
+    /**
+     * Define legacy Node version to use when .nvmrc is absent (Moodle < 3.5).
+     *
+     * @var string
+     */
+    private $legacyNodeVersion = 'lts/carbon';
+
     public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute)
     {
         $this->moodle  = $moodle;
@@ -93,18 +100,20 @@ class VendorInstaller extends AbstractInstaller
 
     /**
      * Check if we have everything needed to proceed with Node.js installation step.
+     * We skip this step if currently installed version is matching required one.
      *
      * @return bool
      */
     public function canInstallNode()
     {
-        // TODO: Check if currently installed Node.js is matching.
         if (is_file($this->moodle->directory.'/.nvmrc')) {
             $reqversion = file_get_contents($this->moodle->directory.'/.nvmrc');
-
-            return getenv('NVM_DIR') && getenv('NVM_BIN') && strpos(getenv('NVM_BIN'), $reqversion) === false;
+        } else {
+            // No .nvmrc found, we likely deal with Moodle < 3.5. Use legacy version (lts/carbon).
+            $reqversion = $this->legacyNodeVersion;
+            file_put_contents($this->moodle->directory.'/.nvmrc', $reqversion);
         }
 
-        return false;
+        return getenv('NVM_DIR') && getenv('NVM_BIN') && strpos(getenv('NVM_BIN'), $reqversion) === false;
     }
 }
