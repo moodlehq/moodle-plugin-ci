@@ -37,6 +37,13 @@ class VendorInstaller extends AbstractInstaller
      */
     private $execute;
 
+    /**
+     * Define legacy Node version to use when .nvmrc is absent (Moodle < 3.5).
+     *
+     * @var string
+     */
+    private $legacyNodeVersion = 'lts/carbon';
+
     public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute)
     {
         $this->moodle  = $moodle;
@@ -46,6 +53,26 @@ class VendorInstaller extends AbstractInstaller
 
     public function install()
     {
+        if ($this->canInstallNode()) {
+            $this->getOutput()->step('Installing Node.js version specified in .nvmrc');
+            $nvmDir  = getenv('NVM_DIR');
+            $cmd     = ". $nvmDir/nvm.sh && nvm install && nvm use && echo \"NVM_BIN=\$NVM_BIN\"";
+            $process = $this->execute->passThrough($cmd, $this->moodle->directory);
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException('Node.js installation failed.');
+            }
+            // Retrieve NVM_BIN from initialisation output, we will use it to
+            // substitute right Node.js environment in all future process runs.
+            // @see Execute::setNodeEnv()
+            preg_match('/^NVM_BIN=(.+)$/m', trim($process->getOutput()), $matches);
+            if (isset($matches[1]) && is_dir($matches[1])) {
+                $this->addEnv('RUNTIME_NVM_BIN', $matches[1]);
+                putenv('RUNTIME_NVM_BIN='.$matches[1]);
+            } else {
+                $this->getOutput()->debug('Can\'t retrieve NVM_BIN content from the command output.');
+            }
+        }
+
         $this->getOutput()->step('Install global dependencies');
 
         $processes = [];
@@ -68,6 +95,25 @@ class VendorInstaller extends AbstractInstaller
 
     public function stepCount()
     {
-        return 2;
+        return ($this->canInstallNode()) ? 3 : 2;
+    }
+
+    /**
+     * Check if we have everything needed to proceed with Node.js installation step.
+     * We skip this step if currently installed version is matching required one.
+     *
+     * @return bool
+     */
+    public function canInstallNode()
+    {
+        if (is_file($this->moodle->directory.'/.nvmrc')) {
+            $reqversion = file_get_contents($this->moodle->directory.'/.nvmrc');
+        } else {
+            // No .nvmrc found, we likely deal with Moodle < 3.5. Use legacy version (lts/carbon).
+            $reqversion = $this->legacyNodeVersion;
+            file_put_contents($this->moodle->directory.'/.nvmrc', $reqversion);
+        }
+
+        return getenv('NVM_DIR') && getenv('NVM_BIN') && strpos(getenv('NVM_BIN'), $reqversion) === false;
     }
 }

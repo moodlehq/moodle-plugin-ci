@@ -16,18 +16,49 @@ use MoodlePluginCI\Bridge\MoodlePlugin;
 use MoodlePluginCI\Installer\VendorInstaller;
 use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
 use MoodlePluginCI\Tests\Fake\Process\DummyExecute;
+use MoodlePluginCI\Tests\MoodleTestCase;
 
-class VendorInstallerTest extends \PHPUnit_Framework_TestCase
+class VendorInstallerTest extends MoodleTestCase
 {
     public function testInstall()
     {
         $installer = new VendorInstaller(
-            new DummyMoodle(''),
-            new MoodlePlugin(__DIR__.'/../Fixture/moodle-local_travis'),
+            new DummyMoodle($this->moodleDir),
+            new MoodlePlugin($this->pluginDir),
             new DummyExecute()
         );
         $installer->install();
 
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
+    }
+
+    public function testCanInstallNode()
+    {
+        $installer = new VendorInstaller(
+            new DummyMoodle($this->moodleDir),
+            new MoodlePlugin($this->pluginDir),
+            new DummyExecute()
+        );
+
+        $this->assertTrue($installer->canInstallNode());
+
+        // Set current version of node to match required.
+        $reqVer = file_get_contents($this->moodleDir.'/.nvmrc');
+        $nvmBin = getenv('NVM_BIN');
+        $modVer = preg_replace('/^(\/.+\/)(v\d.+)(\/bin)$/', '$1'.$reqVer.'$2', $nvmBin);
+        putenv('NVM_BIN='.$modVer);
+        $this->assertFalse($installer->canInstallNode());
+
+        // Revert env change.
+        putenv('NVM_BIN='.$nvmBin);
+        $this->assertTrue($installer->canInstallNode());
+
+        // Remove .nvmrc
+        $this->fs->remove($this->moodleDir.'/.nvmrc');
+
+        // Expect .nvmrc pointing to legacy Node to be created.
+        $this->assertTrue($installer->canInstallNode());
+        $this->assertTrue(is_file($this->moodleDir.'/.nvmrc'));
+        $this->assertSame(file_get_contents($this->moodleDir.'/.nvmrc'), 'lts/carbon');
     }
 }

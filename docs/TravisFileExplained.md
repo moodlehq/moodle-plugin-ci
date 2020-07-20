@@ -55,10 +55,6 @@ env:
 before_install:
 # This disables XDebug which should speed up the build.
   - phpenv config-rm xdebug.ini
-# This installs NodeJS which is used by Grunt, adjust according to `.nvmrc` file
-# in your Moodle installation.
-  - nvm install 14.0.0
-  - nvm use 14.0.0
 # Currently we are inside of the clone of your repository.  We move up two
 # directories to build the project.
   - cd ../..
