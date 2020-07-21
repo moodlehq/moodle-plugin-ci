@@ -813,7 +813,7 @@ Install everything required for CI testing
 
 ### Usage
 
-* `install [--moodle MOODLE] [--data DATA] [--repo REPO] [--branch BRANCH] [--plugin PLUGIN] [--db-type DB-TYPE] [--db-user DB-USER] [--db-pass DB-PASS] [--db-name DB-NAME] [--db-host DB-HOST] [--not-paths NOT-PATHS] [--not-names NOT-NAMES] [--extra-plugins EXTRA-PLUGINS] [--no-init]`
+* `install [--moodle MOODLE] [--data DATA] [--repo REPO] [--branch BRANCH] [--plugin PLUGIN] [--db-type DB-TYPE] [--db-user DB-USER] [--db-pass DB-PASS] [--db-name DB-NAME] [--db-host DB-HOST] [--not-paths NOT-PATHS] [--not-names NOT-NAMES] [--extra-plugins EXTRA-PLUGINS] [--no-init] [--node-version NODE-VERSION]`
 
 Install everything required for CI testing
 
@@ -944,6 +944,15 @@ Prevent PHPUnit and Behat initialization
 * Is value required: no
 * Is multiple: no
 * Default: `false`
+
+#### `--node-version`
+
+Node.js version to use for nvm install (this will override one defined in .nvmrc)
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `NULL`
 
 #### `--help|-h`
 
