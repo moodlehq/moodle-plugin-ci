@@ -15,12 +15,13 @@ language: php
 addons:
   postgresql: "9.5"
 
-# Ensure DB services are running.
+# Ensure DB and docker services are running.
 services:
   - mysql
   - postgresql
+  - docker
 
-# Cache NPM's and Composer's caches to speed up build times.
+# Cache Composer's and NPM's caches to speed up build times.
 cache:
   directories:
     - $HOME/.composer/cache
@@ -32,6 +33,7 @@ cache:
 php:
  - 7.2
  - 7.3
+ - 7.4
 
 # This section sets up the environment variables for the build.
 env:
@@ -51,6 +53,22 @@ env:
 # (git://github.com/moodle/moodle.git is used by default):
 # - MOODLE_REPO=git://github.com/username/moodle.git
 
+# Also, note that, for multi-branch scenarios, where the same plugin
+# codebase needs to be tested against multiple branches of Moodle,
+# it is possible to remove the `php`, `env/global`, and `matrix`
+# sections above and just create a `jobs` section explicitly defining
+# which `php`, `MOODLE_BRANCH` and `DB` to use, for example:
+#
+# jobs:
+#   include:
+#     - php: 7.3
+#       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=psql
+#     - php: 7.3
+#       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=mysqli
+#     ....
+# Note: this also enables to add specific env variables (NODE_VERSION,
+# EXTRA_PLUGINS...) per job, if you don't want to do it globally.
+
 # This lists steps that are run before the installation step.
 before_install:
 # This disables XDebug which should speed up the build.
@@ -59,7 +77,7 @@ before_install:
 # directories to build the project.
   - cd ../..
 # Install this project into a directory called "ci".
-  - composer create-project -n --no-dev --prefer-dist moodlehq/plugin-ci ci ^2
+  - composer create-project -n --no-dev --prefer-dist moodlehq/plugin-ci ci ^3
 # Update the $PATH so scripts from this project can be called easily.
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
@@ -71,6 +89,7 @@ install:
 #    - Create Moodle config.php, database, etc.
 #    - Copy your plugin(s) into Moodle.
 #    - Run Composer install within Moodle.
+#    - Install the correct (or configured) version of nodejs/npm using NVM.
 #    - Run NPM install in Moodle and in your plugin if it has a "package.json".
 #    - Run "grunt ignorefiles" within Moodle to update ignore file lists.
 #    - If your plugin has Behat features, then Behat will be setup.
