@@ -23,10 +23,14 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - Updated version of `moodlehq/moodle-local_codechecker` to v2.9.6
 - Updated [.travis.dist.yml] to build Moodle 3.9
 - `moodle-plugin-ci install` installs Node.js (npm) using the version
-  specified in .nvmrc file. See
+  specified in .nvmrc file or `lts/carbon` if .nvmrc is missing (pre Moodle
+  3.5). It is also possible to override default version by providing
+  --node-version parameter or defining `NODE_VERSION` env variable. The value of
+  this parameter should be compatible with `nvm install` command,
+  e.g. `v8.9`, `8.9.0`, `lts/erbium`. See
   [#7](https://github.com/moodlehq/moodle-plugin-ci/issues/7)
 - ACTION REQUIRED: You may safely remove `nvm install <version>` and `nvm use
-  <version>` from .travis.yml for Moodle 3.5 and above, this is now a part of installation routine.
+  <version>` from .travis.yml, this is now a part of installation routine.
 
 ### Added
 - New help document: [CLI commands and options](CLI.md)

@@ -25,40 +25,45 @@ class VendorInstallerTest extends MoodleTestCase
         $installer = new VendorInstaller(
             new DummyMoodle($this->moodleDir),
             new MoodlePlugin($this->pluginDir),
-            new DummyExecute()
+            new DummyExecute(),
+            null
         );
         $installer->install();
 
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
     }
 
-    public function testCanInstallNode()
+    public function testInstallNodeNoNvmrc()
     {
         $installer = new VendorInstaller(
             new DummyMoodle($this->moodleDir),
             new MoodlePlugin($this->pluginDir),
-            new DummyExecute()
+            new DummyExecute(),
+            null
         );
-
-        $this->assertTrue($installer->canInstallNode());
-
-        // Set current version of node to match required.
-        $reqVer = file_get_contents($this->moodleDir.'/.nvmrc');
-        $nvmBin = getenv('NVM_BIN');
-        $modVer = preg_replace('/^(\/.+\/)(v\d.+)(\/bin)$/', '$1'.$reqVer.'$2', $nvmBin);
-        putenv('NVM_BIN='.$modVer);
-        $this->assertFalse($installer->canInstallNode());
-
-        // Revert env change.
-        putenv('NVM_BIN='.$nvmBin);
-        $this->assertTrue($installer->canInstallNode());
 
         // Remove .nvmrc
         $this->fs->remove($this->moodleDir.'/.nvmrc');
 
-        // Expect .nvmrc pointing to legacy Node to be created.
-        $this->assertTrue($installer->canInstallNode());
+        // Expect .nvmrc containing legacy version of Node.
+        $installer->installNode();
         $this->assertTrue(is_file($this->moodleDir.'/.nvmrc'));
-        $this->assertSame(file_get_contents($this->moodleDir.'/.nvmrc'), 'lts/carbon');
+        $this->assertSame('lts/carbon', file_get_contents($this->moodleDir.'/.nvmrc'));
+    }
+
+    public function testInstallNodeUserVersion()
+    {
+        $userVersion = '8.9';
+        $installer   = new VendorInstaller(
+            new DummyMoodle($this->moodleDir),
+            new MoodlePlugin($this->pluginDir),
+            new DummyExecute(),
+            $userVersion
+        );
+        $installer->installNode();
+
+        // Expect .nvmrc containing user specified version.
+        $this->assertTrue(is_file($this->moodleDir.'/.nvmrc'));
+        $this->assertSame($userVersion, file_get_contents($this->moodleDir.'/.nvmrc'));
     }
 }
