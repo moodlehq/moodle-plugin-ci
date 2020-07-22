@@ -13,9 +13,21 @@ Prior to tagging a release, ensure the following have been updated:
 * If this is a new major version, then the `.travis.dist.yml` and `doc/TravisFileExplained.md` need to be updated
   to use the new major version.  Any other version will automatically be used.
 
-As of writing this, releases are made from the `master` branch.  To tag a release, use a commands like the following:
+When all the changes above have been performed, push them straight upstream to `master` (or create a standard PR
+to get them reviewed and incorporated upstream, **without merge commits** better).
+
+Once all code and commits are in place and verified, to tag a release, use some commands like the following:
 
 ```bash
 $ git tag -a 1.0.0 -m "Release version 1.0.0"
 $ git push origin 1.0.0
 ```
+
+When the tag is pushed, travis should automatically proceed to create the `moodle-plugin-ci.phar` release artifact
+and add it to the release files. Verify it has worked ok.
+
+If there is any problem with that automatic deployment, the artifact will need to be created manually, follow these steps:
+
+- TODO
+- WIP
+
