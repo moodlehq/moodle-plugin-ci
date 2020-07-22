@@ -6,6 +6,12 @@
   "license": "GPL-3.0-or-later",
   "authors": [
     {
+      "name": "Ruslan Kabalin",
+      "email": "ruslan@moodle.com",
+      "homepage": "https://moodle.com",
+      "role": "Maintainer"
+    },
+    {
       "name": "Mark Nielsen",
       "email": "mark.nielsen@blackboard.com",
       "homepage": "https://www.blackboard.com",
@@ -18,6 +24,11 @@
       "role": "Developer"
     }
   ],
+  "support": {
+    "issues": "https://github.com/moodlehq/moodle-plugin-ci/issues",
+    "source": "https://github.com/moodlehq/moodle-plugin-ci",
+    "docs": "https://moodlehq.github.io/moodle-plugin-ci/"
+  },
   "repositories": [
     {
       "type": "package",
