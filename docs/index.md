@@ -25,14 +25,15 @@ This project supports the following testing frameworks and code analysis tools:
 
 ## Requirements
 
-The requirements for **Version 2** are **PHP 5.6** or later and **Moodle 3.2** or later.
+The requirements for **Version 3** are **PHP 7.0** or later and **Moodle 3.2** or later.
 
 In addition, the plugin being tested must have a [version.php](https://docs.moodle.org/dev/version.php) file
 and `$plugin->component` must be defined within it.
 
-If you need to run your plugin in earlier versions of Moodle, then please use Version 1 of this tool.  Documentation
-and more information about Version 1 can be found in the [v1](https://github.com/moodlehq/moodle-plugin-ci/tree/v1)
-branch.  Please know that Version 1 is no longer getting new features and may not receive additional updates.
+If you need to run your plugin in earlier versions of Moodle, then please use previous versions of this tool.  Documentation
+and more [information about Version 2 can be found here](https://github.com/moodlehq/moodle-plugin-ci/tree/2.5.0/docs/index.md). Similarly, [information about Version 1 can be found in here](https://github.com/moodlehq/moodle-plugin-ci/blob/1.5.8/README.md)
+
+Please know older versions (1 and 2) are no longer getting new features and may not receive additional updates.
 
 ## Getting started
 
@@ -67,6 +68,7 @@ Congratulations, you are building on Travis CI!  Next steps on your continuous b
 
 Guides to updating your plugin's `.travis.yml` file to use the latest versions of this tool.
 
+* [Upgrade to 3.0](UPGRADE-3.0.md)
 * [Upgrade to 2.0](UPGRADE-2.0.md)
 
 ## Documentation

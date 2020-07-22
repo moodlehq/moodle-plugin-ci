@@ -10,17 +10,18 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 ### Changed
-- TODO: Document all the changes to jump to this new release from previous 2.5.0, similarly to the docs explaining 1.x => 2.x changes.
 - ACTION REQUIRED: project organization renamed to moodlehq. You must update your `.travis.yml` to use `moodlehq/moodle-plugin-ci`
-- Updated [.travis.dist.yml] with a new `services` section to ensure databases start.
-- Updated [.travis.dist.yml] to remove `openjdk-8-jre-headless` and updated `moodlehq/moodle-local_ci` to fix Mustache linting. See [moodle-local_ci/pull#198](https://github.com/moodlehq/moodle-local_ci/pull/198).
-- `moodle-plugin-ci behat` is using Selenium docker container for built-in Selenium server.
 - ACTION REQUIRED: If you initiated Selenium server in docker container as
   part of your test scenario (e.g. separate step in install stage similar to
   one outlined in workaround
   [blackboard-open-source/issue#110](https://github.com/blackboard-open-source/moodle-plugin-ci/issues/110)),
   this is no longer required, you can remove this step.
-- Updated version of `moodlehq/moodle-local_codechecker` to v2.9.6
+- ACTION REQUIRED: You may safely remove `nvm install <version>` and `nvm use
+  <version>` from .travis.yml, this is now a part of installation routine.
+- Updated [.travis.dist.yml] with a new `services` section to ensure databases start.
+- Updated [.travis.dist.yml] to remove `openjdk-8-jre-headless` and updated `moodlehq/moodle-local_ci` to fix Mustache linting. See [moodle-local_ci/pull#198](https://github.com/moodlehq/moodle-local_ci/pull/198).
+- `moodle-plugin-ci behat` is using Selenium docker container for built-in Selenium server.
+- Updated version of `moodlehq/moodle-local_codechecker` to v2.9.7
 - Updated [.travis.dist.yml] to build Moodle 3.9
 - `moodle-plugin-ci install` installs Node.js (npm) using the version
   specified in .nvmrc file or `lts/carbon` if .nvmrc is missing (pre Moodle
@@ -29,8 +30,6 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   this parameter should be compatible with `nvm install` command,
   e.g. `v8.9`, `8.9.0`, `lts/erbium`. See
   [#7](https://github.com/moodlehq/moodle-plugin-ci/issues/7)
-- ACTION REQUIRED: You may safely remove `nvm install <version>` and `nvm use
-  <version>` from .travis.yml, this is now a part of installation routine.
 
 ### Added
 - New help document: [CLI commands and options](CLI.md)

@@ -25,7 +25,7 @@ upgrade of NodeJS, etc.
 
 ### What is happening to Version 1?
 
-Version 1 still exists in the [v1](https://github.com/moodlehq/moodle-plugin-ci/tree/v1) branch.  You can continue
+Version 1 still exists as its last release [1.5.8](https://github.com/moodlehq/moodle-plugin-ci/tree/1.5.8).  You can continue
 to use it, but it is no longer getting new features and may not receive additional updates.  In addition, it may start
 breaking in Moodle 3.2 or later.
 
