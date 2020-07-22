@@ -18,8 +18,7 @@ Detailed information about what changed in Version 3 can be found in the [change
 Review the updated [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
 and update your `.travis.yml` file in your plugin. For detailed information about the contents of `.travis.dist.yml`
 file, please see this [help document](TravisFileExplained.md).  **Please carefully** review the updated
-`.travis.dist.yml` as some steps have been removed and others added, like installation of Java 8,
-upgrade of NodeJS, etc.
+`.travis.dist.yml` as some steps have been removed (like installation of Java 8, installing of NodeJS, etc.) and others added.
 
 A summary of the actions required may be:
 
