@@ -81,6 +81,7 @@ jobs:
         - php build/moodle-plugin-ci.phar list
       deploy:
         provider: releases
+        api_key: $GITHUB_TOKEN
         file: build/moodle-plugin-ci.phar
         cleanup: false
         on:
