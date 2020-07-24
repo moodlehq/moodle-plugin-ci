@@ -7,7 +7,10 @@ The goal of this project is to facilitate the running of tests and code analysis
 [Travis CI](https://travis-ci.org).  All of these tests and tools are run everytime a change is pushed to a GitHub
 branch or pull request.
 
-All documentation, guides, change log, etc can be found here: https://moodlehq.github.io/moodle-plugin-ci/
+* [Getting started](https://moodlehq.github.io/moodle-plugin-ci/)
+* [Help topics](https://moodlehq.github.io/moodle-plugin-ci/Help.html)
+* [Changelog](https://moodlehq.github.io/moodle-plugin-ci/CHANGELOG.html)
+* [Upgrade 3.0](https://moodlehq.github.io/moodle-plugin-ci/UPGRADE-3.0.html)
 
 History, acknowledgement and appreciation
 =========================================
