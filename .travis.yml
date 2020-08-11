@@ -73,6 +73,7 @@ jobs:
     - php: 7.0
       env: MOODLE_BRANCH=MOODLE_35_STABLE
     - stage: Deploy
+      if: tag IS present
       before_install: skip
       install: skip
       script: skip
@@ -83,7 +84,7 @@ jobs:
         provider: releases
         api_key: $GITHUB_TOKEN
         file: build/moodle-plugin-ci.phar
-        cleanup: false
+        skip_cleanup: true
         on:
           repo: moodlehq/moodle-plugin-ci
           tags: true

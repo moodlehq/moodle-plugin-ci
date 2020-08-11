@@ -36,6 +36,7 @@ No unreleased changes.
 
 ### Added
 - New help document: [CLI commands and options](CLI.md)
+- Upgrade guide: [Upgrading from 2.X to 3.0](UPGRADE-3.0.md)
 
 ### Removed
 - Support for PHP 5.x (7.0.0 is now required).
