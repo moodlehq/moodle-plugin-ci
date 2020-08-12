@@ -62,7 +62,7 @@ env:
 # jobs:
 #   include:
 #     - php: 7.3
-#       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=psql
+#       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=pgsql
 #     - php: 7.3
 #       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=mysqli
 #     ....
