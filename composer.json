@@ -64,11 +64,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_moodlecheck",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
           "type": "git",
-          "reference": "272187600c71a7833086c48f6ea40e7287074a7b"
+          "reference": "ceab6b90ff9f4680468bd6720b2add290b608820"
         }
       }
     }
