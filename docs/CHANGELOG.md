@@ -9,7 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Changed
+- Updated [.travis.dist.yml] to use Postgresql 9.6 (Moodle 3.10 new requirement).
 
 ## [3.0.0] - 2020-07-23
 ### Changed
