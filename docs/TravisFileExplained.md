@@ -13,7 +13,7 @@ language: php
 
 # Installs the updated version of PostgreSQL and extra APT packages.
 addons:
-  postgresql: "9.5"
+  postgresql: "9.6"
 
 # Ensure DB and docker services are running.
 services:
