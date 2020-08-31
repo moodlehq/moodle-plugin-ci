@@ -132,7 +132,7 @@ class GruntCommand extends AbstractMoodleCommand
         $code = 0;
 
         // Look for modified files or files that should be deleted.
-        $files = Finder::create()->files()->in($this->backupDir)->name('*.js')->name('*.css')->getIterator();
+        $files = Finder::create()->files()->in($this->backupDir)->name('*.js')->name('*.js.map')->name('*.css')->getIterator();
         foreach ($files as $file) {
             $compareFile = $this->plugin->directory.'/'.$file->getRelativePathname();
             if (!file_exists($compareFile)) {
@@ -148,7 +148,7 @@ class GruntCommand extends AbstractMoodleCommand
         }
 
         // Look for newly generated files.
-        $files = Finder::create()->files()->in($this->plugin->directory)->name('*.js')->name('*.css')->getIterator();
+        $files = Finder::create()->files()->in($this->plugin->directory)->name('*.js')->name('*.js.map')->name('*.css')->getIterator();
         foreach ($files as $file) {
             if (!file_exists($this->backupDir.'/'.$file->getRelativePathname())) {
                 $output->writeln(sprintf('<error>File is newly generated and needs to be added: %s</error>', $file->getRelativePathname()));
