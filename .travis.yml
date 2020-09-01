@@ -46,7 +46,10 @@ script:
   - moodle-plugin-ci validate
   - moodle-plugin-ci savepoints
   - moodle-plugin-ci mustache
-  - moodle-plugin-ci grunt || [ "$MOODLE_BRANCH" != 'master' -a "$MOODLE_BRANCH" != 'MOODLE_39_STABLE' ]
+  - moodle-plugin-ci grunt || [ \
+        "$MOODLE_BRANCH" != 'master' -a \
+        "$MOODLE_BRANCH" != 'MOODLE_310_STABLE' -a \
+        "$MOODLE_BRANCH" != 'MOODLE_39_STABLE' ]
   - moodle-plugin-ci phpdoc
   - moodle-plugin-ci phpunit --coverage-text
   - moodle-plugin-ci behat --profile default
@@ -62,6 +65,8 @@ jobs:
       script:
         - make validate
     - stage: Integration tests
+    - php: 7.4
+      env: MOODLE_BRANCH=MOODLE_310_STABLE
     - php: 7.4
       env: MOODLE_BRANCH=MOODLE_39_STABLE
     - php: 7.4
