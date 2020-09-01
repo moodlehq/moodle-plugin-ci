@@ -193,5 +193,25 @@ class GruntCommandTest extends MoodleTestCase
         $output = new BufferedOutput();
         $this->assertSame(1, $command->validatePluginFiles($output));
         $this->assertSame("File is newly generated and needs to be added: amd/build/new.min.js\n", $output->fetch());
+
+        $command->restorePlugin();
+        $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
+        $this->assertSame('', $emptyOutput->fetch());
+
+        $this->fs->remove($this->pluginDir.'/amd/build/keys.min.js.map');
+
+        $output = new BufferedOutput();
+        $this->assertSame(1, $command->validatePluginFiles($output));
+        $this->assertSame("File no longer generated and likely should be deleted: amd/build/keys.min.js.map\n", $output->fetch());
+
+        $command->restorePlugin();
+        $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
+        $this->assertSame('', $emptyOutput->fetch());
+
+        $this->fs->touch($this->pluginDir.'/amd/build/new.min.js.map');
+
+        $output = new BufferedOutput();
+        $this->assertSame(1, $command->validatePluginFiles($output));
+        $this->assertSame("File is newly generated and needs to be added: amd/build/new.min.js.map\n", $output->fetch());
     }
 }
