@@ -68,7 +68,7 @@
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
           "type": "git",
-          "reference": "ceab6b90ff9f4680468bd6720b2add290b608820"
+          "reference": "79fe5956f9e9be906499c01dbc59695c2412643d"
         }
       }
     }
@@ -77,7 +77,7 @@
     "php": ">=7.0.0",
     "moodlehq/moodle-local_codechecker": "^2.9.7",
     "moodlehq/moodle-local_ci": "^1.0.5",
-    "moodlehq/moodle-local_moodlecheck": "^1.0.1",
+    "moodlehq/moodle-local_moodlecheck": "^1.0.2",
     "sebastian/phpcpd": "^3.0",
     "phpmd/phpmd": "^2.2",
     "symfony/dotenv": "^3.3",
