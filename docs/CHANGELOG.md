@@ -11,6 +11,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Changed
 - Updated [.travis.dist.yml] to use Postgresql 9.6 (Moodle 3.10 new requirement).
+- Updated composer.json to use the latest version of `local_moodlecheck` plugin.
 
 ### Fixed
 - `moodle-plugin-ci grunt` now also checks `*.js.map` files.
