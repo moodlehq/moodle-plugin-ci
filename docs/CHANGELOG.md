@@ -9,9 +9,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [3.0.1] - 2020-09-04
 ### Changed
 - Updated [.travis.dist.yml] to use Postgresql 9.6 (Moodle 3.10 new requirement).
 - Updated composer.json to use the latest version of `local_moodlecheck` plugin.
+- Updated project dependencies
 
 ### Fixed
 - `moodle-plugin-ci grunt` now also checks `*.js.map` files.
