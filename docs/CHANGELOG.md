@@ -281,6 +281,7 @@ No unreleased changes.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
 [Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.0...master
+[3.0.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.5.0...3.0.0
 [2.5.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.4.0...2.5.0
 [2.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.3.0...2.4.0
