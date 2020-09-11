@@ -52,11 +52,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_ci",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_ci.git",
           "type": "git",
-          "reference": "3c8a4e7ed8dd14732ff21070dd8baab48c87fb0b"
+          "reference": "07ac69779414a3838ee9e95aebbd5068938e16f8"
         }
       }
     },
@@ -64,11 +64,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_moodlecheck",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
           "type": "git",
-          "reference": "79fe5956f9e9be906499c01dbc59695c2412643d"
+          "reference": "7e856a52fd8c9710da203873cf9674de4d1c2611"
         }
       }
     }
