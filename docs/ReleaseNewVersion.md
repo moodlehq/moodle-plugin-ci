@@ -23,25 +23,26 @@ double CI build on Travis, also when merging PR, please **avoid merge commit**
 Once all code and commits are in place and verified, you need to tag a
 release.
 
-There are two options: you can tag `master` branch `HEAD` and push using commands:
+Tag `master` branch `HEAD` and push using commands:
 
 ```bash
 $ git tag -a 3.1.0 -m "Release version 3.1.0"
 $ git push origin 3.1.0
 ```
 
-Alternatively, you can use GitHub interface to tag: click "Draft a new release" and specify
-tag using the interface (you can leave title field empty, tag will be used as
-title in this case) and click "Publish release".
+(while it's also possible to use GitHub interface, we have decided not to do so, travis
+will, automatically, create the needed artifacts and perform the release)
 
-In either option, when the tag is pushed or created via interface, travis will
-trigger a tag build that contains Deploy stage. At this stage it should
-automatically create the `moodle-plugin-ci.phar` release artifact and add it
+When the tag is pushed, travis will trigger a tag build that contains Deploy stage.
+At this stage it should automatically create the `moodle-plugin-ci.phar` release artifact and add it
 to the latest release "assets" on GitHub. Verify it has worked correctly by
-navigating at
-[Releases](https://github.com/moodlehq/moodle-plugin-ci/releases).
+navigating at [Releases](https://github.com/moodlehq/moodle-plugin-ci/releases).
 
-__Note:__ Before triggering tag build, make sure that Travis is not running any
+While in that page, optionally, you can edit the release and add any content to
+the description (we use to put some constant links to the changelog / upgrade docs,
+but anything important can be commented if needed to).
+
+__Note:__ Before sending the tag upstream, make sure that Travis is not running any
 builds, otherwise tag build might not get triggered. If this happenened, you
 need to remove tag and push it again when Travis is not busy.
 
