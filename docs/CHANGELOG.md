@@ -11,6 +11,13 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [3.0.2] - 2020-09-11
+### Added
+- Skip HTML validation in mustache templates adding a `.mustachelintignore` standard ignores file to the plugin. Useful for templates containing specific syntax not being valid HTML (Ionic..).
+
+### Changed
+- Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
+
 ## [3.0.1] - 2020-09-04
 ### Changed
 - Updated [.travis.dist.yml] to use Postgresql 9.6 (Moodle 3.10 new requirement).
@@ -280,7 +287,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.0...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.2...master
+[3.0.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.5.0...3.0.0
 [2.5.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.4.0...2.5.0
