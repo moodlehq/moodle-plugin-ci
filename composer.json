@@ -74,18 +74,18 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.0.8",
     "moodlehq/moodle-local_codechecker": "^2.9.7",
     "moodlehq/moodle-local_ci": "^1.0.5",
     "moodlehq/moodle-local_moodlecheck": "^1.0.2",
     "sebastian/phpcpd": "^3.0",
     "phpmd/phpmd": "^2.2",
-    "symfony/dotenv": "^3.3",
-    "symfony/filesystem": "^3.3",
-    "symfony/finder": "^3.3",
-    "symfony/console": "^3.3",
-    "symfony/yaml": "^3.3",
-    "symfony/process": "^3.3",
+    "symfony/dotenv": "^3.4",
+    "symfony/filesystem": "^3.4",
+    "symfony/finder": "^3.4",
+    "symfony/console": "^3.4",
+    "symfony/yaml": "^3.4",
+    "symfony/process": "^3.4",
     "php-parallel-lint/php-parallel-lint": "^1.2.0",
     "php-parallel-lint/php-console-highlighter": "^0.5",
     "psr/log": "^1.0",
@@ -99,7 +99,7 @@
   },
   "config": {
     "platform": {
-      "php": "7.0"
+      "php": "7.0.8"
     }
   },
   "autoload": {
