@@ -62,10 +62,11 @@
       <code>$input-&gt;getOption('not-paths')</code>
       <code>$input-&gt;getOption('not-names')</code>
     </PossiblyInvalidArgument>
-    <PossiblyInvalidPropertyAssignmentValue occurrences="3">
+    <PossiblyInvalidPropertyAssignmentValue occurrences="4">
       <code>$input-&gt;getOption('data')</code>
       <code>$pluginsDir</code>
       <code>$input-&gt;getOption('no-init')</code>
+      <code>$input->getOption('node-version')</code>
     </PossiblyInvalidPropertyAssignmentValue>
   </file>
   <file src="src/Command/MessDetectorCommand.php">
