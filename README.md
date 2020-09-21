@@ -1,10 +1,10 @@
 [![Latest Stable Version](https://poser.pugx.org/moodlehq/moodle-plugin-ci/v)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
-[![Build Status](https://travis-ci.org/moodlehq/moodle-plugin-ci.svg?branch=master)](https://travis-ci.org/moodlehq/moodle-plugin-ci)
+[![Build Status](https://travis-ci.com/moodlehq/moodle-plugin-ci.svg?branch=master)](https://travis-ci.com/moodlehq/moodle-plugin-ci)
 [![Total Downloads](https://poser.pugx.org/moodlehq/moodle-plugin-ci/downloads)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 [![License](https://poser.pugx.org/moodlehq/moodle-plugin-ci/license)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 
 The goal of this project is to facilitate the running of tests and code analysis against a Moodle plugin in
-[Travis CI](https://travis-ci.org).  All of these tests and tools are run everytime a change is pushed to a GitHub
+[Travis CI](https://travis-ci.com).  All of these tests and tools are run everytime a change is pushed to a GitHub
 branch or pull request.
 
 * [Getting started](https://moodlehq.github.io/moodle-plugin-ci/)
