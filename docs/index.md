@@ -4,7 +4,7 @@ title: Introduction
 ---
 
 The goal of this project is to facilitate the running of tests and code analysis against a Moodle plugin in
-[Travis CI](https://travis-ci.org).  All of these tests and tools are run everytime a change is pushed to a GitHub
+[Travis CI](https://travis-ci.com).  All of these tests and tools are run everytime a change is pushed to a GitHub
 branch or pull request.
 
 Why would you want to do this?  It saves you from having to remember to setup and run PHPUnit, Behat, code checker, etc
@@ -41,8 +41,8 @@ Follow these steps to get your Moodle plugin building in Travis CI.
 
 ### Step 1
 
-Sign into [Travis CI](https://travis-ci.org) with your GitHub account. Once you’re signed in, and Travis CI will have
-synchronized your repositories from GitHub.  Go to your [profile](https://travis-ci.org/profile) page and enable Travis CI
+Sign into [Travis CI](https://travis-ci.com) with your GitHub account. Once you’re signed in, and Travis CI will have
+synchronized your repositories from GitHub.  Go to your [profile](https://travis-ci.com/profile) page and enable Travis CI
 for the plugin you want to build.  Now whenever your plugin receives an update or gets a new pull request, Travis CI will
 run a build to make sure nothing broke.
 
@@ -52,7 +52,7 @@ Copy the [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/ma
 root of your plugin and rename it to `.travis.yml`. Now might be a good time to review the `.travis.yml` contents and
 remove anything that is not needed.  See this [help document](TravisFileExplained.md) for an explanation about the
 contents of the this file. Once you have added the `.travis.yml` file, commit and push up to GitHub, to trigger a
-Travis CI build. Navigate back to [Travis CI](https://travis-ci.org) to see if your build passes or fails.
+Travis CI build. Navigate back to [Travis CI](https://travis-ci.com) to see if your build passes or fails.
 
 ### Step 3
 
