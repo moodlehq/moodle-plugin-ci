@@ -34,3 +34,9 @@
     {}
 }}
 <span class="loading-icon">{{#pix}} y/loading, core, {{#str}} loading {{/str}} {{/pix}}</span>
+
+{{#js}}
+require(['jquery'], function($) {
+    $('.loading-icon').css("color", "red");
+});
+{{/js}}
