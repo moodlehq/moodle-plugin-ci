@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad1d86c385702f0cd0caae16d4213850",
+    "content-hash": "a01d6edb2b56aa7a10f7f63354b2ca45",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -183,21 +183,21 @@
         },
         {
             "name": "moodlehq/moodle-local_ci",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_ci.git",
-                "reference": "07ac69779414a3838ee9e95aebbd5068938e16f8"
+                "reference": "a0993ac0d4e9c28a234480f9ed503609e0bac0a8"
             },
             "type": "library"
         },
         {
             "name": "moodlehq/moodle-local_codechecker",
-            "version": "2.9.7",
+            "version": "2.9.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
-                "reference": "v2.9.7"
+                "reference": "v2.9.8"
             },
             "type": "library",
             "autoload": {

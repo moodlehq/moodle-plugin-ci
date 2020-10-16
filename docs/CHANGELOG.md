@@ -11,6 +11,11 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [3.0.3] - 2020-10-16
+### Changed
+- Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v2.9.8.
+- Updated project dependencies ([moodle-local_ci](https://github.com/moodlehq/moodle-local_ci)).
+
 ## [3.0.2] - 2020-09-11
 ### Added
 - Skip HTML validation in mustache templates adding a `.mustachelintignore` standard ignores file to the plugin. Useful for templates containing specific syntax not being valid HTML (Ionic..).
@@ -287,7 +292,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.2...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.3...master
+[3.0.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.2...3.0.3
 [3.0.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/2.5.0...3.0.0
