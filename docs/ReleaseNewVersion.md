@@ -23,6 +23,10 @@ double CI build on Travis, also when merging PR, please **avoid merge commit**
 Once all code and commits are in place and verified, you need to tag a
 release.
 
+__Note:__ Before sending the tag upstream, make sure that Travis is not running any
+builds, otherwise tag build might not get triggered. If this happenened, you
+need to remove tag and push it again when Travis is not busy.
+
 Tag `master` branch `HEAD` and push using commands:
 
 ```bash
@@ -41,10 +45,6 @@ navigating at [Releases](https://github.com/moodlehq/moodle-plugin-ci/releases).
 While in that page, optionally, you can edit the release and add any content to
 the description (we use to put some constant links to the changelog / upgrade docs,
 but anything important can be commented if needed to).
-
-__Note:__ Before sending the tag upstream, make sure that Travis is not running any
-builds, otherwise tag build might not get triggered. If this happenened, you
-need to remove tag and push it again when Travis is not busy.
 
 If there is any problem with that automatic deployment, the artifact will need to be created manually. First build PHAR file manually:
 
