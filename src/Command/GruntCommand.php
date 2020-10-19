@@ -184,12 +184,12 @@ class GruntCommand extends AbstractMoodleCommand
                 return new GruntTaskModel($task, $amdDir, 'amd/build');
             case 'shifter':
             case 'yui':
-                $yuiDir = $this->plugin->directory.'/yui';
+                $yuiDir = $this->plugin->directory.'/yui/src';
                 if (!is_dir($yuiDir)) {
                     return null;
                 }
 
-                return new GruntTaskModel($task, $yuiDir.'/src', 'yui/build');
+                return new GruntTaskModel($task, $yuiDir, 'yui/build');
             case 'gherkinlint':
                 if ($this->moodle->getBranch() < 33 || !$this->plugin->hasBehatFeatures()) {
                     return null;

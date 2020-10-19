@@ -97,6 +97,16 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertNull($command->toGruntTask('shifter'));
     }
 
+    public function testToGruntTaskWithLegacyYUI()
+    {
+        $command = $this->newCommand();
+        $this->fs->remove($this->pluginDir.'/yui/src');
+        $this->fs->touch($this->pluginDir.'/yui/examplejs');
+
+        $this->assertNull($command->toGruntTask('yui'));
+        $this->assertNull($command->toGruntTask('shifter'));
+    }
+
     public function testToGruntTaskWithGherkin()
     {
         $command = $this->newCommand();
