@@ -146,7 +146,7 @@ class BehatCommand extends AbstractMoodleCommand
         }
 
         // Start web server.
-        $web = new Process('php -S localhost:8000', $this->moodle->directory);
+        $web = new Process(['php', '-S', 'localhost:8000'], $this->moodle->directory);
         $web->setTimeout(0);
         $web->disableOutput();
         $web->start();
