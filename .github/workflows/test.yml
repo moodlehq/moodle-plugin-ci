@@ -8,7 +8,7 @@ on:
 
 jobs:
   selftest:
-    name: Self-test
+    name: CI test (make validate)
     runs-on: ubuntu-18.04
 
     steps:

@@ -19,7 +19,7 @@ test-phpunit: vendor/autoload.php
 validate: build/php-cs-fixer.phar vendor/autoload.php psalm check-docs
 	$(FIXER) fix --dry-run --stop-on-violation
 	$(COMPOSER) validate
-	phpdbg -qrr $(PHPUNIT) --coverage-text
+	phpdbg -d memory_limit=-1 -qrr $(PHPUNIT) --coverage-text
 
 .PHONY:psalm
 psalm: build/psalm.phar
