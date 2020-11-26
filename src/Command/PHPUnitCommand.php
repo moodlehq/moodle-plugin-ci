@@ -99,7 +99,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
             return '';
         }
 
-        return 'phpdbg -qrr ';
+        return 'phpdbg -d memory_limit=-1 -qrr ';
     }
 
     /**
