@@ -56,8 +56,6 @@ jobs:
             moodle-branch: 'MOODLE_39_STABLE'
           - php: '7.4'
             moodle-branch: 'MOODLE_38_STABLE'
-          - php: '7.3'
-            moodle-branch: 'MOODLE_37_STABLE'
           - php: '7.2'
             moodle-branch: 'MOODLE_35_STABLE'
           - php: '7.0'
