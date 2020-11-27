@@ -76,7 +76,7 @@ class VendorInstaller extends AbstractInstaller
         if ($this->plugin->hasUnitTests() || $this->plugin->hasBehatFeatures()) {
             $processes[] = new Process('composer install --no-interaction --prefer-dist', $this->moodle->directory, null, null, null);
         }
-        $processes[] = new Process('npm install -g --no-progress grunt', null, null, null, null);
+        $processes[] = new Process('npm install --no-progress grunt', null, null, null, null);
 
         $this->execute->mustRunAll($processes);
 
@@ -87,7 +87,7 @@ class VendorInstaller extends AbstractInstaller
             $this->execute->mustRun(new Process('npm install --no-progress', $this->plugin->directory, null, null, null));
         }
 
-        $this->execute->mustRun(new Process('grunt ignorefiles', $this->moodle->directory, null, null, null));
+        $this->execute->mustRun(new Process('npx grunt ignorefiles', $this->moodle->directory, null, null, null));
     }
 
     public function stepCount()
