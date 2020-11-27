@@ -14,6 +14,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   This resolves an issue where an "Unable to find local grunt" message was reported when code was structured in a legacy
   format. See #46 for more details.
 
+### Changed
+- `moodle-plugin-ci phpunit` when coverage report is included, phpdbg is called with ignore memory limits param
+  to avoid memory exhaused errors.
+
 ## [3.0.3] - 2020-10-16
 ### Changed
 - Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v2.9.8.
