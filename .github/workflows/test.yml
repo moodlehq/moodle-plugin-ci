@@ -113,6 +113,6 @@ jobs:
             "$MOODLE_BRANCH" != 'MOODLE_310_STABLE' -a \
             "$MOODLE_BRANCH" != 'MOODLE_39_STABLE' ]
         moodle-plugin-ci phpdoc
-        moodle-plugin-ci phpunit --coverage-text
+        moodle-plugin-ci phpunit
         moodle-plugin-ci behat --profile default
         moodle-plugin-ci behat --profile chrome
