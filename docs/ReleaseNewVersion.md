@@ -21,32 +21,29 @@ double CI build on Travis, also when merging PR, please **avoid merge commit**
 (use "Rebase and merge" option).
 
 Once all code and commits are in place and verified, you need to tag a
-release.
-
-__Note:__ Before sending the tag upstream, make sure that Travis is not running any
-builds, otherwise tag build might not get triggered. If this happenened, you
-need to remove tag and push it again when Travis is not busy.
-
-Tag `master` branch `HEAD` and push using commands:
+release. Tag `master` branch `HEAD` and push using commands:
 
 ```bash
 $ git tag -a 3.1.0 -m "Release version 3.1.0"
 $ git push origin 3.1.0
 ```
 
-(while it's also possible to use GitHub interface, we have decided not to do so, travis
-will, automatically, create the needed artifacts and perform the release)
+(while it's also possible to use GitHub interface, we have decided not to do
+so, GitHub release action will, automatically, create the needed artifacts and
+perform the release)
 
-When the tag is pushed, travis will trigger a tag build that contains Deploy stage.
-At this stage it should automatically create the `moodle-plugin-ci.phar` release artifact and add it
-to the latest release "assets" on GitHub. Verify it has worked correctly by
-navigating at [Releases](https://github.com/moodlehq/moodle-plugin-ci/releases).
+When the tag is pushed, GitHub release action will be triggered.  At this
+stage it should automatically create the `moodle-plugin-ci.phar` release
+artifact and add it to the latest release "assets" on GitHub. Verify it has
+worked correctly by navigating at
+[Releases](https://github.com/moodlehq/moodle-plugin-ci/releases).
 
-While in that page, optionally, you can edit the release and add any content to
-the description (we use to put some constant links to the changelog / upgrade docs,
-but anything important can be commented if needed to).
+While in that page, optionally, you can edit the release and add any content
+to the description (links to the changelog / upgrade docs are added
+automatically but anything important can be commented if needed to).
 
-If there is any problem with that automatic deployment, the artifact will need to be created manually. First build PHAR file manually:
+If there is any problem with that automatic deployment, the artifact will need
+to be created manually. First build PHAR file manually:
 
 ```bash
 $ make build/moodle-plugin-ci.phar
