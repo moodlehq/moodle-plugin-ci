@@ -40,13 +40,6 @@
             </errorLevel>
         </UnresolvableInclude>
 
-        <!-- Invalid PHPDoc on Symfony process helper -->
-        <PossiblyInvalidArgument>
-            <errorLevel type="suppress">
-                <file name="src/Process/Execute.php"/>
-            </errorLevel>
-        </PossiblyInvalidArgument>
-
         <!-- These are due to how Command classes work with properties -->
         <PossiblyNullArgument>
             <errorLevel type="suppress">
@@ -89,6 +82,8 @@
             <errorLevel type="suppress">
                 <directory name="src/PluginValidate/Requirements"/>
                 <file name="src/Command/CodeFixerCommand.php"/>
+                <file name="src/Installer/AbstractInstaller.php"/>
+                <file name="src/PluginValidate/Finder/FinderInterface.php"/>
             </errorLevel>
         </MissingReturnType>
 
