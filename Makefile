@@ -57,7 +57,7 @@ build/php-cs-fixer.phar:
 
 # Update download URL from https://github.com/vimeo/psalm/releases
 build/psalm.phar:
-	curl -LSs https://github.com/vimeo/psalm/releases/download/3.0.17/psalm.phar -o build/psalm.phar
+	curl -LSs https://github.com/vimeo/psalm/releases/download/3.18.2/psalm.phar -o build/psalm.phar
 
 build/box.phar:
 	@cd build && curl -LSs https://box-project.github.io/box2/installer.php | php

@@ -160,7 +160,7 @@ class StatementFilter
     {
         $keys = [];
         foreach ($array->items as $item) {
-            if ($item->key instanceof String_) {
+            if (isset($item->key) && $item->key instanceof String_) {
                 $keys[] = $item->key->value;
             }
         }

@@ -105,7 +105,7 @@ class Moodle
         list($type, $name) = $this->normalizeComponent($component);
 
         // Must use reflection to avoid using static cache.
-        $method = new \ReflectionMethod('core_component', 'fetch_plugintypes');
+        $method = new \ReflectionMethod(\core_component::class, 'fetch_plugintypes');
         $method->setAccessible(true);
         $result = $method->invoke(null);
 

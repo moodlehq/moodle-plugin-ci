@@ -71,6 +71,7 @@ class AddPluginCommand extends Command
             throw new \InvalidArgumentException('Cannot use both the project argument and the --clone option');
         }
         if (!empty($project)) {
+            /** @psalm-suppress PossiblyInvalidArgument */
             $cloneUrl = sprintf('https://github.com/%s.git', $project);
         } elseif (!empty($clone)) {
             $cloneUrl = $clone;
@@ -81,7 +82,9 @@ class AddPluginCommand extends Command
         $filesystem->mkdir($storage);
         $storageDir = realpath($validate->directory($storage));
 
-        $process = new Process(sprintf('git clone --depth 1 --branch %s %s', $branch, $cloneUrl), $storageDir);
+        /** @psalm-suppress PossiblyInvalidArgument */
+        $cloneUrl = sprintf('git clone --depth 1 --branch %s %s', $branch, $cloneUrl);
+        $process  = new Process($cloneUrl, $storageDir);
         $this->execute->mustRun($process);
 
         $dumper = new EnvDumper();

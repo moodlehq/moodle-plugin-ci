@@ -52,11 +52,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_ci",
-        "version": "1.0.7",
+        "version": "1.0.8",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_ci.git",
           "type": "git",
-          "reference": "a0993ac0d4e9c28a234480f9ed503609e0bac0a8"
+          "reference": "d479a5c9147f58802776ce99b2cbd6bc2bb79bf1"
         }
       }
     },
@@ -64,11 +64,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_moodlecheck",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
           "type": "git",
-          "reference": "7e856a52fd8c9710da203873cf9674de4d1c2611"
+          "reference": "323e53108dc43bb6fe627a33f3eb4550732cbb3a"
         }
       }
     }
@@ -76,8 +76,8 @@
   "require": {
     "php": ">=7.0.8",
     "moodlehq/moodle-local_codechecker": "^2.9.8",
-    "moodlehq/moodle-local_ci": "^1.0.5",
-    "moodlehq/moodle-local_moodlecheck": "^1.0.2",
+    "moodlehq/moodle-local_ci": "^1.0.8",
+    "moodlehq/moodle-local_moodlecheck": "^1.0.4",
     "sebastian/phpcpd": "^3.0",
     "phpmd/phpmd": "^2.2",
     "symfony/dotenv": "^3.4",
