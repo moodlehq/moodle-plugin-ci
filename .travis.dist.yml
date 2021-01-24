@@ -13,21 +13,47 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-php:
- - 7.2
- - 7.3
- - 7.4
-
-env:
- global:
-  - MOODLE_BRANCH=MOODLE_39_STABLE
- matrix:
-  - DB=pgsql
-  - DB=mysqli
+matrix:
+ include:
+  # Moodle 3.4
+  #- php: 7.0 # 7.0-7.2
+  #  env: MOODLE_BRANCH=MOODLE_34_STABLE NODE_VERSION=8.9 DB=mysqli
+  # Moodle 3.5
+  - php: 7.0 # 7.0-7.2
+    env: MOODLE_BRANCH=MOODLE_35_STABLE NODE_VERSION=14.15 DB=mysqli
+  # Moodle 3.5, PostgreSQL
+  - php: 7.0 # 7.0-7.2
+    env: MOODLE_BRANCH=MOODLE_35_STABLE NODE_VERSION=14.15 DB=pgsql
+  # Moodle 3.6
+  #- php: 7.0 # 7.0-7.3
+  #  env: MOODLE_BRANCH=MOODLE_36_STABLE NODE_VERSION=8.17 DB=mysqli
+  # Moodle 3.7
+  #- php: 7.1 # 7.1-7.3
+  #  env: MOODLE_BRANCH=MOODLE_37_STABLE NODE_VERSION=14.15 DB=mysqli
+  # Moodle 3.8
+  - php: 7.1 # 7.1-7.4
+    env: MOODLE_BRANCH=MOODLE_38_STABLE NODE_VERSION=14.15 DB=mysqli
+  # Moodle 3.9
+  - php: 7.2 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_39_STABLE NODE_VERSION=14.15 DB=mysqli
+  # Moodle 3.9, PostgreSQL
+  - php: 7.3 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_39_STABLE NODE_VERSION=14.15 DB=pgsql
+  # Moodle 3.10
+  - php: 7.4 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_310_STABLE NODE_VERSION=14.15 DB=mysqli
+  # Moodle 3.11
+  #- php: 7.4 # 7.2-7.4
+  #  env: MOODLE_BRANCH=MOODLE_311_STABLE NODE_VERSION=14.15 DB=mysqli
+  # Moodle Master
+  #- php: 7.4 # 7.2-7.4
+  #  env: MOODLE_BRANCH=master NODE_VERSION=14.15 DB=mysqli
 
 before_install:
   - phpenv config-rm xdebug.ini
   - cd ../..
+  - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
   - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
