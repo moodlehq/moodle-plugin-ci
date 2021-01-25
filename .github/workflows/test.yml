@@ -30,7 +30,7 @@ jobs:
   citest:
     name: CI test
     needs: selftest
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-16.04
 
     services:
       postgres:
@@ -101,7 +101,6 @@ jobs:
       env:
         MOODLE_BRANCH: ${{ matrix.moodle-branch }}
       run: |
-        make test-phpunit
         moodle-plugin-ci phplint
         moodle-plugin-ci phpcpd
         moodle-plugin-ci phpmd
@@ -114,6 +113,6 @@ jobs:
             "$MOODLE_BRANCH" != 'MOODLE_310_STABLE' -a \
             "$MOODLE_BRANCH" != 'MOODLE_39_STABLE' ]
         moodle-plugin-ci phpdoc
-        moodle-plugin-ci phpunit
+        moodle-plugin-ci phpunit --verbose --coverage-text
         moodle-plugin-ci behat --profile default
         moodle-plugin-ci behat --profile chrome

@@ -13,12 +13,13 @@ test-fixer: build/php-cs-fixer.phar
 
 .PHONY:test-phpunit
 test-phpunit: vendor/autoload.php
-	$(PHPUNIT)
+	$(PHPUNIT) --verbose
 
 .PHONY:validate
 validate: build/php-cs-fixer.phar vendor/autoload.php psalm check-docs
 	$(FIXER) fix --dry-run --stop-on-violation
 	$(COMPOSER) validate
+	phpdbg --version
 	phpdbg -d memory_limit=-1 -qrr $(PHPUNIT) --coverage-text
 
 .PHONY:psalm
