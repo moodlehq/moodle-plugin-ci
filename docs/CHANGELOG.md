@@ -18,6 +18,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci phpunit` when coverage report is included, phpdbg is called with ignore memory limits param
   to avoid memory exhaused errors.
 - Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
+- Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.0.0.
 
 ### Added
 - Detect existence of legacy php-webdriver, and use a different Firefox image when it is in use

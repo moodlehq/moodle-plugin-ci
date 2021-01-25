@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28ffcc4c7f71645a660781f201cbd629",
+    "content-hash": "7ec8559bdf0136a99e1f68c2c278d24e",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -194,19 +194,13 @@
         },
         {
             "name": "moodlehq/moodle-local_codechecker",
-            "version": "2.9.8",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
-                "reference": "v2.9.8"
+                "reference": "v3.0.0"
             },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "pear/PHP/CodeSniffer.php",
-                    "pear/PHP/CodeSniffer/CLI.php"
-                ]
-            }
+            "type": "library"
         },
         {
             "name": "moodlehq/moodle-local_moodlecheck",
