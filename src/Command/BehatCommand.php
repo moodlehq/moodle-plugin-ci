@@ -31,7 +31,14 @@ class BehatCommand extends AbstractMoodleCommand
      *
      * @var string
      */
-    private $seleniumFirefoxImage = 'selenium/standalone-firefox:2.53.1';
+    private $seleniumLegacyFirefoxImage = 'selenium/standalone-firefox:2.53.1';
+
+    /**
+     * Selenium standalone Firefox image.
+     *
+     * @var string
+     */
+    private $seleniumFirefoxImage = 'selenium/standalone-firefox:3.141.59';
 
     /**
      * Selenium standalone Chrome image.
@@ -124,7 +131,13 @@ class BehatCommand extends AbstractMoodleCommand
         }
 
         // Start docker container using desired image.
-        $image = ($input->getOption('profile') === 'chrome') ? $this->seleniumChromeImage : $this->seleniumFirefoxImage;
+        if ($input->getOption('profile') === 'chrome') {
+            $image = $this->seleniumChromeImage;
+        } elseif ($this->usesLegacyPhpWebdriver()) {
+            $image = $this->seleniumLegacyFirefoxImage;
+        } else {
+            $image = $this->seleniumFirefoxImage;
+        }
         $cmd   = sprintf('docker run -d --rm -p 127.0.0.1:4444:4444 --name=selenium --net=host --shm-size=2g -v %s:%s %s',
             $this->moodle->directory, $this->moodle->directory, $image);
         $docker = $this->execute->passThrough($cmd);
@@ -164,5 +177,13 @@ class BehatCommand extends AbstractMoodleCommand
                 ]);
             }
         }
+    }
+
+    private function usesLegacyPhpWebdriver(): bool
+    {
+        // The `instaclick/php-webdriver` dependency requires use of a legacy version of Firefox.
+        $composerlock = "{$this->moodle->directory}/composer.lock";
+
+        return strpos(file_get_contents($composerlock), 'instaclick/php-webdriver') !== false;
     }
 }
