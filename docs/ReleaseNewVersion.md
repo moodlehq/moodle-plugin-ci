@@ -10,8 +10,10 @@ Prior to tagging a release, ensure the following have been updated:
 
 * The `CHANGELOG.md` needs to be up-to-date.  In addition, the _Unreleased_ section needs to be updated
   with the version being released.  Also update the _Unreleased_ link at the bottom with the new version number.
-* If this is a new major version, then the `.travis.dist.yml` and `doc/TravisFileExplained.md` need to be updated
-  to use the new major version.  Any other version will automatically be used.
+* If this is a new major version, then CI tool example files and its docs need
+  to be updated to use the new major version (e.g. for Travis CI make changes
+  in `.travis.dist.yml` and `doc/TravisFileExplained.md`). Any other version
+  will automatically be used.
 
 When all the changes above have been performed, push them straight upstream to
 `master` or create a standard PR to get them reviewed and incorporated
