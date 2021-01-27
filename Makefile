@@ -5,28 +5,32 @@ PSALM    := php build/psalm.phar
 CMDS     = $(wildcard src/Command/*.php)
 
 .PHONY:test
-test: test-fixer psalm test-phpunit check-docs
+test: check-init test-fixer psalm test-phpunit check-docs
 
 .PHONY:test-fixer
-test-fixer: build/php-cs-fixer.phar
+test-fixer: check-init
 	$(FIXER) fix -v || true
 
 .PHONY:test-phpunit
-test-phpunit: vendor/autoload.php
-	$(PHPUNIT)
+test-phpunit: check-init
+	$(PHPUNIT) --verbose
 
 .PHONY:validate
-validate: build/php-cs-fixer.phar vendor/autoload.php psalm check-docs
+validate: check-init psalm check-docs
 	$(FIXER) fix --dry-run --stop-on-violation
 	$(COMPOSER) validate
+	phpdbg --version
 	phpdbg -d memory_limit=-1 -qrr $(PHPUNIT) --coverage-text
 
+.PHONY:build
+build: build/moodle-plugin-ci.phar
+
 .PHONY:psalm
-psalm: build/psalm.phar
+psalm: check-init
 	$(PSALM)
 
 .PHONY:psalm-update-baseline
-psalm-update-baseline: build/psalm.phar
+psalm-update-baseline: check-init
 	$(PSALM) --update-baseline
 
 .PHONY:check-docs
@@ -34,12 +38,14 @@ check-docs: docs/CLI.md
 	@echo "CHECKING if 'docs/CLI.md' needs to be committed due to changes.  If this fails, simply commit the changes."
 	git diff-files docs/CLI.md
 
-# Downloads everything we need for testing, used by Travis.
+# Setup for testing.
 .PHONY: init
-init: vendor/autoload.php build/php-cs-fixer.phar build/psalm.phar
+init: build/php-cs-fixer.phar build/psalm.phar composer.lock composer.json
+	$(COMPOSER) selfupdate
+	$(COMPOSER) install --no-suggest --no-progress
 
 .PHONY: update
-update: build/php-cs-fixer.phar
+update: check-init build/php-cs-fixer.phar build/psalm.phar
 	$(COMPOSER) selfupdate
 	$(FIXER) selfupdate
 	$(COMPOSER) update
@@ -50,6 +56,12 @@ clean:
 	rm -f build/*.clover
 	rm -rf vendor
 	rm -f .php_cs.cache
+
+# Output error if not initialised.
+check-init:
+ifeq (, $(wildcard vendor))
+	$(error Run 'make init' first)
+endif
 
 # Update download URL from https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases
 build/php-cs-fixer.phar:
@@ -64,13 +76,8 @@ build/box.phar:
 
 build/moodle-plugin-ci.phar: build/box.phar
 	$(COMPOSER) install --no-dev --prefer-dist --classmap-authoritative --quiet
-	php -d phar.readonly=false build/box.phar build
+	php -d memory_limit=-1 -d phar.readonly=false build/box.phar build
 	$(COMPOSER) install --prefer-dist --quiet
-
-vendor/autoload.php: composer.lock composer.json
-	$(COMPOSER) self-update
-	$(COMPOSER) install --no-suggest --no-progress
-	touch $@
 
 docs/CLI.md: $(CMDS)
 	@rm -f $@
