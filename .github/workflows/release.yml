@@ -21,7 +21,7 @@ jobs:
 
       - name: Build PHAR
         run: |
-          make build/moodle-plugin-ci.phar
+          make build
           php build/moodle-plugin-ci.phar list
 
       - name: Create Release
