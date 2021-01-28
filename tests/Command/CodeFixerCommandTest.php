@@ -19,6 +19,14 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Yaml\Yaml;
 
+// Needed to allow caller CLI arguments (phpunit) to be accepted.
+if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+    define('PHP_CODESNIFFER_IN_TESTS', true);
+}
+
+/**
+ * @runTestsInSeparateProcesses There are some statics around (Timing...), so separate process.
+ */
 class CodeFixerCommandTest extends MoodleTestCase
 {
     protected function setUp()
@@ -64,9 +72,19 @@ EOT;
 
     public function testExecute()
     {
-        $this->expectOutputRegex('/Fixed 1 files/');
+        $this->expectOutputRegex('/\.+/'); // Trick to avoid output, real assertions below.
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
+
+        // Verify various parts of the output.
+        $output = $this->getActualOutput();
+        $this->assertRegExp('/F\.* 8\.* \/ 8 \(100%\)/', $output);                   // Progress.
+        $this->assertRegExp('/\/fixable.php/', $output);                            // File.
+        $this->assertRegExp('/A TOTAL OF 1 ERROR WERE FIXED IN 1 FILE/', $output);  // Summary.
+        $this->assertRegExp('/Time:.*Memory:/', $output);                           // Time.
+
+        // Also verify display info is correct.
+        $this->assertRegExp('/RUN  Code Beautifier and Fixer/', $commandTester->getDisplay());
 
         $expected = <<<'EOT'
 <?php

@@ -88,13 +88,6 @@
         </MissingReturnType>
 
         <!-- CodeSniffer has some bad PHPDoc -->
-        <InvalidPropertyAssignmentValue>
-            <errorLevel type="suppress">
-                <file name="src/Bridge/CodeSnifferCLI.php"/>
-            </errorLevel>
-        </InvalidPropertyAssignmentValue>
-
-        <!-- CodeSniffer has some bad PHPDoc -->
         <NullArgument>
             <errorLevel type="suppress">
                 <file name="src/Command/CodeFixerCommand.php"/>
@@ -102,10 +95,12 @@
             </errorLevel>
         </NullArgument>
 
-        <!-- It is defined in Moodle itself -->
+        <!-- It is defined in Moodle itself or included by the commands -->
         <UndefinedClass>
             <errorLevel type="suppress">
                 <file name="src/Bridge/Moodle.php"/>
+                <file name="src/Command/CodeCheckerCommand.php"/>
+                <file name="src/Command/CodeFixerCommand.php"/>
             </errorLevel>
         </UndefinedClass>
     </issueHandlers>

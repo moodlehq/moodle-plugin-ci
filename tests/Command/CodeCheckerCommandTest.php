@@ -19,6 +19,14 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Yaml\Yaml;
 
+// Needed to allow caller CLI arguments (phpunit) to be accepted.
+if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+    define('PHP_CODESNIFFER_IN_TESTS', true);
+}
+
+/**
+ * @runTestsInSeparateProcesses There are some statics around (Timing...), so separate process.
+ */
 class CodeCheckerCommandTest extends MoodleTestCase
 {
     protected function setUp()
@@ -51,9 +59,43 @@ class CodeCheckerCommandTest extends MoodleTestCase
 
     public function testExecute()
     {
-        $this->expectOutputRegex('/\.+/');
+        // Verify that the progress information is always printed, no matter there aren't warnings/errors.
+        $this->expectOutputRegex('/\.{7} 7 \/ 7 \(100%\)/');
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
+    }
+
+    public function testExecuteFail()
+    {
+        // Add a file known to have moodle errors.
+        $content = <<<'EOT'
+<?php
+
+if (true) {
+    $var = ldap_sort();  // To verify PHPCompatibility own sniff.
+} elseif (false) {
+    $var = print_object(); // To verify moodle own sniff.
+
+}
+EOT;
+        $this->fs->dumpFile($this->pluginDir.'/fixable.php', $content);
+
+        $this->expectOutputRegex('/\.+/'); // Trick to avoid output, real assertions below.
+        $commandTester = $this->executeCommand($this->pluginDir);
+        $this->assertSame(1, $commandTester->getStatusCode());
+
+        // Verify various parts of the output.
+        $output = $this->getActualOutput();
+        $this->assertRegExp('/E\.* 8\.* \/ 8 \(100%\)/', $output);                  // Progress.
+        $this->assertRegExp('/\/fixable.php/', $output);                            // File.
+        $this->assertRegExp('/ (4|5) ERRORS AND 1 WARNING AFFECTING 5 /', $output); // Summary (php70 shows one less)
+        $this->assertRegexp('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
+        $this->assertRegexp('/print_object\(\) is forbidden/', $output);            // Moodle sniff.
+        $this->assertRegexp('/FunctionUse\.RemovedFunctions\.ldap_sort/', $output); // PHPCompatibility sniff.
+        $this->assertRegExp('/Time:.*Memory:/', $output);                           // Time.
+
+        // Also verify display info is correct.
+        $this->assertRegExp('/RUN  Moodle Code Checker/', $commandTester->getDisplay());
     }
 
     public function testExecuteNoFiles()

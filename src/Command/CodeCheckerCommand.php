@@ -12,12 +12,23 @@
 
 namespace MoodlePluginCI\Command;
 
-use MoodlePluginCI\Bridge\CodeSnifferCLI;
 use MoodlePluginCI\StandardResolver;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Reporter;
+use PHP_CodeSniffer\Runner;
+use PHP_CodeSniffer\Util\Timing;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+
+// Cannot be autoload from composer, because this autoloader is used for both
+// phpcs and any standard Sniff, so it must be loaded at the end. For more info, see:
+// https://github.com/squizlabs/PHP_CodeSniffer/issues/1463#issuecomment-300637855
+//
+// The alternative is to, instead of using PHP_CodeSniffer like a library, just
+// use the binaries bundled with it (phpcs, phpcbf...) but we want to use as lib for now.
+require_once __DIR__.'/../../vendor/moodlehq/moodle-local_codechecker/phpcs/autoload.php';
 
 /**
  * Run Moodle Code Checker on a plugin.
@@ -72,24 +83,86 @@ class CodeCheckerCommand extends AbstractPluginCommand
             return $this->outputSkip($output);
         }
 
-        // Must define this before the sniffer due to odd code inclusion resulting in sniffer being included twice.
-        $cli = new CodeSnifferCLI([
-            'reports'      => ['full' => null],
-            'colors'       => $output->isDecorated(),
-            'encoding'     => 'utf-8',
-            'showProgress' => true,
-            'reportWidth'  => 120,
-        ]);
+        // Needed constant.
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', false);
+        }
 
-        \PHP_CodeSniffer::setConfigData('testVersion', PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION, true);
+        Timing::startTiming();
 
-        $sniffer = new \PHP_CodeSniffer();
-        $sniffer->setCli($cli);
-        $sniffer->process($files, $this->standard);
-        $results = $sniffer->reporting->printReport('full', false, $sniffer->cli->getCommandLineValues(), null, 120);
+        $runner                    = new Runner();
+        $runner->config            = new Config(['--parallel=1']); // Pass a param to shortcut params coming from caller CLI.
+
+        // This is not needed normally, because phpcs loads the CodeSniffer.conf from its
+        // root directory. But when this is run from within a .phar file, it expects the
+        // config file to be out from the phar, in the same directory.
+        //
+        // While this approach is logic and enabled to configure phpcs, we don't want that
+        // in this case, we just want to ensure phpcs knows about our standards,
+        // so we are going to force the installed_paths config here.
+        //
+        // And it needs need to do it BEFORE the runner init! (or it's lost)
+        //
+        // Note: the "moodle" one is not really needed, because it's autodetected normally,
+        // but the PHPCompatibility one is. There are some issues about version PHPCompatibility 10
+        // to stop requiring to be configured here, but that's future version. Revisit this when
+        // available.
+        //
+        // Note: the paths are relative to the base CodeSniffer directory, aka, the directory
+        // where "src" sits.
+        $runner->config->setConfigData('installed_paths', './../PHPCompatibility');
+        $runner->config->standards = [$this->standard]; // Also BEFORE init() or it's lost.
+
+        $runner->init();
+
+        $runner->config->parallel     = 1;
+        $runner->config->reports      = ['full' => null];
+        $runner->config->colors       = $output->isDecorated();
+        $runner->config->verbosity    = 0;
+        $runner->config->encoding     = 'utf-8';
+        $runner->config->showProgress = true;
+        $runner->config->showSources  = true;
+        $runner->config->interactive  = false;
+        $runner->config->cache        = false;
+        $runner->config->extensions   = ['php' => 'PHP'];
+        $runner->config->reportWidth  = 132;
+
+        $runner->config->files = $files;
+
+        $runner->config->setConfigData('testVersion', PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION, true);
+
+        // Create the reporter to manage all the reports from the run.
+        $runner->reporter = new Reporter($runner->config);
+
+        // And build the file list to iterate over.
+        /** @var object[] $todo */
+        $todo         = new \PHP_CodeSniffer\Files\FileList($runner->config, $runner->ruleset);
+        $numFiles     = count($todo);
+        $numProcessed = 0;
+
+        foreach ($todo as $file) {
+            if ($file->ignored === false) {
+                try {
+                    $runner->processFile($file);
+                    ++$numProcessed;
+                    $runner->printProgress($file, $numFiles, $numProcessed);
+                } catch (\PHP_CodeSniffer\Exceptions\DeepExitException $e) {
+                    echo $e->getMessage();
+
+                    return $e->getCode();
+                } catch (\Exception $e) {
+                    $error = 'Problem during processing; checking has been aborted. The error message was: '.$e->getMessage();
+                    $file->addErrorOnLine($error, 1, 'Internal.Exception');
+                }
+                $file->cleanUp();
+            }
+        }
+
+        // Have finished, generate the final reports.
+        $runner->reporter->printReports();
 
         $maxwarnings = (int) $input->getOption('max-warnings');
 
-        return ($results['errors'] > 0 || ($maxwarnings >= 0 && $results['warnings'] > $maxwarnings)) ? 1 : 0;
+        return ($runner->reporter->totalErrors > 0 || ($maxwarnings >= 0 && $runner->reporter->totalWarnings > $maxwarnings)) ? 1 : 0;
     }
 }
