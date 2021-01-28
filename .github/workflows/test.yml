@@ -66,11 +66,6 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v2
 
-    - name: Install node
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14.15.0'
-
     - name: Setup PHP ${{ matrix.php }}
       uses: shivammathur/setup-php@v2
       with:
