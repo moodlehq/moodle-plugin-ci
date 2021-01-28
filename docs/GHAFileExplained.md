@@ -8,8 +8,8 @@ Below is the
 file with comments added to explain what each section is doing. For additional
 information please refer to [workflow syntax reference](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions).
 
-If you are familiar with Travis, this should be strightforward to understand
-the syntax, you may find this [migration
+If you are familiar with Travis, it should be straightforward to understand
+the new syntax, also you may find this [migration
 manual](https://docs.github.com/en/actions/learn-github-actions/migrating-from-travis-ci-to-github-actions)
 useful.
 
@@ -52,6 +52,9 @@ jobs:
     # build will be created. For example below 6 builds will be created in
     # total (7.2-pgsql, 7.2-mariadb, 7.3-pgsql, 7.3-mariadb, etc.). If we add
     # another branch, total number of builds will become 12.
+    # If you need to use PHP 7.0 and run phpunit coverage test, make sure you are
+    # using ubuntu-16.04 virtual environment in this case to have phpdbg or
+    # this version in the system.
     strategy:
       fail-fast: false
       matrix:

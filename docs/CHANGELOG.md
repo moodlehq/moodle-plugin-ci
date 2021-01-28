@@ -12,7 +12,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Fixed
 - `moodle-plugin-ci grunt` now only runs against the `yui/src` directory when configuring the YUI task.
   This resolves an issue where an "Unable to find local grunt" message was reported when code was structured in a legacy
-  format. See #46 for more details.
+  format. See [#46](https://github.com/moodlehq/moodle-plugin-ci/issues/46) for more details.
 
 ### Changed
 - `moodle-plugin-ci phpunit` when coverage report is included, phpdbg is called with ignore memory limits param
@@ -21,7 +21,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Added
 - Detect existence of legacy php-webdriver, and use a different Firefox image when it is in use.
-- GitHub Actions use manual and example.
+- Add [manual](https://github.com/moodlehq/moodle-plugin-ci/blob/master/docs/index.md) and [example](https://github.com/moodlehq/moodle-plugin-ci/blob/master/docs/GHAFileExplained.md) on using GitHub Actions as CI tool.
 
 ## [3.0.3] - 2020-10-16
 ### Changed

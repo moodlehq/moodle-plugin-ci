@@ -3,14 +3,21 @@ layout: page
 title: Introduction
 ---
 
-The goal of this project is to facilitate the running of tests and code analysis against a Moodle plugin in
-[Travis CI](https://travis-ci.com).  All of these tests and tools are run everytime a change is pushed to a GitHub
-branch or pull request.
+The goal of this project is to facilitate the running of tests and code
+analysis against a Moodle plugin in CI tool of your choice. All of these tests
+and tools are run everytime a change is pushed to a GitHub branch or pull
+request.
+
+We currently provide user manual how to use it with [Travis
+CI](https://travis-ci.com) and [GitHub
+Actions](https://docs.github.com/en/actions), if you are using
+`moodle-plugin-ci` with other CI services please do share your setup examples
+by creating a ticket.
 
 Why would you want to do this?  It saves you from having to remember to setup and run PHPUnit, Behat, code checker, etc
 every single time you make a change.  If you have enough test coverage, it also makes accepting pull requests painless
-because you can be more confident that the change wont break anything.  There are many more advantages to using a
-service like Travis CI, like being able to test your code against multiple databases, multiple PHP versions, etc.
+because you can be more confident that the change wont break anything.  There are many more advantages to use CI
+tools, like being able to test your code against multiple databases, multiple PHP versions, etc.
 
 This project supports the following testing frameworks and code analysis tools:
 * [PHPUnit](https://phpunit.de)
@@ -76,12 +83,13 @@ pull request, GitHub will run a build to make sure nothing broke.
 
 ### Getting more of CI
 
-Congratulations, you are running CI tests on your plugin!  Next steps on your continuous build journey include:
+Next steps on your continuous build journey may include:
 
 * Reviewing the [help documentation](Help.md) to further improve and customize your build.
 * Resolve any build errors you may currently have. Get to that ever rewarding Green Build status.
-* Show off your build status by adding the badge to your plugin's README file.
+* Show off your build status by adding the build status badge to your plugin's README file.
 * Write new tests to increase your code coverage.
+* Contribute to this repo if you have improvement idea or found an issue.
 * Enjoy your favorite beverage because you no longer have to waste time manually testing your plugin!
 
 ## Upgrading
