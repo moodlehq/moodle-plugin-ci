@@ -48,7 +48,7 @@ If there is any problem with that automatic deployment, the artifact will need
 to be created manually. First build PHAR file manually:
 
 ```bash
-$ make build/moodle-plugin-ci.phar
+$ make build
 ```
 
 Once the above command suceeded, navigate to latest release in [GitHub

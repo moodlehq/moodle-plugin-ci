@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [3.0.4] - 2021-01-29
 ### Fixed
 - `moodle-plugin-ci grunt` now only runs against the `yui/src` directory when configuring the YUI task.
   This resolves an issue where an "Unable to find local grunt" message was reported when code was structured in a legacy
@@ -19,6 +22,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   to avoid memory exhaused errors.
 - Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
 - Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.0.0.
+- Install grunt locally and use `npx grunt` to run it instead of installing it globally.
 
 ### Added
 - Detect existence of legacy php-webdriver, and use a different Firefox image when it is in use.
@@ -305,7 +309,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.3...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.4...master
+[3.0.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.3...3.0.4
 [3.0.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.2...3.0.3
 [3.0.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.0...3.0.1
