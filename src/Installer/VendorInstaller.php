@@ -102,7 +102,7 @@ class VendorInstaller extends AbstractInstaller
      */
     public function canInstallNode()
     {
-        return getenv('NVM_DIR') && getenv('NVM_BIN');
+        return !empty(getenv('NVM_DIR'));
     }
 
     /**
