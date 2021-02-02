@@ -9,7 +9,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Fixed
+- `nvm` availability check to make it work correctly in GHA
+- ACTION REQUIRED: If you are using GitHub Actions, add `NVM_DIR` definition
+  in "Initialise moodle-plugin-ci" step. Without it `nvm` can't be used for
+  node version switching, see the step definition at
+  [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml)
+  and add missing `NVM_DIR` line your plugin's GHA workflow file.
+
 
 ## [3.0.4] - 2021-01-29
 ### Fixed
