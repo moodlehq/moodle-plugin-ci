@@ -44,7 +44,13 @@ class Execute
      */
     public $parallelWaitTime = 200000;
 
-    public function __construct(?OutputInterface $output = null, ?ProcessHelper $helper = null)
+    /**
+     * TODO: Add nullable type declaration for params when we switch to php 7.1.
+     *
+     * @param OutputInterface|null $output
+     * @param ProcessHelper|null   $helper
+     */
+    public function __construct($output = null, $helper = null)
     {
         $this->setOutput($output);
         $this->setHelper($helper);
@@ -52,20 +58,22 @@ class Execute
 
     /**
      * Output setter.
+     * TODO: Add nullable type declaration for param when we switch to php 7.1.
      *
      * @param OutputInterface|null $output
      */
-    public function setOutput(?OutputInterface $output)
+    public function setOutput($output)
     {
         $this->output = $output ?? new NullOutput();
     }
 
     /**
      * Process helper setter.
+     * TODO: Add nullable type declaration for param when we switch to php 7.1.
      *
-     * @param OutputInterface|null $output
+     * @param ProcessHelper|null $helper
      */
-    public function setHelper(?ProcessHelper $helper)
+    public function setHelper($helper)
     {
         if (empty($helper)) {
             $helper = new ProcessHelper();
