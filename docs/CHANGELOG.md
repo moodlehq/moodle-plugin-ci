@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [3.0.5] - 2021-02-04
 ### Fixed
 - `nvm` availability check to make it work correctly in GHA
 - ACTION REQUIRED: If you are using GitHub Actions, add `NVM_DIR` definition
@@ -319,7 +322,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.4...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.5...master
+[3.0.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.4...3.0.5
 [3.0.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.3...3.0.4
 [3.0.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.2...3.0.3
 [3.0.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.1...3.0.2
