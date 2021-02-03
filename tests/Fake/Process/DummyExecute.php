@@ -17,20 +17,26 @@ use Symfony\Component\Process\Process;
 
 class DummyExecute extends Execute
 {
-    /** @noinspection PhpMissingParentConstructorInspection */
-    public function __construct()
-    {
-        // Do nothing.
-    }
-
     public function run($cmd, $error = null)
     {
-        return new DummyProcess('dummy');
+        if ($cmd instanceof Process) {
+            // Get the command line from process.
+            $cmd = $cmd->getCommandLine();
+        }
+        $cmd = new DummyProcess($cmd);
+
+        return $this->helper->run($this->output, $cmd, $error);
     }
 
     public function mustRun($cmd, $error = null)
     {
-        return new DummyProcess('dummy');
+        if ($cmd instanceof Process) {
+            // Get the command line from process.
+            $cmd = $cmd->getCommandLine();
+        }
+        $cmd = new DummyProcess($cmd);
+
+        return $this->helper->mustRun($this->output, $cmd, $error);
     }
 
     public function runAll($processes)

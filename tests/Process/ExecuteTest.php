@@ -14,11 +14,7 @@ namespace MoodlePluginCI\Tests\Process;
 
 use MoodlePluginCI\Process\Execute;
 use MoodlePluginCI\Process\MoodleProcess;
-use Symfony\Component\Console\Helper\DebugFormatterHelper;
-use Symfony\Component\Console\Helper\HelperSet;
-use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -34,10 +30,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
     public function testSetNodeEnv()
     {
-        $helper = new ProcessHelper();
-        $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
-
-        $execute = new Execute(new NullOutput(), $helper);
+        $execute = new Execute();
         $pathenv = getenv('PATH');
 
         // RUNTIME_NVM_BIN in undefined.
@@ -69,10 +62,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
     public function testRun()
     {
-        $helper = new ProcessHelper();
-        $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
-
-        $execute = new Execute(new NullOutput(), $helper);
+        $execute = new Execute();
         $process = $execute->run('env');
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
@@ -83,10 +73,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
     public function testMustRun()
     {
-        $helper = new ProcessHelper();
-        $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
-
-        $execute = new Execute(new NullOutput(), $helper);
+        $execute = new Execute();
         $process = $execute->mustRun('env');
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
@@ -97,9 +84,6 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
     public function testRunAllVerbose()
     {
-        $helper = new ProcessHelper();
-        $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
-
         /** @var Process[] $processes */
         $processes = [
             new Process('env'),
@@ -107,7 +91,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         ];
 
         $output  = new BufferedOutput(OutputInterface::VERBOSITY_VERY_VERBOSE);
-        $execute = new Execute($output, $helper);
+        $execute = new Execute($output);
         $execute->runAll($processes);
 
         foreach ($processes as $process) {
@@ -120,9 +104,6 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
     public function testMustRunAll()
     {
-        $helper = new ProcessHelper();
-        $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
-
         /** @var Process[] $processes */
         $processes = [
             new Process('env'),
@@ -130,7 +111,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
             new Process('env'),
         ];
 
-        $execute = new Execute(new NullOutput(), $helper);
+        $execute = new Execute();
 
         $execute->parallelWaitTime = 1;
         $execute->mustRunAll($processes);
@@ -146,9 +127,6 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(ProcessFailedException::class);
 
-        $helper = new ProcessHelper();
-        $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
-
         /** @var Process[] $processes */
         $processes = [
             new Process('php -r "echo 42;"'),
@@ -156,8 +134,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
             new Process('php -r "echo 42;"'),
         ];
 
-        $execute = new Execute(new NullOutput(), $helper);
-
+        $execute                   = new Execute();
         $execute->parallelWaitTime = 1;
         $execute->mustRunAll($processes);
     }
@@ -165,7 +142,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
     public function testPassThrough()
     {
         $output  = new BufferedOutput(OutputInterface::VERBOSITY_VERY_VERBOSE);
-        $execute = new Execute($output, new ProcessHelper());
+        $execute = new Execute($output);
         $process = $execute->passThrough('php -r "echo 42;"');
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);

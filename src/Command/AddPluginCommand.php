@@ -47,9 +47,9 @@ class AddPluginCommand extends Command
     {
         $this->setName('add-plugin')
             ->setDescription('Queue up an additional plugin to be installed in the test site')
-            ->addArgument('project', InputArgument::OPTIONAL, 'GitHub project, EG: moodlehq/moodle-local_hub')
-            ->addOption('branch', 'b', InputOption::VALUE_REQUIRED, 'The branch to checkout within the plugin', 'master')
-            ->addOption('clone', 'c', InputOption::VALUE_REQUIRED, 'Git clone URL')
+            ->addArgument('project', InputArgument::OPTIONAL, 'GitHub project, EG: moodlehq/moodle-local_hub, can\'t be used with --clone option')
+            ->addOption('branch', 'b', InputOption::VALUE_REQUIRED, 'The branch to checkout in plugin repo (if non-default)', null)
+            ->addOption('clone', 'c', InputOption::VALUE_REQUIRED, 'Git clone URL, can\'t be used with --project option')
             ->addOption('storage', null, InputOption::VALUE_REQUIRED, 'Plugin storage directory', 'moodle-plugin-ci-plugins');
     }
 
@@ -82,8 +82,9 @@ class AddPluginCommand extends Command
         $filesystem->mkdir($storage);
         $storageDir = realpath($validate->directory($storage));
 
+        $branch   = $branch !== null ? '--branch '.$branch : '';
         /** @psalm-suppress PossiblyInvalidArgument */
-        $cloneUrl = sprintf('git clone --depth 1 --branch %s %s', $branch, $cloneUrl);
+        $cloneUrl = sprintf('git clone --depth 1 %s %s', $branch, $cloneUrl);
         $process  = new Process($cloneUrl, $storageDir);
         $this->execute->mustRun($process);
 

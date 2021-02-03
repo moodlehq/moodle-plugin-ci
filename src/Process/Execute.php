@@ -12,7 +12,10 @@
 
 namespace MoodlePluginCI\Process;
 
+use Symfony\Component\Console\Helper\DebugFormatterHelper;
+use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\ProcessHelper;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -25,12 +28,12 @@ class Execute
     /**
      * @var OutputInterface
      */
-    private $output;
+    protected $output;
 
     /**
      * @var ProcessHelper
      */
-    private $helper;
+    protected $helper;
 
     /**
      * Sleep for .2 seconds to avoid race conditions in Moodle scripts when running them in parallel.
@@ -41,9 +44,34 @@ class Execute
      */
     public $parallelWaitTime = 200000;
 
-    public function __construct(OutputInterface $output, ProcessHelper $helper)
+    public function __construct(?OutputInterface $output = null, ?ProcessHelper $helper = null)
     {
-        $this->output = $output;
+        $this->setOutput($output);
+        $this->setHelper($helper);
+    }
+
+    /**
+     * Output setter.
+     *
+     * @param OutputInterface|null $output
+     */
+    public function setOutput(?OutputInterface $output)
+    {
+        $this->output = $output ?? new NullOutput();
+    }
+
+    /**
+     * Process helper setter.
+     *
+     * @param OutputInterface|null $output
+     */
+    public function setHelper(?ProcessHelper $helper)
+    {
+        if (empty($helper)) {
+            $helper = new ProcessHelper();
+            // Looks like $helper->run is not possible without DebugFormatterHelper.
+            $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
+        }
         $this->helper = $helper;
     }
 

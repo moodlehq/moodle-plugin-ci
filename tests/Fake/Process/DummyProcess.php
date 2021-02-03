@@ -16,6 +16,18 @@ use Symfony\Component\Process\Process;
 
 class DummyProcess extends Process
 {
+    private $realcommandline;
+
+    public function __construct($commandline)
+    {
+        $this->realcommandline = $commandline;
+    }
+
+    public function getCommandLine()
+    {
+        return $this->realcommandline;
+    }
+
     public function getOutput()
     {
         return '';

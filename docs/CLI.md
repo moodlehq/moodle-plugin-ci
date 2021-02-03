@@ -135,7 +135,7 @@ Queue up an additional plugin to be installed in the test site
 
 #### `project`
 
-GitHub project, EG: moodlehq/moodle-local_hub
+GitHub project, EG: moodlehq/moodle-local_hub, can't be used with --clone option
 
 * Is required: no
 * Is array: no
@@ -145,16 +145,16 @@ GitHub project, EG: moodlehq/moodle-local_hub
 
 #### `--branch|-b`
 
-The branch to checkout within the plugin
+The branch to checkout in plugin repo (if non-default)
 
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
-* Default: `'master'`
+* Default: `NULL`
 
 #### `--clone|-c`
 
-Git clone URL
+Git clone URL, can't be used with --project option
 
 * Accept value: yes
 * Is value required: yes

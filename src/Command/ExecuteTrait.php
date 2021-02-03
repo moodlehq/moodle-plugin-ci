@@ -34,6 +34,12 @@ trait ExecuteTrait
      */
     protected function initializeExecute(OutputInterface $output, ProcessHelper $helper)
     {
-        $this->execute = $this->execute ?: new Execute($output, $helper);
+        if (isset($this->execute)) {
+            // Define output and process helper.
+            $this->execute->setOutput($output);
+            $this->execute->setHelper($helper);
+        } else {
+            $this->execute = new Execute($output, $helper);
+        }
     }
 }
