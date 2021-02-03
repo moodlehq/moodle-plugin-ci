@@ -16,6 +16,7 @@ use MoodlePluginCI\Command\AddPluginCommand;
 use MoodlePluginCI\Tests\Fake\Process\DummyExecute;
 use MoodlePluginCI\Tests\FilesystemTestCase;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class AddPluginCommandTest extends FilesystemTestCase
@@ -51,12 +52,36 @@ class AddPluginCommandTest extends FilesystemTestCase
     public function testExecuteWithClone()
     {
         $commandTester = $this->getCommandTester();
+        // Execute with verbosity, so process helper outputs command line.
         $commandTester->execute([
             '--clone'   => 'https://github.com/user/moodle-mod_foo.git',
             '--storage' => $this->tempDir.'/plugins',
-        ]);
+        ], ['verbosity' => OutputInterface::VERBOSITY_VERY_VERBOSE]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertContains('git clone --depth 1  https://github.com/user/moodle-mod_foo.git',
+            $commandTester->getDisplay());
+        $this->assertTrue(is_dir($this->tempDir.'/plugins'));
+        $this->assertFileExists($this->tempDir.'/.env');
+        $this->assertSame(
+            sprintf("EXTRA_PLUGINS_DIR=%s/plugins\n", realpath($this->tempDir)),
+            file_get_contents($this->tempDir.'/.env')
+        );
+    }
+
+    public function testExecuteWithCloneAndBranch()
+    {
+        $commandTester = $this->getCommandTester();
+        // Execute with verbosity, so process helper outputs command line.
+        $commandTester->execute([
+            '--clone'   => 'https://github.com/user/moodle-mod_foo.git',
+            '--branch'  => 'dev',
+            '--storage' => $this->tempDir.'/plugins',
+        ], ['verbosity' => OutputInterface::VERBOSITY_VERY_VERBOSE]);
+
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertContains('git clone --depth 1 --branch dev https://github.com/user/moodle-mod_foo.git',
+            $commandTester->getDisplay());
         $this->assertTrue(is_dir($this->tempDir.'/plugins'));
         $this->assertFileExists($this->tempDir.'/.env');
         $this->assertSame(

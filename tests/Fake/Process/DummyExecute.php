@@ -17,20 +17,46 @@ use Symfony\Component\Process\Process;
 
 class DummyExecute extends Execute
 {
-    /** @noinspection PhpMissingParentConstructorInspection */
-    public function __construct()
+    private function getMockProcess($cmd)
     {
-        // Do nothing.
+        $process = \Mockery::mock('Symfony\Component\Process\Process');
+        $process->shouldReceive(
+            'setTimeout',
+            'run',
+            'wait',
+            'stop',
+            'getExitCode',
+            'getExitCodeText',
+            'getWorkingDirectory',
+            'isOutputDisabled',
+            'getErrorOutput'
+        );
+
+        $process->shouldReceive('isSuccessful')->andReturn(true);
+        $process->shouldReceive('getOutput')->andReturn('');
+        $process->shouldReceive('getCommandLine')->andReturn($cmd);
+
+        return $process;
     }
 
     public function run($cmd, $error = null)
     {
-        return new DummyProcess('dummy');
+        if ($cmd instanceof Process) {
+            // Get the command line from process.
+            $cmd = $cmd->getCommandLine();
+        }
+
+        return $this->helper->run($this->output, $this->getMockProcess($cmd), $error);
     }
 
     public function mustRun($cmd, $error = null)
     {
-        return new DummyProcess('dummy');
+        if ($cmd instanceof Process) {
+            // Get the command line from process.
+            $cmd = $cmd->getCommandLine();
+        }
+
+        return $this->helper->mustRun($this->output, $this->getMockProcess($cmd), $error);
     }
 
     public function runAll($processes)
@@ -45,15 +71,15 @@ class DummyExecute extends Execute
 
     public function passThrough($commandline, $cwd = null, $timeout = null)
     {
-        return $this->passThroughProcess(new DummyProcess($commandline, $cwd, null, null, $timeout));
+        return $this->passThroughProcess($this->getMockProcess($commandline));
     }
 
     public function passThroughProcess(Process $process)
     {
-        if ($process instanceof DummyProcess) {
+        if ($process instanceof \Mockery\MockInterface) {
             return $process;
         }
 
-        return new DummyProcess($process->getCommandLine(), $process->getWorkingDirectory(), null, null, $process->getTimeout());
+        return $this->getMockProcess($process->getCommandLine());
     }
 }

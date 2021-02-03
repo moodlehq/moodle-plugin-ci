@@ -17,6 +17,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml)
   and add missing `NVM_DIR` line your plugin's GHA workflow file.
 
+### Changed
+- `moodle-plugin-ci add-plugin` command now uses default banch to checkout
+  instead of `master` if `--branch` param is not specified..
 
 ## [3.0.4] - 2021-01-29
 ### Fixed

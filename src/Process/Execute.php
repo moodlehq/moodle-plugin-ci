@@ -12,7 +12,10 @@
 
 namespace MoodlePluginCI\Process;
 
+use Symfony\Component\Console\Helper\DebugFormatterHelper;
+use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\ProcessHelper;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -25,12 +28,12 @@ class Execute
     /**
      * @var OutputInterface
      */
-    private $output;
+    protected $output;
 
     /**
      * @var ProcessHelper
      */
-    private $helper;
+    protected $helper;
 
     /**
      * Sleep for .2 seconds to avoid race conditions in Moodle scripts when running them in parallel.
@@ -41,9 +44,42 @@ class Execute
      */
     public $parallelWaitTime = 200000;
 
-    public function __construct(OutputInterface $output, ProcessHelper $helper)
+    /**
+     * TODO: Add nullable type declaration for params when we switch to php 7.1.
+     *
+     * @param OutputInterface|null $output
+     * @param ProcessHelper|null   $helper
+     */
+    public function __construct($output = null, $helper = null)
     {
-        $this->output = $output;
+        $this->setOutput($output);
+        $this->setHelper($helper);
+    }
+
+    /**
+     * Output setter.
+     * TODO: Add nullable type declaration for param when we switch to php 7.1.
+     *
+     * @param OutputInterface|null $output
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output ?? new NullOutput();
+    }
+
+    /**
+     * Process helper setter.
+     * TODO: Add nullable type declaration for param when we switch to php 7.1.
+     *
+     * @param ProcessHelper|null $helper
+     */
+    public function setHelper($helper)
+    {
+        if (empty($helper)) {
+            $helper = new ProcessHelper();
+            // Looks like $helper->run is not possible without DebugFormatterHelper.
+            $helper->setHelperSet(new HelperSet([new DebugFormatterHelper()]));
+        }
         $this->helper = $helper;
     }
 
