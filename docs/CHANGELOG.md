@@ -9,7 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Fixed
+- `moodle-plugin-ci grunt` should also be using `npx grunt` internally
 
 ## [3.0.5] - 2021-02-04
 ### Fixed
