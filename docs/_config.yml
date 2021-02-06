@@ -1,5 +1,5 @@
 title: Moodle Plugin CI
-description: Moodle plugin + Travis CI
+description: Moodle plugin test in CI environment
 github_username: moodlehq
 theme: minima
 header_pages:
