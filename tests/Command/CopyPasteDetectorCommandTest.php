@@ -23,7 +23,7 @@ class CopyPasteDetectorCommandTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->pluginDir = __DIR__.'/../Fixture/moodle-local_travis';
+        $this->pluginDir = __DIR__.'/../Fixture/moodle-local_ci';
     }
 
     protected function executeCommand($pluginDir = null)

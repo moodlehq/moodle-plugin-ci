@@ -16,6 +16,6 @@ use MoodlePluginCI\Bridge\MoodlePlugin;
 
 class DummyMoodlePlugin extends MoodlePlugin
 {
-    public $component    = 'local_travis';
+    public $component    = 'local_ci';
     public $dependencies = ['mod_forum'];
 }

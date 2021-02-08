@@ -71,10 +71,10 @@ jobs:
     - name: Initialise moodle-plugin-ci
       run: |
         make init
-        cp -R tests/Fixture/moodle-local_travis ../moodle-local_travis
+        cp -R tests/Fixture/moodle-local_ci ../moodle-local_ci
         echo $(cd bin; pwd) >> $GITHUB_PATH
         echo $(cd vendor/bin; pwd) >> $GITHUB_PATH
-        echo "TRAVIS_BUILD_DIR="$(cd ../moodle-local_travis; pwd) >> $GITHUB_ENV
+        echo "TRAVIS_BUILD_DIR="$(cd ../moodle-local_ci; pwd) >> $GITHUB_ENV
         # PHPUnit depends on en_AU.UTF-8 locale
         sudo locale-gen en_AU.UTF-8
         # Define NVM_DIR pointing to nvm installation.

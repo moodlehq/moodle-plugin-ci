@@ -15,22 +15,34 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin upgrade file
+ * Math class.
  *
  * @package   local_ci
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_ci;
+
+defined('MOODLE_INTERNAL') || die();
+
 /**
- * Execute local_ci upgrade from the given old version.
+ * Math class.
  *
- * @param int $oldversion
- * @return bool
+ * @package   local_ci
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-function xmldb_local_ci_upgrade($oldversion) {
-    if ($oldversion < 2011033101) {
-        upgrade_plugin_savepoint(true, 2011033102, 'local', 'travis');
+class math {
+    /**
+     * Add
+     *
+     * @param int $a A integer
+     * @param int $b A integer
+     * @return int
+     */
+    public function add($a, $b) {
+        // Let's add them.
+        return $a + $b;
     }
-    return true;
 }

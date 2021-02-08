@@ -19,8 +19,8 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
 {
     public function testFindTokens()
     {
-        $file       = __DIR__.'/../../Fixture/moodle-local_travis/lib.php';
-        $fileTokens = FileTokens::create('lib.php')->mustHave('local_travis_math');
+        $file       = __DIR__.'/../../Fixture/moodle-local_ci/lib.php';
+        $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci_math');
 
         $finder = new ClassFinder();
         $finder->findTokens($file, $fileTokens);
@@ -30,8 +30,8 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
 
     public function testFindTokensNameSpaceClass()
     {
-        $file       = __DIR__.'/../../Fixture/moodle-local_travis/classes/math.php';
-        $fileTokens = FileTokens::create('lib.php')->mustHave('local_travis\math');
+        $file       = __DIR__.'/../../Fixture/moodle-local_ci/classes/math.php';
+        $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci\math');
 
         $finder = new ClassFinder();
         $finder->findTokens($file, $fileTokens);

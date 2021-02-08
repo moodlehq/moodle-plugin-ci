@@ -4,7 +4,7 @@
        xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
     <TABLES>
-        <TABLE NAME="local_travis_config" COMMENT="This is a config table.">
+        <TABLE NAME="local_ci_config" COMMENT="This is a config table.">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
@@ -26,7 +26,7 @@
                 <KEY NAME="name" TYPE="unique" FIELDS="name"/>
             </KEYS>
         </TABLE>
-        <TABLE NAME="local_travis_config2" COMMENT="This is a config table.">
+        <TABLE NAME="local_ci_config2" COMMENT="This is a config table.">
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>

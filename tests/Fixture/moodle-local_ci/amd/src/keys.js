@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,22 +14,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin upgrade file
+ * This is copied from mod/lti.
  *
- * @package   local_ci
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @module     local_ci/keys
+ * @class      keys
+ * @package    local_ci
+ * @copyright  2015 Ryan Wyllie <ryan@moodle.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @since      3.1
  */
-
-/**
- * Execute local_ci upgrade from the given old version.
- *
- * @param int $oldversion
- * @return bool
- */
-function xmldb_local_ci_upgrade($oldversion) {
-    if ($oldversion < 2011033101) {
-        upgrade_plugin_savepoint(true, 2011033102, 'local', 'travis');
-    }
-    return true;
-}
+define([], function ()
+{
+    return /** @alias module:local_ci/keys */ {
+        ENTER: 13,
+        SPACE: 32
+    };
+});

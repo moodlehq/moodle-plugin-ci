@@ -25,7 +25,7 @@ class PluginInstallerTest extends FilesystemTestCase
 {
     public function testInstall()
     {
-        $fixture   = __DIR__.'/../Fixture/moodle-local_travis';
+        $fixture   = __DIR__.'/../Fixture/moodle-local_ci';
         $plugin    = new MoodlePlugin($fixture);
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installer->install();
@@ -40,7 +40,7 @@ class PluginInstallerTest extends FilesystemTestCase
 
     public function testInstallPluginIntoMoodle()
     {
-        $fixture    = realpath(__DIR__.'/../Fixture/moodle-local_travis');
+        $fixture    = realpath(__DIR__.'/../Fixture/moodle-local_ci');
         $plugin     = new MoodlePlugin($fixture);
         $installer  = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installDir = $installer->installPluginIntoMoodle($plugin);
@@ -65,7 +65,7 @@ class PluginInstallerTest extends FilesystemTestCase
 
         $this->fs->mkdir($this->tempDir.'/local/travis');
 
-        $fixture   = realpath(__DIR__.'/../Fixture/moodle-local_travis');
+        $fixture   = realpath(__DIR__.'/../Fixture/moodle-local_ci');
         $plugin    = new MoodlePlugin($fixture);
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installer->installPluginIntoMoodle($plugin);
@@ -92,9 +92,9 @@ class PluginInstallerTest extends FilesystemTestCase
 
     public function testScanForPlugins()
     {
-        $fixture = __DIR__.'/../Fixture/moodle-local_travis';
+        $fixture = __DIR__.'/../Fixture/moodle-local_ci';
 
-        $this->fs->mirror($fixture, $this->tempDir.'/moodle-local_travis');
+        $this->fs->mirror($fixture, $this->tempDir.'/moodle-local_ci');
 
         $plugin    = new MoodlePlugin($fixture);
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, $this->tempDir, new ConfigDumper());

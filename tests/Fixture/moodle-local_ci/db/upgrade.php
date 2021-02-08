@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Execute local_ci upgrade from the given old version.
  *
@@ -30,7 +32,7 @@
  */
 function xmldb_local_ci_upgrade($oldversion) {
     if ($oldversion < 2011033101) {
-        upgrade_plugin_savepoint(true, 2011033102, 'local', 'travis');
+        upgrade_plugin_savepoint(true, 2011033101, 'local', 'travis');
     }
     return true;
 }

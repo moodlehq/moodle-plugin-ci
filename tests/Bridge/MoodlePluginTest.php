@@ -22,7 +22,7 @@ class MoodlePluginTest extends MoodleTestCase
     public function testGetComponent()
     {
         $plugin = new MoodlePlugin($this->pluginDir);
-        $this->assertSame('local_travis', $plugin->getComponent());
+        $this->assertSame('local_ci', $plugin->getComponent());
     }
 
     public function testGetDependencies()
@@ -108,7 +108,7 @@ class MoodlePluginTest extends MoodleTestCase
             $this->pluginDir.'/classes/math.php',
             $this->pluginDir.'/db/access.php',
             $this->pluginDir.'/db/upgrade.php',
-            $this->pluginDir.'/lang/en/local_travis.php',
+            $this->pluginDir.'/lang/en/local_ci.php',
             $this->pluginDir.'/lib.php',
             $this->pluginDir.'/tests/lib_test.php',
             $this->pluginDir.'/version.php',
@@ -134,7 +134,7 @@ class MoodlePluginTest extends MoodleTestCase
             'classes/math.php',
             'db/access.php',
             'db/upgrade.php',
-            'lang/en/local_travis.php',
+            'lang/en/local_ci.php',
             'lib.php',
             'tests/lib_test.php',
             'version.php',

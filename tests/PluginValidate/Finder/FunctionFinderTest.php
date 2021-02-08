@@ -19,8 +19,8 @@ class FunctionFinderTest extends \PHPUnit_Framework_TestCase
 {
     public function testFindTokens()
     {
-        $file       = __DIR__.'/../../Fixture/moodle-local_travis/lib.php';
-        $fileTokens = FileTokens::create('lib.php')->mustHave('local_travis_subtract');
+        $file       = __DIR__.'/../../Fixture/moodle-local_ci/lib.php';
+        $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci_subtract');
 
         $finder = new FunctionFinder();
         $finder->findTokens($file, $fileTokens);
