@@ -69,7 +69,8 @@ class GruntCommand extends AbstractMoodleCommand
             }
 
             $builder = ProcessBuilder::create()
-                ->setPrefix('grunt');
+                ->setPrefix('npx')
+                ->add('grunt');
             if ($input->getOption('show-lint-warnings')) {
                 $builder->add('--show-lint-warnings');
             }
