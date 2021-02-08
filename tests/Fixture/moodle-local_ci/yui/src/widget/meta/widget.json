@@ -1,0 +1,9 @@
+{
+  "moodle-local_ci-widget": {
+    "requires": [
+      "base",
+      "node",
+      "event"
+    ]
+  }
+}

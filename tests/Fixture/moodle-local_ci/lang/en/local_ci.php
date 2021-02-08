@@ -15,22 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin upgrade file
+ * Language definitions.
  *
  * @package   local_ci
- * @copyright Copyright (c) 2017 Blackboard Inc. (http://www.blackboard.com)
+ * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Execute local_ci upgrade from the given old version.
- *
- * @param int $oldversion
- * @return bool
- */
-function xmldb_local_ci_upgrade($oldversion) {
-    if ($oldversion < 2011033101) {
-        upgrade_plugin_savepoint(true, 2011033102, 'local', 'travis');
-    }
-    return true;
-}
+defined('MOODLE_INTERNAL') || die();
+
+$string['pluginname'] = 'Travis Tester';

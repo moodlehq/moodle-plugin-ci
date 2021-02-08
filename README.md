@@ -5,7 +5,7 @@
 [![License](https://poser.pugx.org/moodlehq/moodle-plugin-ci/license)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 
 The goal of this project is to facilitate the running of tests and code
-analysis against a Moodle plugin in CI tools, such as [Travis
+analysis against a Moodle plugin using CI environments, such as [Travis
 CI](https://travis-ci.com) or [GitHub
 Actions](https://docs.github.com/en/actions).  All of these tests and tools
 are run everytime a change is pushed to a GitHub branch or pull request.

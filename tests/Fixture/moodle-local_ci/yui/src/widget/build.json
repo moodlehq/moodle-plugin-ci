@@ -1,0 +1,10 @@
+{
+  "name": "moodle-local_ci-widget",
+  "builds": {
+    "moodle-local_ci-widget": {
+      "jsfiles": [
+        "widget.js"
+      ]
+    }
+  }
+}

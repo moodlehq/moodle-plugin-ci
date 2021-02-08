@@ -19,8 +19,8 @@ class TablePrefixFinderTest extends \PHPUnit_Framework_TestCase
 {
     public function testFindTokens()
     {
-        $file       = __DIR__.'/../../Fixture/moodle-local_travis/db/install.xml';
-        $fileTokens = FileTokens::create('db/install.xml')->mustHave('local_travis');
+        $file       = __DIR__.'/../../Fixture/moodle-local_ci/db/install.xml';
+        $fileTokens = FileTokens::create('db/install.xml')->mustHave('local_ci');
 
         $finder = new TablePrefixFinder();
         $finder->findTokens($file, $fileTokens);
@@ -31,7 +31,7 @@ class TablePrefixFinderTest extends \PHPUnit_Framework_TestCase
     public function testFindTokensFail()
     {
         $file       = __DIR__.'/../../Fixture/bad-install.xml';
-        $fileTokens = FileTokens::create('db/install.xml')->mustHave('local_travis');
+        $fileTokens = FileTokens::create('db/install.xml')->mustHave('local_ci');
 
         $finder = new TablePrefixFinder();
         $finder->findTokens($file, $fileTokens);

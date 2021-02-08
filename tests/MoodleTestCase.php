@@ -32,6 +32,6 @@ class MoodleTestCase extends FilesystemTestCase
         $this->pluginDir = $this->tempDir.'/local/travis';
 
         $this->fs->mirror(__DIR__.'/Fixture/moodle', $this->moodleDir);
-        $this->fs->mirror(__DIR__.'/Fixture/moodle-local_travis', $this->pluginDir);
+        $this->fs->mirror(__DIR__.'/Fixture/moodle-local_ci', $this->pluginDir);
     }
 }
