@@ -47,35 +47,35 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 3
 
-    # Determines build matrix. This is a list of PHP versions, databases and
-    # branches to test our project against. For each combination a separate
-    # build will be created. For example below 6 builds will be created in
-    # total (7.2-pgsql, 7.2-mariadb, 7.3-pgsql, 7.3-mariadb, etc.). If we add
-    # another branch, total number of builds will become 12.
+    # The settings for each build to test against, including the version of PHP,
+    # Moodle branch, and database.
     # If you need to use PHP 7.0 and run phpunit coverage test, make sure you are
     # using ubuntu-16.04 virtual environment in this case to have phpdbg or
     # this version in the system.
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.2', '7.3', '7.4']
-        moodle-branch: ['MOODLE_310_STABLE']
-        database: [pgsql, mariadb]
+        include:
+          # Moodle 3.9
+          - php: '7.2' # 7.2-7.4
+            moodle-branch: 'MOODLE_39_STABLE'
+            database: mariadb
+          # Moodle 3.9, PostgreSQL
+          - php: '7.3' # 7.2-7.4
+            moodle-branch: 'MOODLE_39_STABLE'
+            database: pgsql
+          # Moodle 3.10
+          - php: '7.4' # 7.2-7.4
+            moodle-branch: 'MOODLE_310_STABLE'
+            database: mariadb
 
-    # There is an alterantive way allowing to define explicitly define which php, moodle-branch
-    # and database to use:
+    # There is an alterantive way which will test against every combination of
+    # the specified PHP versions, Moodle branches, and databases:
     #
     # matrix:
-    #   include:
-    #     - php: '7.4'
-    #       moodle-branch: 'MOODLE_310_STABLE'
-    #       database: pgsql
-    #     - php: '7.3'
-    #       moodle-branch: 'MOODLE_310_STABLE'
-    #       database: mariadb
-    #     - php: '7.2'
-    #       moodle-branch: 'MOODLE_39_STABLE'
-    #       database: pgsql
+    #   php: ['7.2', '7.3', '7.4']
+    #   moodle-branch: ['MOODLE_39_STABLE']
+    #   database: [pgsql, mariadb]
 
     steps:
       # Check out this repository code in ./plugin directory

@@ -27,47 +27,40 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-# Determines which versions of PHP to test our project against.  Each version
-# listed here will create a separate build and run the tests against that
-# version of PHP.
-php:
- - 7.2
- - 7.3
- - 7.4
-
-# This section sets up the environment variables for the build.
-env:
- global:
-# This line determines which version branch of Moodle to test against.
-  - MOODLE_BRANCH=MOODLE_39_STABLE
-# This matrix is used for testing against multiple databases.  So for
-# each version of PHP being tested, one build will be created for each
-# database listed here.  EG: for PHP 7.3, one build will be created
-# using PHP 7.3 and pgsql.  In addition, another build will be created
-# using PHP 7.3 and mysqli.
- matrix:
-  - DB=pgsql
-  - DB=mysqli
-
+# The settings for each build to test against, including the version of PHP,
+# and the environment variables, which determine the Moodle branch and database.
+jobs:
+ include:
+  # Moodle 3.9
+  - php: 7.2 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_39_STABLE DB=mysqli
+  # Moodle 3.9, PostgreSQL
+  - php: 7.3 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_39_STABLE DB=pgsql
+  # Moodle 3.10
+  - php: 7.4 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_310_STABLE DB=mysqli
 # Optionally, it is possible to specify a different Moodle repo to use
 # (git://github.com/moodle/moodle.git is used by default):
 # - MOODLE_REPO=git://github.com/username/moodle.git
-
-# Also, note that, for multi-branch scenarios, where the same plugin
-# codebase needs to be tested against multiple branches of Moodle,
-# it is possible to remove the `php`, `env/global`, and `matrix`
-# sections above and just create a `jobs` section explicitly defining
-# which `php`, `MOODLE_BRANCH` and `DB` to use, for example:
-#
-# jobs:
-#   include:
-#     - php: 7.3
-#       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=pgsql
-#     - php: 7.3
-#       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=mysqli
-#     ....
-# Note: this also enables to add specific env variables (NODE_VERSION,
+# Note: It is also possible to add specific env variables (NODE_VERSION,
 # EXTRA_PLUGINS...) per job, if you don't want to do it globally.
+
+# Also, note that, if the plugin codebase only needs to be tested against
+# one branch of Moodle, it is possible to remove the `jobs` section,
+# and add the following sections, which will test against one Moodle branch,
+# with every combination of the specified PHP versions and the databases.
+#
+# php:
+#  - 7.2
+#  - 7.3
+#  - 7.4
+# env:
+#  global:
+#   - MOODLE_BRANCH=MOODLE_39_STABLE
+#  matrix:
+#   - DB=pgsql
+#   - DB=mysqli
 
 # This lists steps that are run before the installation step.
 before_install:

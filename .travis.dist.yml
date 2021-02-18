@@ -13,17 +13,29 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-php:
- - 7.2
- - 7.3
- - 7.4
-
-env:
- global:
-  - MOODLE_BRANCH=MOODLE_39_STABLE
- matrix:
-  - DB=pgsql
-  - DB=mysqli
+jobs:
+ include:
+  # Moodle 3.5
+  #- php: 7.0 # 7.0-7.2
+  #  env: MOODLE_BRANCH=MOODLE_35_STABLE DB=mysqli
+  # Moodle 3.8
+  #- php: 7.1 # 7.1-7.4
+  #  env: MOODLE_BRANCH=MOODLE_38_STABLE DB=mysqli
+  # Moodle 3.9
+  - php: 7.2 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_39_STABLE DB=mysqli
+  # Moodle 3.9, PostgreSQL
+  - php: 7.3 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_39_STABLE DB=pgsql
+  # Moodle 3.10
+  - php: 7.4 # 7.2-7.4
+    env: MOODLE_BRANCH=MOODLE_310_STABLE DB=mysqli
+  # Moodle 3.11
+  #- php: 7.4 # 7.2-7.4
+  #  env: MOODLE_BRANCH=MOODLE_311_STABLE DB=mysqli
+  # Moodle Master
+  #- php: 7.4 # 7.2-7.4
+  #  env: MOODLE_BRANCH=master DB=mysqli
 
 before_install:
   - phpenv config-rm xdebug.ini
