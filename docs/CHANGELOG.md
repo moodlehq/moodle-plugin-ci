@@ -11,6 +11,11 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [3.0.7] - 2021-02-25
+### Changed
+- Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) version.
+- Switched to Composer v2.
+
 ## [3.0.6] - 2021-02-08
 ### Fixed
 - `moodle-plugin-ci grunt` should also be using `npx grunt` internally
@@ -326,7 +331,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.6...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.7...master
+[3.0.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.6...3.0.7
 [3.0.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.5...3.0.6
 [3.0.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.4...3.0.5
 [3.0.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.3...3.0.4
