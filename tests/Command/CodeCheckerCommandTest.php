@@ -72,7 +72,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
 <?php
 
 if (true) {
-    $var = ldap_sort();  // To verify PHPCompatibility own sniff.
+    $var = ldap_sort();  // To verify both PHPCompatibility and own moodle deprecations sniff.
 } elseif (false) {
     $var = print_object(); // To verify moodle own sniff.
 
@@ -88,7 +88,7 @@ EOT;
         $output = $this->getActualOutput();
         $this->assertRegExp('/E\.* 8\.* \/ 8 \(100%\)/', $output);                  // Progress.
         $this->assertRegExp('/\/fixable.php/', $output);                            // File.
-        $this->assertRegExp('/ (4|5) ERRORS AND 1 WARNING AFFECTING 5 /', $output); // Summary (php70 shows one less)
+        $this->assertRegExp('/ (4|5) ERRORS AND 2 WARNINGS AFFECTING 5 /', $output); // Summary (php70 shows one less)
         $this->assertRegexp('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
         $this->assertRegexp('/print_object\(\) is forbidden/', $output);            // Moodle sniff.
         $this->assertRegexp('/FunctionUse\.RemovedFunctions\.ldap_sort/', $output); // PHPCompatibility sniff.
