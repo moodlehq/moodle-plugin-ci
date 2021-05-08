@@ -14,6 +14,7 @@ namespace MoodlePluginCI\Command;
 
 use MoodlePluginCI\Bridge\MessDetectorRenderer;
 use PHPMD\PHPMD;
+use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
 use Symfony\Component\Console\Input\InputInterface;
@@ -52,7 +53,7 @@ class MessDetectorCommand extends AbstractMoodleCommand
         $ruleSetFactory->setMinimumPriority(5);
 
         $messDetector = new PHPMD();
-        $messDetector->processFiles(implode(',', $files), $rules, [$renderer], $ruleSetFactory);
+        $messDetector->processFiles(implode(',', $files), $rules, [$renderer], $ruleSetFactory, new Report());
 
         return 0;
     }

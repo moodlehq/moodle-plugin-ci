@@ -15,6 +15,7 @@ namespace MoodlePluginCI\Command;
 use SebastianBergmann\PHPCPD\Detector\Detector;
 use SebastianBergmann\PHPCPD\Detector\Strategy\DefaultStrategy;
 use SebastianBergmann\PHPCPD\Log\Text;
+use SebastianBergmann\Timer\Timer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
@@ -45,7 +46,7 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
 
         $printer = new Text();
         $printer->printResult($output, $clones);
-        $output->writeln(\PHP_Timer::resourceUsage());
+        $output->writeln(Timer::resourceUsage());
 
         return count($clones) > 0 ? 1 : 0;
     }

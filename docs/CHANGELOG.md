@@ -9,7 +9,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Changed
+- ACTION REQUIRED: It's needed to edit the CI jobs in your plugins (Travis or GHA) and get rid of (or update) any using PHP 7.0.x or PHP 7.1.x. Alternatively, can remain sticky to previous `moodle-plugin-ci` version 3.0.8 (by specifying `3.0.8` in the `composer create-project`) to continue using those (EOL) PHP versions.
+
+### Removed
+- Support for PHP 7.0.x and 7.1.x (7.2.0 is now required). This means that, still, Moodle 3.4 and up are supported by the tool, but older branches aren't anymore.
 
 ## [3.0.8] - 2021-04-23
 ### Changed
