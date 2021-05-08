@@ -57,7 +57,9 @@ class MessDetectorRenderer extends AbstractRenderer
         $groupByFile = [];
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
-            $groupByFile[$violation->getFileName()][] = $violation;
+            if ($filename = $violation->getFileName()) {
+                $groupByFile[$filename][] = $violation;
+            }
         }
 
         /** @var ProcessingError $error */
