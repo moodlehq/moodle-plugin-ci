@@ -65,7 +65,7 @@ endif
 
 # Update download URL from https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases
 build/php-cs-fixer.phar:
-	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.14.2/php-cs-fixer.phar -o build/php-cs-fixer.phar
+	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.19.0/php-cs-fixer.phar -o build/php-cs-fixer.phar
 
 # Update download URL from https://github.com/vimeo/psalm/releases
 build/psalm.phar:
