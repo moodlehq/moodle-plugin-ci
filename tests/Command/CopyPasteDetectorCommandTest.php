@@ -17,11 +17,11 @@ use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class CopyPasteDetectorCommandTest extends \PHPUnit_Framework_TestCase
+class CopyPasteDetectorCommandTest extends \PHPUnit\Framework\TestCase
 {
     private $pluginDir;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pluginDir = __DIR__.'/../Fixture/moodle-local_ci';
     }

@@ -16,19 +16,19 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\QuestionRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class QuestionRequirementsTest extends \PHPUnit_Framework_TestCase
+class QuestionRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var QuestionRequirements
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new QuestionRequirements(new Plugin('qtype_calculated', 'qtype', 'calculated', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }

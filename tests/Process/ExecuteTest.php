@@ -19,9 +19,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class ExecuteTest extends \PHPUnit_Framework_TestCase
+class ExecuteTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         // Define RUNTIME_NVM_BIN, so we check its value is added to PATH within
         // process.
@@ -42,7 +42,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $process->run();
         $this->assertTrue($process->isSuccessful());
         // Expect path to match system one.
-        $this->assertContains('PATH='.$pathenv, $process->getOutput());
+        $this->assertStringContainsString('PATH='.$pathenv, $process->getOutput());
         // Expect HOME is defined (system env vars present)
         $this->assertRegExp('/^HOME=/m', $process->getOutput());
 
@@ -55,7 +55,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
         $process->run();
         $this->assertTrue($process->isSuccessful());
         // RUNTIME_NVM_BIN is defined, expect it to be first item in the PATH .
-        $this->assertContains('PATH=/test/bin:'.$pathenv, $process->getOutput());
+        $this->assertStringContainsString('PATH=/test/bin:'.$pathenv, $process->getOutput());
         // Expect HOME is defined too (system env vars present)
         $this->assertRegExp('/^HOME=/m', $process->getOutput());
     }

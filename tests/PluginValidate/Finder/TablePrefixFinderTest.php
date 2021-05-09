@@ -15,7 +15,7 @@ namespace MoodlePluginCI\Tests\PluginValidate\Finder;
 use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Finder\TablePrefixFinder;
 
-class TablePrefixFinderTest extends \PHPUnit_Framework_TestCase
+class TablePrefixFinderTest extends \PHPUnit\Framework\TestCase
 {
     public function testFindTokens()
     {

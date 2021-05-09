@@ -16,19 +16,19 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 use MoodlePluginCI\PluginValidate\Requirements\ThemeRequirements;
 
-class ThemeRequirementsTest extends \PHPUnit_Framework_TestCase
+class ThemeRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ThemeRequirements
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new ThemeRequirements(new Plugin('theme_base', 'theme', 'base', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }
@@ -50,7 +50,7 @@ class ThemeRequirementsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($files);
         $this->assertTrue(in_array('config.php', $files, true));
         foreach ($files as $file) {
-            $this->assertInternalType('string', $file);
+            $this->assertIsString($file);
         }
     }
 }
