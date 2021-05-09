@@ -16,19 +16,19 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\FormatRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class FormatRequirementsTest extends \PHPUnit_Framework_TestCase
+class FormatRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FormatRequirements
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new FormatRequirements(new Plugin('format_weeks', 'format', 'weeks', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }
@@ -50,7 +50,7 @@ class FormatRequirementsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($files);
         $this->assertTrue(in_array('format.php', $files, true));
         foreach ($files as $file) {
-            $this->assertInternalType('string', $file);
+            $this->assertIsString($file);
         }
     }
 

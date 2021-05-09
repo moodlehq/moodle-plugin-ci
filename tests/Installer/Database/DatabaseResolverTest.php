@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests\Installer\Database;
 
 use MoodlePluginCI\Installer\Database\DatabaseResolver;
 
-class DatabaseResolverTest extends \PHPUnit_Framework_TestCase
+class DatabaseResolverTest extends \PHPUnit\Framework\TestCase
 {
     public function testType()
     {

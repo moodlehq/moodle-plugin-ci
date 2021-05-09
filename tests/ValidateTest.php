@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests;
 
 use MoodlePluginCI\Validate;
 
-class ValidateTest extends \PHPUnit_Framework_TestCase
+class ValidateTest extends \PHPUnit\Framework\TestCase
 {
     public function testDirectory()
     {

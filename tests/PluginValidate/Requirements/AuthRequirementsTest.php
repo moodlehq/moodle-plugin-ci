@@ -16,19 +16,19 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\AuthRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class AuthRequirementsTest extends \PHPUnit_Framework_TestCase
+class AuthRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var AuthRequirements
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new AuthRequirements(new Plugin('auth_email', 'auth', 'email', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }
@@ -50,7 +50,7 @@ class AuthRequirementsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($files);
         $this->assertTrue(in_array('auth.php', $files, true));
         foreach ($files as $file) {
-            $this->assertInternalType('string', $file);
+            $this->assertIsString($file);
         }
     }
 

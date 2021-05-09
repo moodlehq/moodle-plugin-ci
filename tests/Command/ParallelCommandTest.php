@@ -19,7 +19,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Process\Process;
 
-class ParallelCommandTest extends \PHPUnit_Framework_TestCase
+class ParallelCommandTest extends \PHPUnit\Framework\TestCase
 {
     protected function executeCommand(array $processes)
     {
@@ -69,7 +69,7 @@ class ParallelCommandTest extends \PHPUnit_Framework_TestCase
 
         foreach ($processes as $name => $process) {
             $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
-            $this->assertInternalType('string', $name);
+            $this->assertIsString($name);
             $this->assertGreaterThan(1, strlen($name));
         }
     }

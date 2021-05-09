@@ -16,12 +16,12 @@ use MoodlePluginCI\Process\MoodleDebugException;
 use MoodlePluginCI\Process\MoodlePhpException;
 use MoodlePluginCI\Process\MoodleProcess;
 
-class MoodleProcessTest extends \PHPUnit_Framework_TestCase
+class MoodleProcessTest extends \PHPUnit\Framework\TestCase
 {
     private $outputWithDebugging;
     private $outputWithoutDebugging;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         // Example output from installing Moodle with debugging message.
         $this->outputWithDebugging = '-->System\n'.

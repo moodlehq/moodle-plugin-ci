@@ -21,7 +21,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class CoverallsUploadCommandTest extends MoodleTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fs->touch($this->moodleDir.'/coverage.xml');

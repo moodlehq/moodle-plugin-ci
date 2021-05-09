@@ -20,7 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class AddConfigCommandTest extends FilesystemTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fs->copy(__DIR__.'/../Fixture/example-config.php', $this->tempDir.'/config.php');

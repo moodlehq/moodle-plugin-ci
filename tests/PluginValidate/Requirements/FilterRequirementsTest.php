@@ -16,19 +16,19 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\FilterRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class FilterRequirementsTest extends \PHPUnit_Framework_TestCase
+class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FilterRequirements
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new FilterRequirements(new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }
@@ -50,7 +50,7 @@ class FilterRequirementsTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($files);
         $this->assertTrue(in_array('filter.php', $files, true));
         foreach ($files as $file) {
-            $this->assertInternalType('string', $file);
+            $this->assertIsString($file);
         }
     }
 

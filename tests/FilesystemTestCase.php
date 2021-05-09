@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class FilesystemTestCase extends \PHPUnit_Framework_TestCase
+class FilesystemTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var string
@@ -26,7 +26,7 @@ class FilesystemTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $fs;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->tempDir = sys_get_temp_dir().'/moodle-plugin-ci/FilesystemTestCase'.time();
 
@@ -36,7 +36,7 @@ class FilesystemTestCase extends \PHPUnit_Framework_TestCase
         $this->tempDir = realpath($this->tempDir);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->fs->remove($this->tempDir);
     }

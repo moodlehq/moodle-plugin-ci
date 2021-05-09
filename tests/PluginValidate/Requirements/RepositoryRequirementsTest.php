@@ -16,19 +16,19 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\RepositoryRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class RepositoryRequirementsTest extends \PHPUnit_Framework_TestCase
+class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var RepositoryRequirements
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new RepositoryRequirements(new Plugin('repository_upload', 'repository', 'upload', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }
@@ -49,7 +49,7 @@ class RepositoryRequirementsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($files);
         foreach ($files as $file) {
-            $this->assertInternalType('string', $file);
+            $this->assertIsString($file);
         }
     }
 

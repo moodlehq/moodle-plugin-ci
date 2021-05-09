@@ -15,7 +15,7 @@ namespace MoodlePluginCI\Tests\PluginValidate;
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class RequirementsResolverTest extends \PHPUnit_Framework_TestCase
+class RequirementsResolverTest extends \PHPUnit\Framework\TestCase
 {
     public function testResolveRequirements()
     {

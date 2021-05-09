@@ -16,7 +16,7 @@ use MoodlePluginCI\Installer\InstallerCollection;
 use MoodlePluginCI\Installer\InstallOutput;
 use MoodlePluginCI\Tests\Fake\Installer\DummyInstaller;
 
-class InstallerCollectionTest extends \PHPUnit_Framework_TestCase
+class InstallerCollectionTest extends \PHPUnit\Framework\TestCase
 {
     public function testAll()
     {
