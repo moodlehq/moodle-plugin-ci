@@ -48,6 +48,7 @@ script:
   - moodle-plugin-ci mustache
   - moodle-plugin-ci grunt || [ \
         "$MOODLE_BRANCH" != 'master' -a \
+        "$MOODLE_BRANCH" != 'MOODLE_311_STABLE' -a \
         "$MOODLE_BRANCH" != 'MOODLE_310_STABLE' -a \
         "$MOODLE_BRANCH" != 'MOODLE_39_STABLE' ]
   - moodle-plugin-ci phpdoc
@@ -74,6 +75,4 @@ jobs:
     - php: 7.4
       env: MOODLE_BRANCH=MOODLE_38_STABLE
     - php: 7.2
-      env: MOODLE_BRANCH=MOODLE_35_STABLE
-    - php: 7.0
       env: MOODLE_BRANCH=MOODLE_35_STABLE
