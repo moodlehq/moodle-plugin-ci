@@ -59,7 +59,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         ], ['verbosity' => OutputInterface::VERBOSITY_VERY_VERBOSE]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertContains('git clone --depth 1  https://github.com/user/moodle-mod_foo.git',
+        $this->assertStringContainsString('git clone --depth 1  https://github.com/user/moodle-mod_foo.git',
             $commandTester->getDisplay());
         $this->assertTrue(is_dir($this->tempDir.'/plugins'));
         $this->assertFileExists($this->tempDir.'/.env');
@@ -80,7 +80,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         ], ['verbosity' => OutputInterface::VERBOSITY_VERY_VERBOSE]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertContains('git clone --depth 1 --branch dev https://github.com/user/moodle-mod_foo.git',
+        $this->assertStringContainsString('git clone --depth 1 --branch dev https://github.com/user/moodle-mod_foo.git',
             $commandTester->getDisplay());
         $this->assertTrue(is_dir($this->tempDir.'/plugins'));
         $this->assertFileExists($this->tempDir.'/.env');

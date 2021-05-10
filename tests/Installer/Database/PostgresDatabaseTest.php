@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests\Installer\Database;
 
 use MoodlePluginCI\Installer\Database\PostgresDatabase;
 
-class PostgresDatabaseTest extends \PHPUnit_Framework_TestCase
+class PostgresDatabaseTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetCreateDatabaseCommand()
     {

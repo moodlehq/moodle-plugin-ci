@@ -15,7 +15,7 @@ namespace MoodlePluginCI\Tests\PluginValidate\Finder;
 use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Finder\FunctionFinder;
 
-class FunctionFinderTest extends \PHPUnit_Framework_TestCase
+class FunctionFinderTest extends \PHPUnit\Framework\TestCase
 {
     public function testFindTokens()
     {

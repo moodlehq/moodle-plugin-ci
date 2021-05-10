@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InstallOutputTest extends \PHPUnit_Framework_TestCase
+class InstallOutputTest extends \PHPUnit\Framework\TestCase
 {
     public function testProgressBar()
     {

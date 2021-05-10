@@ -17,7 +17,7 @@ use MoodlePluginCI\PluginValidate\PluginValidate;
 use MoodlePluginCI\PluginValidate\Requirements\GenericRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\ModuleRequirements;
 
-class PluginValidateTest extends \PHPUnit_Framework_TestCase
+class PluginValidateTest extends \PHPUnit\Framework\TestCase
 {
     public function testVerifyRequirements()
     {

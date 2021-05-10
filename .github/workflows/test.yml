@@ -25,7 +25,7 @@ jobs:
   citest:
     name: CI test
     needs: selftest
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
 
     services:
       postgres:
@@ -53,8 +53,6 @@ jobs:
           - php: '7.4'
             moodle-branch: 'MOODLE_38_STABLE'
           - php: '7.2'
-            moodle-branch: 'MOODLE_35_STABLE'
-          - php: '7.0'
             moodle-branch: 'MOODLE_35_STABLE'
 
     steps:
@@ -102,6 +100,7 @@ jobs:
         moodle-plugin-ci mustache
         moodle-plugin-ci grunt ||  [ \
             "$MOODLE_BRANCH" != 'master' -a \
+            "$MOODLE_BRANCH" != 'MOODLE_311_STABLE' -a \
             "$MOODLE_BRANCH" != 'MOODLE_310_STABLE' -a \
             "$MOODLE_BRANCH" != 'MOODLE_39_STABLE' ]
         moodle-plugin-ci phpdoc

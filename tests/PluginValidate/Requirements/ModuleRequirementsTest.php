@@ -16,19 +16,19 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\ModuleRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class ModuleRequirementsTest extends \PHPUnit_Framework_TestCase
+class ModuleRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ModuleRequirements
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new ModuleRequirements(new Plugin('mod_forum', 'mod', 'forum', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }
@@ -49,7 +49,7 @@ class ModuleRequirementsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotEmpty($files);
         foreach ($files as $file) {
-            $this->assertInternalType('string', $file);
+            $this->assertIsString($file);
         }
     }
 

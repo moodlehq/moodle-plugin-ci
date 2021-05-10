@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests\Installer\Database;
 
 use MoodlePluginCI\Installer\Database\MySQLDatabase;
 
-class MySQLDatabaseTest extends \PHPUnit_Framework_TestCase
+class MySQLDatabaseTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetCreateDatabaseCommand()
     {

@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests;
 
 use MoodlePluginCI\StandardResolver;
 
-class StandardResolverTest extends \PHPUnit_Framework_TestCase
+class StandardResolverTest extends \PHPUnit\Framework\TestCase
 {
     public function testHasStandard()
     {

@@ -29,7 +29,7 @@ if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
  */
 class CodeCheckerCommandTest extends MoodleTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
