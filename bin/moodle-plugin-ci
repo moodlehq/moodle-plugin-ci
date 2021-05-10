@@ -42,7 +42,7 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
     require_once __DIR__.'/../vendor/autoload.php';
 } else {
     fwrite(STDERR, 'Failed to find Composer\'s autoload file. You might need to run Composer\'s install on this project'.PHP_EOL);
-    die(1);
+    exit(1);
 }
 
 define('MOODLE_PLUGIN_CI_BOXED', '@is_boxed@');

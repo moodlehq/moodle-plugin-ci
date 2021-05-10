@@ -20,7 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class SavePointsCommandTest extends MoodleTestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
     }
