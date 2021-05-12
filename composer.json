@@ -58,11 +58,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_moodlecheck",
-        "version": "1.0.6",
+        "version": "1.0.7",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
           "type": "git",
-          "reference": "5edcc27e76081de295a2107681bb88232a828a99"
+          "reference": "v1.0.7"
         }
       }
     }
@@ -71,7 +71,7 @@
     "php": ">=7.0.8",
     "moodlehq/moodle-local_codechecker": "^3.0.1",
     "moodlehq/moodle-local_ci": "^1.0.9",
-    "moodlehq/moodle-local_moodlecheck": "^1.0.6",
+    "moodlehq/moodle-local_moodlecheck": "^1.0.7",
     "sebastian/phpcpd": "^3.0",
     "phpmd/phpmd": "^2.2",
     "symfony/dotenv": "^3.4",
@@ -83,7 +83,7 @@
     "php-parallel-lint/php-parallel-lint": "^1.2.0",
     "php-parallel-lint/php-console-highlighter": "^0.5",
     "psr/log": "^1.0",
-    "nikic/php-parser": "^3.0",
+    "nikic/php-parser": "^4.0",
     "stecman/symfony-console-completion": "^0.7.0",
     "marcj/topsort": "^1.0",
     "padraic/phar-updater": "^1.0"

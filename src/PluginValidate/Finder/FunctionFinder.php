@@ -27,7 +27,7 @@ class FunctionFinder extends AbstractParserFinder
         $statements = $this->parser->parseFile($file);
 
         foreach ($this->filter->filterFunctions($statements) as $function) {
-            $fileTokens->compare($function->name);
+            $fileTokens->compare((string) $function->name);
         }
     }
 }

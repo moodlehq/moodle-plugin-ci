@@ -18,6 +18,7 @@ use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 
@@ -94,9 +95,15 @@ class StatementFilter
      */
     public function filterAssignments(array $statements)
     {
-        return array_filter($statements, function ($statement) {
-            return $statement instanceof Assign;
+        $stmts = array_filter($statements, function ($statement) {
+            // Since php-parser 4.0, expression statements are enclosed into
+            // new Stmt\Expression node, confirm our Assignment is there.
+            return $statement instanceof Expression && $statement->expr instanceof Assign;
         });
+        // Return the Assignments only.
+        return array_map(function ($statement) {
+            return $statement->expr;
+        }, $stmts);
     }
 
     /**
@@ -111,7 +118,7 @@ class StatementFilter
     public function findFirstVariableAssignment(array $statements, $name, $notFoundError = null)
     {
         foreach ($this->filterAssignments($statements) as $assign) {
-            if ($assign->var instanceof Variable && $assign->var->name === $name) {
+            if ($assign->var instanceof Variable && (string) $assign->var->name === $name) {
                 return $assign;
             }
         }
@@ -137,11 +144,11 @@ class StatementFilter
             if (!$assign->var instanceof PropertyFetch) {
                 continue;
             }
-            if ($assign->var->name !== $property) {
+            if ((string) $assign->var->name !== $property) {
                 continue;
             }
             $var = $assign->var->var;
-            if ($var instanceof Variable && $var->name === $variable) {
+            if ($var instanceof Variable && (string) $var->name === $variable) {
                 return $assign;
             }
         }
