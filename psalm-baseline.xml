@@ -79,4 +79,11 @@
       <code>$input-&gt;getOption('moodle')</code>
     </PossiblyInvalidArgument>
   </file>
+  <file src="src/Parser/StatementFilter.php">
+    <PossiblyInvalidCast occurrences="3">
+      <code>$assign-&gt;var-&gt;name</code>
+      <code>$assign-&gt;var-&gt;name</code>
+      <code>$var-&gt;name</code>
+    </PossiblyInvalidCast>
+  </file>
 </files>
