@@ -46,11 +46,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_ci",
-        "version": "1.0.9",
+        "version": "1.0.10",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_ci.git",
           "type": "git",
-          "reference": "7a3cef3ce127ef8037765e79518661f03ae1396f"
+          "reference": "v1.0.10"
         }
       }
     },
@@ -70,7 +70,7 @@
   "require": {
     "php": ">=7.0.8",
     "moodlehq/moodle-local_codechecker": "^3.0.1",
-    "moodlehq/moodle-local_ci": "^1.0.9",
+    "moodlehq/moodle-local_ci": "^1.0.10",
     "moodlehq/moodle-local_moodlecheck": "^1.0.7",
     "sebastian/phpcpd": "^3.0",
     "phpmd/phpmd": "^2.2",
