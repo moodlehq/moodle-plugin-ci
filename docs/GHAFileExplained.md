@@ -50,7 +50,7 @@ jobs:
     # Determines build matrix. This is a list of PHP versions, databases and
     # branches to test our project against. For each combination a separate
     # build will be created. For example below 6 builds will be created in
-    # total (7.2-pgsql, 7.2-mariadb, 7.3-pgsql, 7.3-mariadb, etc.). If we add
+    # total (7.3-pgsql, 7.3-mariadb, 7.4-pgsql, 7.4-mariadb, etc.). If we add
     # another branch, total number of builds will become 12.
     # If you need to use PHP 7.0 and run phpunit coverage test, make sure you are
     # using ubuntu-16.04 virtual environment in this case to have phpdbg or
@@ -58,22 +58,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.2', '7.3', '7.4']
-        moodle-branch: ['MOODLE_310_STABLE']
+        php: ['7.3', '7.4', '8.0']
+        moodle-branch: ['MOODLE_311_STABLE']
         database: [pgsql, mariadb]
 
-    # There is an alterantive way allowing to define explicitly define which php, moodle-branch
+    # There is an alternative way allowing to define explicitly define which php, moodle-branch
     # and database to use:
     #
     # matrix:
     #   include:
+    #     - php: '8.0'
+    #       moodle-branch: 'MOODLE_311_STABLE'
+    #       database: pgsql
+    # Optional line: Only needed if going to run php8 jobs and the plugin
+    # needs xmlrpc services or other special extensions.
+    #       extensions: xmlrpc-beta
     #     - php: '7.4'
     #       moodle-branch: 'MOODLE_310_STABLE'
-    #       database: pgsql
-    #     - php: '7.3'
-    #       moodle-branch: 'MOODLE_310_STABLE'
     #       database: mariadb
-    #     - php: '7.2'
+    #     - php: '7.3'
     #       moodle-branch: 'MOODLE_39_STABLE'
     #       database: pgsql
 
@@ -89,6 +92,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          extensions: ${{ matrix.extensions }}
+          ini-values: max_input_vars=5000
           coverage: none
 
       # Install this project into a directory called "ci", updating PATH and

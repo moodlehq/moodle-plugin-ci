@@ -31,15 +31,15 @@ cache:
 # listed here will create a separate build and run the tests against that
 # version of PHP.
 php:
- - 7.2
  - 7.3
  - 7.4
+ - 8.0
 
 # This section sets up the environment variables for the build.
 env:
  global:
 # This line determines which version branch of Moodle to test against.
-  - MOODLE_BRANCH=MOODLE_39_STABLE
+  - MOODLE_BRANCH=MOODLE_311_STABLE
 # This matrix is used for testing against multiple databases.  So for
 # each version of PHP being tested, one build will be created for each
 # database listed here.  EG: for PHP 7.3, one build will be created
@@ -61,16 +61,23 @@ env:
 #
 # jobs:
 #   include:
+#     - php: 8.0
+#       env: MOODLE_BRANCH=MOODLE_311_STABLE    DB=pgsql
+#     - php: 7.4
+#       env: MOODLE_BRANCH=MOODLE_311_STABLE    DB=pgsql
 #     - php: 7.3
-#       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=pgsql
-#     - php: 7.3
-#       env: MOODLE_BRANCH=MOODLE_39_STABLE    DB=mysqli
+#       env: MOODLE_BRANCH=MOODLE_311_STABLE    DB=mysqli
 #     ....
 # Note: this also enables to add specific env variables (NODE_VERSION,
 # EXTRA_PLUGINS...) per job, if you don't want to do it globally.
 
 # This lists steps that are run before the installation step.
 before_install:
+# Optional line: Only needed if going to run php8 jobs and the plugin
+# needs xmlrpc services.
+- if [[ ${TRAVIS_PHP_VERSION:0:1} -gt 7 ]]; then pecl install xmlrpc-beta; fi
+# Setup a good default max_input_vars value for all runs.
+- echo 'max_input_vars=5000' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 # This disables XDebug which should speed up the build.
   - phpenv config-rm xdebug.ini
 # Currently we are inside of the clone of your repository.  We move up two

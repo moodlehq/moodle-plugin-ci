@@ -14,18 +14,20 @@ cache:
     - $HOME/.npm
 
 php:
- - 7.2
  - 7.3
  - 7.4
+ - 8.0
 
 env:
  global:
-  - MOODLE_BRANCH=MOODLE_39_STABLE
+  - MOODLE_BRANCH=MOODLE_311_STABLE
  matrix:
   - DB=pgsql
   - DB=mysqli
 
 before_install:
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} -gt 7 ]]; then pecl install xmlrpc-beta; fi
+  - echo 'max_input_vars=5000' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - phpenv config-rm xdebug.ini
   - cd ../..
   - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3

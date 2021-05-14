@@ -27,8 +27,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.2', '7.3', '7.4']
-        moodle-branch: ['MOODLE_310_STABLE']
+        php: ['7.3', '7.4', '8.0']
+        moodle-branch: ['MOODLE_311_STABLE']
         database: [pgsql, mariadb]
 
     steps:
@@ -41,6 +41,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          extensions: ${{ matrix.extensions }}
+          ini-values: max_input_vars=5000
           coverage: none
 
       - name: Initialise moodle-plugin-ci
