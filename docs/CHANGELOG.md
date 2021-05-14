@@ -11,6 +11,21 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [3.1.0] - 2021-05-14
+### Added
+- Support for PHP 8.0 jobs.
+- ACTION REQUIRED: Small modifications are required to both Travis and GHA integrations,
+  only if adding PHP 8 jobs. These changes include 1) Setting up the `max_input_vars=5000`
+  PHP configuration setting, for all runs, and 2) Enabling the `xmlrpc-beta` extension
+  if the plugin requires xmlrpc services, only for PHP 8 runs. See
+  [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
+  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml) for more information.
+
+### Changed
+- Updated various internal dependencies and tools.
+- Moved [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and
+  [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) dependencies to use tagged references instead of commit ones.
+
 ## [3.0.8] - 2021-04-23
 ### Changed
 - Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
@@ -336,7 +351,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.8...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.1.0...master
+[3.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.8...3.1.0
 [3.0.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.7...3.0.8
 [3.0.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.6...3.0.7
 [3.0.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.5...3.0.6
