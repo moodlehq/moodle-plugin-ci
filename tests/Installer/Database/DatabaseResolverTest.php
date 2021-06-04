@@ -49,8 +49,9 @@ class DatabaseResolverTest extends \PHPUnit\Framework\TestCase
         $user = 'TestUser';
         $pass = 'TestPass';
         $host = 'TestHost';
+        $port = 'TestPort';
 
-        $database = $resolver->resolveDatabase('mysqli', $name, $user, $pass, $host);
+        $database = $resolver->resolveDatabase('mysqli', $name, $user, $pass, $host, $port);
 
         $this->assertInstanceOf(
             'MoodlePluginCI\Installer\Database\MySQLDatabase',

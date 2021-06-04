@@ -25,8 +25,9 @@ class PostgresDatabase extends AbstractDatabase
         $pass     = !empty($this->pass) ? 'env PGPASSWORD='.escapeshellarg($this->pass).' ' : '';
         $user     = escapeshellarg($this->user);
         $host     = escapeshellarg($this->host);
+        $port     = !empty($this->port) ? ' --port '.escapeshellarg($this->port) : '';
         $createDB = escapeshellarg(sprintf('CREATE DATABASE "%s";', $this->name));
 
-        return sprintf('%spsql -c %s -U %s -h %s', $pass, $createDB, $user, $host);
+        return sprintf('%spsql -c %s -U %s -h %s%s', $pass, $createDB, $user, $host, $port);
     }
 }

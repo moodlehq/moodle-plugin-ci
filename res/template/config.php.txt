@@ -11,7 +11,9 @@ $CFG->dbname    = '{{DBNAME}}';
 $CFG->dbuser    = '{{DBUSER}}';
 $CFG->dbpass    = '{{DBPASS}}';
 $CFG->prefix    = 'mdl_';
-$CFG->dboptions = [];
+$CFG->dboptions = [
+    'dbport' => '{{DBPORT}}',
+];
 
 $CFG->wwwroot  = '{{WWWROOT}}';
 $CFG->dataroot = '{{DATAROOT}}';

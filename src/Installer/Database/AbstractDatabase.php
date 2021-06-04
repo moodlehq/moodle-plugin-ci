@@ -46,6 +46,13 @@ abstract class AbstractDatabase
     public $host = 'localhost';
 
     /**
+     * Database port.
+     *
+     * @var string
+     */
+    public $port = '';
+
+    /**
      * Moodle database type.
      *
      * @var string

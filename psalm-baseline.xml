@@ -48,7 +48,7 @@
     </PossiblyNullIterator>
   </file>
   <file src="src/Command/InstallCommand.php">
-    <PossiblyInvalidArgument occurrences="12">
+    <PossiblyInvalidArgument occurrences="13">
       <code>$input-&gt;getOption('plugin')</code>
       <code>$pluginsDir</code>
       <code>$input-&gt;getOption('moodle')</code>
@@ -59,6 +59,7 @@
       <code>$input-&gt;getOption('db-user')</code>
       <code>$input-&gt;getOption('db-pass')</code>
       <code>$input-&gt;getOption('db-host')</code>
+      <code>$input-&gt;getOption('db-port')</code>
       <code>$input-&gt;getOption('not-paths')</code>
       <code>$input-&gt;getOption('not-names')</code>
     </PossiblyInvalidArgument>

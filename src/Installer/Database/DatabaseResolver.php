@@ -23,10 +23,11 @@ class DatabaseResolver
      * @param string|null $user
      * @param string|null $pass
      * @param string|null $host
+     * @param string|null $port
      *
      * @return AbstractDatabase
      */
-    public function resolveDatabase($type, $name = null, $user = null, $pass = null, $host = null)
+    public function resolveDatabase($type, $name = null, $user = null, $pass = null, $host = null, $port = null)
     {
         $database = $this->resolveDatabaseType($type);
 
@@ -41,6 +42,9 @@ class DatabaseResolver
         }
         if ($host !== null) {
             $database->host = $host;
+        }
+        if ($port !== null) {
+            $database->port = $port;
         }
 
         return $database;

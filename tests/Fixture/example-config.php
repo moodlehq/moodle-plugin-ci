@@ -11,7 +11,9 @@ $CFG->dbname    = 'moodle';
 $CFG->dbuser    = 'root';
 $CFG->dbpass    = '';
 $CFG->prefix    = 'mdl_';
-$CFG->dboptions = [];
+$CFG->dboptions = [
+    'dbport' => '',
+];
 
 $CFG->wwwroot  = 'http://localhost/moodle';
 $CFG->dataroot = '/path/to/moodledata';
