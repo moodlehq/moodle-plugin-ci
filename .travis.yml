@@ -30,7 +30,7 @@ before_install:
   # Mimic how a Moodle plugin would be run.
   - cp -R tests/Fixture/moodle-local_ci ../moodle-local_ci
   - export PATH="$(cd bin; pwd):$(cd vendor/bin; pwd):$PATH"
-  - export TRAVIS_BUILD_DIR=$(cd ../moodle-local_ci; pwd)
+  - export CI_BUILD_DIR=$(cd ../moodle-local_ci; pwd)
 
 install:
   - moodle-plugin-ci install -vvv

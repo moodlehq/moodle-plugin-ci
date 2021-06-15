@@ -67,11 +67,11 @@ class InstallCommand extends Command
 
     protected function configure()
     {
-        // Travis CI configures some things by environment variables, default to those if available.
+        // Travis/GitLab CI configures some things by environment variables, default to those if available.
         $type   = getenv('DB') !== false ? getenv('DB') : null;
         $repo   = getenv('MOODLE_REPO') !== false ? getenv('MOODLE_REPO') : 'git://github.com/moodle/moodle.git';
         $branch = getenv('MOODLE_BRANCH') !== false ? getenv('MOODLE_BRANCH') : null;
-        $plugin = getenv('TRAVIS_BUILD_DIR') !== false ? getenv('TRAVIS_BUILD_DIR') : null;
+        $plugin = getenv('CI_BUILD_DIR') !== false ? getenv('CI_BUILD_DIR') : null;
         $paths  = getenv('IGNORE_PATHS') !== false ? getenv('IGNORE_PATHS') : null;
         $names  = getenv('IGNORE_NAMES') !== false ? getenv('IGNORE_NAMES') : null;
         $extra  = getenv('EXTRA_PLUGINS_DIR') !== false ? getenv('EXTRA_PLUGINS_DIR') : null;
