@@ -78,7 +78,7 @@ class InstallCommand extends Command
         $node   = getenv('NODE_VERSION') !== false ? getenv('NODE_VERSION') : null;
 
         // As there is not only Travis CI, it can also be passed a generic environment variable.
-        if (is_null($plugin)) {
+        if (null === $plugin) {
             $plugin = getenv('CI_BUILD_DIR') !== false ? getenv('CI_BUILD_DIR') : null;
         }
 
