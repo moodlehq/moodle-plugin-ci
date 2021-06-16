@@ -12,8 +12,9 @@ using specific PHP comments.  For details see this
 [PHP_CodeSniffer wiki page](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage).
 
 In addition, you can ignore additional files by defining `IGNORE_PATHS` and/or `IGNORE_NAMES` environment variables
-in your `.travis.yml` file.  These environment variables wont work for Grunt tasks, but will for everything else.
-Example:
+in your CI workflow file.  These environment variables wont work for Grunt tasks, but will for everything else.
+
+`.travis.yml` example:
 
 ```yaml
 env:
@@ -26,13 +27,28 @@ env:
   - DB=mysqli
 ```
 
+`.github/workflow/*` example:
+
+```yaml
+      - name: Install moodle-plugin-ci
+        run: |
+          moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
+        env:
+          DB: ${{ matrix.database }}
+          MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+          IGNORE_PATHS: 'vendor/widget,javascript/min-lib.js'
+          IGNORE_NAMES: '*-m.js,bad_lib.php'
+```
+
 Both environment variables take a CSV value.  For `IGNORE_PATHS`, it takes relative file paths to ignore.  File paths
 can be a simple string like `foo/bar` or a regular expression like `/^foo\/bar/`.  For `IGNORE_NAMES`, it takes
 file names to ignore.  File names can be a simple string like `foo.php`, a glob like `*.php` or a regular expression
 like `/\.php$/`.
 
 If you need to specify ignore paths for a specific command, then you can define additional environment variables.  The
-variable names are the same as above, but prefixed with `COMMANDNAME_`.  Example:
+variable names are the same as above, but prefixed with `COMMANDNAME_`.
+
+`.travis.yml` example:
 
 ```yaml
 env:
@@ -44,6 +60,20 @@ env:
  matrix:
   - DB=pgsql
   - DB=mysqli
+```
+
+`.github/workflow/*` example:
+
+```yaml
+      - name: Install moodle-plugin-ci
+        run: |
+          moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
+        env:
+          DB: ${{ matrix.database }}
+          MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+          CODECHECKER_IGNORE_PATHS: 'vendor/widget,javascript/min-lib.js'
+          CODECHECKER_IGNORE_NAMES: '*-m.js,bad_lib.php'
+          MUSTACHE_IGNORE_NAMES: 'broken.mustache'
 ```
 
 In the above example, we are adding the `cli` path to our ignore paths for the PHPUnit command (this is also how you
