@@ -38,8 +38,8 @@ variable names are the same as above, but prefixed with `COMMANDNAME_`.  Example
 env:
  global:
   - MOODLE_BRANCH=MOODLE_32_STABLE
-  - IGNORE_PATHS=vendor/widget,javascript/min-lib.js
-  - IGNORE_NAMES=*-m.js,bad_lib.php
+  - CODECHECKER_IGNORE_PATHS=vendor/widget,javascript/min-lib.js
+  - CODECHECKER_IGNORE_NAMES=*-m.js,bad_lib.php
   - PHPUNIT_IGNORE_PATHS=$IGNORE_PATHS,cli
  matrix:
   - DB=pgsql
