@@ -77,6 +77,11 @@ class InstallCommand extends Command
         $extra  = getenv('EXTRA_PLUGINS_DIR') !== false ? getenv('EXTRA_PLUGINS_DIR') : null;
         $node   = getenv('NODE_VERSION') !== false ? getenv('NODE_VERSION') : null;
 
+        // As there is not only Travis CI, it can also be passed a generic environment variable.
+        if (null === $plugin) {
+            $plugin = getenv('CI_BUILD_DIR') !== false ? getenv('CI_BUILD_DIR') : null;
+        }
+
         $this->setName('install')
             ->setDescription('Install everything required for CI testing')
             ->addOption('moodle', null, InputOption::VALUE_REQUIRED, 'Clone Moodle to this directory', 'moodle')
