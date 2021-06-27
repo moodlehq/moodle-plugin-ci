@@ -6,6 +6,12 @@
   "license": "GPL-3.0-or-later",
   "authors": [
     {
+      "name": "Eloy Lafuente",
+      "email": "stronk7@moodle.com",
+      "homepage": "https://moodle.com",
+      "role": "Maintainer"
+    },
+    {
       "name": "Ruslan Kabalin",
       "email": "ruslan@moodle.com",
       "homepage": "https://moodle.com",
