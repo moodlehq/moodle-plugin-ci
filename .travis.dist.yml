@@ -1,7 +1,7 @@
 language: php
 
 addons:
-  postgresql: "9.6"
+  postgresql: "10"
 
 services:
   - mysql
