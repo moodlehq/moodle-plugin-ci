@@ -9,7 +9,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Changed
+- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
+  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
+  to use PostgreSQL 10 (Moodle 4.0 new requirement).
+- ACTION REQUIRED: Existing integrations running tests with PostgreSQL now need to use version 10 or newer.
 
 ## [3.1.0] - 2021-05-14
 ### Added

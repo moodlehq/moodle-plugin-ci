@@ -29,7 +29,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:9.6
+        image: postgres:10
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -102,6 +102,7 @@ jobs:
         moodle-plugin-ci mustache
         moodle-plugin-ci grunt ||  [ \
             "$MOODLE_BRANCH" != 'master' -a \
+            "$MOODLE_BRANCH" != 'MOODLE_311_STABLE' -a \
             "$MOODLE_BRANCH" != 'MOODLE_310_STABLE' -a \
             "$MOODLE_BRANCH" != 'MOODLE_39_STABLE' ]
         moodle-plugin-ci phpdoc
