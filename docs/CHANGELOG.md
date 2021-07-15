@@ -14,6 +14,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
   to use PostgreSQL 10 (Moodle 4.0 new requirement).
 - ACTION REQUIRED: Existing integrations running tests with PostgreSQL now need to use version 10 or newer.
+- ACTION REQUIRED: Existing integrations running tests with MariaDB must avoid using the 10.6 version and use 10.5 instead. It comes with some changes making it incompatible with Moodle default installation. To achieve that, just look for any use of `image: mariadb:10` and change it to `image: mariadb:10.5`. This is being tracked @ [MDL-72131]( https://tracker.moodle.org/browse/MDL-72131) and, once fixed, it will be possible to go back to the original image.
 
 ## [3.1.0] - 2021-05-14
 ### Added
