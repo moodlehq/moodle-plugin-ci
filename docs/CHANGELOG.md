@@ -9,6 +9,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [3.2.0] - 2021-07-16
+### Added
+- New tool-agnostic `CI_BUILD_DIR` env. variable that can be used instead of the old `TRAVIS_BUILD_DIR` one. Note that support for the later [will be removed](https://github.com/moodlehq/moodle-plugin-ci/issues/118) at some point in the future.
+
 ### Changed
 - Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
   [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
@@ -17,6 +23,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - ACTION REQUIRED: Existing integrations running tests with MariaDB must avoid using the 10.6 version and use 10.5 instead. It comes with some changes making it incompatible with Moodle default installation. To achieve that, just look for any use of `image: mariadb:10` and change it to `image: mariadb:10.5`. This is being tracked @ [MDL-72131]( https://tracker.moodle.org/browse/MDL-72131) and, once fixed, it will be possible to go back to the original image.
 - Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
 - Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.0.2.
+- Improved documentation and examples about how to ignore paths and files.
 
 ## [3.1.0] - 2021-05-14
 ### Added
@@ -358,7 +365,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.1.0...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.0...master
+[3.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.8...3.1.0
 [3.0.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.7...3.0.8
 [3.0.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.6...3.0.7
