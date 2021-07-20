@@ -241,9 +241,9 @@ class TestSuiteInstaller extends AbstractInstaller
 
         return <<<XML
     <coverage>
-        <whitelist addUncoveredFilesFromWhitelist="true">
+        <include>
             $includes
-        </whitelist>
+        </include>
     </coverage>
 
 XML;

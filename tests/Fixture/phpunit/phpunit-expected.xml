@@ -33,10 +33,10 @@
         </testsuite>
     </testsuites>
     <coverage>
-        <whitelist addUncoveredFilesFromWhitelist="true">
+        <include>
             <file>classes/math.php</file>
             <file>lib.php</file>
-        </whitelist>
+        </include>
     </coverage>
 
 </phpunit>
