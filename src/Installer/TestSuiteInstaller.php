@@ -151,8 +151,10 @@ class TestSuiteInstaller extends AbstractInstaller
         $subject   = file_get_contents($config);
         $count     = 0;
 
-        // Replace existing filter.
-        $contents = preg_replace('/<filter>(.|\n)*<\/filter>/m', trim($filterXml), $subject, 1, $count);
+        // Replace filter with coverage.
+        $subject = str_replace('filter>', 'coverage>', $subject);
+        // Replace existing coverage.
+        $contents = preg_replace('/<coverage>(.|\n)*<\/coverage>/m', trim($filterXml), $subject, 1, $count);
 
         // Or if no existing filter, inject the filter.
         if ($count === 0) {
@@ -238,11 +240,11 @@ class TestSuiteInstaller extends AbstractInstaller
         $includes = implode("\n            ", $includes);
 
         return <<<XML
-    <filter>
+    <coverage>
         <whitelist addUncoveredFilesFromWhitelist="true">
             $includes
         </whitelist>
-    </filter>
+    </coverage>
 
 XML;
     }

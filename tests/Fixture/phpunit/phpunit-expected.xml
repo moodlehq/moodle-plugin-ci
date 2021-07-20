@@ -32,11 +32,11 @@
             <directory suffix="_test.php">.</directory>
         </testsuite>
     </testsuites>
-    <filter>
+    <coverage>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <file>classes/math.php</file>
             <file>lib.php</file>
         </whitelist>
-    </filter>
+    </coverage>
 
 </phpunit>
