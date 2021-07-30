@@ -11,6 +11,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [3.2.1] - 2021-07-30
+### Changed
+- Temporary pin Selenium standalone-chrome image to 3.141.59-20210713
+
 ## [3.2.0] - 2021-07-16
 ### Added
 - New tool-agnostic `CI_BUILD_DIR` env. variable that can be used instead of the old `TRAVIS_BUILD_DIR` one. Note that support for the later [will be removed](https://github.com/moodlehq/moodle-plugin-ci/issues/118) at some point in the future.
@@ -365,7 +369,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.0...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.1...master
+[3.2.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.8...3.1.0
 [3.0.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.7...3.0.8
