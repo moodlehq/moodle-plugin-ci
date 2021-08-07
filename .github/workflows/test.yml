@@ -5,7 +5,7 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   selftest:
     name: CI test (make validate)
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Check out repository code
@@ -25,7 +25,7 @@ jobs:
   citest:
     name: CI test
     needs: selftest
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
 
     services:
       postgres:
