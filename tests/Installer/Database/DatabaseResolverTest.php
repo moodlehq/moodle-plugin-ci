@@ -32,6 +32,10 @@ class DatabaseResolverTest extends \PHPUnit_Framework_TestCase
             'MoodlePluginCI\Installer\Database\MariaDBDatabase',
             $resolver->resolveDatabase('mariadb')
         );
+        $this->assertInstanceOf(
+            'MoodlePluginCI\Installer\Database\OracleDatabase',
+            $resolver->resolveDatabase('oci')
+        );
     }
 
     public function testTypeError()

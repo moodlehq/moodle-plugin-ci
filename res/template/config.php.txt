@@ -10,7 +10,7 @@ $CFG->dbhost    = '{{DBHOST}}';
 $CFG->dbname    = '{{DBNAME}}';
 $CFG->dbuser    = '{{DBUSER}}';
 $CFG->dbpass    = '{{DBPASS}}';
-$CFG->prefix    = 'mdl_';
+$CFG->prefix    = 'm_';
 $CFG->dboptions = [];
 
 $CFG->wwwroot  = '{{WWWROOT}}';
@@ -28,11 +28,11 @@ $CFG->noemailever    = true;
 $CFG->noreplyaddress = 'noreply@localhost.local';
 
 // PHPUnit settings.
-$CFG->phpunit_prefix   = 'phpu_';
+$CFG->phpunit_prefix   = 'p_';
 $CFG->phpunit_dataroot = '{{PHPUNITDATAROOT}}';
 
 // Behat settings.
-$CFG->behat_prefix        = 'behat_';
+$CFG->behat_prefix        = 'b_';
 $CFG->behat_dataroot      = '{{BEHATDATAROOT}}';
 $CFG->behat_wwwroot       = '{{BEHATWWWROOT}}';
 $CFG->behat_faildump_path = '{{BEHATDUMP}}';

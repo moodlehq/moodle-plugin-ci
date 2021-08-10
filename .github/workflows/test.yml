@@ -37,6 +37,12 @@ jobs:
         ports:
         - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+      oracle:
+        image: moodlehq/moodle-db-oracle-r2
+        env:
+          ORACLE_DISABLE_ASYNCH_IO: true
+        ports:
+          - 1521:1521
 
     strategy:
       fail-fast: false
@@ -44,18 +50,35 @@ jobs:
         include:
           - php: '7.4'
             moodle-branch: 'master'
+            database: 'pgsql'
+            extensions: 'mbstring, zip, gd, xmlrpc, soap, pgsql'
           - php: '7.4'
             moodle-branch: 'MOODLE_311_STABLE'
+            database: 'oci'
+            extensions: 'mbstring, zip, gd, xmlrpc, soap, oci8'
+            ciinstallparams: '--db-user moodle --db-pass "m@0dl3ing" --db-name XE'
           - php: '7.4'
             moodle-branch: 'MOODLE_310_STABLE'
+            database: 'pgsql'
+            extensions: 'mbstring, zip, gd, xmlrpc, soap, pgsql'
           - php: '7.4'
             moodle-branch: 'MOODLE_39_STABLE'
+            database: 'oci'
+            extensions: 'mbstring, zip, gd, xmlrpc, soap, oci8'
+            ciinstallparams: '--db-user moodle --db-pass "m@0dl3ing" --db-name XE'
           - php: '7.4'
             moodle-branch: 'MOODLE_38_STABLE'
+            database: 'pgsql'
+            extensions: 'mbstring, zip, gd, xmlrpc, soap, pgsql'
           - php: '7.2'
             moodle-branch: 'MOODLE_35_STABLE'
+            database: 'oci'
+            extensions: 'mbstring, zip, gd, xmlrpc, soap, oci8'
+            ciinstallparams: '--db-user moodle --db-pass "m@0dl3ing" --db-name XE'
           - php: '7.0'
             moodle-branch: 'MOODLE_35_STABLE'
+            database: 'pgsql'
+            extensions: 'mbstring, zip, gd, xmlrpc, soap, pgsql'
 
     steps:
     - name: Check out repository code
@@ -65,7 +88,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        extensions: pgsql, zip, gd, xmlrpc, soap
+        extensions: ${{ matrix.extensions }}
         coverage: none
 
     - name: Initialise moodle-plugin-ci
@@ -81,9 +104,9 @@ jobs:
         echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
 
     - name: Install moodle-plugin-ci
-      run: moodle-plugin-ci install -vvv
+      run: moodle-plugin-ci install -vvv ${{ matrix.ciinstallparams }}
       env:
-        DB: 'pgsql'
+        DB: ${{ matrix.database }}
         MOODLE_BRANCH: ${{ matrix.moodle-branch }}
         IGNORE_PATHS: 'ignore'
         IGNORE_NAMES: 'ignore_name.php'

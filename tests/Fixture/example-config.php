@@ -10,7 +10,7 @@ $CFG->dbhost    = 'localhost';
 $CFG->dbname    = 'moodle';
 $CFG->dbuser    = 'root';
 $CFG->dbpass    = '';
-$CFG->prefix    = 'mdl_';
+$CFG->prefix    = 'm_';
 $CFG->dboptions = [];
 
 $CFG->wwwroot  = 'http://localhost/moodle';
@@ -28,11 +28,11 @@ $CFG->noemailever    = true;
 $CFG->noreplyaddress = 'noreply@localhost.local';
 
 // PHPUnit settings.
-$CFG->phpunit_prefix   = 'phpu_';
+$CFG->phpunit_prefix   = 'p_';
 $CFG->phpunit_dataroot = '/path/to/moodledata/phpu_moodledata';
 
 // Behat settings.
-$CFG->behat_prefix        = 'behat_';
+$CFG->behat_prefix        = 'b_';
 $CFG->behat_dataroot      = '/path/to/moodledata/behat_moodledata';
 $CFG->behat_wwwroot       = 'http://localhost:8000';
 $CFG->behat_faildump_path = '/path/to/moodledata/behat_dump';
