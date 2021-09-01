@@ -45,7 +45,7 @@ class BehatCommand extends AbstractMoodleCommand
      *
      * @var string
      */
-    private $seleniumChromeImage = 'selenium/standalone-chrome:3.141.59-20210713';
+    private $seleniumChromeImage = 'selenium/standalone-chrome:3';
 
     /**
      * Wait this many microseconds for Selenium server to start/stop.
