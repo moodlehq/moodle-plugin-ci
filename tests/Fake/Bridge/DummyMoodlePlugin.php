@@ -18,4 +18,5 @@ class DummyMoodlePlugin extends MoodlePlugin
 {
     public $component    = 'local_ci';
     public $dependencies = ['mod_forum'];
+    public $subpluginTypes = [];
 }
