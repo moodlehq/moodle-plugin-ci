@@ -31,6 +31,13 @@ before_install:
   - cp -R tests/Fixture/moodle-local_ci ../moodle-local_ci
   - export PATH="$(cd bin; pwd):$(cd vendor/bin; pwd):$PATH"
   - export TRAVIS_BUILD_DIR=$(cd ../moodle-local_ci; pwd)
+  - >
+    if [ -n "$DOCKER_USER" ] && [ -n "$DOCKER_TOKEN" ]; then
+        echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        echo "Using authenticated connection (no pull limits)"
+    else
+        echo "Using unauthenticated docker (pull limits may apply). Setup DOCKER_USER and DOCKER_TOKEN if needed."
+    fi
 
 install:
   - moodle-plugin-ci install -vvv
