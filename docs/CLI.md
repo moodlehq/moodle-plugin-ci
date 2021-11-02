@@ -844,7 +844,7 @@ Moodle repository to clone
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
-* Default: `'git://github.com/moodle/moodle.git'`
+* Default: `'https://github.com/moodle/moodle.git'`
 
 #### `--branch`
 

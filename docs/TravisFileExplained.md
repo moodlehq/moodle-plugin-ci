@@ -50,8 +50,8 @@ env:
   - DB=mysqli
 
 # Optionally, it is possible to specify a different Moodle repo to use
-# (git://github.com/moodle/moodle.git is used by default):
-# - MOODLE_REPO=git://github.com/username/moodle.git
+# (https://github.com/moodle/moodle.git is used by default):
+# - MOODLE_REPO=https://github.com/username/moodle.git
 
 # Also, note that, for multi-branch scenarios, where the same plugin
 # codebase needs to be tested against multiple branches of Moodle,

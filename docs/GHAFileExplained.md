@@ -108,13 +108,13 @@ jobs:
 
       # Run the default install.
       # Optionally, it is possible to specify a different Moodle repo to use
-      # (git://github.com/moodle/moodle.git is used by default) and define
+      # (https://github.com/moodle/moodle.git is used by default) and define
       # ignore directives or any other env vars for install step.  For more
       # details on configuring for specific requirements please refer to the
       # 'Help' page.
       #
       # env:
-      #   MOODLE_REPO=git://github.com/username/moodle.git
+      #   MOODLE_REPO=https://github.com/username/moodle.git
       #   IGNORE_PATHS: 'ignore'
       #   IGNORE_NAMES: 'ignore_name.php'
       #   MUSTACHE_IGNORE_NAMES: 'broken.mustache'
