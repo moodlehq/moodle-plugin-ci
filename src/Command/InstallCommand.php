@@ -69,7 +69,7 @@ class InstallCommand extends Command
     {
         // Travis CI configures some things by environment variables, default to those if available.
         $type   = getenv('DB') !== false ? getenv('DB') : null;
-        $repo   = getenv('MOODLE_REPO') !== false ? getenv('MOODLE_REPO') : 'git://github.com/moodle/moodle.git';
+        $repo   = getenv('MOODLE_REPO') !== false ? getenv('MOODLE_REPO') : 'https://github.com/moodle/moodle.git';
         $branch = getenv('MOODLE_BRANCH') !== false ? getenv('MOODLE_BRANCH') : null;
         $plugin = getenv('TRAVIS_BUILD_DIR') !== false ? getenv('TRAVIS_BUILD_DIR') : null;
         $paths  = getenv('IGNORE_PATHS') !== false ? getenv('IGNORE_PATHS') : null;
