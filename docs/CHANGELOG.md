@@ -9,7 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Added
+- Support for subplugins in the extra-plugins directory for install.
 
 ## [3.2.1] - 2021-07-30
 ### Changed
