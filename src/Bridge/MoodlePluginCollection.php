@@ -52,6 +52,13 @@ class MoodlePluginCollection implements \Countable
             $elements[$item->getComponent()] = [];
         }
 
+        $subpluginTypes = [];
+        foreach ($this->items as $item) {
+            foreach ($item->getSubpluginTypes() as $type) {
+                $subpluginTypes[$type] = $item->getComponent();
+            }
+        }
+
         // Loop through a second time, only adding dependencies that exist in our list.
         foreach ($this->items as $item) {
             $dependencies = $item->getDependencies();
@@ -59,6 +66,12 @@ class MoodlePluginCollection implements \Countable
                 if (array_key_exists($dependency, $elements)) {
                     $elements[$item->getComponent()][] = $dependency;
                 }
+            }
+
+            // Add implied dependencies for subplugins.
+            list($type, $plugin) = explode('_', $item->getComponent(), 2);
+            if (array_key_exists($type, $subpluginTypes)) {
+                $elements[$item->getComponent()][] = $subpluginTypes[$type];
             }
         }
 

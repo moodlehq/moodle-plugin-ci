@@ -31,6 +31,14 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertSame(['mod_forum'], $plugin->getDependencies());
     }
 
+    public function testGetSubpluginTypes()
+    {
+        $plugintypes = ['subplugin' => 'some/plugin/dir'];
+        file_put_contents($this->pluginDir.'/db/subplugins.json', json_encode(['plugintypes' => $plugintypes]));
+        $plugin = new MoodlePlugin($this->pluginDir);
+        $this->assertSame(array_keys($plugintypes), $plugin->getSubpluginTypes());
+    }
+
     public function testHasUnitTests()
     {
         $plugin = new MoodlePlugin($this->pluginDir);

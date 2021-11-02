@@ -61,6 +61,13 @@ class MoodlePlugin
     protected $dependencies;
 
     /**
+     * Cached subplugin types.
+     *
+     * @var string[]
+     */
+    protected $subpluginTypes;
+
+    /**
      * @param string $directory Absolute path to a Moodle plugin
      */
     public function __construct($directory)
@@ -136,6 +143,30 @@ class MoodlePlugin
         $this->dependencies = $filter->arrayStringKeys($assign->expr);
 
         return $this->dependencies;
+    }
+
+    /**
+     * Get a plugin's subplugin types.
+     *
+     * @return string[]
+     */
+    public function getSubpluginTypes()
+    {
+        // Simple cache.
+        if (is_array($this->subpluginTypes)) {
+            return $this->subpluginTypes;
+        }
+        $this->subpluginTypes = [];
+
+        $subpluginsJsonLocation = $this->directory.'/db/subplugins.json';
+        if (file_exists($subpluginsJsonLocation)) {
+            $subpluginData = json_decode(file_get_contents($subpluginsJsonLocation));
+            if ($subpluginData && property_exists($subpluginData, 'plugintypes')) {
+                $this->subpluginTypes = array_keys((array) $subpluginData->plugintypes);
+            }
+        }
+
+        return $this->subpluginTypes;
     }
 
     /**
