@@ -78,8 +78,8 @@ class MoodlePluginCollectionTest extends \PHPUnit_Framework_TestCase
 
     public function testSortByDependenciesWithSubplugins()
     {
-        $plugin1               = new DummyMoodlePlugin('');
-        $plugin1->component    = 'mod_1';
+        $plugin1                 = new DummyMoodlePlugin('');
+        $plugin1->component      = 'mod_1';
         $plugin1->subpluginTypes = ['subplugin'];
 
         $plugin2               = new DummyMoodlePlugin('');

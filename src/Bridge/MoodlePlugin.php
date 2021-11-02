@@ -158,7 +158,7 @@ class MoodlePlugin
         }
         $this->subpluginTypes = [];
 
-        $subpluginsJsonLocation = $this->directory . '/db/subplugins.json';
+        $subpluginsJsonLocation = $this->directory.'/db/subplugins.json';
         if (file_exists($subpluginsJsonLocation)) {
             $subpluginData = json_decode(file_get_contents($subpluginsJsonLocation));
             if ($subpluginData && property_exists($subpluginData, 'plugintypes')) {

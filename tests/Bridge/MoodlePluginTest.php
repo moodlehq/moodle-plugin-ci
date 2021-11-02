@@ -34,7 +34,7 @@ class MoodlePluginTest extends MoodleTestCase
     public function testGetSubpluginTypes()
     {
         $plugintypes = ['subplugin' => 'some/plugin/dir'];
-        file_put_contents($this->pluginDir . '/db/subplugins.json', json_encode(['plugintypes' => $plugintypes]));
+        file_put_contents($this->pluginDir.'/db/subplugins.json', json_encode(['plugintypes' => $plugintypes]));
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertSame(array_keys($plugintypes), $plugin->getSubpluginTypes());
     }
