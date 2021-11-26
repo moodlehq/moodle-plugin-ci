@@ -12,7 +12,7 @@
 
 namespace MoodlePluginCI\Tests;
 
-class FileUpdatesTest extends \PHPUnit_Framework_TestCase
+class FileUpdatesTest extends \PHPUnit\Framework\TestCase
 {
     public function testLocalCIPackageJSON()
     {

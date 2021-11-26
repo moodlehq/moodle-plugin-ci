@@ -16,7 +16,7 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\RepositoryRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class RepositoryRequirementsTest extends \PHPUnit_Framework_TestCase
+class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var RepositoryRequirements

@@ -16,7 +16,7 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 use MoodlePluginCI\PluginValidate\Requirements\ThemeRequirements;
 
-class ThemeRequirementsTest extends \PHPUnit_Framework_TestCase
+class ThemeRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ThemeRequirements

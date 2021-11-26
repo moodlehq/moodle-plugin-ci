@@ -16,7 +16,7 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\FilterRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class FilterRequirementsTest extends \PHPUnit_Framework_TestCase
+class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FilterRequirements

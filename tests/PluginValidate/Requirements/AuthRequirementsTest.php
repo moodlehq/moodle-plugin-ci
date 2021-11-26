@@ -16,7 +16,7 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\AuthRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class AuthRequirementsTest extends \PHPUnit_Framework_TestCase
+class AuthRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var AuthRequirements

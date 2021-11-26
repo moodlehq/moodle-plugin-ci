@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class FilesystemTestCase extends \PHPUnit_Framework_TestCase
+class FilesystemTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var string

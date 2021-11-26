@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class ExecuteTest extends \PHPUnit_Framework_TestCase
+class ExecuteTest extends \PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

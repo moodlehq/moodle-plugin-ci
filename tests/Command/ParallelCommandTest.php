@@ -19,7 +19,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Process\Process;
 
-class ParallelCommandTest extends \PHPUnit_Framework_TestCase
+class ParallelCommandTest extends \PHPUnit\Framework\TestCase
 {
     protected function executeCommand(array $processes)
     {
