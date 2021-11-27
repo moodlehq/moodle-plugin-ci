@@ -15,6 +15,7 @@ namespace MoodlePluginCI\Tests\Installer;
 use MoodlePluginCI\Bridge\MoodlePlugin;
 use MoodlePluginCI\Installer\TestSuiteInstaller;
 use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle;
+use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodle311;
 use MoodlePluginCI\Tests\Fake\Process\DummyExecute;
 use MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Yaml\Yaml;
@@ -93,5 +94,34 @@ class TestSuiteInstallerTest extends MoodleTestCase
         $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-33.xml', $xmlFile, true);
         $installer->injectPHPUnitFilter();
         $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
+
+        // Test Moodle 3.3 PHPUnit when coverage.php is available.
+        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-33.xml', $xmlFile, true);
+        $this->fs->copy(__DIR__.'/../Fixture/phpunit/coverage.php', $this->pluginDir.'/tests/coverage.php', true);
+        $installer->injectPHPUnitFilter();
+        // 3.3 did not support tests/coverage.php files, so defaults are applied normally.
+        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
+    }
+
+    public function testPHPUnitXMLFile311()
+    {
+        $xmlFile   = $this->pluginDir.'/phpunit.xml';
+        $installer = new TestSuiteInstaller(
+            new DummyMoodle311(''),
+            new MoodlePlugin($this->pluginDir),
+            new DummyExecute()
+        );
+
+        // Test Moodle 3.11 PHPUnit XML file.
+        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile, true);
+        $installer->injectPHPUnitFilter();
+        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected-311.xml', $xmlFile);
+
+        // Test Moodle 3.11 PHPUnit XML file when coverage.php is available.
+        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile, true);
+        $this->fs->copy(__DIR__.'/../Fixture/phpunit/coverage.php', $this->pluginDir.'/tests/coverage.php', true);
+        $installer->injectPHPUnitFilter();
+        // 3.11 supports tests/coverage.php files, so nothing is changed, expected file is the original one.
+        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile);
     }
 }
