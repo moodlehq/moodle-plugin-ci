@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_ci;
+
 use local_ci\math;
 
 defined('MOODLE_INTERNAL') || die();
@@ -35,7 +37,7 @@ require_once(__DIR__.'/../lib.php');
  * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_ci_lib_testcase extends basic_testcase {
+class lib_test extends \basic_testcase {
     /**
      * Test addition.
      */
@@ -58,7 +60,7 @@ class local_ci_lib_testcase extends basic_testcase {
      * Test math class.
      */
     public function test_local_ci_math() {
-        $math = new local_ci_math();
+        $math = new \local_ci_math();
         $this->assertEquals(4, $math->add(2, 2));
         $this->assertEquals(2, $math->add(4, -2));
         $this->assertEquals(0, $math->add(-4, 4));
