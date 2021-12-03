@@ -16,7 +16,7 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\BlockRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class BlockRequirementsTest extends \PHPUnit_Framework_TestCase
+class BlockRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var BlockRequirements

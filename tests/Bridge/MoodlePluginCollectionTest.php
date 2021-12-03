@@ -15,7 +15,7 @@ namespace MoodlePluginCI\Tests\Bridge;
 use MoodlePluginCI\Bridge\MoodlePluginCollection;
 use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 
-class MoodlePluginCollectionTest extends \PHPUnit_Framework_TestCase
+class MoodlePluginCollectionTest extends \PHPUnit\Framework\TestCase
 {
     public function testSortByDependencies()
     {

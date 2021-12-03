@@ -16,7 +16,7 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\FormatRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class FormatRequirementsTest extends \PHPUnit_Framework_TestCase
+class FormatRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var FormatRequirements

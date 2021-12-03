@@ -16,7 +16,7 @@ use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\QuestionRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
-class QuestionRequirementsTest extends \PHPUnit_Framework_TestCase
+class QuestionRequirementsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var QuestionRequirements

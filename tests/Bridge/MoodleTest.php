@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests\Bridge;
 
 use MoodlePluginCI\Bridge\Moodle;
 
-class MoodleTest extends \PHPUnit_Framework_TestCase
+class MoodleTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetBranch()
     {

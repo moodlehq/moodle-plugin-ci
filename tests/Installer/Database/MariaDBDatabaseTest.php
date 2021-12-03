@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests\Installer\Database;
 
 use MoodlePluginCI\Installer\Database\MariaDBDatabase;
 
-class MariaDBDatabaseTest extends \PHPUnit_Framework_TestCase
+class MariaDBDatabaseTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetCreateDatabaseCommand()
     {
