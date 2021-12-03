@@ -38,7 +38,7 @@ class BehatCommand extends AbstractMoodleCommand
      *
      * @var string
      */
-    private $seleniumFirefoxImage = 'selenium/standalone-firefox:3.141.59';
+    private $seleniumFirefoxImage = 'selenium/standalone-firefox:3';
 
     /**
      * Selenium standalone Chrome image.
