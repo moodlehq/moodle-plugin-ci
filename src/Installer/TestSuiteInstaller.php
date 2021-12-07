@@ -146,13 +146,26 @@ class TestSuiteInstaller extends AbstractInstaller
             return;
         }
 
+        // If the plugin already has a tests/coverage.php file, then phpunit.xml filter/coverage
+        // section is already configured following it. Nothing to do here.
+        $coverage = $this->plugin->directory.'/tests/coverage.php';
+        // If the file exists and we are Moodle >= 3.7.
+        // TODO: Remove the branch condition when 3.6 becomes unsupported by moodle-local-ci.
+        if ($this->moodle->getBranch() >= 37 && is_readable($coverage)) {
+            return;
+        }
+
         $files     = $this->getCoverageFiles();
         $filterXml = $this->getFilterXml($files);
         $subject   = file_get_contents($config);
         $count     = 0;
 
         // Replace existing filter.
-        $contents = preg_replace('/<filter>(.|\n)*<\/filter>/m', trim($filterXml), $subject, 1, $count);
+        $contents = preg_replace('/<coverage>(.|\n)*<\/coverage>/m', trim($filterXml), $subject, 1, $count);
+        // TODO: Remove this when 3.10 becomes unsupported by moodle-local-ci.
+        if ($this->moodle->getBranch() < 311) {
+            $contents = preg_replace('/<filter>(.|\n)*<\/filter>/m', trim($filterXml), $subject, 1, $count);
+        }
 
         // Or if no existing filter, inject the filter.
         if ($count === 0) {
@@ -176,6 +189,7 @@ class TestSuiteInstaller extends AbstractInstaller
     {
         $finder = Finder::create()
             ->name('*.php')
+            ->notName('coverage.php')
             ->notName('*_test.php')
             ->notName('version.php')
             ->notName('settings.php')
@@ -231,19 +245,33 @@ class TestSuiteInstaller extends AbstractInstaller
      */
     private function getFilterXml(array $files)
     {
+        // Default (Moodle 3.11 and above) template (PHPUnit 9.5 and up).
+        $template = <<<'XML'
+    <coverage>
+        <include>
+            {{includes}}
+        </include>
+    </coverage>
+XML;
+        // Before Moodle 3.11 (PHPUnit < 9.5), it was filter & white-list.
+        // TODO: Remove this when 3.10 becomes unsupported by moodle-local-ci.
+        if ($this->moodle->getBranch() < 311) {
+            $template = <<<'XML'
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            {{includes}}
+        </whitelist>
+    </filter>
+XML;
+        }
+
+        // Let's add the found php files to become code-coverage analysed.
         $includes = [];
         foreach ($files as $file) {
             $includes[] = sprintf('<file>%s</file>', $file);
         }
         $includes = implode("\n            ", $includes);
 
-        return <<<XML
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            $includes
-        </whitelist>
-    </filter>
-
-XML;
+        return str_replace('{{includes}}', $includes, $template);
     }
 }
