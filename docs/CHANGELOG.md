@@ -11,6 +11,14 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Added
 - Support for subplugins in the extra-plugins directory for install.
+- Support for [`coverage.php`](https://docs.moodle.org/dev/Writing_PHPUnit_tests#Check_your_coverage) files added. Previous coverage defaults only will be applied when that file is not present in the plugin.
+
+### Changed
+- Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
+- Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.0.4.
+- Both Chrome and Firefox are back to use latest Selenium 3 versions, previously pinned because of some interim problems with them.
+- GitHub [no longer supports the git:// protocol](https://github.blog/2021-09-01-improving-git-protocol-security-github/). Please change any use to `https://` instead.
+- Internal, various improvements to self testing.
 
 ## [3.2.1] - 2021-07-30
 ### Changed
@@ -80,7 +88,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Changed
 - `moodle-plugin-ci phpunit` when coverage report is included, phpdbg is called with ignore memory limits param
-  to avoid memory exhaused errors.
+  to avoid memory exhausted errors.
 - Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
 - Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.0.0.
 - Install grunt locally and use `npx grunt` to run it instead of installing it globally.
