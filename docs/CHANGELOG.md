@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+No unreleased changes.
+
+## [3.2.2] - 2021-12-16
 ### Added
 - Support for subplugins in the extra-plugins directory for install.
 - Support for [`coverage.php`](https://docs.moodle.org/dev/Writing_PHPUnit_tests#Check_your_coverage) files added. Previous coverage defaults only will be applied when that file is not present in the plugin.
@@ -378,7 +381,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.1...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.2...master
+[3.2.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.1...3.2.2
 [3.2.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.0.8...3.1.0
