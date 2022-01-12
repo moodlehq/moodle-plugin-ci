@@ -24,8 +24,6 @@
 
 namespace local_ci;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Math class.
  *
