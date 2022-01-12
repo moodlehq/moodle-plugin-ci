@@ -130,7 +130,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         /** @var Process[] $processes */
         $processes = [
             new Process('php -r "echo 42;"'),
-            new Process('php -r "syntax error"'),
+            new Process('php -r "syntax wrong_code_error_ignore_me"'), // This may appear in logs, ignore it!
             new Process('php -r "echo 42;"'),
         ];
 
