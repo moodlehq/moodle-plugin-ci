@@ -11,6 +11,13 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [3.2.3] - 2022-01-12
+### Changed
+- Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.0.5.
+
+### Fixed
+- Avoid publishing the selenium container port, not needed for `host` networking.
+
 ## [3.2.2] - 2021-12-16
 ### Added
 - Support for subplugins in the extra-plugins directory for install.
@@ -381,7 +388,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.2...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.3...master
+[3.2.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.2...3.2.3
 [3.2.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.1...3.2.2
 [3.2.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.1.0...3.2.0
