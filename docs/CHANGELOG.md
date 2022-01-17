@@ -11,6 +11,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 No unreleased changes.
 
+## [3.2.4] - 2022-01-17
+### Changed
+- Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.0.6.
+
 ## [3.2.3] - 2022-01-12
 ### Changed
 - Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.0.5.
@@ -388,7 +392,8 @@ No unreleased changes.
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.3...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.4...master
+[3.2.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.3...3.2.4
 [3.2.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.2...3.2.3
 [3.2.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.1...3.2.2
 [3.2.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.0...3.2.1
