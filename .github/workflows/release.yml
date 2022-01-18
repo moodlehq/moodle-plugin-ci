@@ -6,6 +6,8 @@ on:
 
 jobs:
   release:
+    # Avoid forks to perform this job.
+    if: github.repository_owner == 'moodlehq'
     name: Create Release
     runs-on: ubuntu-18.04
 
