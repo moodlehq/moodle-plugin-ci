@@ -9,7 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-No unreleased changes.
+### Changed
+- ACTION SUGGESTED: Now, it's safe to 'unpin' the MariaDB version in all integrations. With MariaDB 10.6.7 and 10.7.3 already released, the existing problems are gone, so it's possible to move away from the older 10.5 version. To achieve that, just look for any use of `image: mariadb:10.5` and change it to `image: mariadb:10`. For more information, see [MDL-72131](https://tracker.moodle.org/browse/MDL-72131).
 
 ## [3.2.4] - 2022-01-17
 ### Changed
