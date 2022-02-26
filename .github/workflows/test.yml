@@ -103,9 +103,7 @@ jobs:
         moodle-plugin-ci mustache
         moodle-plugin-ci grunt ||  [ \
             "$MOODLE_BRANCH" != 'master' -a \
-            "$MOODLE_BRANCH" != 'MOODLE_311_STABLE' -a \
-            "$MOODLE_BRANCH" != 'MOODLE_310_STABLE' -a \
-            "$MOODLE_BRANCH" != 'MOODLE_39_STABLE' ]
+            "$MOODLE_BRANCH" != 'MOODLE_400_STABLE' ]
         moodle-plugin-ci phpdoc
         moodle-plugin-ci phpunit --verbose --coverage-text
         moodle-plugin-ci behat --profile default
