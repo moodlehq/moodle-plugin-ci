@@ -40,11 +40,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_codechecker",
-        "version": "3.0.6",
+        "version": "3.1.0",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
           "type": "git",
-          "reference": "v3.0.6"
+          "reference": "v3.1.0"
         }
       }
     },
@@ -75,7 +75,7 @@
   ],
   "require": {
     "php": ">=7.0.8",
-    "moodlehq/moodle-local_codechecker": "^3.0.6",
+    "moodlehq/moodle-local_codechecker": "^3.1",
     "moodlehq/moodle-local_ci": "^1.0.12",
     "moodlehq/moodle-local_moodlecheck": "^1.0.9",
     "sebastian/phpcpd": "^3.0",
