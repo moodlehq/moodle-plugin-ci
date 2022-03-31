@@ -40,6 +40,8 @@ require_once(__DIR__.'/../lib.php');
 class lib_test extends \basic_testcase {
     /**
      * Test addition.
+     *
+     * @covers ::local_ci_add
      */
     public function test_local_ci_add() {
         $this->assertEquals(4, local_ci_add(2, 2));
@@ -49,6 +51,8 @@ class lib_test extends \basic_testcase {
 
     /**
      * Test subtraction.
+     *
+     * @covers ::local_ci_substract
      */
     public function test_local_ci_subtract() {
         $this->assertEquals(0, local_ci_subtract(2, 2));
@@ -58,6 +62,8 @@ class lib_test extends \basic_testcase {
 
     /**
      * Test math class.
+     *
+     * @covers \local_ci\math\add
      */
     public function test_local_ci_math() {
         $math = new \local_ci_math();
@@ -68,6 +74,8 @@ class lib_test extends \basic_testcase {
 
     /**
      * Test math class.
+     *
+     * @covers \local_ci\math\add
      */
     public function test_local_ci_math_class() {
         $math = new math();
