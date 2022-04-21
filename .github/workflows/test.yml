@@ -101,6 +101,6 @@ jobs:
             "$MOODLE_BRANCH" != 'master' -a \
             "$MOODLE_BRANCH" != 'MOODLE_400_STABLE' ]
         moodle-plugin-ci phpdoc
-        moodle-plugin-ci phpunit --verbose --coverage-text
+        moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
         moodle-plugin-ci behat --profile default
         moodle-plugin-ci behat --profile chrome

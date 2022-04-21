@@ -1735,7 +1735,7 @@ Run PHPUnit on a plugin
 
 ### Usage
 
-* `phpunit [-m|--moodle MOODLE] [--coverage-text] [--coverage-clover] [--] <plugin>`
+* `phpunit [-m|--moodle MOODLE] [--coverage-text] [--coverage-clover] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
 
 Run PHPUnit on a plugin
 
@@ -1772,6 +1772,42 @@ Generate and print code coverage report in text format
 #### `--coverage-clover`
 
 Generate code coverage report in Clover XML format
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--fail-on-incomplete`
+
+Treat incomplete tests as failures
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--fail-on-risky`
+
+Treat risky tests as failures
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--fail-on-skipped`
+
+Treat skipped tests as failures
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--fail-on-warning`
+
+Treat tests with warnings as failures
 
 * Accept value: no
 * Is value required: no
