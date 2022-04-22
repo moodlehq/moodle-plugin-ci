@@ -30,7 +30,11 @@ class PHPUnitCommand extends AbstractMoodleCommand
         $this->setName('phpunit')
             ->setDescription('Run PHPUnit on a plugin')
             ->addOption('coverage-text', null, InputOption::VALUE_NONE, 'Generate and print code coverage report in text format')
-            ->addOption('coverage-clover', null, InputOption::VALUE_NONE, 'Generate code coverage report in Clover XML format');
+            ->addOption('coverage-clover', null, InputOption::VALUE_NONE, 'Generate code coverage report in Clover XML format')
+            ->addOption('fail-on-incomplete', null, InputOption::VALUE_NONE, 'Treat incomplete tests as failures')
+            ->addOption('fail-on-risky', null, InputOption::VALUE_NONE, 'Treat risky tests as failures')
+            ->addOption('fail-on-skipped', null, InputOption::VALUE_NONE, 'Treat skipped tests as failures')
+            ->addOption('fail-on-warning', null, InputOption::VALUE_NONE, 'Treat tests with warnings as failures');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -73,6 +77,11 @@ class PHPUnitCommand extends AbstractMoodleCommand
         }
         if ($this->supportsCoverage() && $input->getOption('coverage-clover')) {
             $options[] = sprintf('--coverage-clover %s/coverage.xml', getcwd());
+        }
+        foreach (['fail-on-warning', 'fail-on-risky', 'fail-on-skipped', 'fail-on-warning'] as $option) {
+            if ($input->getOption($option)) {
+                $options[] = '--'.$option;
+            }
         }
         if (is_file($this->plugin->directory.'/phpunit.xml')) {
             $options[] = sprintf('--configuration %s', $this->plugin->directory);
