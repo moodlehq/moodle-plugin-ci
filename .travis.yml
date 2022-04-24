@@ -25,7 +25,9 @@ env:
     - MOODLE_BRANCH=master
 
 before_install:
-  - phpenv config-rm xdebug.ini
+  # We want to verify that xdebug works for coverage. Once we only support
+  # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
+  # - phpenv config-rm xdebug.ini
   - make init
   # Mimic how a Moodle plugin would be run.
   - cp -R tests/Fixture/moodle-local_ci ../moodle-local_ci
@@ -55,7 +57,7 @@ script:
   - moodle-plugin-ci mustache
   - moodle-plugin-ci grunt || [ "$MOODLE_BRANCH" == 'MOODLE_38_STABLE' ]
   - moodle-plugin-ci phpdoc
-  - moodle-plugin-ci phpunit --coverage-text --fail-on-warning
+  - moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
   - moodle-plugin-ci behat --profile default
   - moodle-plugin-ci behat --profile chrome
 

@@ -15,7 +15,9 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: 7.3
-        coverage: none
+        # We want to verify that xdebug works for coverage. Once we only support
+        # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
+        coverage: xdebug
 
     - name: Initialise
       run: make init
@@ -65,7 +67,9 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: pgsql, zip, gd, xmlrpc, soap
-        coverage: none
+        # We want to verify that xdebug works for coverage. Once we only support
+        # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
+        coverage: xdebug
 
     - name: Initialise moodle-plugin-ci
       run: |

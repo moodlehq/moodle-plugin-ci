@@ -28,7 +28,10 @@ env:
 before_install:
   - if [[ ${TRAVIS_PHP_VERSION:0:1} -gt 7 ]]; then pecl install xmlrpc-beta; fi
   - echo 'max_input_vars=5000' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  # Don't disable xdebug if you want to get it used for code coverage.
   - phpenv config-rm xdebug.ini
+  # Alternative (for Moodle 3.10 and up) is to use pcov. It can be installed using:
+  # - pecl install pcov
   - cd ../..
   - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"

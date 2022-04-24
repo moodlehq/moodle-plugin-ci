@@ -6,6 +6,8 @@ title: Generating code coverage
 Currently, code coverage is only generated for builds that are running on PHP7 or later.  Code coverage generation
 is significantly faster and easier to produce in PHP7.
 
+Code coverage will now automatically fallback between `pcov` => `xdebug` => `phpdbg`, using the "best" one available in the system. Still, if needed to, any of them can be forced, given all their requirements are fulfilled, using the following new options of the 'phpunit' command: `--coverage-pcov`, `--coverage-xdebug` or `--coverage-phpdbg`.
+
 The way you generate code coverage is to use one of the coverage options on the `phpunit` command.  The currently
 available options are `--coverage-text` and `--coverage-clover`.  The easiest way to start generating code coverage
 is to use the text option as that gets printed in the Travis CI logs.  Example:

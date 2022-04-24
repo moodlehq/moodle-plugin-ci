@@ -54,7 +54,8 @@ jobs:
     # another branch, total number of builds will become 12.
     # If you need to use PHP 7.0 and run phpunit coverage test, make sure you are
     # using ubuntu-16.04 virtual environment in this case to have phpdbg or
-    # this version in the system.
+    # this version in the system. See the "Setup PHP" step below for more details
+    # about PHPUnit code coverage.
     strategy:
       fail-fast: false
       matrix:
@@ -94,6 +95,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: ${{ matrix.extensions }}
           ini-values: max_input_vars=5000
+          # none to use phpdbg fallback. Specify pcov (Moodle 3.10 and up) or xdebug to use them instead.
           coverage: none
 
       # Install this project into a directory called "ci", updating PATH and
