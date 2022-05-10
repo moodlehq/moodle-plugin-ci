@@ -12,6 +12,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Changed
 - It is possible to specify more test execution options to the 'phpunit' command, such as "--fail-on-warning"
 
+### Fixed
+- Locally bundled [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) now works ok with recent (Moodle 3.11 and up) branches. A recent change in those versions was causing [some problems](https://tracker.moodle.org/browse/MDL-74704).
+
 ## [3.2.5] - 2022-03-31
 ### Changed
 - ACTION SUGGESTED: Now, it's safe to 'unpin' the MariaDB version in all integrations. With MariaDB 10.6.7 and 10.7.3 already released, the existing problems are gone, so it's possible to move away from the older 10.5 version. To achieve that, just look for any use of `image: mariadb:10.5` and change it to `image: mariadb:10`. For more information, see [MDL-72131](https://tracker.moodle.org/browse/MDL-72131).
