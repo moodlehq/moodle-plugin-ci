@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.2.6] - 2022-05-10
 ### Changed
 - It is possible to specify more test execution options to the 'phpunit' command, such as "--fail-on-warning"
 
@@ -405,7 +407,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.5...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.6...master
+[3.2.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.5...3.2.6
 [3.2.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.4...3.2.5
 [3.2.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.3...3.2.4
 [3.2.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.2...3.2.3
