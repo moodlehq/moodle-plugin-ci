@@ -46,6 +46,8 @@ jobs:
           - php: '7.4'
             moodle-branch: 'master'
           - php: '7.4'
+            moodle-branch: 'MOODLE_400_STABLE'
+          - php: '7.4'
             moodle-branch: 'MOODLE_311_STABLE'
           - php: '7.4'
             moodle-branch: 'MOODLE_310_STABLE'
@@ -97,9 +99,7 @@ jobs:
         moodle-plugin-ci validate
         moodle-plugin-ci savepoints
         moodle-plugin-ci mustache
-        moodle-plugin-ci grunt ||  [ \
-            "$MOODLE_BRANCH" != 'master' -a \
-            "$MOODLE_BRANCH" != 'MOODLE_400_STABLE' ]
+        moodle-plugin-ci grunt || [ "$MOODLE_BRANCH" == 'MOODLE_38_STABLE' ]
         moodle-plugin-ci phpdoc
         moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
         moodle-plugin-ci behat --profile default
