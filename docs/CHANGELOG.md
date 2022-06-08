@@ -14,7 +14,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - ACTION SUGGESTED: Ensure that the `pcov` or `xdebug` extensions are installed in your environment to get 'moodle-plugin-ci' using them automatically.
 
 ### Changed
-- Switched from [local_codechecker]() to [moodle-cs]() for checking the coding style. Previously, `moodle-plugin-ci` (and other tools) required `local_codechecker` (that includes both `PHP_Codesniffer` and the `moodle` standard) to verify the coding style. Now, the `moodle` standard has been moved to be a standalone repository and all the tools will be using it and installing `PHP_Codesniffer` via composer. No changes in behavior are expected.
+- Switched from [local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to [moodle-cs](https://github.com/moodlehq/moodle-cs) for checking the coding style. Previously, `moodle-plugin-ci` (and other tools) required `local_codechecker` (that includes both `PHP_Codesniffer` and the `moodle` standard) to verify the coding style. Now, the `moodle` standard has been moved to be a standalone repository and all the tools will be using it and installing `PHP_Codesniffer` via composer. No changes in behavior are expected.
 
 ## [3.2.6] - 2022-05-10
 ### Added
