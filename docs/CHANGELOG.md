@@ -13,6 +13,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - PHPUnit code coverage will now automatically fallback between `pcov` => `xdebug` => `phpdbg`, using the "best" one available in the system. Still, if needed to, any of them can be forced, given all their requirements are fulfilled, using the following new options of the 'phpunit' command: `--coverage-pcov`, `--coverage-xdebug` or `--coverage-phpdbg`.
 - ACTION SUGGESTED: Ensure that the `pcov` or `xdebug` extensions are installed in your environment to get 'moodle-plugin-ci' using them automatically.
 
+### Changed
+- Switched from [local_codechecker]() to [moodle-cs]() for checking the coding style. Previously, `moodle-plugin-ci` (and other tools) required `local_codechecker` (that includes both `PHP_Codesniffer` and the `moodle` standard) to verify the coding style. Now, the `moodle` standard has been moved to be a standalone repository and all the tools will be using it and installing `PHP_Codesniffer` via composer. No changes in behavior are expected.
+
 ## [3.2.6] - 2022-05-10
 ### Added
 - It is possible to specify more test execution options to the 'phpunit' command, such as `--fail-on-incomplete`, `--fail-on-risky` and `--fail-on-skipped` and `--fail-on-warning`. For more information, see [PHPUnit documentation](https://phpunit.readthedocs.io).

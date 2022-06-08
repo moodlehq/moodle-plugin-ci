@@ -28,7 +28,7 @@ use Symfony\Component\Finder\Finder;
 //
 // The alternative is to, instead of using PHP_CodeSniffer like a library, just
 // use the binaries bundled with it (phpcs, phpcbf...) but we want to use as lib for now.
-require_once __DIR__.'/../../vendor/moodlehq/moodle-local_codechecker/phpcs/autoload.php';
+require_once __DIR__.'/../../vendor/squizlabs/php_codesniffer/autoload.php';
 
 /**
  * Run Moodle Code Checker on a plugin.
@@ -110,7 +110,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
         //
         // Note: the paths are relative to the base CodeSniffer directory, aka, the directory
         // where "src" sits.
-        $runner->config->setConfigData('installed_paths', './../PHPCompatibility');
+        $runner->config->setConfigData('installed_paths', './../../phpcompatibility/php-compatibility/PHPCompatibility');
         $runner->config->standards = [$this->standard]; // Also BEFORE init() or it's lost.
 
         $runner->init();
