@@ -88,15 +88,6 @@ class VendorInstaller extends AbstractInstaller
         }
 
         $this->execute->mustRun(new Process('npx grunt ignorefiles', $this->moodle->directory, null, null, null));
-
-        // Remove the .phpcs files, recently introduced for 311_STABLE and up. At this stage moodle-plugin-ci
-        // is not ready to have them around, because of the way we run codechecker (from local_codechecker
-        // dependency).
-        // Once we remove that dependency and move to composer install of both phpcs and moodle-cs... there
-        // shouldn't be any more problems with these files and the following lines can be safely removed.
-        // So this is just an interim hack to allow moodle-plugin-ci to continue working the "legacy" way.
-        $this->execute->mustRun(new Process('rm -fr .phpcs.xml', $this->moodle->directory, null, null, null));
-        $this->execute->mustRun(new Process('rm -fr .phpcs.xml.dist', $this->moodle->directory, null, null, null));
     }
 
     public function stepCount()

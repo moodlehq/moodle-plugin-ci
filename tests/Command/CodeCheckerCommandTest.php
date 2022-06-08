@@ -24,9 +24,6 @@ if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
     define('PHP_CODESNIFFER_IN_TESTS', true);
 }
 
-/**
- * @runTestsInSeparateProcesses There are some statics around (Timing...), so separate process.
- */
 class CodeCheckerCommandTest extends MoodleTestCase
 {
     protected function setUp()
@@ -37,7 +34,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
-    protected function executeCommand($pluginDir = null)
+    protected function executeCommand($pluginDir = null, $maxWarnings = -1)
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -49,20 +46,29 @@ class CodeCheckerCommandTest extends MoodleTestCase
         $application = new Application();
         $application->add($command);
 
+        $options = ['plugin' => $pluginDir];
+        if ($maxWarnings >= 0) {
+            $options['--max-warnings'] = $maxWarnings;
+        }
+
         $commandTester = new CommandTester($application->find('codechecker'));
-        $commandTester->execute([
-            'plugin' => $pluginDir,
-        ]);
+        $commandTester->execute($options);
 
         return $commandTester;
     }
 
     public function testExecute()
     {
-        // Verify that the progress information is always printed, no matter there aren't warnings/errors.
-        $this->expectOutputRegex('/\.{7} 7 \/ 7 \(100%\)/');
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
+
+        // Verify various parts of the output.
+        $output = $commandTester->getDisplay();
+        // Verify that the progress information is always printed, no matter there aren't warnings/errors.
+        $this->assertRegExp('/\.{7} 7 \/ 7 \(100%\)/', $output);
+
+        // Also verify display info is correct.
+        $this->assertRegExp('/RUN  Moodle CodeSniffer standard on local_ci/', $output);
     }
 
     public function testExecuteFail()
@@ -78,24 +84,58 @@ if (true) {
 
 } // No EOL @ EOF on purpose to verify it's detected.
 EOT;
+
         $this->fs->dumpFile($this->pluginDir.'/fixable.php', $content);
 
-        $this->expectOutputRegex('/\.+/'); // Trick to avoid output, real assertions below.
         $commandTester = $this->executeCommand($this->pluginDir);
         $this->assertSame(1, $commandTester->getStatusCode());
 
         // Verify various parts of the output.
-        $output = $this->getActualOutput();
+        $output = $commandTester->getDisplay();
         $this->assertRegExp('/E\.* 8\.* \/ 8 \(100%\)/', $output);                  // Progress.
         $this->assertRegExp('/\/fixable.php/', $output);                            // File.
         $this->assertRegExp('/ (4|5) ERRORS AND (1|2) WARNINGS? AFFECTING 6 /', $output); // Summary (php70 shows one less)
         $this->assertRegexp('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
         $this->assertRegexp('/print_object\(\) is forbidden/', $output);            // Moodle sniff.
         $this->assertRegexp('/FunctionUse\.RemovedFunctions\.ldap_sort/', $output); // PHPCompatibility sniff.
+        $this->assertRegexp('/Files\.EndFileNewline\.NotFound/', $output);          // End of file.
         $this->assertRegExp('/Time:.*Memory:/', $output);                           // Time.
 
         // Also verify display info is correct.
-        $this->assertRegExp('/RUN  Moodle Code Checker/', $commandTester->getDisplay());
+        $this->assertRegExp('/RUN  Moodle CodeSniffer standard on local_ci/', $output);
+    }
+
+    public function testExecuteWithWarningsAndThreshold()
+    {
+        // Let's add a file with 2 warnings, and verify how the max-warnings affects the outcome.
+        $content = <<<'EOT'
+<?php // phpcs:disable moodle.Files
+print_error();
+print_error();
+
+EOT;
+
+        $this->fs->dumpFile($this->pluginDir.'/warnings.php', $content);
+
+        // By default it passes.
+        $commandTester = $this->executeCommand($this->pluginDir);
+        $this->assertSame(0, $commandTester->getStatusCode());
+
+        // Allowing 0 warning, it fails.
+        $commandTester = $this->executeCommand($this->pluginDir, 0);
+        $this->assertSame(1, $commandTester->getStatusCode());
+
+        // Allowing 1 warning, it fails.
+        $commandTester = $this->executeCommand($this->pluginDir, 1);
+        $this->assertSame(1, $commandTester->getStatusCode());
+
+        // Allowing 2 warnings, it passes.
+        $commandTester = $this->executeCommand($this->pluginDir, 2);
+        $this->assertSame(0, $commandTester->getStatusCode());
+
+        // Allowing 3 warnings, it passes.
+        $commandTester = $this->executeCommand($this->pluginDir, 3);
+        $this->assertSame(0, $commandTester->getStatusCode());
     }
 
     public function testExecuteNoFiles()
