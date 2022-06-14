@@ -9,10 +9,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- PHPUnit code coverage will now automatically fallback between `pcov` => `xdebug` => `phpdbg`, using the "best" one available in the system. Still, if needed to, any of them can be forced, given all their requirements are fulfilled, using the following new options of the 'phpunit' command: `--coverage-pcov`, `--coverage-xdebug` or `--coverage-phpdbg`.
+- ACTION SUGGESTED: Ensure that the `pcov` or `xdebug` extensions are installed in your environment to get 'moodle-plugin-ci' using them automatically.
 
 ## [3.2.6] - 2022-05-10
-### Changed
-- It is possible to specify more test execution options to the 'phpunit' command, such as "--fail-on-warning"
+### Added
+- It is possible to specify more test execution options to the 'phpunit' command, such as `--fail-on-incomplete`, `--fail-on-risky` and `--fail-on-skipped` and `--fail-on-warning`. For more information, see [PHPUnit documentation](https://phpunit.readthedocs.io).
 
 ### Fixed
 - Locally bundled [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) now works ok with recent (Moodle 3.11 and up) branches. A recent change in those versions was causing [some problems](https://tracker.moodle.org/browse/MDL-74704).
