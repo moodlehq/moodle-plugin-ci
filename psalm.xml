@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="false"
-    requireVoidReturnType="false"
-    allowPhpStormGenerics="true"
+    errorLevel="2"
+    reportMixedIssues="false"
     errorBaseline="psalm-baseline.xml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"

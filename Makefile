@@ -68,11 +68,11 @@ endif
 
 # Update download URL from https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases
 build/php-cs-fixer.phar:
-	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.19.0/php-cs-fixer.phar -o build/php-cs-fixer.phar
+	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v3.4.0/php-cs-fixer.phar -o build/php-cs-fixer.phar
 
 # Update download URL from https://github.com/vimeo/psalm/releases
 build/psalm.phar:
-	curl -LSs https://github.com/vimeo/psalm/releases/download/3.18.2/psalm.phar -o build/psalm.phar
+	curl -LSs https://github.com/vimeo/psalm/releases/download/4.23.0/psalm.phar -o build/psalm.phar
 
 build/box.phar:
 	@cd build && curl -LSs https://box-project.github.io/box2/installer.php | php
