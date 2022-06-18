@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Fixed
+- Updated the PHAR packaging utility ([box](https://github.com/box-project/box)) to actual one, to avoid various issues happening with PHP 8.1 and up.
+
 ## [4.1.2] - 2023-09-02
 ### Changed
 - Modified `moodle-local_ci` composer dependencies and manage them normally, removing some ancient bits that have [stopped working with Composer 2.6.0 and up](https://github.com/composer/composer/issues/11613).
