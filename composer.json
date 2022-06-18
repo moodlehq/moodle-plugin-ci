@@ -67,6 +67,7 @@
     "moodlehq/moodle-local_ci": "^1.0.12",
     "moodlehq/moodle-local_moodlecheck": "^1.0.9",
     "sebastian/phpcpd": "^3.0",
+    "sebastian/version": "^2.0.1",
     "phpmd/phpmd": "^2.2",
     "symfony/dotenv": "^3.4",
     "symfony/filesystem": "^3.4",

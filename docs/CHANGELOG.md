@@ -16,6 +16,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Changed
 - Switched from [local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to [moodle-cs](https://github.com/moodlehq/moodle-cs) for checking the coding style. Previously, `moodle-plugin-ci` (and other tools) required `local_codechecker` (that includes both `PHP_Codesniffer` and the `moodle` standard) to verify the coding style. Now, the `moodle` standard has been moved to be a standalone repository and all the tools will be using it and installing `PHP_Codesniffer` via composer. No changes in behavior are expected.
 
+### Fixed
+- The `--version` option now works both with the `bin/moodle-plugin-ci` binary and the `moodle-plugin-ci.phar` package.
+
 ## [3.2.6] - 2022-05-10
 ### Added
 - It is possible to specify more test execution options to the 'phpunit' command, such as `--fail-on-incomplete`, `--fail-on-risky` and `--fail-on-skipped` and `--fail-on-warning`. For more information, see [PHPUnit documentation](https://phpunit.readthedocs.io).
