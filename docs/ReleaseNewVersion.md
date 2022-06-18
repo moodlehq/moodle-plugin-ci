@@ -10,6 +10,8 @@ Prior to tagging a release, ensure the following have been updated:
 
 * The `CHANGELOG.md` needs to be up-to-date.  In addition, the _Unreleased_ section needs to be updated
   with the version being released.  Also update the _Unreleased_ link at the bottom with the new version number.
+* The `bin/moodle-plugin-ci` also needs to be updated accordingly, setting the `MOODLE_PLUGIN_CI_VERSION` constant
+  to the version being released.
 * If this is a new major version, then CI tool example files and its docs need
   to be updated to use the new major version (e.g. for Travis CI make changes
   in `.travis.dist.yml` and `doc/TravisFileExplained.md`). Any other version
