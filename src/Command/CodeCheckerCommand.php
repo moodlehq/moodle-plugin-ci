@@ -27,9 +27,9 @@ class CodeCheckerCommand extends AbstractPluginCommand
     use ExecuteTrait;
 
     /**
-     * @var string Path to the temp file where the summary report results will be stored
+     * @var string Path to the temp file where the json report results will be stored
      */
-    protected $summaryFile;
+    protected $tempFile;
 
     protected function configure()
     {
@@ -46,7 +46,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
-        $this->summaryFile = sys_get_temp_dir().'/moodle-plugin-ci-code-checker-summary-'.time();
+        $this->tempFile = sys_get_temp_dir().'/moodle-plugin-ci-code-checker-summary-'.time();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -81,7 +81,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
         } else {
             // If we are using the max-warnings option, we need the summary report somewhere to get
             // the total number of errors and warnings from there.
-            $builder->add('--report-summary='.$this->summaryFile);
+            $builder->add('--report-json='.$this->tempFile);
         }
 
         // Add the files to process.
@@ -100,12 +100,12 @@ class CodeCheckerCommand extends AbstractPluginCommand
         // based on the existence of errors and the number of warnings compared with the threshold.
         $totalErrors   = 0;
         $totalWarnings = 0;
-        $summary       = trim(file_get_contents($this->summaryFile));
-        if (preg_match('/^A TOTAL OF (\d+) ERRORS? AND (\d+) WARNINGS? WERE FOUND IN/m', $summary, $matches)) {
-            $totalErrors   = (int) $matches[1];
-            $totalWarnings = (int) $matches[2];
+        $jsonFile      = trim(file_get_contents($this->tempFile));
+        if ($json = json_decode($jsonFile, false)) {
+            $totalErrors   = (int) $json->totals->errors;
+            $totalWarnings = (int) $json->totals->warnings;
         }
-        (new Filesystem())->remove($this->summaryFile);  // Remove the temporal summary file.
+        (new Filesystem())->remove($this->tempFile);  // Remove the temporal summary file.
 
         // With errors or warnings over the max-warnings threshold, fail the command.
         return ($totalErrors > 0 || ($totalWarnings > $input->getOption('max-warnings'))) ? 1 : 0;
