@@ -39,18 +39,6 @@
     {
       "type": "package",
       "package": {
-        "name": "moodlehq/moodle-local_codechecker",
-        "version": "3.1.0",
-        "source": {
-          "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
-          "type": "git",
-          "reference": "v3.1.0"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
         "name": "moodlehq/moodle-local_ci",
         "version": "1.0.12",
         "source": {
@@ -75,7 +63,7 @@
   ],
   "require": {
     "php": ">=7.0.8",
-    "moodlehq/moodle-local_codechecker": "^3.1",
+    "moodlehq/moodle-cs": "^3.2.3",
     "moodlehq/moodle-local_ci": "^1.0.12",
     "moodlehq/moodle-local_moodlecheck": "^1.0.9",
     "sebastian/phpcpd": "^3.0",
@@ -101,6 +89,9 @@
   "config": {
     "platform": {
       "php": "7.0.8"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "autoload": {
@@ -121,7 +112,6 @@
     "post-update-cmd": "@local-ci-install",
     "post-create-project-cmd": "@local-ci-install",
     "local-ci-install": [
-      "@composer remove --no-update --working-dir=vendor/moodlehq/moodle-local_ci squizlabs/php_codesniffer",
       "@composer update --prefer-dist --optimize-autoloader --working-dir=vendor/moodlehq/moodle-local_ci",
       "cd vendor/moodlehq/moodle-local_ci && npm install --no-progress"
     ]
