@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d6b457b1396170f7143d142bff90eec",
+    "content-hash": "f9a7fb1e23cd1273a26f9c928e1e5696",
     "packages": [
         {
             "name": "composer/ca-bundle",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "4c679186f2aca4ab6a0f1b0b9cf9252decb44d0b"
+                "reference": "fd5dd441932a7e10ca6e5b490e272d34c8430640"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/4c679186f2aca4ab6a0f1b0b9cf9252decb44d0b",
-                "reference": "4c679186f2aca4ab6a0f1b0b9cf9252decb44d0b",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/fd5dd441932a7e10ca6e5b490e272d34c8430640",
+                "reference": "fd5dd441932a7e10ca6e5b490e272d34c8430640",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.3.1"
+                "source": "https://github.com/composer/ca-bundle/tree/1.3.2"
             },
             "funding": [
                 {
@@ -80,27 +80,27 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-28T20:44:15+00:00"
+            "time": "2022-05-24T11:56:16+00:00"
         },
         {
             "name": "composer/pcre",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
-                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2"
+                "reference": "67a32d7d6f9f560b726ab25a061b38ff3a80c560"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/3d322d715c43a1ac36c7fe215fa59336265500f2",
-                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/67a32d7d6f9f560b726ab25a061b38ff3a80c560",
+                "reference": "67a32d7d6f9f560b726ab25a061b38ff3a80c560",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3.2 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^1",
+                "phpstan/phpstan": "^1.3",
                 "phpstan/phpstan-strict-rules": "^1.1",
                 "symfony/phpunit-bridge": "^4.2 || ^5"
             },
@@ -135,7 +135,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/1.0.0"
+                "source": "https://github.com/composer/pcre/tree/1.0.1"
             },
             "funding": [
                 {
@@ -151,20 +151,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-06T15:17:27+00:00"
+            "time": "2022-01-21T20:24:37+00:00"
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "0c1a3925ec58a4ec98e992b9c7d171e9e184be0a"
+                "reference": "9e36aeed4616366d2b690bdce11f71e9178c579a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/0c1a3925ec58a4ec98e992b9c7d171e9e184be0a",
-                "reference": "0c1a3925ec58a4ec98e992b9c7d171e9e184be0a",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/9e36aeed4616366d2b690bdce11f71e9178c579a",
+                "reference": "9e36aeed4616366d2b690bdce11f71e9178c579a",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +201,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/xdebug-handler/issues",
-                "source": "https://github.com/composer/xdebug-handler/tree/2.0.4"
+                "source": "https://github.com/composer/xdebug-handler/tree/2.0.5"
             },
             "funding": [
                 {
@@ -217,7 +217,82 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-04T17:06:45+00:00"
+            "time": "2022-02-24T20:20:32+00:00"
+        },
+        {
+            "name": "dealerdirect/phpcodesniffer-composer-installer",
+            "version": "v0.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
+                "reference": "1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db",
+                "reference": "1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": ">=5.3",
+                "squizlabs/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
+            },
+            "require-dev": {
+                "composer/composer": "*",
+                "php-parallel-lint/php-parallel-lint": "^1.3.1",
+                "phpcompatibility/php-compatibility": "^9.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Franck Nijhof",
+                    "email": "franck.nijhof@dealerdirect.com",
+                    "homepage": "http://www.frenck.nl",
+                    "role": "Developer / IT Manager"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors"
+                }
+            ],
+            "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
+            "homepage": "http://www.dealerdirect.com",
+            "keywords": [
+                "PHPCodeSniffer",
+                "PHP_CodeSniffer",
+                "code quality",
+                "codesniffer",
+                "composer",
+                "installer",
+                "phpcbf",
+                "phpcs",
+                "plugin",
+                "qa",
+                "quality",
+                "standard",
+                "standards",
+                "style guide",
+                "stylecheck",
+                "tests"
+            ],
+            "support": {
+                "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
+                "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
+            },
+            "time": "2022-02-04T12:51:07+00:00"
         },
         {
             "name": "marcj/topsort",
@@ -271,22 +346,70 @@
             "time": "2016-11-19T14:58:11+00:00"
         },
         {
+            "name": "moodlehq/moodle-cs",
+            "version": "v3.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moodlehq/moodle-cs.git",
+                "reference": "12ac0d4e56a7c9caa02a73725a089019742ad63c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/12ac0d4e56a7c9caa02a73725a089019742ad63c",
+                "reference": "12ac0d4e56a7c9caa02a73725a089019742ad63c",
+                "shasum": ""
+            },
+            "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+                "phpcompatibility/php-compatibility": "^9.3",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "replace": {
+                "moodlehq/moodle-local_codechecker": "3.1.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.6",
+                "overtrue/phplint": "^3.0",
+                "phpmd/phpmd": "^2.11",
+                "phpunit/phpunit": "^9.5",
+                "thor-juhasz/phpunit-coverage-check": "^0.3.0"
+            },
+            "type": "phpcodesniffer-standard",
+            "autoload": {
+                "psr-4": {
+                    "MoodleHQ\\MoodleCS\\moodle\\": "moodle/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Lyons",
+                    "email": "andrew@nicols.co.uk"
+                }
+            ],
+            "description": "Moodle Coding Sniffer rules",
+            "keywords": [
+                "phpcs",
+                "standards",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/moodlehq/moodle-cs/issues",
+                "source": "https://github.com/moodlehq/moodle-cs",
+                "wiki": "https://github.com/moodlehq/moodle-cs/wiki"
+            },
+            "time": "2022-04-17T07:35:46+00:00"
+        },
+        {
             "name": "moodlehq/moodle-local_ci",
             "version": "1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_ci.git",
                 "reference": "v1.0.12"
-            },
-            "type": "library"
-        },
-        {
-            "name": "moodlehq/moodle-local_codechecker",
-            "version": "3.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/moodlehq/moodle-local_codechecker.git",
-                "reference": "v3.1.0"
             },
             "type": "library"
         },
@@ -302,16 +425,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.13.2",
+            "version": "v4.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "210577fe3cf7badcc5814d99455df46564f3c077"
+                "reference": "34bea19b6e03d8153165d8f30bba4c3be86184c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/210577fe3cf7badcc5814d99455df46564f3c077",
-                "reference": "210577fe3cf7badcc5814d99455df46564f3c077",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/34bea19b6e03d8153165d8f30bba4c3be86184c1",
+                "reference": "34bea19b6e03d8153165d8f30bba4c3be86184c1",
                 "shasum": ""
             },
             "require": {
@@ -352,9 +475,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.13.2"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.14.0"
             },
-            "time": "2021-11-30T19:35:32+00:00"
+            "time": "2022-05-31T20:59:12+00:00"
         },
         {
             "name": "padraic/humbug_get_contents",
@@ -390,13 +513,13 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Humbug\\": "src/"
-                },
                 "files": [
                     "src/function.php",
                     "src/functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "Humbug\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -488,23 +611,23 @@
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.10.2",
+            "version": "2.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "c8c1d2af43fb8c2b5387d50e9c42a9c56de13686"
+                "reference": "da3166a06b4a89915920a42444f707122a1584c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/c8c1d2af43fb8c2b5387d50e9c42a9c56de13686",
-                "reference": "c8c1d2af43fb8c2b5387d50e9c42a9c56de13686",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/da3166a06b4a89915920a42444f707122a1584c9",
+                "reference": "da3166a06b4a89915920a42444f707122a1584c9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.7",
-                "symfony/config": "^2.3.0|^3|^4|^5",
-                "symfony/dependency-injection": "^2.3.0|^3|^4|^5",
-                "symfony/filesystem": "^2.3.0|^3|^4|^5"
+                "symfony/config": "^2.3.0|^3|^4|^5|^6.0",
+                "symfony/dependency-injection": "^2.3.0|^3|^4|^5|^6.0",
+                "symfony/filesystem": "^2.3.0|^3|^4|^5|^6.0"
             },
             "require-dev": {
                 "easy-doc/easy-doc": "0.0.0|^1.2.3",
@@ -533,7 +656,7 @@
             "description": "Official version of pdepend to be handled with Composer",
             "support": {
                 "issues": "https://github.com/pdepend/pdepend/issues",
-                "source": "https://github.com/pdepend/pdepend/tree/2.10.2"
+                "source": "https://github.com/pdepend/pdepend/tree/2.10.3"
             },
             "funding": [
                 {
@@ -541,7 +664,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-16T20:05:32+00:00"
+            "time": "2022-02-23T07:53:09+00:00"
         },
         {
             "name": "php-parallel-lint/php-console-color",
@@ -647,16 +770,16 @@
         },
         {
             "name": "php-parallel-lint/php-parallel-lint",
-            "version": "v1.3.1",
+            "version": "v1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-parallel-lint/PHP-Parallel-Lint.git",
-                "reference": "761f3806e30239b5fcd90a0a45d41dc2138de192"
+                "reference": "6483c9832e71973ed29cf71bd6b3f4fde438a9de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Parallel-Lint/zipball/761f3806e30239b5fcd90a0a45d41dc2138de192",
-                "reference": "761f3806e30239b5fcd90a0a45d41dc2138de192",
+                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Parallel-Lint/zipball/6483c9832e71973ed29cf71bd6b3f4fde438a9de",
+                "reference": "6483c9832e71973ed29cf71bd6b3f4fde438a9de",
                 "shasum": ""
             },
             "require": {
@@ -669,7 +792,7 @@
             },
             "require-dev": {
                 "nette/tester": "^1.3 || ^2.0",
-                "php-parallel-lint/php-console-highlighter": "~0.3",
+                "php-parallel-lint/php-console-highlighter": "0.* || ^1.0",
                 "squizlabs/php_codesniffer": "^3.6"
             },
             "suggest": {
@@ -681,7 +804,7 @@
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "./"
+                    "./src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -698,28 +821,90 @@
             "homepage": "https://github.com/php-parallel-lint/PHP-Parallel-Lint",
             "support": {
                 "issues": "https://github.com/php-parallel-lint/PHP-Parallel-Lint/issues",
-                "source": "https://github.com/php-parallel-lint/PHP-Parallel-Lint/tree/v1.3.1"
+                "source": "https://github.com/php-parallel-lint/PHP-Parallel-Lint/tree/v1.3.2"
             },
-            "time": "2021-08-13T05:35:13+00:00"
+            "time": "2022-02-21T12:50:22+00:00"
         },
         {
-            "name": "phpmd/phpmd",
-            "version": "2.11.1",
+            "name": "phpcompatibility/php-compatibility",
+            "version": "9.3.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "08b60a2eb7e14c23f46ff8865b510ae08b75d0fd"
+                "url": "https://github.com/PHPCompatibility/PHPCompatibility.git",
+                "reference": "9fb324479acf6f39452e0655d2429cc0d3914243"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/08b60a2eb7e14c23f46ff8865b510ae08b75d0fd",
-                "reference": "08b60a2eb7e14c23f46ff8865b510ae08b75d0fd",
+                "url": "https://api.github.com/repos/PHPCompatibility/PHPCompatibility/zipball/9fb324479acf6f39452e0655d2429cc0d3914243",
+                "reference": "9fb324479acf6f39452e0655d2429cc0d3914243",
                 "shasum": ""
             },
             "require": {
-                "composer/xdebug-handler": "^1.0 || ^2.0",
+                "php": ">=5.3",
+                "squizlabs/php_codesniffer": "^2.3 || ^3.0.2"
+            },
+            "conflict": {
+                "squizlabs/php_codesniffer": "2.6.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "suggest": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically.",
+                "roave/security-advisories": "dev-master || Helps prevent installing dependencies with known security issues."
+            },
+            "type": "phpcodesniffer-standard",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Wim Godden",
+                    "homepage": "https://github.com/wimg",
+                    "role": "lead"
+                },
+                {
+                    "name": "Juliette Reinders Folmer",
+                    "homepage": "https://github.com/jrfnl",
+                    "role": "lead"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/PHPCompatibility/PHPCompatibility/graphs/contributors"
+                }
+            ],
+            "description": "A set of sniffs for PHP_CodeSniffer that checks for PHP cross-version compatibility.",
+            "homepage": "http://techblog.wimgodden.be/tag/codesniffer/",
+            "keywords": [
+                "compatibility",
+                "phpcs",
+                "standards"
+            ],
+            "support": {
+                "issues": "https://github.com/PHPCompatibility/PHPCompatibility/issues",
+                "source": "https://github.com/PHPCompatibility/PHPCompatibility"
+            },
+            "time": "2019-12-27T09:44:58+00:00"
+        },
+        {
+            "name": "phpmd/phpmd",
+            "version": "2.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpmd/phpmd.git",
+                "reference": "c0b678ba71902f539c27c14332aa0ddcf14388ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/c0b678ba71902f539c27c14332aa0ddcf14388ec",
+                "reference": "c0b678ba71902f539c27c14332aa0ddcf14388ec",
+                "shasum": ""
+            },
+            "require": {
+                "composer/xdebug-handler": "^1.0 || ^2.0 || ^3.0",
                 "ext-xml": "*",
-                "pdepend/pdepend": "^2.10.2",
+                "pdepend/pdepend": "^2.10.3",
                 "php": ">=5.3.9"
             },
             "require-dev": {
@@ -775,7 +960,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/phpmd",
                 "issues": "https://github.com/phpmd/phpmd/issues",
-                "source": "https://github.com/phpmd/phpmd/tree/2.11.1"
+                "source": "https://github.com/phpmd/phpmd/tree/2.12.0"
             },
             "funding": [
                 {
@@ -783,7 +968,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-17T11:25:43+00:00"
+            "time": "2022-03-24T13:33:01+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -1087,6 +1272,62 @@
             "time": "2016-10-03T07:35:21+00:00"
         },
         {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/5e4e71592f69da17871dba6e80dd51bce74a351a",
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "support": {
+                "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
+                "source": "https://github.com/squizlabs/PHP_CodeSniffer",
+                "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
+            },
+            "time": "2021-12-12T21:44:58+00:00"
+        },
+        {
             "name": "stecman/symfony-console-completion",
             "version": "0.7.0",
             "source": {
@@ -1361,6 +1602,7 @@
                     "type": "tidelift"
                 }
             ],
+            "abandoned": "symfony/error-handler",
             "time": "2020-10-24T10:57:07+00:00"
         },
         {
@@ -1669,12 +1911,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1748,12 +1990,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1931,22 +2173,25 @@
         },
         {
             "name": "theseer/fdomdocument",
-            "version": "1.6.6",
+            "version": "1.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theseer/fDOMDocument.git",
-                "reference": "6e8203e40a32a9c770bcb62fe37e68b948da6dca"
+                "reference": "5cddd4f9076a9a2b85c5135935bba2dcb3ed7574"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theseer/fDOMDocument/zipball/6e8203e40a32a9c770bcb62fe37e68b948da6dca",
-                "reference": "6e8203e40a32a9c770bcb62fe37e68b948da6dca",
+                "url": "https://api.github.com/repos/theseer/fDOMDocument/zipball/5cddd4f9076a9a2b85c5135935bba2dcb3ed7574",
+                "reference": "5cddd4f9076a9a2b85c5135935bba2dcb3ed7574",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "lib-libxml": "*",
                 "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "php": ">=7.3"
             },
             "type": "library",
             "autoload": {
@@ -1969,9 +2214,10 @@
             "homepage": "https://github.com/theseer/fDOMDocument",
             "support": {
                 "issues": "https://github.com/theseer/fDOMDocument/issues",
-                "source": "https://github.com/theseer/fDOMDocument/tree/master"
+                "source": "https://github.com/theseer/fDOMDocument/tree/1.6.7"
             },
-            "time": "2017-06-30T11:53:12+00:00"
+            "abandoned": true,
+            "time": "2022-01-25T23:10:35+00:00"
         }
     ],
     "packages-dev": [
@@ -2177,12 +2423,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "DeepCopy\\": "src/DeepCopy/"
-                },
                 "files": [
                     "src/DeepCopy/deep_copy.php"
-                ]
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [

@@ -12,49 +12,31 @@
 
 namespace MoodlePluginCI\Command;
 
-use MoodlePluginCI\StandardResolver;
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Reporter;
-use PHP_CodeSniffer\Runner;
-use PHP_CodeSniffer\Util\Timing;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
-// Cannot be autoload from composer, because this autoloader is used for both
-// phpcs and any standard Sniff, so it must be loaded at the end. For more info, see:
-// https://github.com/squizlabs/PHP_CodeSniffer/issues/1463#issuecomment-300637855
-//
-// The alternative is to, instead of using PHP_CodeSniffer like a library, just
-// use the binaries bundled with it (phpcs, phpcbf...) but we want to use as lib for now.
-require_once __DIR__.'/../../vendor/moodlehq/moodle-local_codechecker/phpcs/autoload.php';
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * Run Moodle Code Checker on a plugin.
+ * Run Moodle CodeSniffer standard on a plugin.
  */
 class CodeCheckerCommand extends AbstractPluginCommand
 {
-    /**
-     * The coding standard to use.
-     *
-     * @var string
-     */
-    protected $standard;
+    use ExecuteTrait;
 
     /**
-     * Used to find the files to process.
-     *
-     * @var Finder
+     * @var string Path to the temp file where the json report results will be stored
      */
-    protected $finder;
+    protected $tempFile;
 
     protected function configure()
     {
         parent::configure();
 
         $this->setName('codechecker')
-            ->setDescription('Run Moodle Code Checker on a plugin')
+            ->setDescription('Run Moodle CodeSniffer standard on a plugin')
             ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle')
             ->addOption('max-warnings', null, InputOption::VALUE_REQUIRED,
                 'Number of warnings to trigger nonzero exit code - default: -1', -1);
@@ -63,106 +45,69 @@ class CodeCheckerCommand extends AbstractPluginCommand
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
-
-        // Resolve the coding standard.
-        $resolver       = new StandardResolver();
-        $this->standard = $input->getOption('standard');
-        if ($resolver->hasStandard($this->standard)) {
-            $this->standard = $resolver->resolve($this->standard);
-        }
-
-        $this->finder = Finder::create()->name('*.php');
+        $this->initializeExecute($output, $this->getHelper('process'));
+        $this->tempFile = sys_get_temp_dir().'/moodle-plugin-ci-code-checker-summary-'.time();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->outputHeading($output, 'Moodle Code Checker on %s');
+        $this->outputHeading($output, 'Moodle CodeSniffer standard on %s');
 
-        $files = $this->plugin->getFiles($this->finder);
+        $files = $this->plugin->getFiles(Finder::create()->name('*.php'));
         if (count($files) === 0) {
             return $this->outputSkip($output);
         }
 
-        // Needed constant.
-        if (defined('PHP_CODESNIFFER_CBF') === false) {
-            define('PHP_CODESNIFFER_CBF', false);
+        $builder = ProcessBuilder::create()
+            ->setPrefix('php')
+            ->add(__DIR__.'/../../vendor/squizlabs/php_codesniffer/bin/phpcs')
+            ->add('--standard='.($input->getOption('standard') ?: 'moodle'))
+            ->add('--extensions=php')
+            ->add('-p')
+            ->add('-w')
+            ->add('-s')
+            ->add('--no-cache')
+            ->add($output->isDecorated() ? '--colors' : '--no-colors')
+            ->add('--report-full')
+            ->add('--report-width=132')
+            ->add('--encoding=utf-8')
+            ->setWorkingDirectory($this->plugin->directory)
+            ->setTimeout(null);
+
+        // If we aren't using the max-warnings option, then we can forget about warnings and tell phpcs
+        // to ignore them for exit-code purposes (still they will be reported in the output).
+        if ($input->getOption('max-warnings') < 0) {
+            $builder->add('--runtime-set')->add('ignore_warnings_on_exit')->add(' 1');
+        } else {
+            // If we are using the max-warnings option, we need the summary report somewhere to get
+            // the total number of errors and warnings from there.
+            $builder->add('--report-json='.$this->tempFile);
         }
 
-        Timing::startTiming();
-
-        $runner                    = new Runner();
-        $runner->config            = new Config(['--parallel=1']); // Pass a param to shortcut params coming from caller CLI.
-
-        // This is not needed normally, because phpcs loads the CodeSniffer.conf from its
-        // root directory. But when this is run from within a .phar file, it expects the
-        // config file to be out from the phar, in the same directory.
-        //
-        // While this approach is logic and enabled to configure phpcs, we don't want that
-        // in this case, we just want to ensure phpcs knows about our standards,
-        // so we are going to force the installed_paths config here.
-        //
-        // And it needs need to do it BEFORE the runner init! (or it's lost)
-        //
-        // Note: the "moodle" one is not really needed, because it's autodetected normally,
-        // but the PHPCompatibility one is. There are some issues about version PHPCompatibility 10
-        // to stop requiring to be configured here, but that's future version. Revisit this when
-        // available.
-        //
-        // Note: the paths are relative to the base CodeSniffer directory, aka, the directory
-        // where "src" sits.
-        $runner->config->setConfigData('installed_paths', './../PHPCompatibility');
-        $runner->config->standards = [$this->standard]; // Also BEFORE init() or it's lost.
-
-        $runner->init();
-
-        $runner->config->parallel     = 1;
-        $runner->config->reports      = ['full' => null];
-        $runner->config->colors       = $output->isDecorated();
-        $runner->config->verbosity    = 0;
-        $runner->config->encoding     = 'utf-8';
-        $runner->config->showProgress = true;
-        $runner->config->showSources  = true;
-        $runner->config->interactive  = false;
-        $runner->config->cache        = false;
-        $runner->config->extensions   = ['php' => 'PHP'];
-        $runner->config->reportWidth  = 132;
-
-        $runner->config->files = $files;
-
-        $runner->config->setConfigData('testVersion', PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION, true);
-
-        // Create the reporter to manage all the reports from the run.
-        $runner->reporter = new Reporter($runner->config);
-
-        // And build the file list to iterate over.
-        /** @var object[] $todo */
-        $todo         = new \PHP_CodeSniffer\Files\FileList($runner->config, $runner->ruleset);
-        $numFiles     = count($todo);
-        $numProcessed = 0;
-
-        foreach ($todo as $file) {
-            if ($file->ignored === false) {
-                try {
-                    $runner->processFile($file);
-                    ++$numProcessed;
-                    $runner->printProgress($file, $numFiles, $numProcessed);
-                } catch (\PHP_CodeSniffer\Exceptions\DeepExitException $e) {
-                    echo $e->getMessage();
-
-                    return $e->getCode();
-                } catch (\Exception $e) {
-                    $error = 'Problem during processing; checking has been aborted. The error message was: '.$e->getMessage();
-                    $file->addErrorOnLine($error, 1, 'Internal.Exception');
-                }
-                $file->cleanUp();
-            }
+        // Add the files to process.
+        foreach ($files as $file) {
+            $builder->add($file);
         }
 
-        // Have finished, generate the final reports.
-        $runner->reporter->printReports();
+        $process = $this->execute->passThroughProcess($builder->getProcess());
 
-        $maxwarnings = (int) $input->getOption('max-warnings');
+        // If we aren't using the max-warnings option, process exit code is enough for us.
+        if ($input->getOption('max-warnings') < 0) {
+            return $process->isSuccessful() ? 0 : 1;
+        }
 
-        return ($runner->reporter->totalErrors > 0 || ($maxwarnings >= 0 && $runner->reporter->totalWarnings > $maxwarnings)) ? 1 : 0;
+        // Arrived here, we are playing with max-warnings, so we have to decide the exit code
+        // based on the existence of errors and the number of warnings compared with the threshold.
+        $totalErrors   = 0;
+        $totalWarnings = 0;
+        $jsonFile      = trim(file_get_contents($this->tempFile));
+        if ($json = json_decode($jsonFile, false)) {
+            $totalErrors   = (int) $json->totals->errors;
+            $totalWarnings = (int) $json->totals->warnings;
+        }
+        (new Filesystem())->remove($this->tempFile);  // Remove the temporal summary file.
+
+        // With errors or warnings over the max-warnings threshold, fail the command.
+        return ($totalErrors > 0 || ($totalWarnings > $input->getOption('max-warnings'))) ? 1 : 0;
     }
 }

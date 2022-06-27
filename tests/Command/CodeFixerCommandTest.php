@@ -72,19 +72,18 @@ EOT;
 
     public function testExecute()
     {
-        $this->expectOutputRegex('/\.+/'); // Trick to avoid output, real assertions below.
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
 
         // Verify various parts of the output.
-        $output = $this->getActualOutput();
+        $output = $commandTester->getDisplay();
         $this->assertRegExp('/F\.* 8\.* \/ 8 \(100%\)/', $output);                   // Progress.
         $this->assertRegExp('/\/fixable.php/', $output);                            // File.
         $this->assertRegExp('/A TOTAL OF 1 ERROR WERE FIXED IN 1 FILE/', $output);  // Summary.
         $this->assertRegExp('/Time:.*Memory:/', $output);                           // Time.
 
         // Also verify display info is correct.
-        $this->assertRegExp('/RUN  Code Beautifier and Fixer/', $commandTester->getDisplay());
+        $this->assertRegExp('/RUN  Code Beautifier and Fixer on local_ci/', $output);
 
         $expected = <<<'EOT'
 <?php
@@ -97,5 +96,14 @@ if (true) {
 
 EOT;
         $this->assertSame($expected, file_get_contents($this->pluginDir.'/fixable.php'));
+    }
+
+    public function testExecuteNoFiles()
+    {
+        // Just random directory with no PHP files.
+        $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
+        $this->assertSame(0, $commandTester->getStatusCode());
+
+        $this->assertRegExp('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 }
