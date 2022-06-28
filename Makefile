@@ -16,13 +16,17 @@ test-phpunit: check-init
 	$(PHPUNIT) --verbose
 
 .PHONY:validate
-validate: check-init psalm check-docs
+validate: check-init validate-version psalm check-docs
 	$(FIXER) fix --dry-run --stop-on-violation
 	$(COMPOSER) validate
 	XDEBUG_MODE=coverage $(PHPUNIT) --verbose --coverage-text
 
 .PHONY:build
 build: build/moodle-plugin-ci.phar
+
+.PHONY:validate-version
+validate-version:
+	bin/validate-version
 
 .PHONY:psalm
 psalm: check-init
@@ -41,7 +45,7 @@ check-docs: docs/CLI.md
 .PHONY: init
 init: build/php-cs-fixer.phar build/psalm.phar composer.lock composer.json
 	$(COMPOSER) selfupdate
-	$(COMPOSER) install --no-suggest --no-progress
+	$(COMPOSER) install --no-progress
 
 .PHONY: update
 update: check-init build/php-cs-fixer.phar build/psalm.phar
