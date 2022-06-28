@@ -42,8 +42,8 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
     public function testExecute()
     {
         $commandTester = $this->executeCommand([
-            'foo' => new Process('php -r "usleep(100);"'),
-            'bar' => new Process('php -r "usleep(100);"'),
+            'foo' => new Process(['php', '-r', 'usleep(100);']),
+            'bar' => new Process(['php', '-r', 'usleep(100);']),
         ]);
         $this->assertSame(0, $commandTester->getStatusCode());
     }
@@ -51,13 +51,13 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
     public function testExecuteFailedProcess()
     {
         $commandTester = $this->executeCommand([
-            'foo' => new Process('php -r "fwrite(STDERR, \"Write to error\n\"); exit(1);"'),
+            'foo' => new Process(['php', '-r', 'fwrite(STDERR, "Write to error\n"); exit(1);']),
         ]);
 
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertRegExp('/Command foo failed/', $commandTester->getDisplay());
-        $this->assertRegExp('/Error output for foo command/', $commandTester->getDisplay());
-        $this->assertRegExp('/Write to error/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Command foo failed/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Error output for foo command/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Write to error/', $commandTester->getDisplay());
     }
 
     public function testInitializeProcesses()
@@ -69,7 +69,7 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
 
         foreach ($processes as $name => $process) {
             $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
-            $this->assertInternalType('string', $name);
+            $this->assertIsString($name);
             $this->assertGreaterThan(1, strlen($name));
         }
     }

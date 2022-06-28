@@ -15,6 +15,8 @@ namespace MoodlePluginCI\Command;
 use SebastianBergmann\PHPCPD\Detector\Detector;
 use SebastianBergmann\PHPCPD\Detector\Strategy\DefaultStrategy;
 use SebastianBergmann\PHPCPD\Log\Text;
+use SebastianBergmann\Timer\ResourceUsageFormatter;
+use SebastianBergmann\Timer\Timer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
@@ -32,8 +34,11 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
             ->setDescription('Run PHP Copy/Paste Detector on a plugin');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $timer = new Timer();
+        $timer->start();
+
         $this->outputHeading($output, 'PHP Copy/Paste Detector on %s');
 
         $files = $this->plugin->getFiles(Finder::create()->name('*.php'));
@@ -44,8 +49,8 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
         $clones   = $detector->copyPasteDetection($files);
 
         $printer = new Text();
-        $printer->printResult($output, $clones);
-        $output->writeln(\PHP_Timer::resourceUsage());
+        $printer->printResult($clones, true);
+        $output->writeln((new ResourceUsageFormatter())->resourceUsage($timer->stop()));
 
         return count($clones) > 0 ? 1 : 0;
     }

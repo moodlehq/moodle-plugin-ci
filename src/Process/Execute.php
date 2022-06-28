@@ -45,12 +45,12 @@ class Execute
     public $parallelWaitTime = 200000;
 
     /**
-     * TODO: Add nullable type declaration for params when we switch to php 7.1.
+     * Constructor.
      *
      * @param OutputInterface|null $output
      * @param ProcessHelper|null   $helper
      */
-    public function __construct($output = null, $helper = null)
+    public function __construct(?OutputInterface $output = null, ?ProcessHelper $helper = null)
     {
         $this->setOutput($output);
         $this->setHelper($helper);
@@ -58,22 +58,20 @@ class Execute
 
     /**
      * Output setter.
-     * TODO: Add nullable type declaration for param when we switch to php 7.1.
      *
      * @param OutputInterface|null $output
      */
-    public function setOutput($output)
+    public function setOutput(?OutputInterface $output): void
     {
         $this->output = $output ?? new NullOutput();
     }
 
     /**
      * Process helper setter.
-     * TODO: Add nullable type declaration for param when we switch to php 7.1.
      *
      * @param ProcessHelper|null $helper
      */
-    public function setHelper($helper)
+    public function setHelper(?ProcessHelper $helper): void
     {
         if (empty($helper)) {
             $helper = new ProcessHelper();
@@ -97,29 +95,25 @@ class Execute
      *
      * @return Process
      */
-    public function setNodeEnv(Process $process)
+    public function setNodeEnv(Process $process): Process
     {
         if (getenv('RUNTIME_NVM_BIN')) {
-            // Concatinate RUNTIME_NVM_BIN with PATH, so the correct version of
+            // Concatenate RUNTIME_NVM_BIN with PATH, so the correct version of
             // npm binary is used within process.
             $env = ['PATH' => getenv('RUNTIME_NVM_BIN').':'.getenv('PATH')];
             $process->setEnv($env);
-            // Make sure we have all system env vars available too.
-            // TODO: Env vars are inherited by default in Symfony 4, next line
-            // can be removed after upgrade.
-            $process->inheritEnvironmentVariables(true);
         }
 
         return $process;
     }
 
     /**
-     * @param string|array|Process $cmd   An instance of Process or an array of arguments to escape and run or a command to run
-     * @param string|null          $error An error message that must be displayed if something went wrong
+     * @param string[]|Process $cmd   An instance of Process or the command to run and its arguments listed as different entities
+     * @param string|null      $error An error message that must be displayed if something went wrong
      *
      * @return Process
      */
-    public function run($cmd, $error = null)
+    public function run($cmd, ?string $error = null): Process
     {
         if (!($cmd instanceof Process)) {
             $cmd = new Process($cmd);
@@ -130,12 +124,12 @@ class Execute
     }
 
     /**
-     * @param string|array|Process $cmd   An instance of Process or an array of arguments to escape and run or a command to run
-     * @param string|null          $error An error message that must be displayed if something went wrong
+     * @param string[]|Process $cmd   An instance of Process or the command to run and its arguments listed as different entities
+     * @param string|null      $error An error message that must be displayed if something went wrong
      *
      * @return Process
      */
-    public function mustRun($cmd, $error = null)
+    public function mustRun($cmd, ?string $error = null): Process
     {
         if (!($cmd instanceof Process)) {
             $cmd = new Process($cmd);
@@ -148,7 +142,7 @@ class Execute
     /**
      * @param Process[] $processes
      */
-    public function runAll($processes)
+    public function runAll(array $processes): void
     {
         if ($this->output->isVeryVerbose()) {
             // If verbose, then do not run in parallel so we get sane debug output.
@@ -168,7 +162,7 @@ class Execute
     /**
      * @param Process[] $processes
      */
-    public function mustRunAll($processes)
+    public function mustRunAll(array $processes): void
     {
         $this->runAll($processes);
 
@@ -185,13 +179,13 @@ class Execute
     /**
      * Run a command and send output, unaltered, immediately.
      *
-     * @param string         $commandline The command line to run
+     * @param string[]       $commandline The command to run and its arguments listed as different entities
      * @param string|null    $cwd         The working directory or null to use the working dir of the current PHP process
      * @param int|float|null $timeout     The timeout in seconds or null to disable
      *
      * @return Process
      */
-    public function passThrough($commandline, $cwd = null, $timeout = null)
+    public function passThrough(array $commandline, ?string $cwd = null, ?float $timeout = null): Process
     {
         return $this->passThroughProcess(new Process($commandline, $cwd, null, null, $timeout));
     }
@@ -203,7 +197,7 @@ class Execute
      *
      * @return Process
      */
-    public function passThroughProcess(Process $process)
+    public function passThroughProcess(Process $process): Process
     {
         if ($this->output->isVeryVerbose()) {
             $this->output->writeln(sprintf('<bg=blue;fg=white;> RUN </> <fg=blue>%s</>', $process->getCommandLine()));

@@ -21,7 +21,7 @@ use Symfony\Component\Process\Process;
 
 class ExecuteTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         // Define RUNTIME_NVM_BIN, so we check its value is added to PATH within
         // process.
@@ -35,16 +35,16 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
 
         // RUNTIME_NVM_BIN in undefined.
         putenv('RUNTIME_NVM_BIN');
-        $process = new Process('env');
+        $process = new Process(['env']);
         $process = $execute->setNodeEnv($process);
         // We do not expect env set for process.
         $this->assertEmpty($process->getEnv());
         $process->run();
         $this->assertTrue($process->isSuccessful());
         // Expect path to match system one.
-        $this->assertContains('PATH='.$pathenv, $process->getOutput());
+        $this->assertStringContainsString('PATH='.$pathenv, $process->getOutput());
         // Expect HOME is defined (system env vars present)
-        $this->assertRegExp('/^HOME=/m', $process->getOutput());
+        $this->assertMatchesRegularExpression('/^HOME=/m', $process->getOutput());
 
         // RUNTIME_NVM_BIN is defined.
         putenv('RUNTIME_NVM_BIN=/test/bin');
@@ -55,39 +55,39 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $process->run();
         $this->assertTrue($process->isSuccessful());
         // RUNTIME_NVM_BIN is defined, expect it to be first item in the PATH .
-        $this->assertContains('PATH=/test/bin:'.$pathenv, $process->getOutput());
+        $this->assertStringContainsString('PATH=/test/bin:'.$pathenv, $process->getOutput());
         // Expect HOME is defined too (system env vars present)
-        $this->assertRegExp('/^HOME=/m', $process->getOutput());
+        $this->assertMatchesRegularExpression('/^HOME=/m', $process->getOutput());
     }
 
     public function testRun()
     {
         $execute = new Execute();
-        $process = $execute->run('env');
+        $process = $execute->run(['env']);
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
         $this->assertTrue($process->isSuccessful());
         // RUNTIME_NVM_BIN is defined, expect it in the PATH.
-        $this->assertRegExp('/^PATH=\/test\/bin:/m', $process->getOutput());
+        $this->assertMatchesRegularExpression('/^PATH=\/test\/bin:/m', $process->getOutput());
     }
 
     public function testMustRun()
     {
         $execute = new Execute();
-        $process = $execute->mustRun('env');
+        $process = $execute->mustRun(['env']);
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
         $this->assertTrue($process->isSuccessful());
         // RUNTIME_NVM_BIN is defined, expect it in the PATH.
-        $this->assertRegExp('/^PATH=\/test\/bin:/m', $process->getOutput());
+        $this->assertMatchesRegularExpression('/^PATH=\/test\/bin:/m', $process->getOutput());
     }
 
     public function testRunAllVerbose()
     {
         /** @var Process[] $processes */
         $processes = [
-            new Process('env'),
-            new Process('env'),
+            new Process(['env']),
+            new Process(['env']),
         ];
 
         $output  = new BufferedOutput(OutputInterface::VERBOSITY_VERY_VERBOSE);
@@ -97,7 +97,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         foreach ($processes as $process) {
             $this->assertTrue($process->isSuccessful());
             // RUNTIME_NVM_BIN is defined, expect it in the PATH.
-            $this->assertRegExp('/^PATH=\/test\/bin:/m', $process->getOutput());
+            $this->assertMatchesRegularExpression('/^PATH=\/test\/bin:/m', $process->getOutput());
         }
         $this->assertNotEmpty($output->fetch());
     }
@@ -106,9 +106,12 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
     {
         /** @var Process[] $processes */
         $processes = [
-            new Process('env'),
-            new MoodleProcess('-r "echo \'PATH=\'.getenv(\'PATH\');"'),
-            new Process('env'),
+            new Process(['env']),
+            new MoodleProcess([
+                '-r',
+                'echo \'PATH=\'.getenv(\'PATH\');',
+            ]),
+            new Process(['env']),
         ];
 
         $execute = new Execute();
@@ -119,7 +122,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         foreach ($processes as $process) {
             $this->assertTrue($process->isSuccessful());
             // RUNTIME_NVM_BIN is defined, expect it in the PATH.
-            $this->assertRegExp('/^PATH=\/test\/bin:/m', $process->getOutput());
+            $this->assertMatchesRegularExpression('/^PATH=\/test\/bin:/m', $process->getOutput());
         }
     }
 
@@ -129,9 +132,9 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
 
         /** @var Process[] $processes */
         $processes = [
-            new Process('php -r "echo 42;"'),
-            new Process('php -r "syntax wrong_code_error_ignore_me"'), // This may appear in logs, ignore it!
-            new Process('php -r "echo 42;"'),
+            new Process(['php -r "echo 42;"']),
+            new Process(['php -r "syntax wrong_code_error_ignore_me"']), // This may appear in logs, ignore it!
+            new Process(['php -r "echo 42;"']),
         ];
 
         $execute                   = new Execute();
@@ -143,13 +146,14 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
     {
         $output  = new BufferedOutput(OutputInterface::VERBOSITY_VERY_VERBOSE);
         $execute = new Execute($output);
-        $process = $execute->passThrough('php -r "echo 42;"');
+        $process = $execute->passThrough(['php',  '-r', 'echo 42;']);
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
-        $this->assertSame(' RUN  php -r "echo 42;"'.PHP_EOL.'42', $output->fetch());
+        $this->assertSame(" RUN  'php' '-r' 'echo 42;'".PHP_EOL.'42', $output->fetch());
 
-        $process = $execute->passThrough('env');
+        $process = $execute->passThrough(['env']);
+        $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
         // RUNTIME_NVM_BIN is defined, expect it in the PATH.
-        $this->assertRegExp('/^PATH=\/test\/bin:/m', $output->fetch());
+        $this->assertMatchesRegularExpression('/^PATH=\/test\/bin:/m', $output->fetch());
     }
 }

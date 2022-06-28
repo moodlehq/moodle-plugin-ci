@@ -24,25 +24,10 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class PluginInstaller extends AbstractInstaller
 {
-    /**
-     * @var Moodle
-     */
-    private $moodle;
-
-    /**
-     * @var MoodlePlugin
-     */
-    private $plugin;
-
-    /**
-     * @var string
-     */
-    private $extraPluginsDir;
-
-    /**
-     * @var ConfigDumper
-     */
-    private $configDumper;
+    private Moodle $moodle;
+    private MoodlePlugin $plugin;
+    private ?string $extraPluginsDir;
+    private ConfigDumper $configDumper;
 
     /**
      * @param Moodle       $moodle
@@ -50,7 +35,7 @@ class PluginInstaller extends AbstractInstaller
      * @param string       $extraPluginsDir
      * @param ConfigDumper $configDumper
      */
-    public function __construct(Moodle $moodle, MoodlePlugin $plugin, $extraPluginsDir, ConfigDumper $configDumper)
+    public function __construct(Moodle $moodle, MoodlePlugin $plugin, ?string $extraPluginsDir, ConfigDumper $configDumper)
     {
         $this->moodle          = $moodle;
         $this->plugin          = $plugin;

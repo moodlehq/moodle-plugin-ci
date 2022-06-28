@@ -74,20 +74,27 @@ class VendorInstaller extends AbstractInstaller
 
         $processes = [];
         if ($this->plugin->hasUnitTests() || $this->plugin->hasBehatFeatures()) {
-            $processes[] = new Process('composer install --no-interaction --prefer-dist', $this->moodle->directory, null, null, null);
+            $processes[] = Process::fromShellCommandline('composer install --no-interaction --prefer-dist',
+                $this->moodle->directory, null, null, null);
         }
-        $processes[] = new Process('npm install --no-progress grunt', null, null, null, null);
+        $processes[] = Process::fromShellCommandline('npm install --no-progress grunt', null, null, null, null);
 
         $this->execute->mustRunAll($processes);
 
         $this->getOutput()->step('Install npm dependencies');
 
-        $this->execute->mustRun(new Process('npm install --no-progress', $this->moodle->directory, null, null, null));
+        $this->execute->mustRun(
+            Process::fromShellCommandline('npm install --no-progress', $this->moodle->directory, null, null, null)
+        );
         if ($this->plugin->hasNodeDependencies()) {
-            $this->execute->mustRun(new Process('npm install --no-progress', $this->plugin->directory, null, null, null));
+            $this->execute->mustRun(
+                Process::fromShellCommandline('npm install --no-progress', $this->plugin->directory, null, null, null)
+            );
         }
 
-        $this->execute->mustRun(new Process('npx grunt ignorefiles', $this->moodle->directory, null, null, null));
+        $this->execute->mustRun(
+            Process::fromShellCommandline('npx grunt ignorefiles', $this->moodle->directory, null, null, null)
+        );
     }
 
     public function stepCount()
@@ -130,7 +137,10 @@ class VendorInstaller extends AbstractInstaller
 
         $nvmDir  = getenv('NVM_DIR');
         $cmd     = ". $nvmDir/nvm.sh && nvm install && nvm use && echo \"NVM_BIN=\$NVM_BIN\"";
-        $process = $this->execute->passThrough($cmd, $this->moodle->directory);
+
+        $process = $this->execute->passThroughProcess(
+            Process::fromShellCommandline($cmd, $this->moodle->directory, null, null, null)
+        );
         if (!$process->isSuccessful()) {
             throw new \RuntimeException('Node.js installation failed.');
         }

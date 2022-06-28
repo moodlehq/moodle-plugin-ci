@@ -54,14 +54,30 @@ class CoverallsUploadCommand extends AbstractPluginCommand
         $filesystem = new Filesystem();
 
         // Only if it has not been installed before.
-        if (!$filesystem->exists($this->plugin->directory.'/coveralls')) {
-            $process = new Process('composer create-project -n --no-dev --prefer-dist php-coveralls/php-coveralls coveralls ^2', $this->plugin->directory);
+        if (!$filesystem->exists($this->plugin->directory . '/coveralls')) {
+            $cmd = [
+                'composer',
+                'create-project',
+                '-n',
+                '--no-dev',
+                '--prefer-dist',
+                'php-coveralls/php-coveralls',
+                'coveralls',
+                '^2',
+            ];
+            $process = new Process($cmd, $this->plugin->directory);
             $this->execute->mustRun($process);
         }
 
-        $filesystem->copy($coverage, $this->plugin->directory.'/build/logs/clover.xml');
+        // Yes, this is a hack, but it's the only way to get the coverage file into the right place
+        // for the coveralls command to find it.
+        $filesystem->copy($coverage, $this->plugin->directory . '/build/logs/clover.xml');
 
-        $process = $this->execute->passThrough('coveralls/bin/php-coveralls -v', $this->plugin->directory);
+        $cmd = [
+            'coveralls/bin/php-coveralls',
+            '-v',
+        ];
+        $process = $this->execute->passThrough($cmd, $this->plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;
     }

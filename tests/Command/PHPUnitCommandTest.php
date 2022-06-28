@@ -21,7 +21,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class PHPUnitCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null)
+    protected function executeCommand($pluginDir = null, $moodleDir = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -58,7 +58,7 @@ class PHPUnitCommandTest extends MoodleTestCase
 
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/No PHPUnit tests to run, free pass!/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/No PHPUnit tests to run, free pass!/', $commandTester->getDisplay());
     }
 
     public function testExecuteNoPlugin()

@@ -20,7 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class AddConfigCommandTest extends FilesystemTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fs->copy(__DIR__.'/../Fixture/example-config.php', $this->tempDir.'/config.php');
@@ -47,13 +47,13 @@ class AddConfigCommandTest extends FilesystemTestCase
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/\$CFG->foo = "bar";\n/', file_get_contents($this->tempDir.'/config.php'));
+        $this->assertMatchesRegularExpression('/\$CFG->foo = "bar";\n/', file_get_contents($this->tempDir.'/config.php'));
     }
 
     public function testExecuteSyntaxError()
     {
         $commandTester = $this->executeCommand('$CFG->foo = "bar"');
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertRegExp('/Syntax error found in 1 file/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Syntax error found in 1 file/', $commandTester->getDisplay());
     }
 }

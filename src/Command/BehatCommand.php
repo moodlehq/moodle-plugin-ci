@@ -17,7 +17,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Run Behat tests.
@@ -38,14 +37,14 @@ class BehatCommand extends AbstractMoodleCommand
      *
      * @var string
      */
-    private $seleniumFirefoxImage = 'selenium/standalone-firefox:3';
+    private string $seleniumFirefoxImage = 'selenium/standalone-firefox:4';
 
     /**
      * Selenium standalone Chrome image.
      *
      * @var string
      */
-    private $seleniumChromeImage = 'selenium/standalone-chrome:3';
+    private string $seleniumChromeImage = 'selenium/standalone-chrome:4';
 
     /**
      * Wait this many microseconds for Selenium server to start/stop.
@@ -93,22 +92,21 @@ class BehatCommand extends AbstractMoodleCommand
 
         $servers && $this->startServerProcesses($input);
 
-        $builder = ProcessBuilder::create()
-            ->setPrefix('php')
-            ->add('admin/tool/behat/cli/run.php')
-            ->add('--tags=@'.$this->plugin->getComponent())
-            ->add('--profile='.$input->getOption('profile'))
-            ->add('--suite='.$input->getOption('suite'))
-            ->add('--auto-rerun='.$input->getOption('auto-rerun'))
-            ->add('--verbose')
-            ->add('-vvv')
-            ->setWorkingDirectory($this->moodle->directory)
-            ->setTimeout(null);
+        $cmd = [
+            'php', 'admin/tool/behat/cli/run.php',
+            '--tags=@'.$this->plugin->getComponent(),
+            '--profile='.$input->getOption('profile'),
+            '--suite='.$input->getOption('suite'),
+            '--auto-rerun='.$input->getOption('auto-rerun'),
+            '--verbose',
+            '-vvv',
+        ];
 
         if ($output->isDecorated()) {
-            $builder->add('--colors');
+            $cmd[] = '--colors';
         }
-        $process = $this->execute->passThroughProcess($builder->getProcess());
+
+        $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->directory, null, null, null));
 
         $servers && $this->stopServerProcesses();
 
@@ -138,15 +136,31 @@ class BehatCommand extends AbstractMoodleCommand
         } else {
             $image = $this->seleniumFirefoxImage;
         }
-        $cmd   = sprintf('docker run -d --rm --name=selenium --net=host --shm-size=2g -v %s:%s %s',
-            $this->moodle->directory, $this->moodle->directory, $image);
+
+        $cmd = [
+            'docker',
+            'run',
+            '-d',
+            '--rm',
+            '--name=selenium',
+            '--publish=4444:4444',
+            '--shm-size=2g',
+            '-v',
+            $this->moodle->directory . ':' . $this->moodle->directory,
+            $image,
+        ];
         $docker = $this->execute->passThrough($cmd);
         if (!$docker->isSuccessful()) {
             throw new \RuntimeException('Can\'t start Selenium server');
         }
 
         // Start web server.
-        $web = new Process(['php', '-S', 'localhost:8000'], $this->moodle->directory);
+        $cmd = [
+            'php',
+            '-S',
+            'localhost:8000',
+        ];
+        $web = new Process($cmd, $this->moodle->directory);
         $web->setTimeout(0);
         $web->disableOutput();
         $web->start();

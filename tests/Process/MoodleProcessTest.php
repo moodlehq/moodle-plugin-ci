@@ -18,10 +18,10 @@ use MoodlePluginCI\Process\MoodleProcess;
 
 class MoodleProcessTest extends \PHPUnit\Framework\TestCase
 {
-    private $outputWithDebugging;
-    private $outputWithoutDebugging;
+    private string $outputWithDebugging;
+    private string $outputWithoutDebugging;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         // Example output from installing Moodle with debugging message.
         $this->outputWithDebugging = '-->System\n'.
@@ -55,40 +55,61 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
 
     public function testDetectDebuggingMessages()
     {
-        $process = new MoodleProcess(sprintf('-r "echo \"%s\";"', $this->outputWithoutDebugging));
+        $process = new MoodleProcess([
+                    '-r',
+                    'echo "' . $this->outputWithoutDebugging . '";',
+                ]);
         $process->run();
         $this->assertFalse($process->hasDebuggingMessages($process->getOutput()));
 
-        $process = new MoodleProcess(sprintf('-r "echo \"%s\";"', $this->outputWithDebugging));
+        $process = new MoodleProcess([
+                    '-r',
+                    'echo "' . $this->outputWithDebugging . '";',
+                ]);
         $process->run();
         $this->assertTrue($process->hasDebuggingMessages($process->getOutput()));
     }
 
     public function testHasPhpErrorMessages()
     {
-        $process = new MoodleProcess('-r "echo $foo[\'bar\'];"');
+        $process = new MoodleProcess([
+                    '-r',
+                    'echo $foo[\'bar\'];',
+                ]);
         $process->run();
         $this->assertTrue($process->hasPhpErrorMessages($process->getErrorOutput()));
 
-        $process = new MoodleProcess('-r "echo 42;"');
+        $process = new MoodleProcess([
+                    '-r',
+                    'echo 42;',
+                ]);
         $process->run();
         $this->assertFalse($process->hasPhpErrorMessages($process->getErrorOutput()));
     }
 
     public function testIsSuccessful()
     {
-        $process = new MoodleProcess('-r "echo 42;"');
+        $process = new MoodleProcess([
+                    '-r',
+                    'echo 42;',
+                ]);
         $process->run();
         $this->assertTrue($process->isSuccessful());
 
-        $process = new MoodleProcess('-r "echo $foo[\'bar\'];"');
+        $process = new MoodleProcess([
+                    '-r',
+                    'echo $foo[\'bar\'];',
+                ]);
         $process->run();
         $this->assertFalse($process->isSuccessful());
     }
 
     public function testMustRun()
     {
-        $process = new MoodleProcess('-r "echo 42;"');
+        $process = new MoodleProcess([
+                    '-r',
+                    'echo 42;',
+                ]);
         $process->mustRun();
         $this->assertTrue($process->isSuccessful());
     }
@@ -96,25 +117,34 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
     public function testMustRunError()
     {
         $this->expectException(MoodlePhpException::class);
-        $process = new MoodleProcess('-r "echo $foo[\'bar\'];"');
+        $process = new MoodleProcess([
+            '-r',
+            'echo $foo[\'bar\'];',
+        ]);
         $process->mustRun();
     }
 
     public function testCheckOutputForProblemsNotStarted()
     {
-        $process = new MoodleProcess('-r "echo 42;"');
+        $process = new MoodleProcess([
+            '-r',
+            'echo 42;',
+        ]);
 
         try {
             $process->checkOutputForProblems();
             $this->fail('The checkOutputForProblems should have thrown a LogicException');
         } catch (\LogicException $e) {
-            $this->assertRegExp('/started/', $e->getMessage());
+            $this->assertMatchesRegularExpression('/started/', $e->getMessage());
         }
     }
 
     public function testCheckOutputForProblemsOutputDisabled()
     {
-        $process = new MoodleProcess('-r "echo 42;"');
+        $process = new MoodleProcess([
+            '-r',
+            'echo 42;',
+        ]);
         $process->run();
         $process->disableOutput();
 
@@ -122,14 +152,17 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
             $process->checkOutputForProblems();
             $this->fail('The checkOutputForProblems should have thrown a LogicException');
         } catch (\LogicException $e) {
-            $this->assertRegExp('/disabled/', $e->getMessage());
+            $this->assertMatchesRegularExpression('/disabled/', $e->getMessage());
         }
     }
 
     public function testCheckOutputForProblemsPhpError()
     {
         $this->expectException(MoodlePhpException::class);
-        $process = new MoodleProcess('-r "echo $foo[\'bar\'];"');
+        $process = new MoodleProcess([
+            '-r',
+            'echo $foo[\'bar\'];',
+        ]);
         $process->run();
         $process->checkOutputForProblems();
     }
@@ -137,7 +170,10 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
     public function testCheckOutputForProblemsDebuggingMessage()
     {
         $this->expectException(MoodleDebugException::class);
-        $process = new MoodleProcess(sprintf('-r "echo \"%s\";"', $this->outputWithDebugging));
+        $process = new MoodleProcess([
+            '-r',
+            'echo "' . $this->outputWithDebugging . '";',
+        ]);
         $process->run();
         $process->checkOutputForProblems();
     }

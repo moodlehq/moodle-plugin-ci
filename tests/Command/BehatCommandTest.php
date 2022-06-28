@@ -21,7 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class BehatCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null)
+    protected function executeCommand($pluginDir = null, $moodleDir = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -58,7 +58,7 @@ class BehatCommandTest extends MoodleTestCase
 
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/No Behat features to run, free pass!/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/No Behat features to run, free pass!/', $commandTester->getDisplay());
     }
 
     public function testExecuteNoPlugin()

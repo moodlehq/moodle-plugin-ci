@@ -12,6 +12,7 @@
 
 namespace MoodlePluginCI\Process;
 
+use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
 /**
@@ -20,21 +21,33 @@ use Symfony\Component\Process\Process;
 class MoodleProcess extends Process
 {
     /**
-     * @param string         $script  Passed to php binary
-     * @param string|null    $cwd     The working directory or null to use the working dir of the current PHP process
-     * @param array|null     $env     The environment variables or null to inherit
-     * @param int|float|null $timeout The timeout in seconds or null to disable
+     * @param array       $command The command to run and its arguments listed as separate entries
+     * @param string|null $cwd     The working directory or null to use the working dir of the current PHP process
+     * @param array|null  $env     The environment variables or null to inherit
+     * @param ?int        $timeout The timeout in seconds or null (default) to disable
      */
-    public function __construct($script, $cwd = null, array $env = null, $timeout = null)
+    public function __construct(array $command, string $cwd = null, array $env = null, ?int $timeout = null)
     {
+        // Let's find our beloved php.
+        $phpBinaryFinder = new PhpExecutableFinder();
+        $phpBinary       = $phpBinaryFinder->find();
         // By telling PHP to log errors without having a log file, PHP will write
         // errors to STDERR in a specific format (each line is prefixed with PHP).
-        $commandline = sprintf('php -d log_errors=1 -d error_log=NULL %s', $script);
+        $cmd = array_merge(
+            [
+                $phpBinary,
+                '-d',
+                'log_errors=1',
+                '-d',
+                'error_log=null',
+            ],
+            $command,
+        );
 
-        parent::__construct($commandline, $cwd, $env, null, $timeout);
+        parent::__construct($cmd, $cwd, $env, null, $timeout);
     }
 
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         $isSuccessful = parent::isSuccessful();
 
@@ -50,9 +63,9 @@ class MoodleProcess extends Process
         return $isSuccessful;
     }
 
-    public function mustRun(callable $callback = null)
+    public function mustRun(?callable $callback = null, array $env = []): Process
     {
-        parent::mustRun($callback);
+        parent::mustRun($callback, $env);
 
         // Check for problems with output.
         $this->checkOutputForProblems();
@@ -65,7 +78,7 @@ class MoodleProcess extends Process
      *
      * Problems would include PHP errors or Moodle debugging messages.
      */
-    public function checkOutputForProblems()
+    public function checkOutputForProblems(): void
     {
         if (!$this->isStarted()) {
             throw new \LogicException(sprintf('Process must be started before calling %s.', __FUNCTION__));
@@ -88,7 +101,7 @@ class MoodleProcess extends Process
      *
      * @return bool
      */
-    public function hasDebuggingMessages($output)
+    public function hasDebuggingMessages($output): bool
     {
         // Looks for something like the following which is a debug message and the start of the debug trace:
         // ++ Some message ++
@@ -103,7 +116,7 @@ class MoodleProcess extends Process
      *
      * @return bool
      */
-    public function hasPhpErrorMessages($output)
+    public function hasPhpErrorMessages($output): bool
     {
         // Looks for something like the following which is a debug message and the start of the debug trace:
         // PHP Notice:  Undefined index: bat in /path/to/file.php on line 30

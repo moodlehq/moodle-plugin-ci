@@ -112,7 +112,7 @@ class InstallCommand extends Command
         $this->installers = $this->installers ?: new InstallerCollection($installOutput);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->factory->addInstallers($this->installers);
         $this->install->runInstallation($this->installers);
@@ -122,6 +122,8 @@ class InstallCommand extends Command
 
         // Progress bar does not end with a newline.
         $output->writeln('');
+
+        return 0;
     }
 
     /**

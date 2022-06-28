@@ -35,6 +35,6 @@ class EnvDumperTest extends FilesystemTestCase
         $dumper = new EnvDumper();
         $dumper->dump([], $toFile);
 
-        $this->assertFileNotExists($toFile);
+        $this->assertFileDoesNotExist($toFile);
     }
 }

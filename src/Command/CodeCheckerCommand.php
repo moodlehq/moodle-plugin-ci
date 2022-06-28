@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 
 /**
  * Run Moodle CodeSniffer standard on a plugin.
@@ -58,38 +58,36 @@ class CodeCheckerCommand extends AbstractPluginCommand
             return $this->outputSkip($output);
         }
 
-        $builder = ProcessBuilder::create()
-            ->setPrefix('php')
-            ->add(__DIR__.'/../../vendor/squizlabs/php_codesniffer/bin/phpcs')
-            ->add('--standard='.($input->getOption('standard') ?: 'moodle'))
-            ->add('--extensions=php')
-            ->add('-p')
-            ->add('-w')
-            ->add('-s')
-            ->add('--no-cache')
-            ->add($output->isDecorated() ? '--colors' : '--no-colors')
-            ->add('--report-full')
-            ->add('--report-width=132')
-            ->add('--encoding=utf-8')
-            ->setWorkingDirectory($this->plugin->directory)
-            ->setTimeout(null);
+        $cmd = [
+            'php', __DIR__.'/../../vendor/squizlabs/php_codesniffer/bin/phpcs',
+            '--standard='.($input->getOption('standard') ?: 'moodle'),
+            '--extensions=php',
+            '-p',
+            '-w',
+            '-s',
+            '--no-cache',
+            ($output->isDecorated() ? '--colors' : '--no-colors'),
+            '--report-full',
+            '--report-width=132',
+            '--encoding=utf-8',
+        ];
 
         // If we aren't using the max-warnings option, then we can forget about warnings and tell phpcs
         // to ignore them for exit-code purposes (still they will be reported in the output).
         if ($input->getOption('max-warnings') < 0) {
-            $builder->add('--runtime-set')->add('ignore_warnings_on_exit')->add(' 1');
+            array_push($cmd, '--runtime-set', 'ignore_warnings_on_exit', '1');
         } else {
             // If we are using the max-warnings option, we need the summary report somewhere to get
             // the total number of errors and warnings from there.
-            $builder->add('--report-json='.$this->tempFile);
+            $cmd[] = '--report-json='.$this->tempFile;
         }
 
         // Add the files to process.
         foreach ($files as $file) {
-            $builder->add($file);
+            $cmd[] = $file;
         }
 
-        $process = $this->execute->passThroughProcess($builder->getProcess());
+        $process = $this->execute->passThroughProcess(new Process($cmd, $this->plugin->directory, null, null, null));
 
         // If we aren't using the max-warnings option, process exit code is enough for us.
         if ($input->getOption('max-warnings') < 0) {

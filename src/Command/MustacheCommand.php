@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 
 /**
  * Lints mustache template files.
@@ -58,22 +58,23 @@ class MustacheCommand extends AbstractMoodleCommand
 
         $code = 0;
         foreach ($files as $file) {
+            $cmd = [
+                'env',
+                '-u',
+                // _JAVA_OPTIONS is something Travis CI started to set in Trusty.  This breaks Mustache because
+                // the output from vnu.jar needs to be captured and JSON decoded.  When _JAVA_OPTIONS is present,
+                // then a message like "Picked up _JAVA_OPTIONS..." is printed which breaks JSON decoding.
+                '_JAVA_OPTIONS',
+                'php',
+                $wrapper,
+                '--filename='.$file,
+                '--validator='.$jarFile,
+                '--basename='.$this->moodle->directory,
+            ];
             // _JAVA_OPTIONS is something Travis CI started to set in Trusty.  This breaks Mustache because
             // the output from vnu.jar needs to be captured and JSON decoded.  When _JAVA_OPTIONS is present,
             // then a message like "Picked up _JAVA_OPTIONS..." is printed which breaks JSON decoding.
-            $process = $this->execute->passThroughProcess(
-                ProcessBuilder::create()
-                    ->add('env')
-                    ->add('-u')
-                    ->add('_JAVA_OPTIONS')
-                    ->add('php')
-                    ->add($wrapper)
-                    ->add('--filename='.$file)
-                    ->add('--validator='.$jarFile)
-                    ->add('--basename='.$this->moodle->directory)
-                    ->setTimeout(null)
-                    ->getProcess()
-            );
+            $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->directory, null, null, null));
 
             if (!$process->isSuccessful()) {
                 $code = 1;

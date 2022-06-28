@@ -23,7 +23,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class InstallCommandTest extends MoodleTestCase
 {
-    protected function executeCommand()
+    protected function executeCommand(): CommandTester
     {
         $command          = new InstallCommand($this->tempDir.'/.env');
         $command->install = new DummyInstall(new InstallOutput());
@@ -97,7 +97,7 @@ EOT
         $this->assertFileEquals($expected, $actual);
     }
 
-    public function csvToArrayProvider()
+    public function csvToArrayProvider(): array
     {
         return [
             [' , foo , bar ', ['foo', 'bar']],

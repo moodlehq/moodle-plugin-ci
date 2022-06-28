@@ -26,7 +26,7 @@ if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
 
 class CodeCheckerCommandTest extends MoodleTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -34,7 +34,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
-    protected function executeCommand($pluginDir = null, $maxWarnings = -1)
+    protected function executeCommand($pluginDir = null, $maxWarnings = -1): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -65,10 +65,10 @@ class CodeCheckerCommandTest extends MoodleTestCase
         // Verify various parts of the output.
         $output = $commandTester->getDisplay();
         // Verify that the progress information is always printed, no matter there aren't warnings/errors.
-        $this->assertRegExp('/\.{7} 7 \/ 7 \(100%\)/', $output);
+        $this->assertMatchesRegularExpression('/\.{7} 7 \/ 7 \(100%\)/', $output);
 
         // Also verify display info is correct.
-        $this->assertRegExp('/RUN  Moodle CodeSniffer standard on local_ci/', $output);
+        $this->assertMatchesRegularExpression('/RUN  Moodle CodeSniffer standard on local_ci/', $output);
     }
 
     public function testExecuteFail()
@@ -92,17 +92,17 @@ EOT;
 
         // Verify various parts of the output.
         $output = $commandTester->getDisplay();
-        $this->assertRegExp('/E\.* 8\.* \/ 8 \(100%\)/', $output);                  // Progress.
-        $this->assertRegExp('/\/fixable.php/', $output);                            // File.
-        $this->assertRegExp('/ (5|6) ERRORS AND (1|2) WARNINGS? AFFECTING 6 /', $output); // Summary (php70 shows one less)
-        $this->assertRegexp('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
-        $this->assertRegexp('/print_object\(\) is forbidden/', $output);            // Moodle sniff.
-        $this->assertRegexp('/FunctionUse\.RemovedFunctions\.ldap_sort/', $output); // PHPCompatibility sniff.
-        $this->assertRegexp('/Files\.EndFileNewline\.NotFound/', $output);          // End of file.
-        $this->assertRegExp('/Time:.*Memory:/', $output);                           // Time.
+        $this->assertMatchesRegularExpression('/E\.* 8\.* \/ 8 \(100%\)/', $output);                  // Progress.
+        $this->assertMatchesRegularExpression('/\/fixable.php/', $output);                            // File.
+        $this->assertMatchesRegularExpression('/ (4|5) ERRORS AND (1|2) WARNINGS? AFFECTING 6 /', $output); // Summary (php70 shows one less)
+        $this->assertMatchesRegularExpression('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
+        $this->assertMatchesRegularExpression('/print_object\(\) is forbidden/', $output);            // Moodle sniff.
+        $this->assertMatchesRegularExpression('/FunctionUse\.RemovedFunctions\.ldap_sort/', $output); // PHPCompatibility sniff.
+        $this->assertMatchesRegularExpression('/Files\.EndFileNewline\.NotFound/', $output);          // End of file.
+        $this->assertMatchesRegularExpression('/Time:.*Memory:/', $output);                           // Time.
 
         // Also verify display info is correct.
-        $this->assertRegExp('/RUN  Moodle CodeSniffer standard on local_ci/', $output);
+        $this->assertMatchesRegularExpression('/RUN  Moodle CodeSniffer/', $commandTester->getDisplay());
     }
 
     public function testExecuteWithWarningsAndThreshold()
@@ -143,7 +143,7 @@ EOT;
         // Just random directory with no PHP files.
         $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
     public function testExecuteNoPlugin()

@@ -22,7 +22,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class TestSuiteInstallerTest extends MoodleTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

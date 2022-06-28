@@ -21,7 +21,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class CoverallsUploadCommandTest extends MoodleTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fs->touch($this->moodleDir.'/coverage.xml');
@@ -68,6 +68,6 @@ class CoverallsUploadCommandTest extends MoodleTestCase
 
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/Did not find coverage file/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Did not find coverage file/', $commandTester->getDisplay());
     }
 }

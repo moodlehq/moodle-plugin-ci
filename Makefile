@@ -1,6 +1,6 @@
 COMPOSER := composer
 PHPUNIT  := vendor/bin/phpunit
-FIXER    := php build/php-cs-fixer.phar
+FIXER    := vendor/bin/php-cs-fixer
 PSALM    := php build/psalm.phar
 CMDS     = $(wildcard src/Command/*.php)
 

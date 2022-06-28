@@ -23,12 +23,12 @@ class BlockRequirementsTest extends \PHPUnit\Framework\TestCase
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new BlockRequirements(new Plugin('block_html', 'block', 'html', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }
@@ -49,7 +49,7 @@ class BlockRequirementsTest extends \PHPUnit\Framework\TestCase
 
         $this->assertNotEmpty($files);
         foreach ($files as $file) {
-            $this->assertInternalType('string', $file);
+            $this->assertIsString($file);
         }
     }
 

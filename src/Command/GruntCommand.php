@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 
 /**
  * Run grunt tasks.
@@ -68,26 +68,26 @@ class GruntCommand extends AbstractMoodleCommand
                 continue; // Means plugin lacks requirements or Moodle does.
             }
 
-            $builder = ProcessBuilder::create()
-                ->setPrefix('npx')
-                ->add('grunt');
-            if ($input->getOption('show-lint-warnings')) {
-                $builder->add('--show-lint-warnings');
-            }
-            if (strlen($input->getOption('max-lint-warnings'))) {
-                $builder->add('--max-lint-warnings='.((int) $input->getOption('max-lint-warnings')));
-            }
-            $builder
-                ->add($task->taskName)
-                ->setWorkingDirectory($task->workingDirectory)
-                ->setTimeout(null);
+            $cmd = [
+                'npx', 'grunt',
+                $task->taskName,
+            ];
 
-            // Remove build directory so we can detect files that should be deleted.
+            if ($input->getOption('show-lint-warnings')) {
+                $cmd[] = '--show-lint-warnings';
+            }
+
+            if (strlen($input->getOption('max-lint-warnings'))) {
+                $cmd[] = '--max-lint-warnings='.((int) $input->getOption('max-lint-warnings'));
+            }
+
+            // Remove build directory, so we can detect files that should be deleted.
             if (!empty($task->buildDirectory)) {
                 $files->remove($this->plugin->directory.'/'.$task->buildDirectory);
             }
 
-            $process = $this->execute->passThroughProcess($builder->getProcess());
+            $process = $this->execute->passThroughProcess(new Process($cmd, $task->workingDirectory, null, null, null));
+
             if (!$process->isSuccessful()) {
                 $code = 1;
             }
@@ -128,7 +128,7 @@ class GruntCommand extends AbstractMoodleCommand
      *
      * @return int
      */
-    public function validatePluginFiles(OutputInterface $output)
+    public function validatePluginFiles(OutputInterface $output): int
     {
         $code = 0;
 

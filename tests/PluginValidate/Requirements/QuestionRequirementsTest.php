@@ -23,12 +23,12 @@ class QuestionRequirementsTest extends \PHPUnit\Framework\TestCase
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new QuestionRequirements(new Plugin('qtype_calculated', 'qtype', 'calculated', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }

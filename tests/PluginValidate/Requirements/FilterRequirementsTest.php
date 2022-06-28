@@ -23,12 +23,12 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
      */
     private $requirements;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requirements = new FilterRequirements(new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 29);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->requirements = null;
     }
@@ -50,7 +50,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($files);
         $this->assertTrue(in_array('filter.php', $files, true));
         foreach ($files as $file) {
-            $this->assertInternalType('string', $file);
+            $this->assertIsString($file);
         }
     }
 

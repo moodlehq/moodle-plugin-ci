@@ -15,7 +15,7 @@ namespace MoodlePluginCI\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 
 class SavePointsCommand extends AbstractPluginCommand
 {
@@ -48,12 +48,9 @@ class SavePointsCommand extends AbstractPluginCommand
         $filesystem->copy($upgradetester, $this->plugin->directory.'/check_upgrade_savepoints.php');
 
         $process = $this->execute->passThroughProcess(
-            ProcessBuilder::create()
-                ->setPrefix('php')
-                ->add('check_upgrade_savepoints.php')
+            (new Process(['php', 'check_upgrade_savepoints.php']))
                 ->setTimeout(null)
                 ->setWorkingDirectory($this->plugin->directory)
-                ->getProcess()
         );
 
         $code    = 0;

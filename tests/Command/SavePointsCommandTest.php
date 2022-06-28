@@ -20,7 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class SavePointsCommandTest extends MoodleTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -55,7 +55,7 @@ class SavePointsCommandTest extends MoodleTestCase
     {
         $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertRegExp('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
     public function testExecuteFail()

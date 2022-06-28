@@ -55,22 +55,22 @@ class ParallelCommand extends AbstractMoodleCommand
      */
     public function initializeProcesses()
     {
-        $bin    = 'php '.$_SERVER['PHP_SELF'];
+        $bin    = ['php', $_SERVER['PHP_SELF']];
         $plugin = $this->plugin->directory;
         $moodle = $this->moodle->directory;
 
         return [
-            'phplint'     => new Process(sprintf('%s phplint --ansi %s', $bin, $plugin)),
-            'phpcpd'      => new Process(sprintf('%s phpcpd --ansi %s', $bin, $plugin)),
-            'phpmd'       => new Process(sprintf('%s phpmd --ansi -m %s %s', $bin, $moodle, $plugin)),
-            'codechecker' => new Process(sprintf('%s codechecker --ansi %s', $bin, $plugin)),
-            'phpdoc'      => new Process(sprintf('%s phpdoc --ansi %s', $bin, $plugin)),
-            'validate'    => new Process(sprintf('%s validate --ansi -m %s %s', $bin, $moodle, $plugin)),
-            'savepoints'  => new Process(sprintf('%s savepoints --ansi %s', $bin, $plugin)),
-            'mustache'    => new Process(sprintf('%s mustache --ansi -m %s %s', $bin, $moodle, $plugin)),
-            'grunt'       => new Process(sprintf('%s grunt --ansi -m %s %s', $bin, $moodle, $plugin)),
-            'phpunit'     => new Process(sprintf('%s phpunit --ansi -m %s %s', $bin, $moodle, $plugin)),
-            'behat'       => new Process(sprintf('%s behat --ansi -m %s %s', $bin, $moodle, $plugin)),
+            'phplint'     => new Process(array_merge($bin, ['phplint', '--ansi', $plugin])),
+            'phpcpd'      => new Process(array_merge($bin, ['phpcpd', '--ansi', $plugin])),
+            'phpmd'       => new Process(array_merge($bin, ['phpmd', '--ansi', '-m', $moodle, $plugin])),
+            'codechecker' => new Process(array_merge($bin, ['codechecker', '--ansi', $plugin])),
+            'phpdoc'      => new Process(array_merge($bin, ['phpdoc', '--ansi', $plugin])),
+            'validate'    => new Process(array_merge($bin, ['validate', '--ansi', '-m', $moodle, $plugin])),
+            'savepoints'  => new Process(array_merge($bin, ['savepoints', '--ansi', $plugin])),
+            'mustache'    => new Process(array_merge($bin, ['mustache', '--ansi', 'm', $moodle, $plugin])),
+            'grunt'       => new Process(array_merge($bin, ['grunt', '--ansi', '-m', $moodle, $plugin])),
+            'phpunit'     => new Process(array_merge($bin, ['phpunit', '--ansi', '-m', $moodle, $plugin])),
+            'behat'       => new Process(array_merge($bin, ['behat', '--ansi', '-m', $moodle, $plugin])),
         ];
     }
 

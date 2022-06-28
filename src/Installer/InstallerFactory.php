@@ -23,60 +23,17 @@ use MoodlePluginCI\Process\Execute;
  */
 class InstallerFactory
 {
-    /**
-     * @var Moodle
-     */
-    public $moodle;
-
-    /**
-     * @var MoodlePlugin
-     */
-    public $plugin;
-
-    /**
-     * @var Execute
-     */
-    public $execute;
-
-    /**
-     * @var AbstractDatabase
-     */
-    public $database;
-
-    /**
-     * @var string
-     */
-    public $repo;
-
-    /**
-     * @var string
-     */
-    public $branch;
-
-    /**
-     * @var string
-     */
-    public $dataDir;
-
-    /**
-     * @var ConfigDumper
-     */
-    public $dumper;
-
-    /**
-     * @var string
-     */
-    public $pluginsDir;
-
-    /**
-     * @var bool
-     */
-    public $noInit;
-
-    /**
-     * @var string
-     */
-    public $nodeVer;
+    public Moodle $moodle;
+    public MoodlePlugin $plugin;
+    public Execute $execute;
+    public AbstractDatabase $database;
+    public string $repo;
+    public string $branch;
+    public string $dataDir;
+    public ConfigDumper $dumper;
+    public ?string $pluginsDir;
+    public bool $noInit;
+    public ?string $nodeVer;
 
     /**
      * Given a big bag of install options, add installers to the collection.

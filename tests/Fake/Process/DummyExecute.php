@@ -39,7 +39,7 @@ class DummyExecute extends Execute
         return $process;
     }
 
-    public function run($cmd, $error = null)
+    public function run($cmd, string $error = null): Process
     {
         if ($cmd instanceof Process) {
             // Get the command line from process.
@@ -49,7 +49,7 @@ class DummyExecute extends Execute
         return $this->helper->run($this->output, $this->getMockProcess($cmd), $error);
     }
 
-    public function mustRun($cmd, $error = null)
+    public function mustRun($cmd, string $error = null): Process
     {
         if ($cmd instanceof Process) {
             // Get the command line from process.
@@ -59,22 +59,22 @@ class DummyExecute extends Execute
         return $this->helper->mustRun($this->output, $this->getMockProcess($cmd), $error);
     }
 
-    public function runAll($processes)
+    public function runAll(array $processes): void
     {
         // Do nothing.
     }
 
-    public function mustRunAll($processes)
+    public function mustRunAll(array $processes): void
     {
         // Do nothing.
     }
 
-    public function passThrough($commandline, $cwd = null, $timeout = null)
+    public function passThrough(array $commandline, ?string $cwd = null, ?float $timeout = null): Process
     {
         return $this->passThroughProcess($this->getMockProcess($commandline));
     }
 
-    public function passThroughProcess(Process $process)
+    public function passThroughProcess(Process $process): Process
     {
         if ($process instanceof \Mockery\MockInterface) {
             return $process;

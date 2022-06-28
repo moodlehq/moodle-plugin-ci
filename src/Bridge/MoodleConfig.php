@@ -20,7 +20,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class MoodleConfig
 {
-    const PLACEHOLDER = '// Extra config.';
+    public const PLACEHOLDER = '// Extra config.';
 
     /**
      * Create a Moodle config.

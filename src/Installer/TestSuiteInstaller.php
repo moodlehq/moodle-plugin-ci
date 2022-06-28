@@ -94,7 +94,10 @@ class TestSuiteInstaller extends AbstractInstaller
         $this->addEnv('MOODLE_START_BEHAT_SERVERS', 'YES');
 
         return [
-            new MoodleProcess(sprintf('%s --install', $this->getBehatUtility())),
+            new MoodleProcess([
+                $this->getBehatUtility(),
+                '--install',
+            ]),
         ];
     }
 
@@ -111,7 +114,12 @@ class TestSuiteInstaller extends AbstractInstaller
 
         $this->getOutput()->debug('Initialize PHPUnit');
 
-        return [new MoodleProcess(sprintf('%s/admin/tool/phpunit/cli/util.php --install', $this->moodle->directory))];
+        return [
+            new MoodleProcess([
+                $this->moodle->directory . '/admin/tool/phpunit/cli/util.php',
+                '--install',
+            ]),
+        ];
     }
 
     /**
@@ -125,12 +133,22 @@ class TestSuiteInstaller extends AbstractInstaller
 
         if ($this->plugin->hasBehatFeatures()) {
             $this->getOutput()->debug('Enabling Behat');
-            $processes[] = new MoodleProcess(sprintf('%s --enable --add-core-features-to-theme', $this->getBehatUtility()));
+            $processes[] = new MoodleProcess([
+                $this->getBehatUtility(),
+                '--enable',
+                '--add-core-features-to-theme',
+            ]);
         }
         if ($this->plugin->hasUnitTests()) {
             $this->getOutput()->debug('Build PHPUnit config');
-            $processes[] = new MoodleProcess(sprintf('%s/admin/tool/phpunit/cli/util.php --buildconfig', $this->moodle->directory));
-            $processes[] = new MoodleProcess(sprintf('%s/admin/tool/phpunit/cli/util.php --buildcomponentconfigs', $this->moodle->directory));
+            $processes[] = new MoodleProcess([
+                $this->moodle->directory . '/admin/tool/phpunit/cli/util.php',
+                '--buildconfig',
+            ]);
+            $processes[] = new MoodleProcess([
+                $this->moodle->directory . '/admin/tool/phpunit/cli/util.php',
+                '--buildcomponentconfigs',
+            ]);
         }
 
         return $processes;
