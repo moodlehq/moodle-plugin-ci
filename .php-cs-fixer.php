@@ -54,5 +54,6 @@ return (new PhpCsFixer\Config())
             ->exclude('moodle')
             ->exclude('moodledata')
             ->name('moodle-plugin-ci')
+            ->name('validate-version')
             ->in(__DIR__)
     );
