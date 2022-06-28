@@ -376,13 +376,13 @@ Do not ask any interactive question
 `codechecker`
 -------------
 
-Run Moodle Code Checker on a plugin
+Run Moodle CodeSniffer standard on a plugin
 
 ### Usage
 
 * `codechecker [-s|--standard STANDARD] [--max-warnings MAX-WARNINGS] [--] <plugin>`
 
-Run Moodle Code Checker on a plugin
+Run Moodle CodeSniffer standard on a plugin
 
 ### Arguments
 
@@ -1735,7 +1735,7 @@ Run PHPUnit on a plugin
 
 ### Usage
 
-* `phpunit [-m|--moodle MOODLE] [--coverage-text] [--coverage-clover] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
+* `phpunit [-m|--moodle MOODLE] [--coverage-text] [--coverage-clover] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
 
 Run PHPUnit on a plugin
 
@@ -1772,6 +1772,33 @@ Generate and print code coverage report in text format
 #### `--coverage-clover`
 
 Generate code coverage report in Clover XML format
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--coverage-pcov`
+
+Use the pcov extension to calculate code coverage
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--coverage-xdebug`
+
+Use the xdebug extension to calculate code coverage
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--coverage-phpdbg`
+
+Use the phpdbg binary to calculate code coverage
 
 * Accept value: no
 * Is value required: no
