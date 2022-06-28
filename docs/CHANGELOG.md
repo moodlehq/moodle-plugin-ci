@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.3.0] - 2022-06-28
 ### Added
 - PHPUnit code coverage will now automatically fallback between `pcov` => `xdebug` => `phpdbg`, using the "best" one available in the system. Still, if needed to, any of them can be forced, given all their requirements are fulfilled, using the following new options of the 'phpunit' command: `--coverage-pcov`, `--coverage-xdebug` or `--coverage-phpdbg`.
 - ACTION SUGGESTED: Ensure that the `pcov` or `xdebug` extensions are installed in your environment to get 'moodle-plugin-ci' using them automatically.
@@ -416,7 +418,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.6...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.3.0...master
+[3.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.6...3.3.0
 [3.2.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.5...3.2.6
 [3.2.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.4...3.2.5
 [3.2.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.3...3.2.4
