@@ -13,12 +13,15 @@ language: php
 
 # Installs the updated version of PostgreSQL and extra APT packages.
 addons:
-  postgresql: "10"
+  postgresql: "12"
+  apt:
+    packages:
+      - postgresql-12
+      - postgresql-client-12
 
 # Ensure DB and docker services are running.
 services:
   - mysql
-  - postgresql
   - docker
 
 # Cache Composer's and NPM's caches to speed up build times.
@@ -38,6 +41,11 @@ php:
 # This section sets up the environment variables for the build.
 env:
  global:
+# This line instructs moodle-plugin-ci the version of PostgreSQL being
+# used, because, for PG 11 and up, both the user and the port were
+# changed by Travis. With that variable, the tool will switch to
+# socketed connections instead of localhost ones.
+  - PGVER=12
 # This line determines which version branch of Moodle to test against.
   - MOODLE_BRANCH=MOODLE_311_STABLE
 # This matrix is used for testing against multiple databases.  So for

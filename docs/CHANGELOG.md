@@ -12,6 +12,16 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 - `moodle-plugin-ci install` now provides an option `--db-port` to define a custom database port.
 
+### Changed
+- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
+  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
+  (and documentation) to fulfil [Moodle 4.1 new requirements](https://tracker.moodle.org/browse/MDL-71747).
+- ACTION REQUIRED: Review existing integrations running tests against master (4.1dev). There are a few Moodle 4.1 new requirements:
+  - PHP 7.4 is required (instead of 7.3).
+  - PostgreSQL 12 is required (instead of 10). Pay special attention to the changes needed for this and Travis!
+  - MariaDB 10.4 is required (instead of 10.2.29).
+  - Oracle 19 is required (instead of 11.2).
+
 ## [3.3.0] - 2022-06-28
 ### Added
 - PHPUnit code coverage will now automatically fallback between `pcov` => `xdebug` => `phpdbg`, using the "best" one available in the system. Still, if needed to, any of them can be forced, given all their requirements are fulfilled, using the following new options of the 'phpunit' command: `--coverage-pcov`, `--coverage-xdebug` or `--coverage-phpdbg`.

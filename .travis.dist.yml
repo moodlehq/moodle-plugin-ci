@@ -1,11 +1,14 @@
 language: php
 
 addons:
-  postgresql: "10"
+  postgresql: "12"
+  apt:
+    packages:
+      - postgresql-12
+      - postgresql-client-12
 
 services:
   - mysql
-  - postgresql
   - docker
 
 cache:
@@ -20,6 +23,7 @@ php:
 
 env:
  global:
+  - PGVER=12
   - MOODLE_BRANCH=MOODLE_311_STABLE
  matrix:
   - DB=pgsql
