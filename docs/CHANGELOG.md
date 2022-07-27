@@ -21,6 +21,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   - PostgreSQL 12 is required (instead of 10). Pay special attention to the changes needed for this and Travis!
   - MariaDB 10.4 is required (instead of 10.2.29).
   - Oracle 19 is required (instead of 11.2).
+- Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
 
 ## [3.3.0] - 2022-06-28
 ### Added
