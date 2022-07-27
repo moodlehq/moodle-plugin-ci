@@ -94,6 +94,7 @@ class InstallCommand extends Command
             ->addOption('db-pass', null, InputOption::VALUE_REQUIRED, 'Database pass', '')
             ->addOption('db-name', null, InputOption::VALUE_REQUIRED, 'Database name', 'moodle')
             ->addOption('db-host', null, InputOption::VALUE_REQUIRED, 'Database host', 'localhost')
+            ->addOption('db-port', null, InputOption::VALUE_REQUIRED, 'Database port', '')
             ->addOption('not-paths', null, InputOption::VALUE_REQUIRED, 'CSV of file paths to exclude', $paths)
             ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names)
             ->addOption('extra-plugins', null, InputOption::VALUE_REQUIRED, 'Directory of extra plugins to install', $extra)
@@ -174,7 +175,8 @@ class InstallCommand extends Command
             $input->getOption('db-name'),
             $input->getOption('db-user'),
             $input->getOption('db-pass'),
-            $input->getOption('db-host')
+            $input->getOption('db-host'),
+            $input->getOption('db-port')
         );
 
         return $factory;

@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- `moodle-plugin-ci install` now provides an option `--db-port` to define a custom database port.
 
 ## [3.3.0] - 2022-06-28
 ### Added

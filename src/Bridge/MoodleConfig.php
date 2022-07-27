@@ -37,6 +37,7 @@ class MoodleConfig
             '{{DBTYPE}}'          => $database->type,
             '{{DBLIBRARY}}'       => $database->library,
             '{{DBHOST}}'          => $database->host,
+            '{{DBPORT}}'          => $database->port,
             '{{DBNAME}}'          => $database->name,
             '{{DBUSER}}'          => $database->user,
             '{{DBPASS}}'          => $database->pass,
