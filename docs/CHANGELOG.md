@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.4.0] - 2022-07-27
 ### Added
 - `moodle-plugin-ci install` now provides an option `--db-port` to define a custom database port.
 
@@ -431,7 +433,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.3.0...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.0...master
+[3.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.3.0...3.4.0
 [3.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.6...3.3.0
 [3.2.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.5...3.2.6
 [3.2.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.4...3.2.5
