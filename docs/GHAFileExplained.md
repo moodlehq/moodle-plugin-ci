@@ -26,7 +26,7 @@ jobs:
   # when a job name is not provided
   test:
     # Virtual environment to use.
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     # DB services you need for testing.
     services:
