@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated all GHA scripts, templates and guides to use Ubuntu 22.04 (jammy). This change is not required yet, but integrations using old versions (Ubuntu 16.04, 18.04...) may face problems in the future because they are being deprecated.
+
 
 ## [3.4.0] - 2022-07-27
 ### Added
