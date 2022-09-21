@@ -9,10 +9,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.4.1] - 2022-09-21
 ### Changed
 - Updated all GHA scripts, templates and guides to use Ubuntu 22.04 (jammy). This change is not required yet, but integrations using old versions (Ubuntu 16.04, 18.04...) may face problems in the future because they are being deprecated.
 - Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
-
 
 ## [3.4.0] - 2022-07-27
 ### Added
@@ -437,7 +438,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.0...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.1...master
+[3.4.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.3.0...3.4.0
 [3.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.6...3.3.0
 [3.2.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.2.5...3.2.6
