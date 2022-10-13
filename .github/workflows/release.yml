@@ -27,23 +27,10 @@ jobs:
           php build/moodle-plugin-ci.phar list
 
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token does not need to be defined, it is available by default.
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          artifacts: build/moodle-plugin-ci.phar
+          artifactContentType: application/zip
           body: |
             Take a look at the [CHANGELOG](https://moodlehq.github.io/moodle-plugin-ci/CHANGELOG.html) for details about the release.
             Please follow [3.0 Upgrade guide](https://moodlehq.github.io/moodle-plugin-ci/UPGRADE-3.0.html) when upgrading from 2.x.
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/moodle-plugin-ci.phar
-          asset_name: moodle-plugin-ci.phar
-          asset_content_type: application/zip
