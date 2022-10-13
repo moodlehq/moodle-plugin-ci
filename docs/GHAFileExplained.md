@@ -84,7 +84,7 @@ jobs:
     steps:
       # Check out this repository code in ./plugin directory
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: plugin
 
