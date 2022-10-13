@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+* Updated all uses of `actions/checkout` from `v2` (using node 12) to `v3` (using node 16), because [actions using node 12 are deprecated](https://github.blog/changelog/2022-09-22-github-actions-all-actions-will-begin-running-on-node16-instead-of-node12/) and will sop working in the future.
+* ACTION SUGGESTED: In order to avoid the node 12 deprecation warnings, update your workflows to use `actions/checkout@v3`.
 
 ## [3.4.1] - 2022-09-21
 ### Changed
