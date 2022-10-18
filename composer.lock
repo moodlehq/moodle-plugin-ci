@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "669ae5743947f516ea7b4799af50da1b",
+    "content-hash": "8aeca14b4fa59fb2848873bface38c0a",
     "packages": [
         {
             "name": "composer/ca-bundle",
-            "version": "1.3.3",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "30897edbfb15e784fe55587b4f73ceefd3c4d98c"
+                "reference": "69098eca243998b53eed7a48d82dedd28b447cd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/30897edbfb15e784fe55587b4f73ceefd3c4d98c",
-                "reference": "30897edbfb15e784fe55587b4f73ceefd3c4d98c",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/69098eca243998b53eed7a48d82dedd28b447cd5",
+                "reference": "69098eca243998b53eed7a48d82dedd28b447cd5",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.3.3"
+                "source": "https://github.com/composer/ca-bundle/tree/1.3.4"
             },
             "funding": [
                 {
@@ -80,7 +80,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-20T07:14:26+00:00"
+            "time": "2022-10-12T12:08:29+00:00"
         },
         {
             "name": "composer/pcre",
@@ -347,16 +347,16 @@
         },
         {
             "name": "moodlehq/moodle-cs",
-            "version": "v3.2.4",
+            "version": "v3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-cs.git",
-                "reference": "ff404eafbeebf5413e9bad11fba2acfa09734738"
+                "reference": "805a077056117f3e5f26735d5951b7780550070d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/ff404eafbeebf5413e9bad11fba2acfa09734738",
-                "reference": "ff404eafbeebf5413e9bad11fba2acfa09734738",
+                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/805a077056117f3e5f26735d5951b7780550070d",
+                "reference": "805a077056117f3e5f26735d5951b7780550070d",
                 "shasum": ""
             },
             "require": {
@@ -372,6 +372,7 @@
                 "overtrue/phplint": "^3.0",
                 "phpmd/phpmd": "^2.11",
                 "phpunit/phpunit": "^9.5",
+                "sebastian/phpcpd": "^6.0",
                 "thor-juhasz/phpunit-coverage-check": "^0.3.0"
             },
             "type": "phpcodesniffer-standard",
@@ -401,25 +402,25 @@
                 "source": "https://github.com/moodlehq/moodle-cs",
                 "wiki": "https://github.com/moodlehq/moodle-cs/wiki"
             },
-            "time": "2022-07-24T15:09:11+00:00"
+            "time": "2022-10-18T12:59:41+00:00"
         },
         {
             "name": "moodlehq/moodle-local_ci",
-            "version": "1.0.14",
+            "version": "1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_ci.git",
-                "reference": "v1.0.14"
+                "reference": "v1.0.15"
             },
             "type": "library"
         },
         {
             "name": "moodlehq/moodle-local_moodlecheck",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
-                "reference": "v1.1.1"
+                "reference": "v1.1.2"
             },
             "type": "library"
         },
