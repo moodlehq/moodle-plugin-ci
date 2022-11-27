@@ -48,6 +48,8 @@ jobs:
           - php: '7.4'
             moodle-branch: 'master'
           - php: '7.4'
+            moodle-branch: 'MOODLE_401_STABLE'
+          - php: '7.4'
             moodle-branch: 'MOODLE_400_STABLE'
           - php: '7.4'
             moodle-branch: 'MOODLE_311_STABLE'
