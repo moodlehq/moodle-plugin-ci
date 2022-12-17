@@ -26,13 +26,13 @@ jobs:
       run: make validate
 
   citest:
-    name: CI test
+    name: Integration tests
     needs: selftest
     runs-on: ubuntu-22.04
 
     services:
       postgres:
-        image: postgres:12
+        image: postgres:13
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -45,7 +45,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - php: '7.4'
+          - php: '8.0'
             moodle-branch: 'master'
           - php: '7.4'
             moodle-branch: 'MOODLE_401_STABLE'
@@ -69,6 +69,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: pgsql, zip, gd, xmlrpc, soap
+        ini-values: max_input_vars=5000
         # We want to verify that xdebug works for coverage. Once we only support
         # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
         coverage: xdebug

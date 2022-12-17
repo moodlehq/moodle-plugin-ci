@@ -1,11 +1,11 @@
 language: php
 
 addons:
-  postgresql: "12"
+  postgresql: "13"
   apt:
     packages:
-      - postgresql-12
-      - postgresql-client-12
+      - postgresql-13
+      - postgresql-client-13
 
 services:
   - mysql
@@ -16,19 +16,16 @@ cache:
     - $HOME/.composer/cache
     - $HOME/.npm
 
-php:
- - 7.4
-
 env:
   global:
-    - PGVER=12
+    - PGVER=13
     - IGNORE_PATHS=ignore
     - IGNORE_NAMES=ignore_name.php
     - MUSTACHE_IGNORE_NAMES=broken.mustache
     - DB=pgsql
-    - MOODLE_BRANCH=master
 
 before_install:
+  - echo 'max_input_vars=5000' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   # We want to verify that xdebug works for coverage. Once we only support
   # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
   # - phpenv config-rm xdebug.ini
@@ -49,8 +46,6 @@ install:
   - moodle-plugin-ci install -vvv
 
 script:
-  - make test-phpunit
-
   # This is basically "integration" testing.
   - moodle-plugin-ci phplint
   - moodle-plugin-ci phpcpd
@@ -67,14 +62,18 @@ script:
 
 jobs:
   include:
-    - stage: Tests
+    - stage: CI test (make validate)
       php: 7.3
       before_install: skip
       install:
         - make init
       script:
         - make validate
+
     - stage: Integration tests
+      if: env(MOODLE_BRANCH) IS present
+    - php: 8.0
+      env: MOODLE_BRANCH=master
     - php: 7.4
       env: MOODLE_BRANCH=MOODLE_401_STABLE
     - php: 7.4
