@@ -13,11 +13,11 @@ language: php
 
 # Installs the updated version of PostgreSQL and extra APT packages.
 addons:
-  postgresql: "12"
+  postgresql: "13"
   apt:
     packages:
-      - postgresql-12
-      - postgresql-client-12
+      - postgresql-13
+      - postgresql-client-13
 
 # Ensure DB and docker services are running.
 services:
@@ -45,7 +45,7 @@ env:
 # used, because, for PG 11 and up, both the user and the port were
 # changed by Travis. With that variable, the tool will switch to
 # socketed connections instead of localhost ones.
-  - PGVER=12
+  - PGVER=13
 # This line determines which version branch of Moodle to test against.
   - MOODLE_BRANCH=MOODLE_311_STABLE
 # This matrix is used for testing against multiple databases.  So for

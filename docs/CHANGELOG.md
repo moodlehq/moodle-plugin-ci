@@ -9,6 +9,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
+  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
+  (and documentation) to fulfil [Moodle 4.2 new requirements](https://tracker.moodle.org/browse/MDL-74905).
+- ACTION REQUIRED: Review existing integrations running tests against master (4.2dev). There are a few Moodle 4.2 new requirements:
+  - PHP 8.0 is required (instead of 7.4).
+  - PostgreSQL 13 is required (instead of 12).
+  - MariaDB 10.6 is required (instead of 10.4).
+  - MySQL 8 is required (instead of 5.7).
 
 ## [3.4.2] - 2022-10-18
 ### Changed
