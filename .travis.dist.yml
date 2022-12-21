@@ -1,11 +1,11 @@
 language: php
 
 addons:
-  postgresql: "12"
+  postgresql: "13"
   apt:
     packages:
-      - postgresql-12
-      - postgresql-client-12
+      - postgresql-13
+      - postgresql-client-13
 
 services:
   - mysql
@@ -23,7 +23,7 @@ php:
 
 env:
  global:
-  - PGVER=12
+  - PGVER=13
   - MOODLE_BRANCH=MOODLE_311_STABLE
  matrix:
   - DB=pgsql
