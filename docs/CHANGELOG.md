@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.4.3] - 2022-12-24
 ### Changed
 - Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
   [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
@@ -454,7 +456,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.2...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.3...master
+[3.4.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.2...3.4.3
 [3.4.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.3.0...3.4.0
