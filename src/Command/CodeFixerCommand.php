@@ -49,7 +49,7 @@ class CodeFixerCommand extends CodeCheckerCommand
             '-w',
             '-s',
             '--no-cache',
-            ($output->isDecorated() ? '--colors' : '--no-colors'),
+            $output->isDecorated() ? '--colors' : '--no-colors',
             '--report-full',
             '--report-width=132',
             '--encoding=utf-8',

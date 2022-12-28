@@ -42,8 +42,7 @@ class GruntCommand extends AbstractMoodleCommand
             ->setDescription('Run Grunt task on a plugin')
             ->addOption('tasks', 't', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'The Grunt tasks to run', $tasks)
             ->addOption('show-lint-warnings', null, InputOption::VALUE_NONE, 'Show eslint warnings')
-            ->addOption('max-lint-warnings', null, InputOption::VALUE_REQUIRED,
-            'Maximum number of eslint warnings', '');
+            ->addOption('max-lint-warnings', null, InputOption::VALUE_REQUIRED, 'Maximum number of eslint warnings', '');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)

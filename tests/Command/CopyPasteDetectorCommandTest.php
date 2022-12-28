@@ -48,6 +48,7 @@ class CopyPasteDetectorCommandTest extends \PHPUnit\Framework\TestCase
 
     public function testExecute()
     {
+        $this->expectOutputRegex('/^No clones found\./');
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
     }

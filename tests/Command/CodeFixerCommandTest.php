@@ -46,8 +46,7 @@ EOT;
 
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
         $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
-        $this->fs->dumpFile($this->pluginDir.'/fixable.php', $content
-);
+        $this->fs->dumpFile($this->pluginDir.'/fixable.php', $content);
     }
 
     protected function executeCommand($pluginDir = null)

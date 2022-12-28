@@ -84,15 +84,14 @@ class InstallCommandTest extends MoodleTestCase
         $dumper->dump($actual);
 
         $expected = $this->dumpFile('expected.yml', <<<'EOT'
-filter:
-    notPaths: [global/path]
-    notNames: [global_name.php]
-filter-phplint:
-    notPaths: [bat, fiz/buz]
-    notNames: [foo.php, bar.php]
+            filter:
+                notPaths: [global/path]
+                notNames: [global_name.php]
+            filter-phplint:
+                notPaths: [bat, fiz/buz]
+                notNames: [foo.php, bar.php]
 
-EOT
-);
+            EOT);
 
         $this->assertFileEquals($expected, $actual);
     }

@@ -1,7 +1,7 @@
 COMPOSER := composer
 PHPUNIT  := vendor/bin/phpunit
 FIXER    := vendor/bin/php-cs-fixer
-PSALM    := php build/psalm.phar
+PSALM    := vendor/bin/psalm
 CMDS     = $(wildcard src/Command/*.php)
 
 .PHONY:test
@@ -43,12 +43,12 @@ check-docs: docs/CLI.md
 
 # Setup for testing.
 .PHONY: init
-init: build/php-cs-fixer.phar build/psalm.phar composer.lock composer.json
+init: composer.lock composer.json
 	$(COMPOSER) selfupdate
 	$(COMPOSER) install --no-progress
 
 .PHONY: update
-update: check-init build/php-cs-fixer.phar build/psalm.phar
+update: check-init
 	$(COMPOSER) selfupdate
 	$(FIXER) selfupdate
 	$(COMPOSER) update
@@ -65,14 +65,6 @@ check-init:
 ifeq (, $(wildcard vendor))
 	$(error Run 'make init' first)
 endif
-
-# Update download URL from https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases
-build/php-cs-fixer.phar:
-	curl -LSs https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v3.4.0/php-cs-fixer.phar -o build/php-cs-fixer.phar
-
-# Update download URL from https://github.com/vimeo/psalm/releases
-build/psalm.phar:
-	curl -LSs https://github.com/vimeo/psalm/releases/download/4.23.0/psalm.phar -o build/psalm.phar
 
 build/box.phar:
 	@cd build && curl -LSs https://box-project.github.io/box2/installer.php | php
