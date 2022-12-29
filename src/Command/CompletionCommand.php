@@ -12,7 +12,7 @@
 
 namespace MoodlePluginCI\Command;
 
-use Stecman\Component\Symfony\Console\BashCompletion\Completion;
+use Stecman\Component\Symfony\Console\BashCompletion\Completion\CompletionInterface;
 use Stecman\Component\Symfony\Console\BashCompletion\Completion\ShellPathCompletion;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionCommand as BaseCompletionCommand;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionHandler;
@@ -22,26 +22,26 @@ use Stecman\Component\Symfony\Console\BashCompletion\CompletionHandler;
  */
 class CompletionCommand extends BaseCompletionCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->setHidden(true);
     }
 
-    protected function configureCompletion(CompletionHandler $handler)
+    protected function configureCompletion(CompletionHandler $handler): void
     {
         // Completion for plugin argument/option to file system paths.
         $handler->addHandler(new ShellPathCompletion(
-            Completion::ALL_COMMANDS,
+            CompletionInterface::ALL_COMMANDS,
             'plugin',
-            Completion::ALL_TYPES
+            CompletionInterface::ALL_TYPES
         ));
 
         // Completion for moodle option to file system paths.
         $handler->addHandler(new ShellPathCompletion(
-            Completion::ALL_COMMANDS,
+            CompletionInterface::ALL_COMMANDS,
             'moodle',
-            Completion::TYPE_OPTION
+            CompletionInterface::TYPE_OPTION
         ));
     }
 }

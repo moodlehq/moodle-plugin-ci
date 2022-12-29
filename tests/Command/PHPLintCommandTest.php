@@ -19,28 +19,23 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class PHPLintCommandTest extends \PHPUnit\Framework\TestCase
 {
-    private $pluginDir;
+    private string $pluginDir = __DIR__.'/../Fixture/moodle-local_ci';
 
-    protected function setUp(): void
+    protected function executeCommand(?string $customPluginDir = null)
     {
-        $this->pluginDir = __DIR__.'/../Fixture/moodle-local_ci';
-    }
-
-    protected function executeCommand($pluginDir = null)
-    {
-        if ($pluginDir === null) {
-            $pluginDir = $this->pluginDir;
+        if ($customPluginDir) {
+            $this->pluginDir = $customPluginDir;
         }
 
         $command         = new PHPLintCommand();
-        $command->plugin = new DummyMoodlePlugin($pluginDir);
+        $command->plugin = new DummyMoodlePlugin($this->pluginDir);
 
         $application = new Application();
         $application->add($command);
 
         $commandTester = new CommandTester($application->find('phplint'));
         $commandTester->execute([
-            'plugin' => $pluginDir,
+            'plugin' => $this->pluginDir,
         ]);
 
         return $commandTester;

@@ -22,22 +22,20 @@ use Symfony\Component\Finder\Finder;
 abstract class AbstractRequirements
 {
     /**
-     * @var Plugin
+     * Plugin to be validated.
      */
-    protected $plugin;
+    protected Plugin $plugin;
 
     /**
      * The major Moodle version, EG: 29, 30, 31.
-     *
-     * @var int
      */
-    protected $moodleVersion;
+    protected int $moodleVersion;
 
     /**
      * @param Plugin $plugin        Details about the plugin
      * @param int    $moodleVersion The major Moodle version, EG: 29, 30, 31
      */
-    public function __construct(Plugin $plugin, $moodleVersion)
+    public function __construct(Plugin $plugin, int $moodleVersion)
     {
         $this->plugin        = $plugin;
         $this->moodleVersion = $moodleVersion;
@@ -50,13 +48,17 @@ abstract class AbstractRequirements
      *
      * @return FileTokens[]
      */
-    protected function behatTagsFactory(array $tags)
+    protected function behatTagsFactory(array $tags): array
     {
         $fileTokens = [];
 
-        $files = Finder::create()->files()->in($this->plugin->directory)->path('tests/behat')->name('*.feature')->getIterator();
-        foreach ($files as $file) {
-            $fileTokens[] = FileTokens::create($file->getRelativePathname())->mustHaveAll($tags);
+        try {
+            $files = Finder::create()->files()->in($this->plugin->directory)->path('tests/behat')->name('*.feature')->getIterator();
+            foreach ($files as $file) {
+                $fileTokens[] = FileTokens::create($file->getRelativePathname())->mustHaveAll($tags);
+            }
+        } catch (\Exception $e) {
+            // Nothing to do.
         }
 
         return $fileTokens;
@@ -67,54 +69,54 @@ abstract class AbstractRequirements
      *
      * @return array
      */
-    abstract public function getRequiredFiles();
+    abstract public function getRequiredFiles(): array;
 
     /**
      * Required plugin functions.
      *
      * @return FileTokens[]
      */
-    abstract public function getRequiredFunctions();
+    abstract public function getRequiredFunctions(): array;
 
     /**
      * Required plugin classes.
      *
      * @return FileTokens[]
      */
-    abstract public function getRequiredClasses();
+    abstract public function getRequiredClasses(): array;
 
     /**
      * Required plugin string definitions.
      *
      * @return FileTokens
      */
-    abstract public function getRequiredStrings();
+    abstract public function getRequiredStrings(): FileTokens;
 
     /**
      * Required plugin capability definitions.
      *
      * @return FileTokens
      */
-    abstract public function getRequiredCapabilities();
+    abstract public function getRequiredCapabilities(): FileTokens;
 
     /**
      * Required plugin database tables.
      *
      * @return FileTokens
      */
-    abstract public function getRequiredTables();
+    abstract public function getRequiredTables(): FileTokens;
 
     /**
      * Required plugin database table prefix.
      *
      * @return FileTokens
      */
-    abstract public function getRequiredTablePrefix();
+    abstract public function getRequiredTablePrefix(): FileTokens;
 
     /**
      * Required Behat tags for feature files.
      *
      * @return FileTokens[]
      */
-    abstract public function getRequiredBehatTags();
+    abstract public function getRequiredBehatTags(): array;
 }

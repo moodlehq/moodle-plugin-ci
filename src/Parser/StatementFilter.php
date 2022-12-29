@@ -32,7 +32,7 @@ class StatementFilter
      *
      * @return Function_[]
      */
-    public function filterFunctions(array $statements)
+    public function filterFunctions(array $statements): array
     {
         return array_filter($statements, function ($statement) {
             return $statement instanceof Function_;
@@ -46,7 +46,7 @@ class StatementFilter
      *
      * @return Class_[]
      */
-    public function filterClasses(array $statements)
+    public function filterClasses(array $statements): array
     {
         return array_filter($statements, function ($statement) {
             return $statement instanceof Class_;
@@ -60,7 +60,7 @@ class StatementFilter
      *
      * @return array
      */
-    public function filterClassNames(array $statements)
+    public function filterClassNames(array $statements): array
     {
         $names = [];
         foreach ($this->filterClasses($statements) as $class) {
@@ -81,7 +81,7 @@ class StatementFilter
      *
      * @return Namespace_[]
      */
-    public function filterNamespaces(array $statements)
+    public function filterNamespaces(array $statements): array
     {
         return array_filter($statements, function ($statement) {
             return $statement instanceof Namespace_;
@@ -93,7 +93,7 @@ class StatementFilter
      *
      * @return Assign[]
      */
-    public function filterAssignments(array $statements)
+    public function filterAssignments(array $statements): array
     {
         $stmts = array_filter($statements, function ($statement) {
             // Since php-parser 4.0, expression statements are enclosed into
@@ -115,7 +115,7 @@ class StatementFilter
      *
      * @return Assign
      */
-    public function findFirstVariableAssignment(array $statements, $name, $notFoundError = null)
+    public function findFirstVariableAssignment(array $statements, string $name, ?string $notFoundError = null): Assign
     {
         foreach ($this->filterAssignments($statements) as $assign) {
             if ($assign->var instanceof Variable && (string) $assign->var->name === $name) {
@@ -138,7 +138,7 @@ class StatementFilter
      *
      * @return Assign
      */
-    public function findFirstPropertyFetchAssignment(array $statements, $variable, $property, $notFoundError = null)
+    public function findFirstPropertyFetchAssignment(array $statements, string $variable, string $property, ?string $notFoundError = null): Assign
     {
         foreach ($this->filterAssignments($statements) as $assign) {
             if (!$assign->var instanceof PropertyFetch) {
@@ -163,7 +163,7 @@ class StatementFilter
      *
      * @return array
      */
-    public function arrayStringKeys(Array_ $array)
+    public function arrayStringKeys(Array_ $array): array
     {
         $keys = [];
         foreach ($array->items as $item) {

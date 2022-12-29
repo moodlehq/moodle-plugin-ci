@@ -26,12 +26,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractPluginCommand extends Command
 {
-    /**
-     * @var MoodlePlugin
-     */
-    public $plugin;
+    public ?MoodlePlugin $plugin = null;
 
-    protected function configure()
+    protected function configure(): void
     {
         $plugin = getenv('PLUGIN_DIR');
         $plugin = $plugin === false ? null : $plugin;
@@ -39,9 +36,9 @@ abstract class AbstractPluginCommand extends Command
         $this->addArgument('plugin', $mode, 'Path to the plugin', $plugin);
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        if (!$this->plugin) {
+        if (!$this->plugin instanceof MoodlePlugin) {
             $validate     = new Validate();
             $pluginDir    = realpath($validate->directory($input->getArgument('plugin')));
             $this->plugin = new MoodlePlugin($pluginDir);
@@ -55,7 +52,7 @@ abstract class AbstractPluginCommand extends Command
      * @param OutputInterface $output
      * @param string          $message
      */
-    protected function outputHeading(OutputInterface $output, $message)
+    protected function outputHeading(OutputInterface $output, string $message): void
     {
         $message = sprintf($message, $this->plugin->getComponent());
         $output->writeln(sprintf('<bg=green;fg=white;> RUN </> <fg=blue>%s</>', $message));
@@ -67,7 +64,7 @@ abstract class AbstractPluginCommand extends Command
      *
      * @return int
      */
-    protected function outputSkip(OutputInterface $output, $message = null)
+    protected function outputSkip(OutputInterface $output, ?string $message = null): int
     {
         $message = $message ?: 'No relevant files found to process, free pass!';
         $output->writeln('<info>'.$message.'</info>');

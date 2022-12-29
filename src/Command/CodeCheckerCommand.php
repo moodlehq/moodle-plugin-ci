@@ -27,11 +27,11 @@ class CodeCheckerCommand extends AbstractPluginCommand
     use ExecuteTrait;
 
     /**
-     * @var string Path to the temp file where the json report results will be stored
+     * Path to the temp file where the json report results will be stored.
      */
-    protected $tempFile;
+    protected string $tempFile;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -42,14 +42,14 @@ class CodeCheckerCommand extends AbstractPluginCommand
                 'Number of warnings to trigger nonzero exit code - default: -1', -1);
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
         $this->tempFile = sys_get_temp_dir().'/moodle-plugin-ci-code-checker-summary-'.time();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'Moodle CodeSniffer standard on %s');
 

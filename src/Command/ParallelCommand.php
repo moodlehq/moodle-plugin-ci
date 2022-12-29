@@ -19,16 +19,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Process;
 
 /**
- * Runs all of the testing commands in parallel.
+ * Runs all the testing commands in parallel.
  */
 class ParallelCommand extends AbstractMoodleCommand
 {
     /**
      * @var Process[]
      */
-    public $processes;
+    public array $processes;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -36,14 +36,14 @@ class ParallelCommand extends AbstractMoodleCommand
             ->setDescription('Run all of the tests and analysis against a plugin');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
         $this->processes = $this->processes ?: $this->initializeProcesses();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->runProcesses($output);
 
@@ -53,7 +53,7 @@ class ParallelCommand extends AbstractMoodleCommand
     /**
      * @return Process[]
      */
-    public function initializeProcesses()
+    public function initializeProcesses(): array
     {
         $bin    = ['php', $_SERVER['PHP_SELF']];
         $plugin = $this->plugin->directory;
@@ -79,12 +79,12 @@ class ParallelCommand extends AbstractMoodleCommand
      *
      * @param OutputInterface $output
      */
-    private function runProcesses(OutputInterface $output)
+    private function runProcesses(OutputInterface $output): void
     {
         $progress = new ProgressIndicator($output);
         $progress->start('Starting...');
 
-        // Start all of the processes.
+        // Start all the processes.
         foreach ($this->processes as $process) {
             $process->start();
             $progress->advance();
@@ -108,7 +108,7 @@ class ParallelCommand extends AbstractMoodleCommand
      *
      * @return int
      */
-    private function reportOnProcesses(InputInterface $input, OutputInterface $output)
+    private function reportOnProcesses(InputInterface $input, OutputInterface $output): int
     {
         $style = new SymfonyStyle($input, $output);
 

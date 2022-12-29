@@ -25,7 +25,7 @@ class CoverallsUploadCommand extends AbstractPluginCommand
 {
     use ExecuteTrait;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -34,13 +34,13 @@ class CoverallsUploadCommand extends AbstractPluginCommand
             ->addOption('coverage-file', null, InputOption::VALUE_REQUIRED, 'Location of the Clover XML file to upload', './coverage.xml');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $coverage = realpath($input->getOption('coverage-file'));
         if ($coverage === false) {

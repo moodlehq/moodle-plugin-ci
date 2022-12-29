@@ -26,39 +26,28 @@ class BehatCommand extends AbstractMoodleCommand
     use ExecuteTrait;
 
     /**
-     * Selenium standalone Firefox image.
-     *
-     * @var string
+     * Selenium legacy Firefox image.
      */
-    private $seleniumLegacyFirefoxImage = 'selenium/standalone-firefox:2.53.1';
+    private string $seleniumLegacyFirefoxImage = 'selenium/standalone-firefox:2.53.1';
 
     /**
      * Selenium standalone Firefox image.
-     *
-     * @var string
      */
     private string $seleniumFirefoxImage = 'selenium/standalone-firefox:4';
 
     /**
      * Selenium standalone Chrome image.
-     *
-     * @var string
      */
     private string $seleniumChromeImage = 'selenium/standalone-chrome:4';
 
     /**
      * Wait this many microseconds for Selenium server to start/stop.
-     *
-     * @var int
      */
-    private $seleniumWaitTime = 5000000;
+    private int $seleniumWaitTime = 5000000;
 
-    /**
-     * @var Process
-     */
-    private $webserver;
+    private Process $webserver;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -71,13 +60,13 @@ class BehatCommand extends AbstractMoodleCommand
             ->setDescription('Run Behat on a plugin');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'Behat features for %s');
 
@@ -85,7 +74,7 @@ class BehatCommand extends AbstractMoodleCommand
             return $this->outputSkip($output, 'No Behat features to run, free pass!');
         }
         // This env var is set during install and forces server startup.
-        $servers = getenv('MOODLE_START_BEHAT_SERVERS') === 'YES' ? true : false;
+        $servers = getenv('MOODLE_START_BEHAT_SERVERS') === 'YES';
         if (!$servers) {
             $servers = $input->getOption('start-servers');
         }
@@ -120,7 +109,7 @@ class BehatCommand extends AbstractMoodleCommand
     /**
      * @param InputInterface $input
      */
-    private function startServerProcesses(InputInterface $input)
+    private function startServerProcesses(InputInterface $input): void
     {
         // Test we have docker cli.
         $process = $this->execute->run('docker -v');
@@ -170,7 +159,7 @@ class BehatCommand extends AbstractMoodleCommand
         usleep($this->seleniumWaitTime);
     }
 
-    private function stopServerProcesses()
+    private function stopServerProcesses(): void
     {
         // Stop docker. This will also destroy container.
         $this->execute->mustRun('docker stop selenium');
@@ -178,7 +167,7 @@ class BehatCommand extends AbstractMoodleCommand
         $this->webserver->stop();
     }
 
-    private function dumpFailures(OutputInterface $output)
+    private function dumpFailures(OutputInterface $output): void
     {
         $dumpDir = $this->moodle->getConfig('behat_faildump_path');
         if (is_dir($dumpDir)) {

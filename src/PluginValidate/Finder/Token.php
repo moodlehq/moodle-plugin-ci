@@ -19,18 +19,14 @@ class Token
 {
     /**
      * If the token was found or not.
-     *
-     * @var bool
      */
-    private $found = false;
+    private bool $found = false;
 
     /**
      * If there are multiple tokens, it means that we are looking for
      * any of the tokens, EG: token 1 OR token 2.
-     *
-     * @var array
      */
-    public $tokens;
+    public array $tokens;
 
     /**
      * @param string|array $token
@@ -46,7 +42,7 @@ class Token
     /**
      * Reset token found state.
      */
-    public function reset()
+    public function reset(): void
     {
         $this->found = false;
     }
@@ -54,7 +50,7 @@ class Token
     /**
      * @return bool
      */
-    public function hasTokenBeenFound()
+    public function hasTokenBeenFound(): bool
     {
         return $this->found;
     }
@@ -64,7 +60,7 @@ class Token
      *
      * @param string $string
      */
-    public function compare($string)
+    public function compare(string $string): void
     {
         foreach ($this->tokens as $token) {
             if (strcasecmp($token, $string) === 0) {
@@ -78,7 +74,7 @@ class Token
      *
      * @param string $string
      */
-    public function compareStart($string)
+    public function compareStart(string $string): void
     {
         $lowerString = strtolower($string);
         foreach ($this->tokens as $token) {

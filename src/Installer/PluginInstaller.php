@@ -43,7 +43,7 @@ class PluginInstaller extends AbstractInstaller
         $this->configDumper    = $configDumper;
     }
 
-    public function install()
+    public function install(): void
     {
         $this->getOutput()->step('Install plugins');
 
@@ -67,7 +67,7 @@ class PluginInstaller extends AbstractInstaller
     /**
      * @return MoodlePluginCollection
      */
-    public function scanForPlugins()
+    public function scanForPlugins(): MoodlePluginCollection
     {
         $plugins = new MoodlePluginCollection();
 
@@ -91,7 +91,7 @@ class PluginInstaller extends AbstractInstaller
      *
      * @return string
      */
-    public function installPluginIntoMoodle(MoodlePlugin $plugin)
+    public function installPluginIntoMoodle(MoodlePlugin $plugin): string
     {
         $this->getOutput()->info(sprintf('Installing %s', $plugin->getComponent()));
 
@@ -115,7 +115,7 @@ class PluginInstaller extends AbstractInstaller
      *
      * @param string $toFile
      */
-    public function createConfigFile($toFile)
+    public function createConfigFile(string $toFile): void
     {
         if (file_exists($toFile)) {
             $this->getOutput()->debug('Config file already exists in plugin, skipping creation of config file.');
@@ -131,7 +131,7 @@ class PluginInstaller extends AbstractInstaller
         $this->getOutput()->debug('Created config file at '.$toFile);
     }
 
-    public function stepCount()
+    public function stepCount(): int
     {
         return 1;
     }

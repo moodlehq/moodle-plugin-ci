@@ -19,12 +19,12 @@ use PhpParser\Node\Expr\Array_;
  */
 class CapabilityFinder extends AbstractParserFinder
 {
-    public function getType()
+    public function getType(): string
     {
         return 'capability';
     }
 
-    public function findTokens($file, FileTokens $fileTokens)
+    public function findTokens($file, FileTokens $fileTokens): void
     {
         $notFound   = sprintf('Failed to find $capabilities in %s file', $fileTokens->file);
         $statements = $this->parser->parseFile($file);

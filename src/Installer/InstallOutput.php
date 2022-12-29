@@ -20,24 +20,15 @@ use Symfony\Component\Console\Helper\ProgressBar;
  */
 class InstallOutput
 {
-    /**
-     * @var ProgressBar|null
-     */
-    private $progressBar;
-
-    /**
-     * @var LoggerInterface|null
-     */
-    private $logger;
+    private ?ProgressBar $progressBar = null;
+    private ?LoggerInterface $logger  = null;
 
     /**
      * Number of steps taken.
-     *
-     * @var int
      */
-    private $stepCount = 0;
+    private int $stepCount = 0;
 
-    public function __construct(LoggerInterface $logger = null, ProgressBar $progressBar = null)
+    public function __construct(?LoggerInterface $logger = null, ?ProgressBar $progressBar = null)
     {
         $this->progressBar = $progressBar;
 
@@ -52,18 +43,18 @@ class InstallOutput
      *
      * @return int
      */
-    public function getStepCount()
+    public function getStepCount(): int
     {
         return $this->stepCount;
     }
 
     /**
-     * Starting the install process.
+     * Starting the installation process.
      *
      * @param string $message  Start message
      * @param int    $maxSteps The number of steps that will be taken
      */
-    public function start($message, $maxSteps)
+    public function start(string $message, int $maxSteps): void
     {
         $this->info($message);
 
@@ -74,11 +65,11 @@ class InstallOutput
     }
 
     /**
-     * Signify the move to the next step in the install.
+     * Signify the move to the next step in the installation.
      *
      * @param string $message Very short message about the step
      */
-    public function step($message)
+    public function step(string $message): void
     {
         ++$this->stepCount;
 
@@ -91,11 +82,11 @@ class InstallOutput
     }
 
     /**
-     * Ending the install process.
+     * Ending the installation process.
      *
      * @param string $message End message
      */
-    public function end($message)
+    public function end(string $message): void
     {
         $this->info($message);
 
@@ -111,7 +102,7 @@ class InstallOutput
      * @param string $message
      * @param array  $context
      */
-    public function info($message, array $context = [])
+    public function info(string $message, array $context = []): void
     {
         if ($this->logger instanceof LoggerInterface) {
             $this->logger->info($message, $context);
@@ -119,12 +110,12 @@ class InstallOutput
     }
 
     /**
-     * Log a message, shown in highest verbosity mode.
+     * Log a message, shown in the highest verbosity mode.
      *
      * @param string $message
      * @param array  $context
      */
-    public function debug($message, array $context = [])
+    public function debug(string $message, array $context = []): void
     {
         if ($this->logger instanceof LoggerInterface) {
             $this->logger->debug($message, $context);

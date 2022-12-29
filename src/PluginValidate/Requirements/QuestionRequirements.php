@@ -19,7 +19,7 @@ use MoodlePluginCI\PluginValidate\Finder\FileTokens;
  */
 class QuestionRequirements extends GenericRequirements
 {
-    public function getRequiredTablePrefix()
+    public function getRequiredTablePrefix(): FileTokens
     {
         return FileTokens::create('db/install.xml')->mustHaveAny(['qtype_', 'question_']);
     }

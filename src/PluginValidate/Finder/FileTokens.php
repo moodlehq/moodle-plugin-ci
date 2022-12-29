@@ -20,17 +20,19 @@ class FileTokens
     /**
      * @var Token[]
      */
-    public $tokens = [];
+    public array $tokens = [];
 
     /**
+     * File to find tokens in.
+     *
      * @var string
      */
-    public $file;
+    public string $file;
 
     /**
      * @param string $file
      */
-    public function __construct($file)
+    public function __construct(string $file)
     {
         $this->file = $file;
     }
@@ -40,9 +42,9 @@ class FileTokens
      *
      * @param string $file
      *
-     * @return FileTokens
+     * @return self
      */
-    public static function create($file)
+    public static function create(string $file): self
     {
         return new self($file);
     }
@@ -52,7 +54,7 @@ class FileTokens
      *
      * @return bool
      */
-    public function hasTokens()
+    public function hasTokens(): bool
     {
         return !empty($this->tokens);
     }
@@ -60,9 +62,9 @@ class FileTokens
     /**
      * @param Token $token
      *
-     * @return FileTokens
+     * @return self
      */
-    public function addToken(Token $token)
+    public function addToken(Token $token): self
     {
         $this->tokens[] = $token;
 
@@ -70,25 +72,25 @@ class FileTokens
     }
 
     /**
-     * Require that a the file has this single token.
+     * Require that the file has this single token.
      *
      * @param string $token
      *
-     * @return FileTokens
+     * @return self
      */
-    public function mustHave($token)
+    public function mustHave(string $token): self
     {
         return $this->addToken(new Token($token));
     }
 
     /**
-     * Require that a the file has all of these tokens.
+     * Require that the file has all of these tokens.
      *
      * @param array $tokens
      *
-     * @return FileTokens
+     * @return self
      */
-    public function mustHaveAll(array $tokens)
+    public function mustHaveAll(array $tokens): self
     {
         foreach ($tokens as $token) {
             $this->mustHave($token);
@@ -98,13 +100,13 @@ class FileTokens
     }
 
     /**
-     * Require that a the file has any of the passed tokens.
+     * Require that the file has any of the passed tokens.
      *
      * @param array $tokens
      *
-     * @return FileTokens
+     * @return self
      */
-    public function mustHaveAny(array $tokens)
+    public function mustHaveAny(array $tokens): self
     {
         return $this->addToken(new Token($tokens));
     }
@@ -114,7 +116,7 @@ class FileTokens
      *
      * @param string $string
      */
-    public function compare($string)
+    public function compare(string $string): void
     {
         foreach ($this->tokens as $token) {
             if ($token->hasTokenBeenFound()) {
@@ -129,7 +131,7 @@ class FileTokens
      *
      * @param string $string
      */
-    public function compareStart($string)
+    public function compareStart(string $string): void
     {
         foreach ($this->tokens as $token) {
             if ($token->hasTokenBeenFound()) {
@@ -140,11 +142,11 @@ class FileTokens
     }
 
     /**
-     * Have all of the tokens been found yet?
+     * Have all the tokens been found yet?
      *
      * @return bool
      */
-    public function hasFoundAllTokens()
+    public function hasFoundAllTokens(): bool
     {
         foreach ($this->tokens as $token) {
             if (!$token->hasTokenBeenFound()) {
@@ -158,7 +160,7 @@ class FileTokens
     /**
      * Reset found state on all tokens.
      */
-    public function resetTokens()
+    public function resetTokens(): void
     {
         foreach ($this->tokens as $token) {
             $token->reset();

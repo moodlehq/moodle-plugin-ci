@@ -23,7 +23,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
 {
     use ExecuteTrait;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -40,13 +40,13 @@ class PHPUnitCommand extends AbstractMoodleCommand
             ->addOption('fail-on-warning', null, InputOption::VALUE_NONE, 'Treat tests with warnings as failures');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'PHPUnit tests for %s');
 
@@ -172,7 +172,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
      *
      * @return bool
      */
-    private function supportsCoverage()
+    private function supportsCoverage(): bool
     {
         return version_compare(PHP_VERSION, '7.0.0', '>=');
     }
@@ -185,7 +185,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
      *
      * @return string one of pcov, xdebug, phpdbg
      */
-    private function resolveCoverageDriver(InputInterface $input, OutputInterface $output)
+    private function resolveCoverageDriver(InputInterface $input, OutputInterface $output): string
     {
         // Let's see if any of the coverage drivers has been forced via command line options.
         if ($input->getOption('coverage-pcov')) {

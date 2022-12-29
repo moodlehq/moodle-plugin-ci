@@ -20,12 +20,8 @@ class InstallerCollection
     /**
      * @var AbstractInstaller[]
      */
-    private $installers = [];
-
-    /**
-     * @var InstallOutput
-     */
-    private $output;
+    private array $installers = [];
+    private InstallOutput $output;
 
     public function __construct(InstallOutput $output)
     {
@@ -37,7 +33,7 @@ class InstallerCollection
      *
      * @param AbstractInstaller $installer
      */
-    public function add(AbstractInstaller $installer)
+    public function add(AbstractInstaller $installer): void
     {
         $installer->setOutput($this->output);
         $this->installers[] = $installer;
@@ -46,7 +42,7 @@ class InstallerCollection
     /**
      * @return AbstractInstaller[]
      */
-    public function all()
+    public function all(): array
     {
         return $this->installers;
     }
@@ -56,7 +52,7 @@ class InstallerCollection
      *
      * @return array
      */
-    public function mergeEnv()
+    public function mergeEnv(): array
     {
         $env = [];
         foreach ($this->installers as $installer) {
@@ -71,7 +67,7 @@ class InstallerCollection
      *
      * @return int
      */
-    public function sumStepCount()
+    public function sumStepCount(): int
     {
         $sum = 0;
         foreach ($this->installers as $installer) {

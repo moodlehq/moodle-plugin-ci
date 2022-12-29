@@ -17,12 +17,12 @@ namespace MoodlePluginCI\PluginValidate\Finder;
  */
 class ClassFinder extends AbstractParserFinder
 {
-    public function getType()
+    public function getType(): string
     {
         return 'class';
     }
 
-    public function findTokens($file, FileTokens $fileTokens)
+    public function findTokens($file, FileTokens $fileTokens): void
     {
         $statements = $this->parser->parseFile($file);
 

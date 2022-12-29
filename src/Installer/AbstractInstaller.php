@@ -17,22 +17,17 @@ namespace MoodlePluginCI\Installer;
  */
 abstract class AbstractInstaller
 {
-    /**
-     * @var InstallOutput|null
-     */
-    private $output;
+    private ?InstallOutput $output = null;
 
     /**
      * Environment variables to write out.
-     *
-     * @var array
      */
-    private $env = [];
+    private array $env = [];
 
     /**
      * @param InstallOutput $output
      */
-    public function setOutput(InstallOutput $output)
+    public function setOutput(InstallOutput $output): void
     {
         $this->output = $output;
     }
@@ -40,7 +35,7 @@ abstract class AbstractInstaller
     /**
      * @return InstallOutput
      */
-    public function getOutput()
+    public function getOutput(): InstallOutput
     {
         // Output is optional, if not set, use null output.
         if (!$this->output instanceof InstallOutput) {
@@ -53,7 +48,7 @@ abstract class AbstractInstaller
     /**
      * @return array
      */
-    public function getEnv()
+    public function getEnv(): array
     {
         return $this->env;
     }
@@ -64,7 +59,7 @@ abstract class AbstractInstaller
      * @param string $name
      * @param string $value
      */
-    public function addEnv($name, $value)
+    public function addEnv(string $name, string $value): void
     {
         $this->env[$name] = $value;
     }
@@ -72,12 +67,12 @@ abstract class AbstractInstaller
     /**
      * Run install.
      */
-    abstract public function install();
+    abstract public function install(): void;
 
     /**
      * Get the number of steps this installer will perform.
      *
      * @return int
      */
-    abstract public function stepCount();
+    abstract public function stepCount(): int;
 }

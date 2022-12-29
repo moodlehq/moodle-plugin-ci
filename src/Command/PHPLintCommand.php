@@ -23,7 +23,7 @@ use Symfony\Component\Finder\Finder;
  */
 class PHPLintCommand extends AbstractPluginCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -31,7 +31,7 @@ class PHPLintCommand extends AbstractPluginCommand
             ->setDescription('Run PHP Lint on a plugin');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'PHP Lint on %s');
 
@@ -44,7 +44,11 @@ class PHPLintCommand extends AbstractPluginCommand
         $settings->addPaths($files);
 
         $manager = new Manager();
-        $result  = $manager->run($settings);
+        try {
+            $result = $manager->run($settings);
+        } catch (\Exception $e) {
+            return 1;
+        }
 
         return $result->hasError() ? 1 : 0;
     }

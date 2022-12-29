@@ -15,6 +15,7 @@ namespace MoodlePluginCI\Tests\Command;
 use MoodlePluginCI\Command\InstallCommand;
 use MoodlePluginCI\Command\PHPLintCommand;
 use MoodlePluginCI\Installer\InstallOutput;
+use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 use MoodlePluginCI\Tests\Fake\Installer\DummyInstall;
 use MoodlePluginCI\Tests\MoodleTestCase;
 use Symfony\Component\Console\Application;
@@ -71,7 +72,7 @@ class InstallCommandTest extends MoodleTestCase
         $command->install = new DummyInstall(new InstallOutput());
 
         $lintCommand         = new PHPLintCommand();
-        $lintCommand->plugin = $this->pluginDir;
+        $lintCommand->plugin = new DummyMoodlePlugin($this->pluginDir);
 
         $application = new Application();
         $application->add($command);

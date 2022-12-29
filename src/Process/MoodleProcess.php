@@ -101,7 +101,7 @@ class MoodleProcess extends Process
      *
      * @return bool
      */
-    public function hasDebuggingMessages($output): bool
+    public function hasDebuggingMessages(string $output): bool
     {
         // Looks for something like the following which is a debug message and the start of the debug trace:
         // ++ Some message ++
@@ -116,10 +116,10 @@ class MoodleProcess extends Process
      *
      * @return bool
      */
-    public function hasPhpErrorMessages($output): bool
+    public function hasPhpErrorMessages(string $output): bool
     {
         // Looks for something like the following which is a debug message and the start of the debug trace:
         // PHP Notice:  Undefined index: bat in /path/to/file.php on line 30
-        return preg_match('/PHP [\w\s]+:/s', $output) !== 0;
+        return preg_match('/PHP [\w\s]+:/', $output) !== 0;
     }
 }

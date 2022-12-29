@@ -19,7 +19,7 @@ use MoodlePluginCI\PluginValidate\Finder\FileTokens;
  */
 class BlockRequirements extends GenericRequirements
 {
-    public function getRequiredFiles()
+    public function getRequiredFiles(): array
     {
         return array_merge(parent::getRequiredFiles(), [
             $this->plugin->component.'.php',
@@ -27,7 +27,7 @@ class BlockRequirements extends GenericRequirements
         ]);
     }
 
-    public function getRequiredClasses()
+    public function getRequiredClasses(): array
     {
         return [
             FileTokens::create($this->plugin->component.'.php')->mustHave($this->plugin->component),

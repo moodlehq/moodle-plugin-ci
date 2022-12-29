@@ -19,14 +19,14 @@ use MoodlePluginCI\PluginValidate\Finder\FileTokens;
  */
 class FormatRequirements extends GenericRequirements
 {
-    public function getRequiredFiles()
+    public function getRequiredFiles(): array
     {
         return array_merge(parent::getRequiredFiles(), [
             'format.php',
         ]);
     }
 
-    public function getRequiredClasses()
+    public function getRequiredClasses(): array
     {
         return [
             FileTokens::create('renderer.php')->mustHave('format_'.$this->plugin->name.'_renderer'),

@@ -28,22 +28,15 @@ use Symfony\Component\Process\Process;
 class AddPluginCommand extends Command
 {
     use ExecuteTrait;
+    private string $envFile;
 
-    /**
-     * @var string
-     */
-    private $envFile;
-
-    /**
-     * @param string $envFile
-     */
-    public function __construct($envFile)
+    public function __construct(string $envFile)
     {
         parent::__construct();
         $this->envFile = $envFile;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('add-plugin')
             ->setDescription('Queue up an additional plugin to be installed in the test site')
@@ -53,12 +46,12 @@ class AddPluginCommand extends Command
             ->addOption('storage', null, InputOption::VALUE_REQUIRED, 'Plugin storage directory', 'moodle-plugin-ci-plugins');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->initializeExecute($output, $this->getHelper('process'));
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $validate   = new Validate();
         $filesystem = new Filesystem();

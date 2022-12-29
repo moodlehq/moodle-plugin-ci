@@ -25,24 +25,15 @@ use Symfony\Component\Process\Process;
  */
 class Execute
 {
-    /**
-     * @var OutputInterface
-     */
-    protected $output;
-
-    /**
-     * @var ProcessHelper
-     */
-    protected $helper;
+    protected OutputInterface $output;
+    protected ProcessHelper $helper;
 
     /**
      * Sleep for .2 seconds to avoid race conditions in Moodle scripts when running them in parallel.
      *
      * Example failure, making cache directories.
-     *
-     * @var int
      */
-    public $parallelWaitTime = 200000;
+    public int $parallelWaitTime = 200000;
 
     /**
      * Constructor.
@@ -100,7 +91,7 @@ class Execute
         if (getenv('RUNTIME_NVM_BIN')) {
             // Concatenate RUNTIME_NVM_BIN with PATH, so the correct version of
             // npm binary is used within process.
-            $env = ['PATH' => getenv('RUNTIME_NVM_BIN').':'.getenv('PATH')];
+            $env = ['PATH' => (getenv('RUNTIME_NVM_BIN') ?: '').':'.(getenv('PATH') ?: '')];
             $process->setEnv($env);
         }
 
@@ -145,7 +136,7 @@ class Execute
     public function runAll(array $processes): void
     {
         if ($this->output->isVeryVerbose()) {
-            // If verbose, then do not run in parallel so we get sane debug output.
+            // If verbose, then do not run in parallel, so we get sane debug output.
             array_map([$this, 'run'], $processes);
 
             return;

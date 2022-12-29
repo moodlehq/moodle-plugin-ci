@@ -24,13 +24,13 @@ abstract class AbstractMoodleCommand extends AbstractPluginCommand
 {
     use MoodleOptionTrait;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->addMoodleOption($this);
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeMoodle($input);

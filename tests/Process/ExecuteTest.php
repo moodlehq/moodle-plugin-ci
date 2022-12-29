@@ -132,9 +132,9 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
 
         /** @var Process[] $processes */
         $processes = [
-            new Process(['php -r "echo 42;"']),
-            new Process(['php -r "syntax wrong_code_error_ignore_me"']), // This may appear in logs, ignore it!
-            new Process(['php -r "echo 42;"']),
+            new Process(['php', '-r', 'echo 42;']),
+            new Process(['php', '-r', 'syntax wrong_code_error_ignore_me']), // This may appear in logs, ignore it!
+            new Process(['php', '-r', 'echo 42;']),
         ];
 
         $execute                   = new Execute();
@@ -144,9 +144,9 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
 
     public function testPassThrough()
     {
-        $output  = new BufferedOutput(OutputInterface::VERBOSITY_VERY_VERBOSE);
+        $output  = new BufferedOutput(BufferedOutput::VERBOSITY_VERY_VERBOSE);
         $execute = new Execute($output);
-        $process = $execute->passThrough(['php',  '-r', 'echo 42;']);
+        $process = $execute->passThrough(['php', '-r', 'echo 42;']);
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
         $this->assertSame(" RUN  'php' '-r' 'echo 42;'".PHP_EOL.'42', $output->fetch());

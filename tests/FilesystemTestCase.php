@@ -16,15 +16,8 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FilesystemTestCase extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var string
-     */
-    protected $tempDir;
-
-    /**
-     * @var Filesystem
-     */
-    protected $fs;
+    protected string $tempDir;
+    protected Filesystem $fs;
 
     protected function setUp(): void
     {

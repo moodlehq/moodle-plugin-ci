@@ -30,27 +30,23 @@ class PluginValidate
 {
     /**
      * Results from validation.
-     *
-     * @var array
      */
-    public $messages = [];
+    public array $messages = [];
 
     /**
      * If the plugin is valid or not.
-     *
-     * @var bool
      */
-    public $isValid = true;
+    public bool $isValid = true;
 
     /**
-     * @var Plugin
+     * Plugin to be validated.
      */
-    private $plugin;
+    private Plugin $plugin;
 
     /**
-     * @var AbstractRequirements
+     * Plugin requirements.
      */
-    private $requirements;
+    private AbstractRequirements $requirements;
 
     public function __construct(Plugin $plugin, AbstractRequirements $requirements)
     {
@@ -59,26 +55,32 @@ class PluginValidate
     }
 
     /**
+     * Add an error to the validation.
+     *
      * @param string $message
      */
-    public function addError($message)
+    public function addError(string $message): void
     {
         $this->messages[] = sprintf('<fg=red>X %s</>', $message);
         $this->isValid    = false;
     }
 
     /**
+     * Add a success to the validation.
+     *
      * @param string $message
      */
-    public function addSuccess($message)
+    public function addSuccess(string $message): void
     {
         $this->messages[] = sprintf('<info>></info> %s', $message);
     }
 
     /**
+     * Add a warning to the validation.
+     *
      * @param string $message
      */
-    public function addWarning($message)
+    public function addWarning(string $message): void
     {
         $this->messages[] = sprintf('<comment>!</comment> %s', $message);
     }
@@ -89,7 +91,7 @@ class PluginValidate
      * @param string     $type
      * @param FileTokens $fileTokens
      */
-    public function addMessagesFromTokens($type, FileTokens $fileTokens)
+    public function addMessagesFromTokens(string $type, FileTokens $fileTokens): void
     {
         foreach ($fileTokens->tokens as $token) {
             if ($token->hasTokenBeenFound()) {
@@ -103,7 +105,7 @@ class PluginValidate
     /**
      * Run verification of a plugin.
      */
-    public function verifyRequirements()
+    public function verifyRequirements(): void
     {
         $this->findRequiredFiles($this->requirements->getRequiredFiles());
         $this->findRequiredTokens(new FunctionFinder(), $this->requirements->getRequiredFunctions());
@@ -120,7 +122,7 @@ class PluginValidate
      *
      * @param array $files
      */
-    public function findRequiredFiles(array $files)
+    public function findRequiredFiles(array $files): void
     {
         foreach ($files as $file) {
             if (file_exists($this->plugin->directory.'/'.$file)) {
@@ -137,7 +139,7 @@ class PluginValidate
      * @param FinderInterface $finder
      * @param FileTokens[]    $tokenCollection
      */
-    public function findRequiredTokens(FinderInterface $finder, array $tokenCollection)
+    public function findRequiredTokens(FinderInterface $finder, array $tokenCollection): void
     {
         foreach ($tokenCollection as $fileTokens) {
             if (!$fileTokens->hasTokens()) {

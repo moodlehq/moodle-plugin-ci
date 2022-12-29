@@ -40,7 +40,7 @@ class InstallerFactory
      *
      * @param InstallerCollection $installers Installers will be added to this
      */
-    public function addInstallers(InstallerCollection $installers)
+    public function addInstallers(InstallerCollection $installers): void
     {
         $installers->add(new MoodleInstaller($this->execute, $this->database, $this->moodle, new MoodleConfig(), $this->repo, $this->branch, $this->dataDir));
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->pluginsDir, $this->dumper));

@@ -22,9 +22,9 @@ class MoodlePluginCollection implements \Countable
     /**
      * @var MoodlePlugin[]
      */
-    private $items = [];
+    private array $items = [];
 
-    public function add(MoodlePlugin $item)
+    public function add(MoodlePlugin $item): void
     {
         $this->items[] = $item;
     }
@@ -32,20 +32,17 @@ class MoodlePluginCollection implements \Countable
     /**
      * @return MoodlePlugin[]
      */
-    public function all()
+    public function all(): array
     {
         return $this->items;
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
 
-    /**
-     * @return MoodlePluginCollection
-     */
-    public function sortByDependencies()
+    public function sortByDependencies(): self
     {
         $elements = [];
         foreach ($this->items as $item) {

@@ -20,12 +20,12 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ConfigDumper
 {
-    private $values = [];
+    private array $values = [];
 
     /**
      * @return bool
      */
-    public function hasConfig()
+    public function hasConfig(): bool
     {
         return !empty($this->values);
     }
@@ -35,7 +35,7 @@ class ConfigDumper
      * @param string       $name
      * @param string|array $value
      */
-    public function addSection($section, $name, $value)
+    public function addSection(string $section, string $name, $value): void
     {
         if (empty($value)) {
             return;
@@ -49,7 +49,7 @@ class ConfigDumper
     /**
      * @param string $toFile Write to this file
      */
-    public function dump($toFile)
+    public function dump(string $toFile): void
     {
         if (empty($this->values)) {
             return;

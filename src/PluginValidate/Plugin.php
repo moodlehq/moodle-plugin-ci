@@ -19,31 +19,23 @@ class Plugin
 {
     /**
      * The plugin component, EG: mod_forum.
-     *
-     * @var string
      */
-    public $component;
+    public string $component;
 
     /**
      * The plugin type, EG: mod in mod_forum.
-     *
-     * @var string
      */
-    public $type;
+    public string $type;
 
     /**
      * The plugin name, EG: forum in mod_forum.
-     *
-     * @var string
      */
-    public $name;
+    public string $name;
 
     /**
      * Absolute path to the plugin directory.
-     *
-     * @var string
      */
-    public $directory;
+    public string $directory;
 
     /**
      * @param string $component
@@ -51,7 +43,7 @@ class Plugin
      * @param string $name
      * @param string $directory
      */
-    public function __construct($component, $type, $name, $directory)
+    public function __construct(string $component, string $type, string $name, string $directory)
     {
         $this->component = $component;
         $this->type      = $type;

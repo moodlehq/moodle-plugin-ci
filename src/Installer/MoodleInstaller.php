@@ -25,40 +25,13 @@ use Symfony\Component\Process\Process;
  */
 class MoodleInstaller extends AbstractInstaller
 {
-    /**
-     * @var Execute
-     */
-    private $execute;
-
-    /**
-     * @var AbstractDatabase
-     */
-    private $database;
-
-    /**
-     * @var Moodle
-     */
-    private $moodle;
-
-    /**
-     * @var MoodleConfig
-     */
-    private $config;
-
-    /**
-     * @var string
-     */
-    private $repo;
-
-    /**
-     * @var string
-     */
-    private $branch;
-
-    /**
-     * @var string
-     */
-    private $dataDir;
+    private Execute $execute;
+    private AbstractDatabase $database;
+    private Moodle $moodle;
+    private MoodleConfig $config;
+    private string $repo;
+    private string $branch;
+    private string $dataDir;
 
     /**
      * @param Execute          $execute
@@ -69,7 +42,8 @@ class MoodleInstaller extends AbstractInstaller
      * @param string           $branch
      * @param string           $dataDir
      */
-    public function __construct(Execute $execute, AbstractDatabase $database, Moodle $moodle, MoodleConfig $config, $repo, $branch, $dataDir)
+    public function __construct(Execute $execute, AbstractDatabase $database, Moodle $moodle, MoodleConfig $config,
+        string $repo, string $branch, string $dataDir)
     {
         $this->execute  = $execute;
         $this->database = $database;
@@ -80,7 +54,7 @@ class MoodleInstaller extends AbstractInstaller
         $this->dataDir  = $dataDir;
     }
 
-    public function install()
+    public function install(): void
     {
         $this->getOutput()->step('Cloning Moodle');
 
@@ -134,14 +108,14 @@ class MoodleInstaller extends AbstractInstaller
      *
      * @return string
      */
-    public function expandPath($path)
+    public function expandPath(string $path): string
     {
         $validate = new Validate();
 
         return realpath($validate->directory($path));
     }
 
-    public function stepCount()
+    public function stepCount(): int
     {
         return 2;
     }

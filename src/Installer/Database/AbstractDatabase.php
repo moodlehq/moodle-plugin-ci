@@ -19,57 +19,43 @@ abstract class AbstractDatabase
 {
     /**
      * Database username.
-     *
-     * @var string
      */
-    public $user = 'root';
+    public string $user = 'root';
 
     /**
      * Database password.
-     *
-     * @var string
      */
-    public $pass = '';
+    public string $pass = '';
 
     /**
      * Database name.
-     *
-     * @var string
      */
-    public $name = 'moodle';
+    public string $name = 'moodle';
 
     /**
      * Database host.
-     *
-     * @var string
      */
-    public $host = 'localhost';
+    public string $host = 'localhost';
 
     /**
      * Database port.
-     *
-     * @var string
      */
-    public $port = '';
+    public string $port = '';
 
     /**
      * Moodle database type.
-     *
-     * @var string
      */
-    public $type;
+    public string $type;
 
     /**
      * Moodle database library.
-     *
-     * @var string
      */
-    public $library = 'native';
+    public string $library = 'native';
 
     /**
      * Get database create command.  Suitable for executing on the CLI.
      *
-     * @return string
+     * @return string[]
      */
-    abstract public function getCreateDatabaseCommand();
+    abstract public function getCreateDatabaseCommand(): array;
 }

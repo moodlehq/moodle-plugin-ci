@@ -19,7 +19,7 @@ use MoodlePluginCI\PluginValidate\Finder\FileTokens;
  */
 class RepositoryRequirements extends GenericRequirements
 {
-    public function getRequiredFiles()
+    public function getRequiredFiles(): array
     {
         return array_merge(parent::getRequiredFiles(), [
             'lib.php',
@@ -27,19 +27,19 @@ class RepositoryRequirements extends GenericRequirements
         ]);
     }
 
-    public function getRequiredClasses()
+    public function getRequiredClasses(): array
     {
         return [
             FileTokens::create('lib.php')->mustHave($this->plugin->component),
         ];
     }
 
-    public function getRequiredStrings()
+    public function getRequiredStrings(): FileTokens
     {
         return parent::getRequiredStrings()->mustHave($this->plugin->name.':view');
     }
 
-    public function getRequiredCapabilities()
+    public function getRequiredCapabilities(): FileTokens
     {
         return FileTokens::create('db/access.php')->mustHave('repository/'.$this->plugin->name.':view');
     }

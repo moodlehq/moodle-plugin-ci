@@ -21,12 +21,12 @@ use MoodlePluginCI\PluginValidate\Finder\FileTokens;
  */
 class GenericRequirements extends AbstractRequirements
 {
-    protected function getLangFile()
+    protected function getLangFile(): string
     {
         return 'lang/en/'.$this->plugin->component.'.php';
     }
 
-    public function getRequiredFiles()
+    public function getRequiredFiles(): array
     {
         return [
             'version.php',
@@ -34,39 +34,39 @@ class GenericRequirements extends AbstractRequirements
         ];
     }
 
-    public function getRequiredFunctions()
+    public function getRequiredFunctions(): array
     {
         return [
             FileTokens::create('db/upgrade.php')->mustHave('xmldb_'.$this->plugin->component.'_upgrade'),
         ];
     }
 
-    public function getRequiredClasses()
+    public function getRequiredClasses(): array
     {
         return [];
     }
 
-    public function getRequiredStrings()
+    public function getRequiredStrings(): FileTokens
     {
         return FileTokens::create($this->getLangFile())->mustHave('pluginname');
     }
 
-    public function getRequiredCapabilities()
+    public function getRequiredCapabilities(): FileTokens
     {
         return FileTokens::create('db/access.php'); // None.
     }
 
-    public function getRequiredTables()
+    public function getRequiredTables(): FileTokens
     {
         return FileTokens::create('db/install.xml'); // None.
     }
 
-    public function getRequiredTablePrefix()
+    public function getRequiredTablePrefix(): FileTokens
     {
         return FileTokens::create('db/install.xml')->mustHave($this->plugin->component);
     }
 
-    public function getRequiredBehatTags()
+    public function getRequiredBehatTags(): array
     {
         return $this->behatTagsFactory(['@'.$this->plugin->type, '@'.$this->plugin->component]);
     }

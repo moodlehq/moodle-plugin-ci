@@ -21,17 +21,17 @@ use PhpParser\Node\Scalar\String_;
  */
 class LangFinder extends AbstractParserFinder
 {
-    public function getType()
+    public function getType(): string
     {
         return 'language';
     }
 
-    public function findTokens($file, FileTokens $fileTokens)
+    public function findTokens($file, FileTokens $fileTokens): void
     {
         $statements = $this->parser->parseFile($file);
 
         foreach ($this->filter->filterAssignments($statements) as $assign) {
-            // Looking for a assignment to an array key, EG: $string['something'].
+            // Looking for an assignment to an array key, EG: $string['something'].
             if ($assign->var instanceof ArrayDimFetch) {
                 // Verify that the array name is $string.
                 $arrayName = $assign->var->var;

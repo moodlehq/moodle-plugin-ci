@@ -36,36 +36,21 @@ class InstallCommand extends Command
 {
     use ExecuteTrait;
 
-    /**
-     * @var Install
-     */
-    public $install;
-
-    /**
-     * @var InstallerCollection
-     */
-    public $installers;
-
-    /**
-     * @var InstallerFactory
-     */
-    public $factory;
-
-    /**
-     * @var string
-     */
-    private $envFile;
+    public ?Install $install                = null;
+    public ?InstallerCollection $installers = null;
+    public ?InstallerFactory $factory       = null;
+    private string $envFile;
 
     /**
      * @param string $envFile
      */
-    public function __construct($envFile)
+    public function __construct(string $envFile)
     {
         parent::__construct();
         $this->envFile = $envFile;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         // Travis CI configures some things by environment variables, default to those if available.
         $type   = getenv('DB') !== false ? getenv('DB') : null;
@@ -102,7 +87,7 @@ class InstallCommand extends Command
             ->addOption('node-version', null, InputOption::VALUE_REQUIRED, 'Node.js version to use for nvm install (this will override one defined in .nvmrc)', $node);
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->initializeExecute($output, $this->getHelper('process'));
 
@@ -131,7 +116,7 @@ class InstallCommand extends Command
      *
      * @return InstallOutput
      */
-    public function initializeInstallOutput(OutputInterface $output)
+    public function initializeInstallOutput(OutputInterface $output): InstallOutput
     {
         $progressBar = null;
         if ($output->getVerbosity() < OutputInterface::VERBOSITY_VERY_VERBOSE) {
@@ -150,7 +135,7 @@ class InstallCommand extends Command
      *
      * @return InstallerFactory
      */
-    public function initializeInstallerFactory(InputInterface $input)
+    public function initializeInstallerFactory(InputInterface $input): InstallerFactory
     {
         $validate   = new Validate();
         $resolver   = new DatabaseResolver();
@@ -189,7 +174,7 @@ class InstallCommand extends Command
      *
      * @return ConfigDumper
      */
-    public function initializePluginConfigDumper(InputInterface $input)
+    public function initializePluginConfigDumper(InputInterface $input): ConfigDumper
     {
         $dumper = new ConfigDumper();
         $dumper->addSection('filter', 'notPaths', $this->csvToArray($input->getOption('not-paths')));
@@ -227,7 +212,7 @@ class InstallCommand extends Command
      *
      * @return array
      */
-    public function csvToArray($value)
+    public function csvToArray(?string $value): array
     {
         if ($value === null) {
             return [];

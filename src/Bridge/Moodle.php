@@ -23,30 +23,26 @@ class Moodle
 {
     /**
      * Absolute path to Moodle directory.
-     *
-     * @var string
      */
-    public $directory;
+    public string $directory;
 
     /**
-     * Moodle's config.
-     *
-     * @var object
+     * Moodle config.
      */
-    protected $cfg;
+    protected ?object $cfg;
 
     /**
      * @param string $directory Absolute path to Moodle directory
      */
-    public function __construct($directory)
+    public function __construct(string $directory)
     {
         $this->directory = $directory;
     }
 
     /**
-     * Load's Moodle config so we can use Moodle APIs.
+     * Load Moodle config so we can use Moodle APIs.
      */
-    public function requireConfig()
+    public function requireConfig(): void
     {
         global $CFG;
 
@@ -85,7 +81,7 @@ class Moodle
      *
      * @return array
      */
-    public function normalizeComponent($component)
+    public function normalizeComponent(string $component): array
     {
         $this->requireConfig();
 
@@ -100,7 +96,7 @@ class Moodle
      *
      * @return string Absolute path, EG: /path/to/mod/forum
      */
-    public function getComponentInstallDirectory($component)
+    public function getComponentInstallDirectory(string $component): string
     {
         list($type, $name) = $this->normalizeComponent($component);
 
@@ -121,7 +117,7 @@ class Moodle
      *
      * @return int
      */
-    public function getBranch()
+    public function getBranch(): int
     {
         $filter = new StatementFilter();
         $parser = new CodeParser();
@@ -143,11 +139,11 @@ class Moodle
      *
      * @return string
      */
-    public function getConfig($name)
+    public function getConfig(string $name): string
     {
         $this->requireConfig();
 
-        if (!property_exists($this->cfg, $name)) {
+        if (null === $this->cfg || !property_exists($this->cfg, $name)) {
             throw new \RuntimeException(sprintf('Failed to find $CFG->%s in Moodle config file', $name));
         }
 

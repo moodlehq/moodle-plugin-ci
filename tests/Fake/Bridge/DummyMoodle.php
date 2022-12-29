@@ -21,22 +21,22 @@ class DummyMoodle extends Moodle
 {
     public $branch = 33;
 
-    public function requireConfig()
+    public function requireConfig(): void
     {
         // Don't do anything.
     }
 
-    public function normalizeComponent($component)
+    public function normalizeComponent($component): array
     {
         return ['local', 'travis'];
     }
 
-    public function getComponentInstallDirectory($component)
+    public function getComponentInstallDirectory($component): string
     {
         return $this->directory.'/local/travis';
     }
 
-    public function getBranch()
+    public function getBranch(): int
     {
         return $this->branch;
     }

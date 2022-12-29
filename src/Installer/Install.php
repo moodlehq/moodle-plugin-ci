@@ -17,10 +17,7 @@ namespace MoodlePluginCI\Installer;
  */
 class Install
 {
-    /**
-     * @var InstallOutput
-     */
-    private $output;
+    private InstallOutput $output;
 
     public function __construct(InstallOutput $output)
     {
@@ -32,7 +29,7 @@ class Install
      *
      * @param InstallerCollection $installers
      */
-    public function runInstallation(InstallerCollection $installers)
+    public function runInstallation(InstallerCollection $installers): void
     {
         $this->output->start('Starting install', $installers->sumStepCount() + 1);
 

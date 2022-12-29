@@ -14,22 +14,15 @@ namespace MoodlePluginCI\Tests;
 
 class MoodleTestCase extends FilesystemTestCase
 {
-    /**
-     * @var string
-     */
-    protected $moodleDir;
-
-    /**
-     * @var string
-     */
-    protected $pluginDir;
+    protected string $moodleDir;
+    protected string $pluginDir;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->moodleDir = $this->tempDir;
-        $this->pluginDir = $this->tempDir.'/local/travis';
+        $this->pluginDir = $this->tempDir.'/local/ci';
 
         $this->fs->mirror(__DIR__.'/Fixture/moodle', $this->moodleDir);
         $this->fs->mirror(__DIR__.'/Fixture/moodle-local_ci', $this->pluginDir);

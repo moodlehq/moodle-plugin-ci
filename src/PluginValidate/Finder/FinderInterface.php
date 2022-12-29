@@ -24,7 +24,7 @@ interface FinderInterface
      *
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * Find tokens in a given file.
@@ -32,5 +32,5 @@ interface FinderInterface
      * @param string     $file
      * @param FileTokens $fileTokens
      */
-    public function findTokens($file, FileTokens $fileTokens);
+    public function findTokens(string $file, FileTokens $fileTokens): void;
 }

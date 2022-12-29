@@ -24,45 +24,30 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MessDetectorRenderer extends AbstractRenderer
 {
-    /**
-     * @var OutputInterface
-     */
-    protected $output;
-
-    /**
-     * @var string
-     */
-    private $basePath;
+    protected OutputInterface $output;
+    private string $basePath;
 
     /**
      * @param OutputInterface $output
      * @param string          $basePath
      */
-    public function __construct(OutputInterface $output, $basePath)
+    public function __construct(OutputInterface $output, string $basePath)
     {
         $this->output   = $output;
         $this->basePath = $basePath;
     }
 
-    /**
-     * This method will be called when the engine has finished the source analysis
-     * phase.
-     *
-     * @param \PHPMD\Report $report
-     */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $this->output->writeln('');
 
         $groupByFile = [];
-        /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             if ($filename = $violation->getFileName()) {
                 $groupByFile[$filename][] = $violation;
             }
         }
 
-        /** @var ProcessingError $error */
         foreach ($report->getErrors() as $error) {
             $groupByFile[$error->getFile()][] = $error;
         }

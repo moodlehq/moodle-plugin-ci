@@ -19,21 +19,21 @@ use MoodlePluginCI\PluginValidate\Finder\FileTokens;
  */
 class FilterRequirements extends GenericRequirements
 {
-    public function getRequiredFiles()
+    public function getRequiredFiles(): array
     {
         return array_merge(parent::getRequiredFiles(), [
             'filter.php',
         ]);
     }
 
-    public function getRequiredClasses()
+    public function getRequiredClasses(): array
     {
         return [
             FileTokens::create('filter.php')->mustHave('filter_'.$this->plugin->name),
         ];
     }
 
-    public function getRequiredStrings()
+    public function getRequiredStrings(): FileTokens
     {
         return FileTokens::create($this->getLangFile())->mustHave('filtername');
     }

@@ -18,5 +18,5 @@ namespace MoodlePluginCI\Installer\Database;
  */
 class MariaDBDatabase extends MySQLDatabase
 {
-    public $type = 'mariadb';
+    public string $type = 'mariadb';
 }

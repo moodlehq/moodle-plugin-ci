@@ -27,7 +27,8 @@ class DatabaseResolver
      *
      * @return AbstractDatabase
      */
-    public function resolveDatabase($type, $name = null, $user = null, $pass = null, $host = null, $port = null)
+    public function resolveDatabase(string $type, ?string $name = null, ?string $user = null, ?string $pass = null,
+        ?string $host = null, ?string $port = null): AbstractDatabase
     {
         $database = $this->resolveDatabaseType($type);
 
@@ -57,7 +58,7 @@ class DatabaseResolver
      *
      * @return AbstractDatabase
      */
-    private function resolveDatabaseType($type)
+    private function resolveDatabaseType(string $type): AbstractDatabase
     {
         foreach ($this->getDatabases() as $database) {
             if ($database->type === $type) {
@@ -70,7 +71,7 @@ class DatabaseResolver
     /**
      * @return AbstractDatabase[]
      */
-    private function getDatabases()
+    private function getDatabases(): array
     {
         return [new MySQLDatabase(), new PostgresDatabase(), new MariaDBDatabase()];
     }

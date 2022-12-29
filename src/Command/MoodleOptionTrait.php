@@ -23,10 +23,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 trait MoodleOptionTrait
 {
-    /**
-     * @var Moodle
-     */
-    public $moodle;
+    public ?Moodle $moodle = null;
 
     /**
      * Adds the 'moodle' option to a command.
@@ -35,7 +32,7 @@ trait MoodleOptionTrait
      *
      * @return Command
      */
-    protected function addMoodleOption(Command $command)
+    protected function addMoodleOption(Command $command): Command
     {
         $moodle = getenv('MOODLE_DIR') !== false ? getenv('MOODLE_DIR') : '.';
         $command->addOption('moodle', 'm', InputOption::VALUE_REQUIRED, 'Path to Moodle', $moodle);
@@ -48,9 +45,9 @@ trait MoodleOptionTrait
      *
      * @param InputInterface $input
      */
-    protected function initializeMoodle(InputInterface $input)
+    protected function initializeMoodle(InputInterface $input): void
     {
-        if (!$this->moodle) {
+        if (!$this->moodle instanceof Moodle) {
             $validate     = new Validate();
             $moodleDir    = realpath($validate->directory($input->getOption('moodle')));
             $this->moodle = new Moodle($moodleDir);

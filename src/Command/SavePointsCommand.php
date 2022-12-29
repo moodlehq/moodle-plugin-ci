@@ -21,7 +21,7 @@ class SavePointsCommand extends AbstractPluginCommand
 {
     use ExecuteTrait;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -29,13 +29,13 @@ class SavePointsCommand extends AbstractPluginCommand
             ->setDescription('Check upgrade savepoints');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'Check upgrade savepoints on %s');
 

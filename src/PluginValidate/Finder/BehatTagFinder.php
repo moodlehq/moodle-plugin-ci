@@ -17,12 +17,12 @@ namespace MoodlePluginCI\PluginValidate\Finder;
  */
 class BehatTagFinder implements FinderInterface
 {
-    public function getType()
+    public function getType(): string
     {
         return 'Behat tag';
     }
 
-    public function findTokens($file, FileTokens $fileTokens)
+    public function findTokens($file, FileTokens $fileTokens): void
     {
         foreach (file($file) as $line) {
             if (strpos($line, 'Feature:') !== false) {

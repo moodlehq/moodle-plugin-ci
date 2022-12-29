@@ -17,12 +17,12 @@ namespace MoodlePluginCI\PluginValidate\Finder;
  */
 class TablePrefixFinder extends TableFinder
 {
-    public function getType()
+    public function getType(): string
     {
         return 'table prefixes';
     }
 
-    public function findTokens($file, FileTokens $fileTokens)
+    public function findTokens($file, FileTokens $fileTokens): void
     {
         $tables = $this->findTables($file);
         $total  = count($tables);
@@ -34,7 +34,7 @@ class TablePrefixFinder extends TableFinder
                 if (!$fileTokens->hasFoundAllTokens()) {
                     break; // Found an invalid table name, can stop.
                 }
-                // Current table name valid, reset tokens so we can see if the next table is valid or not.
+                // Current table name valid, reset tokens, so we can see if the next table is valid or not.
                 $fileTokens->resetTokens();
             }
         }

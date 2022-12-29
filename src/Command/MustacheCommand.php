@@ -25,7 +25,7 @@ class MustacheCommand extends AbstractMoodleCommand
 {
     use ExecuteTrait;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -33,13 +33,13 @@ class MustacheCommand extends AbstractMoodleCommand
             ->setDescription('Run Mustache Lint on a plugin');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'Mustache Lint on %s');
 
@@ -89,7 +89,7 @@ class MustacheCommand extends AbstractMoodleCommand
     /**
      * @return string
      */
-    private function resolveJarFile()
+    private function resolveJarFile(): string
     {
         // Check if locally installed.
         $file = __DIR__.'/../../vendor/moodlehq/moodle-local_ci/node_modules/vnu-jar/build/dist/vnu.jar';
@@ -110,7 +110,7 @@ class MustacheCommand extends AbstractMoodleCommand
         return $file;
     }
 
-    private function validateJarVersion()
+    private function validateJarVersion(): void
     {
         $json = json_decode($this->execute->mustRun('npm -g list --json')->getOutput(), true);
         if (!isset($json['dependencies']['vnu-jar']['version'])) {

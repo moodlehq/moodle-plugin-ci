@@ -23,7 +23,7 @@ class EnvDumper
      * @param array  $values The values to write out
      * @param string $toFile Write to this file
      */
-    public function dump(array $values, $toFile)
+    public function dump(array $values, string $toFile): void
     {
         if (empty($values)) {
             return;

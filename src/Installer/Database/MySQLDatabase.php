@@ -17,16 +17,20 @@ namespace MoodlePluginCI\Installer\Database;
  */
 class MySQLDatabase extends AbstractDatabase
 {
-    public $type = 'mysqli';
+    public string $type = 'mysqli';
 
-    public function getCreateDatabaseCommand()
+    public function getCreateDatabaseCommand(): array
     {
-        $passOpt  = !empty($this->pass) ? ' --password='.escapeshellarg($this->pass) : '';
-        $user     = escapeshellarg($this->user);
-        $host     = escapeshellarg($this->host);
-        $port     = !empty($this->port) ? ' --port='.escapeshellarg($this->port) : '';
-        $createDB = escapeshellarg(sprintf('CREATE DATABASE `%s` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;', $this->name));
-
-        return sprintf('mysql -u %s%s -h %s%s -e %s', $user, $passOpt, $host, $port, $createDB);
+        return array_filter([
+            'mysql',
+            '-u',
+            $this->user,
+            !empty($this->pass) ? '--password='.$this->pass : '',
+            '-h',
+            $this->host,
+            !empty($this->port) ? '--port='.$this->port : '',
+            '-e',
+            sprintf('CREATE DATABASE `%s` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;', $this->name),
+        ]);
     }
 }

@@ -23,7 +23,7 @@ use Symfony\Component\Process\Process;
  */
 class CodeFixerCommand extends CodeCheckerCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         AbstractPluginCommand::configure();
 
@@ -32,7 +32,7 @@ class CodeFixerCommand extends CodeCheckerCommand
             ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'Code Beautifier and Fixer on %s');
 

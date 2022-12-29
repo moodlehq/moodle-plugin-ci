@@ -27,7 +27,7 @@ use Symfony\Component\Finder\Finder;
  */
 class MessDetectorCommand extends AbstractMoodleCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -36,7 +36,7 @@ class MessDetectorCommand extends AbstractMoodleCommand
             ->addOption('rules', 'r', InputOption::VALUE_REQUIRED, 'Path to PHP Mess Detector rule set');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'PHP Mess Detector on %s');
 

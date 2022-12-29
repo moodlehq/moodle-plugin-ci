@@ -26,7 +26,7 @@ use Symfony\Component\Finder\Finder;
  */
 class CopyPasteDetectorCommand extends AbstractPluginCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 

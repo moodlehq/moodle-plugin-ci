@@ -30,7 +30,7 @@ class MoodleConfig
      *
      * @return string
      */
-    public function createContents(AbstractDatabase $database, $dataDir)
+    public function createContents(AbstractDatabase $database, string $dataDir): string
     {
         $template  = file_get_contents(__DIR__.'/../../res/template/config.php.txt');
         $variables = [
@@ -62,7 +62,7 @@ class MoodleConfig
      *
      * @return string
      */
-    public function injectLine($contents, $lineToAdd)
+    public function injectLine(string $contents, string $lineToAdd): string
     {
         if (strpos($contents, self::PLACEHOLDER) === false) {
             throw new \RuntimeException('Failed to find placeholder in config file, file might be malformed');
@@ -78,7 +78,7 @@ class MoodleConfig
      *
      * @return string
      */
-    public function read($file)
+    public function read(string $file): string
     {
         if (!file_exists($file)) {
             throw new \InvalidArgumentException('Failed to find Moodle config.php file, perhaps Moodle has not been installed yet');
@@ -100,7 +100,7 @@ class MoodleConfig
      * @param string $file     File path
      * @param string $contents Config file contents
      */
-    public function dump($file, $contents)
+    public function dump(string $file, string $contents): void
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($file, $contents);

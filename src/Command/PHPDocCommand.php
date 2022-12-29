@@ -23,12 +23,9 @@ class PHPDocCommand extends AbstractMoodleCommand
 {
     use ExecuteTrait;
 
-    /**
-     * @var Finder
-     */
-    private $finder;
+    private Finder $finder;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -36,14 +33,14 @@ class PHPDocCommand extends AbstractMoodleCommand
             ->setDescription('Run Moodle PHPDoc Checker on a plugin');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
         $this->finder = Finder::create()->name('*.php');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'Moodle PHPDoc Checker on %s');
 

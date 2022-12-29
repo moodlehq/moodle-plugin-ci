@@ -16,13 +16,13 @@ use MoodlePluginCI\Installer\AbstractInstaller;
 
 class DummyInstaller extends AbstractInstaller
 {
-    public function install()
+    public function install(): void
     {
         $this->getOutput()->step('Step 1');
         $this->getOutput()->step('Step 2');
     }
 
-    public function stepCount()
+    public function stepCount(): int
     {
         return 2;
     }

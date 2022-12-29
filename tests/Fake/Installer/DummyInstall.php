@@ -17,7 +17,7 @@ use MoodlePluginCI\Installer\InstallerCollection;
 
 class DummyInstall extends Install
 {
-    public function runInstallation(InstallerCollection $installers)
+    public function runInstallation(InstallerCollection $installers): void
     {
         // Do nothing.
     }

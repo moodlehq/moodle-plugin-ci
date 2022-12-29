@@ -22,7 +22,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class SelfUpdateCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('selfupdate')
             ->setDescription('Updates moodle-plugin-ci')
@@ -31,7 +31,7 @@ class SelfUpdateCommand extends Command
             ->addOption('any', null, InputOption::VALUE_NONE, 'Update to most recent release');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $rollback  = $input->getOption('rollback');
         $stability = GithubStrategy::STABLE;
@@ -88,7 +88,7 @@ class SelfUpdateCommand extends Command
     /**
      * @return string
      */
-    protected function getBackupPath()
+    protected function getBackupPath(): string
     {
         $directory = getenv('HOME');
         if (empty($directory) || !is_dir($directory)) {

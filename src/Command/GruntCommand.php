@@ -27,12 +27,9 @@ class GruntCommand extends AbstractMoodleCommand
 {
     use ExecuteTrait;
 
-    /**
-     * @var string
-     */
-    public $backupDir;
+    public string $backupDir;
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -45,14 +42,14 @@ class GruntCommand extends AbstractMoodleCommand
             ->addOption('max-lint-warnings', null, InputOption::VALUE_REQUIRED, 'Maximum number of eslint warnings', '');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
-        $this->backupDir = $this->backupDir ?: sys_get_temp_dir().'/moodle-plugin-ci-grunt-backup-'.time();
+        $this->backupDir = $this->backupDir ?? sys_get_temp_dir() . '/moodle-plugin-ci-grunt-backup-' . time();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->outputHeading($output, 'Grunt on %s');
         $this->backupPlugin();
@@ -105,7 +102,7 @@ class GruntCommand extends AbstractMoodleCommand
     /**
      * Backup the plugin so we can use it for comparison and restores.
      */
-    public function backupPlugin()
+    public function backupPlugin(): void
     {
         (new Filesystem())->mirror($this->plugin->directory, $this->backupDir);
     }
@@ -113,7 +110,7 @@ class GruntCommand extends AbstractMoodleCommand
     /**
      * Revert any changes Grunt tasks might have done.
      */
-    public function restorePlugin()
+    public function restorePlugin(): void
     {
         (new Filesystem())->mirror($this->backupDir, $this->plugin->directory, null, ['delete' => true, 'override' => true]);
     }
@@ -166,7 +163,7 @@ class GruntCommand extends AbstractMoodleCommand
      *
      * @return GruntTaskModel|null
      */
-    public function toGruntTask($task)
+    public function toGruntTask(string $task): ?GruntTaskModel
     {
         $workingDirectory = $this->moodle->directory;
         if (is_file($this->plugin->directory.'/Gruntfile.js')) {

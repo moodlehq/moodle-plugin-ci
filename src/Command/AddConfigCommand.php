@@ -27,7 +27,7 @@ class AddConfigCommand extends Command
 {
     use MoodleOptionTrait;
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->addMoodleOption($this)
             ->setName('add-config')
@@ -35,12 +35,12 @@ class AddConfigCommand extends Command
             ->addArgument('line', InputArgument::REQUIRED, 'Line of PHP code to add to the Moodle config.php file');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->initializeMoodle($input);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $line = $input->getArgument('line');
         $file = $this->moodle->directory.'/config.php';
@@ -64,7 +64,7 @@ class AddConfigCommand extends Command
      *
      * @return int
      */
-    public function lintFile($file, OutputInterface $output)
+    public function lintFile(string $file, OutputInterface $output): int
     {
         $manager  = new Manager();
         $settings = new Settings();

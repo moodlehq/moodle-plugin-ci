@@ -26,20 +26,9 @@ use Symfony\Component\Process\Process;
  */
 class TestSuiteInstaller extends AbstractInstaller
 {
-    /**
-     * @var Moodle
-     */
-    private $moodle;
-
-    /**
-     * @var MoodlePlugin
-     */
-    private $plugin;
-
-    /**
-     * @var Execute
-     */
-    private $execute;
+    private Moodle$moodle;
+    private MoodlePlugin $plugin;
+    private Execute $execute;
 
     public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute)
     {
@@ -53,12 +42,12 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return string
      */
-    private function getBehatUtility()
+    private function getBehatUtility(): string
     {
         return $this->moodle->directory.'/admin/tool/behat/cli/util_single_run.php';
     }
 
-    public function install()
+    public function install(): void
     {
         $this->getOutput()->step('Initialize test suite');
 
@@ -74,7 +63,7 @@ class TestSuiteInstaller extends AbstractInstaller
         $this->injectPHPUnitFilter();
     }
 
-    public function stepCount()
+    public function stepCount(): int
     {
         return 2;
     }
@@ -84,7 +73,7 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return Process[]
      */
-    public function getBehatInstallProcesses()
+    public function getBehatInstallProcesses(): array
     {
         if (!$this->plugin->hasBehatFeatures()) {
             return [];
@@ -106,7 +95,7 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return Process[]
      */
-    public function getUnitTestInstallProcesses()
+    public function getUnitTestInstallProcesses(): array
     {
         if (!$this->plugin->hasUnitTests()) {
             return [];
@@ -127,7 +116,7 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return Process[]
      */
-    public function getPostInstallProcesses()
+    public function getPostInstallProcesses(): array
     {
         $processes = [];
 
@@ -157,7 +146,7 @@ class TestSuiteInstaller extends AbstractInstaller
     /**
      * Inject filter XML into the plugin's PHPUnit configuration file.
      */
-    public function injectPHPUnitFilter()
+    public function injectPHPUnitFilter(): void
     {
         $config = $this->plugin->directory.'/phpunit.xml';
         if (!is_file($config)) {
@@ -203,7 +192,7 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return array
      */
-    private function getCoverageFiles()
+    private function getCoverageFiles(): array
     {
         $finder = Finder::create()
             ->name('*.php')
@@ -232,7 +221,7 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return array
      */
-    private function removeDbFiles($dbPath, array $files)
+    private function removeDbFiles(string $dbPath, array $files): array
     {
         if (!is_dir($dbPath)) {
             return $files;
@@ -261,7 +250,7 @@ class TestSuiteInstaller extends AbstractInstaller
      *
      * @return string
      */
-    private function getFilterXml(array $files)
+    private function getFilterXml(array $files): string
     {
         // Default (Moodle 3.11 and above) template (PHPUnit 9.5 and up).
         $template = <<<'XML'

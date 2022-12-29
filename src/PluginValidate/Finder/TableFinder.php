@@ -17,12 +17,12 @@ namespace MoodlePluginCI\PluginValidate\Finder;
  */
 class TableFinder implements FinderInterface
 {
-    public function getType()
+    public function getType(): string
     {
         return 'table';
     }
 
-    public function findTokens($file, FileTokens $fileTokens)
+    public function findTokens($file, FileTokens $fileTokens): void
     {
         foreach ($this->findTables($file) as $table) {
             $fileTokens->compare($table);
@@ -34,7 +34,7 @@ class TableFinder implements FinderInterface
      *
      * @return array
      */
-    protected function findTables($file)
+    protected function findTables(string $file): array
     {
         $tables = [];
         $xml    = simplexml_load_file($file);

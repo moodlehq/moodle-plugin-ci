@@ -17,7 +17,7 @@ namespace MoodlePluginCI\PluginValidate\Requirements;
  */
 class ThemeRequirements extends GenericRequirements
 {
-    public function getRequiredFiles()
+    public function getRequiredFiles(): array
     {
         return array_merge(parent::getRequiredFiles(), [
             'config.php',
