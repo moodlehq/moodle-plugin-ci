@@ -48,7 +48,7 @@ class MustacheCommand extends AbstractMoodleCommand
             return $this->outputSkip($output);
         }
 
-        $linter  = __DIR__.'/../../vendor/moodlehq/moodle-local_ci/mustache_lint/mustache_lint.php';
+        $linter  = __DIR__ . '/../../vendor/moodlehq/moodle-local_ci/mustache_lint/mustache_lint.php';
         $jarFile = $this->resolveJarFile();
 
         // This is a workaround to execute mustache_lint.php file from within a phar.
@@ -67,9 +67,9 @@ class MustacheCommand extends AbstractMoodleCommand
                 '_JAVA_OPTIONS',
                 'php',
                 $wrapper,
-                '--filename='.$file,
-                '--validator='.$jarFile,
-                '--basename='.$this->moodle->directory,
+                '--filename=' . $file,
+                '--validator=' . $jarFile,
+                '--basename=' . $this->moodle->directory,
             ];
             // _JAVA_OPTIONS is something Travis CI started to set in Trusty.  This breaks Mustache because
             // the output from vnu.jar needs to be captured and JSON decoded.  When _JAVA_OPTIONS is present,
@@ -92,7 +92,7 @@ class MustacheCommand extends AbstractMoodleCommand
     private function resolveJarFile(): string
     {
         // Check if locally installed.
-        $file = __DIR__.'/../../vendor/moodlehq/moodle-local_ci/node_modules/vnu-jar/build/dist/vnu.jar';
+        $file = __DIR__ . '/../../vendor/moodlehq/moodle-local_ci/node_modules/vnu-jar/build/dist/vnu.jar';
         if (is_file($file)) {
             return realpath($file);
         }
@@ -101,7 +101,7 @@ class MustacheCommand extends AbstractMoodleCommand
         $this->validateJarVersion();
 
         $process = $this->execute->mustRun('npm -g prefix');
-        $file    = trim($process->getOutput()).'/lib/node_modules/vnu-jar/build/dist/vnu.jar';
+        $file    = trim($process->getOutput()) . '/lib/node_modules/vnu-jar/build/dist/vnu.jar';
 
         if (!is_file($file)) {
             throw new \RuntimeException(sprintf('Failed to find %s', $file));

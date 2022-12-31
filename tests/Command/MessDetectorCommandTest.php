@@ -23,7 +23,7 @@ class MessDetectorCommandTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->pluginDir = __DIR__.'/../Fixture/moodle-local_ci';
+        $this->pluginDir = __DIR__ . '/../Fixture/moodle-local_ci';
     }
 
     protected function executeCommand($pluginDir = null)
@@ -55,7 +55,7 @@ class MessDetectorCommandTest extends \PHPUnit\Framework\TestCase
     public function testExecuteNoFiles()
     {
         // Just random directory with no PHP files.
-        $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
+        $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }

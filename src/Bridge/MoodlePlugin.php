@@ -93,7 +93,7 @@ class MoodlePlugin
         $parser = new CodeParser();
 
         $notFound   = 'The plugin must define the $plugin->component in the version.php file.';
-        $statements = $parser->parseFile($this->directory.'/version.php');
+        $statements = $parser->parseFile($this->directory . '/version.php');
 
         try {
             $assign = $filter->findFirstPropertyFetchAssignment($statements, 'plugin', 'component', $notFound);
@@ -125,7 +125,7 @@ class MoodlePlugin
         $filter = new StatementFilter();
         $parser = new CodeParser();
 
-        $statements = $parser->parseFile($this->directory.'/version.php');
+        $statements = $parser->parseFile($this->directory . '/version.php');
 
         try {
             $assign = $filter->findFirstPropertyFetchAssignment($statements, 'plugin', 'dependencies');
@@ -158,7 +158,7 @@ class MoodlePlugin
         }
         $this->subpluginTypes = [];
 
-        $subpluginsJsonLocation = $this->directory.'/db/subplugins.json';
+        $subpluginsJsonLocation = $this->directory . '/db/subplugins.json';
         if (file_exists($subpluginsJsonLocation)) {
             $subpluginData = json_decode(file_get_contents($subpluginsJsonLocation));
             if ($subpluginData && property_exists($subpluginData, 'plugintypes')) {
@@ -214,7 +214,7 @@ class MoodlePlugin
      */
     public function hasNodeDependencies()
     {
-        return is_file($this->directory.'/package.json');
+        return is_file($this->directory . '/package.json');
     }
 
     /**
@@ -224,7 +224,7 @@ class MoodlePlugin
      */
     public function getThirdPartyLibraryPaths()
     {
-        $xmlFile = $this->directory.'/thirdpartylibs.xml';
+        $xmlFile = $this->directory . '/thirdpartylibs.xml';
         if (!is_file($xmlFile)) {
             return [];
         }
@@ -240,7 +240,7 @@ class MoodlePlugin
      */
     public function getIgnores()
     {
-        $configFile = $this->directory.'/.moodle-plugin-ci.yml';
+        $configFile = $this->directory . '/.moodle-plugin-ci.yml';
 
         if (!is_file($configFile)) {
             return [];
@@ -249,8 +249,8 @@ class MoodlePlugin
         $config = Yaml::parse(file_get_contents($configFile));
 
         // Search for context (AKA command) specific filter first.
-        if (!empty($this->context) && array_key_exists('filter-'.$this->context, $config)) {
-            return $config['filter-'.$this->context];
+        if (!empty($this->context) && array_key_exists('filter-' . $this->context, $config)) {
+            return $config['filter-' . $this->context];
         }
 
         return array_key_exists('filter', $config) ? $config['filter'] : [];
@@ -306,7 +306,7 @@ class MoodlePlugin
     {
         $files = [];
         foreach ($this->getFiles($finder) as $file) {
-            $files[] = str_replace($this->directory.'/', '', $file);
+            $files[] = str_replace($this->directory . '/', '', $file);
         }
 
         return $files;

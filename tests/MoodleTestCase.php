@@ -22,9 +22,9 @@ class MoodleTestCase extends FilesystemTestCase
         parent::setUp();
 
         $this->moodleDir = $this->tempDir;
-        $this->pluginDir = $this->tempDir.'/local/ci';
+        $this->pluginDir = $this->tempDir . '/local/ci';
 
-        $this->fs->mirror(__DIR__.'/Fixture/moodle', $this->moodleDir);
-        $this->fs->mirror(__DIR__.'/Fixture/moodle-local_ci', $this->pluginDir);
+        $this->fs->mirror(__DIR__ . '/Fixture/moodle', $this->moodleDir);
+        $this->fs->mirror(__DIR__ . '/Fixture/moodle-local_ci', $this->pluginDir);
     }
 }

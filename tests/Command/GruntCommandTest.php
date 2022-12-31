@@ -29,7 +29,7 @@ class GruntCommandTest extends MoodleTestCase
         $command            = new GruntCommand();
         $command->moodle    = new DummyMoodle($this->moodleDir);
         $command->execute   = new DummyExecute();
-        $command->backupDir = $this->tempDir.'/backup';
+        $command->backupDir = $this->tempDir . '/backup';
 
         $application = new Application();
         $application->add($command);
@@ -49,7 +49,7 @@ class GruntCommandTest extends MoodleTestCase
         $command            = new GruntCommand();
         $command->moodle    = new DummyMoodle($this->moodleDir);
         $command->plugin    = new DummyMoodlePlugin($this->pluginDir);
-        $command->backupDir = $this->tempDir.'/backup';
+        $command->backupDir = $this->tempDir . '/backup';
 
         return $command;
     }
@@ -68,9 +68,9 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertInstanceOf(GruntTaskModel::class, $task);
         $this->assertSame('amd', $task->taskName);
         $this->assertSame('amd/build', $task->buildDirectory);
-        $this->assertSame($this->pluginDir.'/amd', $task->workingDirectory);
+        $this->assertSame($this->pluginDir . '/amd', $task->workingDirectory);
 
-        $this->fs->remove($this->pluginDir.'/amd');
+        $this->fs->remove($this->pluginDir . '/amd');
 
         $this->assertNull($command->toGruntTask('amd'));
     }
@@ -83,15 +83,15 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertInstanceOf(GruntTaskModel::class, $task);
         $this->assertSame('yui', $task->taskName);
         $this->assertSame('yui/build', $task->buildDirectory);
-        $this->assertSame($this->pluginDir.'/yui/src', $task->workingDirectory);
+        $this->assertSame($this->pluginDir . '/yui/src', $task->workingDirectory);
 
         $task = $command->toGruntTask('shifter');
         $this->assertInstanceOf(GruntTaskModel::class, $task);
         $this->assertSame('shifter', $task->taskName);
         $this->assertSame('yui/build', $task->buildDirectory);
-        $this->assertSame($this->pluginDir.'/yui/src', $task->workingDirectory);
+        $this->assertSame($this->pluginDir . '/yui/src', $task->workingDirectory);
 
-        $this->fs->remove($this->pluginDir.'/yui');
+        $this->fs->remove($this->pluginDir . '/yui');
 
         $this->assertNull($command->toGruntTask('yui'));
         $this->assertNull($command->toGruntTask('shifter'));
@@ -100,8 +100,8 @@ class GruntCommandTest extends MoodleTestCase
     public function testToGruntTaskWithLegacyYUI()
     {
         $command = $this->newCommand();
-        $this->fs->remove($this->pluginDir.'/yui/src');
-        $this->fs->touch($this->pluginDir.'/yui/examplejs');
+        $this->fs->remove($this->pluginDir . '/yui/src');
+        $this->fs->touch($this->pluginDir . '/yui/examplejs');
 
         $this->assertNull($command->toGruntTask('yui'));
         $this->assertNull($command->toGruntTask('shifter'));
@@ -127,7 +127,7 @@ class GruntCommandTest extends MoodleTestCase
 
         $this->assertInstanceOf(GruntTaskModel::class, $command->toGruntTask('gherkinlint'), 'Should work again');
 
-        $this->fs->remove($this->pluginDir.'/tests/behat');
+        $this->fs->remove($this->pluginDir . '/tests/behat');
 
         $this->assertNull($command->toGruntTask('gherkinlint'));
     }
@@ -142,7 +142,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame('', $task->buildDirectory);
         $this->assertSame($this->moodleDir, $task->workingDirectory);
 
-        $this->fs->remove($this->pluginDir.'/styles.css');
+        $this->fs->remove($this->pluginDir . '/styles.css');
 
         $this->assertNull($command->toGruntTask('stylelint:css'));
         $this->assertNull($command->toGruntTask('stylelint:less'));
@@ -159,7 +159,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame('', $task->buildDirectory);
         $this->assertSame($this->moodleDir, $task->workingDirectory);
 
-        $this->fs->touch($this->pluginDir.'/Gruntfile.js');
+        $this->fs->touch($this->pluginDir . '/Gruntfile.js');
 
         $task = $command->toGruntTask('foo');
         $this->assertInstanceOf(GruntTaskModel::class, $task);
@@ -178,7 +178,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
         $this->assertSame('', $emptyOutput->fetch());
 
-        $this->fs->dumpFile($this->pluginDir.'/styles.css', 'changed');
+        $this->fs->dumpFile($this->pluginDir . '/styles.css', 'changed');
 
         $output = new BufferedOutput();
         $this->assertSame(1, $command->validatePluginFiles($output));
@@ -188,7 +188,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
         $this->assertSame('', $emptyOutput->fetch());
 
-        $this->fs->remove($this->pluginDir.'/amd/build/keys.min.js');
+        $this->fs->remove($this->pluginDir . '/amd/build/keys.min.js');
 
         $output = new BufferedOutput();
         $this->assertSame(1, $command->validatePluginFiles($output));
@@ -198,7 +198,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
         $this->assertSame('', $emptyOutput->fetch());
 
-        $this->fs->touch($this->pluginDir.'/amd/build/new.min.js');
+        $this->fs->touch($this->pluginDir . '/amd/build/new.min.js');
 
         $output = new BufferedOutput();
         $this->assertSame(1, $command->validatePluginFiles($output));
@@ -208,7 +208,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
         $this->assertSame('', $emptyOutput->fetch());
 
-        $this->fs->remove($this->pluginDir.'/amd/build/keys.min.js.map');
+        $this->fs->remove($this->pluginDir . '/amd/build/keys.min.js.map');
 
         $output = new BufferedOutput();
         $this->assertSame(1, $command->validatePluginFiles($output));
@@ -218,7 +218,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame(0, $command->validatePluginFiles($emptyOutput));
         $this->assertSame('', $emptyOutput->fetch());
 
-        $this->fs->touch($this->pluginDir.'/amd/build/new.min.js.map');
+        $this->fs->touch($this->pluginDir . '/amd/build/new.min.js.map');
 
         $output = new BufferedOutput();
         $this->assertSame(1, $command->validatePluginFiles($output));

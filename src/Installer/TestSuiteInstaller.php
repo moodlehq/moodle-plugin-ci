@@ -44,7 +44,7 @@ class TestSuiteInstaller extends AbstractInstaller
      */
     private function getBehatUtility(): string
     {
-        return $this->moodle->directory.'/admin/tool/behat/cli/util_single_run.php';
+        return $this->moodle->directory . '/admin/tool/behat/cli/util_single_run.php';
     }
 
     public function install(): void
@@ -148,14 +148,14 @@ class TestSuiteInstaller extends AbstractInstaller
      */
     public function injectPHPUnitFilter(): void
     {
-        $config = $this->plugin->directory.'/phpunit.xml';
+        $config = $this->plugin->directory . '/phpunit.xml';
         if (!is_file($config)) {
             return;
         }
 
         // If the plugin already has a tests/coverage.php file, then phpunit.xml filter/coverage
         // section is already configured following it. Nothing to do here.
-        $coverage = $this->plugin->directory.'/tests/coverage.php';
+        $coverage = $this->plugin->directory . '/tests/coverage.php';
         // If the file exists and we are Moodle >= 3.7.
         // TODO: Remove the branch condition when 3.6 becomes unsupported by moodle-local-ci.
         if ($this->moodle->getBranch() >= 37 && is_readable($coverage)) {
@@ -176,7 +176,7 @@ class TestSuiteInstaller extends AbstractInstaller
 
         // Or if no existing filter, inject the filter.
         if ($count === 0) {
-            $contents  = str_replace('</phpunit>', $filterXml.'</phpunit>', $subject, $count);
+            $contents  = str_replace('</phpunit>', $filterXml . '</phpunit>', $subject, $count);
         }
 
         if ($count !== 1) {
@@ -210,7 +210,7 @@ class TestSuiteInstaller extends AbstractInstaller
 
         $this->plugin->context = ''; // Revert.
 
-        return $this->removeDbFiles($this->plugin->directory.'/db', $files);
+        return $this->removeDbFiles($this->plugin->directory . '/db', $files);
     }
 
     /**
@@ -233,7 +233,7 @@ class TestSuiteInstaller extends AbstractInstaller
             ->notName('upgradelib.php');
 
         foreach ($dbFiles as $dbFile) {
-            $key = array_search('db/'.$dbFile->getRelativePathname(), $files, true);
+            $key = array_search('db/' . $dbFile->getRelativePathname(), $files, true);
 
             if ($key !== false) {
                 unset($files[$key]);

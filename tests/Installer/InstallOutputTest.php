@@ -45,7 +45,7 @@ class InstallOutputTest extends \PHPUnit\Framework\TestCase
         $installOutput  = new InstallOutput(new ConsoleLogger($bufferedOutput));
 
         $installOutput->info('Testing log');
-        $this->assertSame('[info] Testing log'.PHP_EOL, $bufferedOutput->fetch());
+        $this->assertSame('[info] Testing log' . PHP_EOL, $bufferedOutput->fetch());
     }
 
     public function testQuietLogInfo()
@@ -63,7 +63,7 @@ class InstallOutputTest extends \PHPUnit\Framework\TestCase
         $installOutput  = new InstallOutput(new ConsoleLogger($bufferedOutput));
 
         $installOutput->debug('Testing log');
-        $this->assertSame('[debug] Testing log'.PHP_EOL, $bufferedOutput->fetch());
+        $this->assertSame('[debug] Testing log' . PHP_EOL, $bufferedOutput->fetch());
     }
 
     public function testQuietLogDebug()

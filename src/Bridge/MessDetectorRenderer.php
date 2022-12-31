@@ -69,7 +69,7 @@ class MessDetectorRenderer extends AbstractRenderer
             }
 
             $this->output->writeln([
-                sprintf('<fg=white;options=bold>FILE: %s</>', str_replace($this->basePath.'/', '', $file)),
+                sprintf('<fg=white;options=bold>FILE: %s</>', str_replace($this->basePath . '/', '', $file)),
                 sprintf('<fg=white;options=bold>FOUND %d ERRORS AND %d VIOLATIONS</>', $errorCount, $violationCount),
             ]);
             $table->render();

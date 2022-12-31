@@ -19,7 +19,7 @@ class CapabilityFinderTest extends \PHPUnit\Framework\TestCase
 {
     public function testFindTokens()
     {
-        $file       = __DIR__.'/../../Fixture/moodle-local_ci/db/access.php';
+        $file       = __DIR__ . '/../../Fixture/moodle-local_ci/db/access.php';
         $fileTokens = FileTokens::create('db/access.php')->mustHave('local/travis:view');
 
         $finder = new CapabilityFinder();

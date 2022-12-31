@@ -53,14 +53,14 @@ class SavePointsCommandTest extends MoodleTestCase
 
     public function testExecuteNoUpgradeFile()
     {
-        $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
+        $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
     public function testExecuteFail()
     {
-        $this->fs->copy(__DIR__.'/../Fixture/broken-upgrade.php', $this->pluginDir.'/db/upgrade.php', true);
+        $this->fs->copy(__DIR__ . '/../Fixture/broken-upgrade.php', $this->pluginDir . '/db/upgrade.php', true);
         $commandTester = $this->executeCommand();
         $this->assertSame(1, $commandTester->getStatusCode());
     }

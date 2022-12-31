@@ -20,7 +20,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
     {
         $validate = new Validate();
         $this->assertSame(__DIR__, $validate->directory(__DIR__));
-        $this->assertSame(__DIR__.'/..', $validate->directory(__DIR__.'/..'));
+        $this->assertSame(__DIR__ . '/..', $validate->directory(__DIR__ . '/..'));
     }
 
     public function testDirectoryRealPathFail()
@@ -41,7 +41,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
     {
         $validate = new Validate();
         $this->assertSame(__FILE__, $validate->filePath(__FILE__));
-        $this->assertSame(__DIR__.'/../README.md', $validate->filePath(__DIR__.'/../README.md'));
+        $this->assertSame(__DIR__ . '/../README.md', $validate->filePath(__DIR__ . '/../README.md'));
     }
 
     public function testFilePathRealPathFail()

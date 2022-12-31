@@ -45,8 +45,8 @@ if (true) {
 EOT;
 
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
-        $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
-        $this->fs->dumpFile($this->pluginDir.'/fixable.php', $content);
+        $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($config));
+        $this->fs->dumpFile($this->pluginDir . '/fixable.php', $content);
     }
 
     protected function executeCommand($pluginDir = null)
@@ -94,13 +94,13 @@ if (true) {
 }
 
 EOT;
-        $this->assertSame($expected, file_get_contents($this->pluginDir.'/fixable.php'));
+        $this->assertSame($expected, file_get_contents($this->pluginDir . '/fixable.php'));
     }
 
     public function testExecuteNoFiles()
     {
         // Just random directory with no PHP files.
-        $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
+        $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');
         $this->assertSame(0, $commandTester->getStatusCode());
 
         $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());

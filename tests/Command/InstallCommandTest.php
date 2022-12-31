@@ -26,7 +26,7 @@ class InstallCommandTest extends MoodleTestCase
 {
     protected function executeCommand(): CommandTester
     {
-        $command          = new InstallCommand($this->tempDir.'/.env');
+        $command          = new InstallCommand($this->tempDir . '/.env');
         $command->install = new DummyInstall(new InstallOutput());
 
         $application = new Application();
@@ -34,9 +34,9 @@ class InstallCommandTest extends MoodleTestCase
 
         $commandTester = new CommandTester($application->find('install'));
         $commandTester->execute([
-            '--moodle'        => $this->tempDir.'/moodle',
+            '--moodle'        => $this->tempDir . '/moodle',
             '--plugin'        => $this->pluginDir,
-            '--data'          => $this->tempDir.'/moodledata',
+            '--data'          => $this->tempDir . '/moodledata',
             '--branch'        => 'MOODLE_29_STABLE',
             '--db-type'       => 'mysqli',
             '--extra-plugins' => $this->tempDir, // Not accurate, but tests more code.
@@ -59,7 +59,7 @@ class InstallCommandTest extends MoodleTestCase
      */
     public function testCsvToArray($value, array $expected)
     {
-        $command = new InstallCommand($this->tempDir.'/.env');
+        $command = new InstallCommand($this->tempDir . '/.env');
         $this->assertSame($expected, $command->csvToArray($value), "Converting this value: '$value'");
     }
 
@@ -68,7 +68,7 @@ class InstallCommandTest extends MoodleTestCase
         putenv('PHPLINT_IGNORE_NAMES=foo.php,bar.php');
         putenv('PHPLINT_IGNORE_PATHS=bat,fiz/buz');
 
-        $command          = new InstallCommand($this->tempDir.'/.env');
+        $command          = new InstallCommand($this->tempDir . '/.env');
         $command->install = new DummyInstall(new InstallOutput());
 
         $lintCommand         = new PHPLintCommand();
@@ -78,7 +78,7 @@ class InstallCommandTest extends MoodleTestCase
         $application->add($command);
         $application->add($lintCommand);
 
-        $actual = $this->tempDir.'/config.yml';
+        $actual = $this->tempDir . '/config.yml';
 
         $input  = new ArrayInput(['--not-paths' => 'global/path', '--not-names' => 'global_name.php'], $command->getDefinition());
         $dumper = $command->initializePluginConfigDumper($input);

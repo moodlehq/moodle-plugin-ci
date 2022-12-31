@@ -24,32 +24,32 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         // Example output from installing Moodle with debugging message.
-        $this->outputWithDebugging = '-->System\n'.
-            '++ Success ++\n'.
-            '-->availability_completion\n'.
-            '++ Success ++\n'.
-            '-->availability_date\n'.
-            '++ Success ++\n'.
-            '++ Test debugging messages ++\n'.
-            '* line 27 of /local/travis/version.php: call to debugging()\n'.
-            '* line 448 of /lib/upgradelib.php: call to require()\n'.
-            '* line 1630 of /lib/upgradelib.php: call to upgrade_plugins()\n'.
-            '* line 486 of /lib/installlib.php: call to upgrade_noncore()\n'.
-            '* line 443 of /lib/phpunit/classes/util.php: call to install_cli_database()\n'.
-            '* line 150 of /admin/tool/phpunit/cli/util.php: call to phpunit_util::install_site()\n'.
-            '-->availability_grade\n'.
-            '++ Success ++\n'.
+        $this->outputWithDebugging = '-->System\n' .
+            '++ Success ++\n' .
+            '-->availability_completion\n' .
+            '++ Success ++\n' .
+            '-->availability_date\n' .
+            '++ Success ++\n' .
+            '++ Test debugging messages ++\n' .
+            '* line 27 of /local/travis/version.php: call to debugging()\n' .
+            '* line 448 of /lib/upgradelib.php: call to require()\n' .
+            '* line 1630 of /lib/upgradelib.php: call to upgrade_plugins()\n' .
+            '* line 486 of /lib/installlib.php: call to upgrade_noncore()\n' .
+            '* line 443 of /lib/phpunit/classes/util.php: call to install_cli_database()\n' .
+            '* line 150 of /admin/tool/phpunit/cli/util.php: call to phpunit_util::install_site()\n' .
+            '-->availability_grade\n' .
+            '++ Success ++\n' .
             '-->availability_group\n';
 
         // Example output from installing Moodle.
-        $this->outputWithoutDebugging = '-->System\n'.
-            '++ Success ++\n'.
-            '-->availability_completion\n'.
-            '++ Success ++\n'.
-            '-->availability_date\n'.
-            '++ Success ++\n'.
-            '-->availability_grade\n'.
-            '++ Success ++\n'.
+        $this->outputWithoutDebugging = '-->System\n' .
+            '++ Success ++\n' .
+            '-->availability_completion\n' .
+            '++ Success ++\n' .
+            '-->availability_date\n' .
+            '++ Success ++\n' .
+            '-->availability_grade\n' .
+            '++ Success ++\n' .
             '-->availability_group\n';
     }
 

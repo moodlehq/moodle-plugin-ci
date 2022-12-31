@@ -42,8 +42,8 @@ class CodeFixerCommand extends CodeCheckerCommand
         }
 
         $cmd = [
-            'php', __DIR__.'/../../vendor/squizlabs/php_codesniffer/bin/phpcbf',
-            '--standard='.($input->getOption('standard') ?: 'moodle'),
+            'php', __DIR__ . '/../../vendor/squizlabs/php_codesniffer/bin/phpcbf',
+            '--standard=' . ($input->getOption('standard') ?: 'moodle'),
             '--extensions=php',
             '-p',
             '-w',

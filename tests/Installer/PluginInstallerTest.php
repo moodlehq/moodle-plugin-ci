@@ -25,14 +25,14 @@ class PluginInstallerTest extends FilesystemTestCase
 {
     public function testInstall()
     {
-        $fixture   = __DIR__.'/../Fixture/moodle-local_ci';
+        $fixture   = __DIR__ . '/../Fixture/moodle-local_ci';
         $plugin    = new MoodlePlugin($fixture);
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installer->install();
 
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
 
-        $installDir = $this->tempDir.'/local/travis';
+        $installDir = $this->tempDir . '/local/travis';
 
         $this->assertSame($installDir, $plugin->directory, 'Plugin directory should be absolute path after install');
         $this->assertSame(['PLUGIN_DIR' => $installDir], $installer->getEnv());
@@ -40,7 +40,7 @@ class PluginInstallerTest extends FilesystemTestCase
 
     public function testInstallPluginIntoMoodle()
     {
-        $fixture    = realpath(__DIR__.'/../Fixture/moodle-local_ci');
+        $fixture    = realpath(__DIR__ . '/../Fixture/moodle-local_ci');
         $plugin     = new MoodlePlugin($fixture);
         $installer  = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installDir = $installer->installPluginIntoMoodle($plugin);
@@ -52,7 +52,7 @@ class PluginInstallerTest extends FilesystemTestCase
 
         /* @var \SplFileInfo $file */
         foreach ($finder as $file) {
-            $path = str_replace($fixture, $this->tempDir.'/local/travis', $file->getPathname());
+            $path = str_replace($fixture, $this->tempDir . '/local/travis', $file->getPathname());
 
             $this->assertFileExists($path);
             $this->assertFileEquals($file->getPathname(), $path);
@@ -63,9 +63,9 @@ class PluginInstallerTest extends FilesystemTestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $this->fs->mkdir($this->tempDir.'/local/travis');
+        $this->fs->mkdir($this->tempDir . '/local/travis');
 
-        $fixture   = realpath(__DIR__.'/../Fixture/moodle-local_ci');
+        $fixture   = realpath(__DIR__ . '/../Fixture/moodle-local_ci');
         $plugin    = new MoodlePlugin($fixture);
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, '', new ConfigDumper());
         $installer->installPluginIntoMoodle($plugin);
@@ -73,7 +73,7 @@ class PluginInstallerTest extends FilesystemTestCase
 
     public function testCreateIgnoreFile()
     {
-        $filename = $this->tempDir.'/.moodle-plugin-ci.yml';
+        $filename = $this->tempDir . '/.moodle-plugin-ci.yml';
         $expected = ['filter' => [
             'notPaths' => ['foo/bar', 'very/bad.php'],
             'notNames' => ['*-m.js', 'bad.php'],
@@ -92,9 +92,9 @@ class PluginInstallerTest extends FilesystemTestCase
 
     public function testScanForPlugins()
     {
-        $fixture = __DIR__.'/../Fixture/moodle-local_ci';
+        $fixture = __DIR__ . '/../Fixture/moodle-local_ci';
 
-        $this->fs->mirror($fixture, $this->tempDir.'/moodle-local_ci');
+        $this->fs->mirror($fixture, $this->tempDir . '/moodle-local_ci');
 
         $plugin    = new MoodlePlugin($fixture);
         $installer = new PluginInstaller(new DummyMoodle($this->tempDir), $plugin, $this->tempDir, new ConfigDumper());

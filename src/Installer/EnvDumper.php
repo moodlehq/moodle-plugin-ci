@@ -30,7 +30,7 @@ class EnvDumper
         }
         $content = '';
         foreach ($values as $name => $value) {
-            $content .= sprintf('%s=%s', $name, $value).PHP_EOL;
+            $content .= sprintf('%s=%s', $name, $value) . PHP_EOL;
         }
 
         $filesystem = new Filesystem();

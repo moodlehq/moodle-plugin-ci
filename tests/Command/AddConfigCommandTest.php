@@ -23,7 +23,7 @@ class AddConfigCommandTest extends FilesystemTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->fs->copy(__DIR__.'/../Fixture/example-config.php', $this->tempDir.'/config.php');
+        $this->fs->copy(__DIR__ . '/../Fixture/example-config.php', $this->tempDir . '/config.php');
     }
 
     protected function executeCommand($line = '$CFG->foo = "bar";')
@@ -36,7 +36,7 @@ class AddConfigCommandTest extends FilesystemTestCase
 
         $commandTester = new CommandTester($application->find('add-config'));
         $commandTester->execute([
-            '--moodle' => $this->tempDir.'/moodle',
+            '--moodle' => $this->tempDir . '/moodle',
             'line'     => $line,
         ]);
 
@@ -47,7 +47,7 @@ class AddConfigCommandTest extends FilesystemTestCase
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/\$CFG->foo = "bar";\n/', file_get_contents($this->tempDir.'/config.php'));
+        $this->assertMatchesRegularExpression('/\$CFG->foo = "bar";\n/', file_get_contents($this->tempDir . '/config.php'));
     }
 
     public function testExecuteSyntaxError()

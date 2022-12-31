@@ -31,7 +31,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         parent::setUp();
 
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
-        $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
+        $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
     protected function executeCommand($pluginDir = null, $maxWarnings = -1): CommandTester
@@ -90,7 +90,7 @@ class test {
 } // No EOL @ EOF on purpose to verify it's detected.
 EOT;
 
-        $this->fs->dumpFile($this->pluginDir.'/fixable.php', $content);
+        $this->fs->dumpFile($this->pluginDir . '/fixable.php', $content);
 
         $commandTester = $this->executeCommand($this->pluginDir);
         $this->assertSame(1, $commandTester->getStatusCode());
@@ -122,7 +122,7 @@ print_error();
 
 EOT;
 
-        $this->fs->dumpFile($this->pluginDir.'/warnings.php', $content);
+        $this->fs->dumpFile($this->pluginDir . '/warnings.php', $content);
 
         // By default it passes.
         $commandTester = $this->executeCommand($this->pluginDir);
@@ -148,7 +148,7 @@ EOT;
     public function testExecuteNoFiles()
     {
         // Just random directory with no PHP files.
-        $commandTester = $this->executeCommand($this->pluginDir.'/tests/behat');
+        $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }

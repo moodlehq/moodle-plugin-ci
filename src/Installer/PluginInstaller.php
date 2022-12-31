@@ -56,7 +56,7 @@ class PluginInstaller extends AbstractInstaller
 
             if ($plugin->getComponent() === $this->plugin->getComponent()) {
                 $this->addEnv('PLUGIN_DIR', $directory);
-                $this->createConfigFile($directory.'/.moodle-plugin-ci.yml');
+                $this->createConfigFile($directory . '/.moodle-plugin-ci.yml');
 
                 // Update plugin so other installers use the installed path.
                 $this->plugin->directory = $directory;
@@ -128,7 +128,7 @@ class PluginInstaller extends AbstractInstaller
             return;
         }
         $this->configDumper->dump($toFile);
-        $this->getOutput()->debug('Created config file at '.$toFile);
+        $this->getOutput()->debug('Created config file at ' . $toFile);
     }
 
     public function stepCount(): int

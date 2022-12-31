@@ -55,12 +55,12 @@ class MustacheCommandTest extends MoodleTestCase
     public function testExecuteNoPlugin()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->executeCommand($this->moodleDir.'/no/plugin');
+        $this->executeCommand($this->moodleDir . '/no/plugin');
     }
 
     public function testExecuteNoMoodle()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->executeCommand($this->moodleDir.'/no/moodle');
+        $this->executeCommand($this->moodleDir . '/no/moodle');
     }
 }

@@ -42,6 +42,7 @@ return (new PhpCsFixer\Config())
         'strict_comparison'                     => true,
         'strict_param'                          => true,
         'binary_operator_spaces'                => ['operators' => ['=' => 'align', '=>' => 'align']],
+        'concat_space'                          => ['spacing' => 'one'],
         'align_multiline_comment'               => true,
         'yoda_style'                            => false,
         'compact_nullable_typehint'             => true,

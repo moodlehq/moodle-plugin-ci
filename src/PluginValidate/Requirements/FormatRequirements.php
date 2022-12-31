@@ -29,7 +29,7 @@ class FormatRequirements extends GenericRequirements
     public function getRequiredClasses(): array
     {
         return [
-            FileTokens::create('renderer.php')->mustHave('format_'.$this->plugin->name.'_renderer'),
+            FileTokens::create('renderer.php')->mustHave('format_' . $this->plugin->name . '_renderer'),
         ];
     }
 }

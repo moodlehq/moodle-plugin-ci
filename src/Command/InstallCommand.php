@@ -186,17 +186,17 @@ class InstallCommand extends Command
             }
 
             $prefix   = strtoupper($command->getName());
-            $envPaths = $prefix.'_IGNORE_PATHS';
-            $envNames = $prefix.'_IGNORE_NAMES';
+            $envPaths = $prefix . '_IGNORE_PATHS';
+            $envNames = $prefix . '_IGNORE_NAMES';
 
             $paths = getenv($envPaths) !== false ? getenv($envPaths) : null;
             $names = getenv($envNames) !== false ? getenv($envNames) : null;
 
             if (!empty($paths)) {
-                $dumper->addSection('filter-'.$command->getName(), 'notPaths', $this->csvToArray($paths));
+                $dumper->addSection('filter-' . $command->getName(), 'notPaths', $this->csvToArray($paths));
             }
             if (!empty($names)) {
-                $dumper->addSection('filter-'.$command->getName(), 'notNames', $this->csvToArray($names));
+                $dumper->addSection('filter-' . $command->getName(), 'notNames', $this->csvToArray($names));
             }
         }
 

@@ -23,7 +23,7 @@ class MoodleInstallerTest extends MoodleTestCase
 {
     public function testInstall()
     {
-        $dataDir   = $this->tempDir.'/moodledata';
+        $dataDir   = $this->tempDir . '/moodledata';
         $moodle    = new DummyMoodle($this->moodleDir);
         $installer = new MoodleInstaller(
             new DummyExecute(),
@@ -39,9 +39,9 @@ class MoodleInstallerTest extends MoodleTestCase
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
 
         $this->assertTrue(is_dir($dataDir));
-        $this->assertTrue(is_dir($dataDir.'/phpu_moodledata'));
-        $this->assertTrue(is_dir($dataDir.'/behat_moodledata'));
-        $this->assertTrue(is_file($this->tempDir.'/config.php'));
+        $this->assertTrue(is_dir($dataDir . '/phpu_moodledata'));
+        $this->assertTrue(is_dir($dataDir . '/behat_moodledata'));
+        $this->assertTrue(is_file($this->tempDir . '/config.php'));
         $this->assertSame($this->tempDir, $moodle->directory, 'Moodle directory should be absolute path after install');
         $this->assertSame(['MOODLE_DIR' => $this->tempDir], $installer->getEnv());
     }

@@ -21,7 +21,7 @@ class MoodleDebugException extends \RuntimeException
 {
     public function __construct(Process $process)
     {
-        $error = sprintf('Moodle debugging message was detected when running this command:'.PHP_EOL.'  %s'.PHP_EOL.
+        $error = sprintf('Moodle debugging message was detected when running this command:' . PHP_EOL . '  %s' . PHP_EOL .
             'Moodle scripts should run without any debugging messages.',
             $process->getCommandLine()
         );

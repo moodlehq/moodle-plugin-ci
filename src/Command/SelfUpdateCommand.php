@@ -80,7 +80,7 @@ class SelfUpdateCommand extends Command
             }
             exit(0);
         } catch (\Exception $e) {
-            $output->writeln('Exception: '.$e->getMessage().PHP_EOL.$e->getTraceAsString());
+            $output->writeln('Exception: ' . $e->getMessage() . PHP_EOL . $e->getTraceAsString());
             exit(1);
         }
     }
@@ -98,6 +98,6 @@ class SelfUpdateCommand extends Command
 
         (new Filesystem())->mkdir($directory);
 
-        return $directory.'/moodle-plugin-ci-old.phar';
+        return $directory . '/moodle-plugin-ci-old.phar';
     }
 }

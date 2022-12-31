@@ -21,7 +21,7 @@ class FilesystemTestCase extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->tempDir = sys_get_temp_dir().'/moodle-plugin-ci/FilesystemTestCase'.time();
+        $this->tempDir = sys_get_temp_dir() . '/moodle-plugin-ci/FilesystemTestCase' . time();
 
         $this->fs = new Filesystem();
         $this->fs->mkdir($this->tempDir);
@@ -36,7 +36,7 @@ class FilesystemTestCase extends \PHPUnit\Framework\TestCase
 
     protected function dumpFile($relativePath, $content): string
     {
-        $path = $this->tempDir.'/'.$relativePath;
+        $path = $this->tempDir . '/' . $relativePath;
         $this->fs->dumpFile($path, $content);
 
         return $path;

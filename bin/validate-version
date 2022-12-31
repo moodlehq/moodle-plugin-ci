@@ -16,23 +16,23 @@
  */
 
 // We need the moodle-plugin-ci binary, error if not found.
-$binary = __DIR__.'/moodle-plugin-ci';
+$binary = __DIR__ . '/moodle-plugin-ci';
 if (!is_readable($binary)) {
-    fwrite(STDERR, 'Failed to find moodle-plugin-ci binary (usually under the bin directory).'.PHP_EOL);
+    fwrite(STDERR, 'Failed to find moodle-plugin-ci binary (usually under the bin directory).' . PHP_EOL);
     exit(1);
 }
 
 // We need the docs/CHANGELOG.md, error if not found.
-$changelog = dirname(__DIR__).'/docs/CHANGELOG.md';
+$changelog = dirname(__DIR__) . '/docs/CHANGELOG.md';
 if (!is_readable($changelog)) {
-    fwrite(STDERR, 'Failed to find CHANGELOG.md (usually under the docs directory).'.PHP_EOL);
+    fwrite(STDERR, 'Failed to find CHANGELOG.md (usually under the docs directory).' . PHP_EOL);
     exit(1);
 }
 
 // Extract the version from the binary, error if not found.
 $regexp = '~^define\(\'MOODLE_PLUGIN_CI_VERSION\', *[\'"](\d+\.\d+\.\d+)[\'"].*$~m';
 if (!preg_match($regexp, file_get_contents($binary), $binaryMatches)) {
-    fwrite(STDERR, 'Failed to parse moodle-plugin-ci looking for a version.'.PHP_EOL);
+    fwrite(STDERR, 'Failed to parse moodle-plugin-ci looking for a version.' . PHP_EOL);
     exit(1);
 }
 $binaryVersion = $binaryMatches[1];
@@ -40,27 +40,27 @@ $binaryVersion = $binaryMatches[1];
 // Extract the version from the change log, error if not found.
 $regexp = '~^## *\[(\d+\.\d+\.\d+)\] *\-* *\d{4}\-\d{1,2}\-\d{1,2}$~m';
 if (!preg_match($regexp, file_get_contents($changelog), $changelogMatches)) {
-    fwrite(STDERR, 'Failed to parse CHANGELOG.md looking for a version.'.PHP_EOL);
+    fwrite(STDERR, 'Failed to parse CHANGELOG.md looking for a version.' . PHP_EOL);
     exit(1);
 }
 $changelogVersion = $changelogMatches[1];
 
 // Version in change log > binary, error.
 if (version_compare($changelogVersion, $binaryVersion, '>')) {
-    fwrite(STDERR, 'Version in docs/CHANGELOG.md ('.
-        $changelogVersion.') is newer than version in bin/moodle-plugin-ci ('.
-        $binaryVersion.'). Please, check!'.PHP_EOL);
+    fwrite(STDERR, 'Version in docs/CHANGELOG.md (' .
+        $changelogVersion . ') is newer than version in bin/moodle-plugin-ci (' .
+        $binaryVersion . '). Please, check!' . PHP_EOL);
     exit(1);
 }
 
 // Version in change log < binary, error.
 if (version_compare($changelogVersion, $binaryVersion, '<')) {
-    fwrite(STDERR, 'Version in docs/CHANGELOG.md ('.
-        $changelogVersion.') is older than version in bin/moodle-plugin-ci ('.
-        $binaryVersion.'). Please, check!'.PHP_EOL);
+    fwrite(STDERR, 'Version in docs/CHANGELOG.md (' .
+        $changelogVersion . ') is older than version in bin/moodle-plugin-ci (' .
+        $binaryVersion . '). Please, check!' . PHP_EOL);
     exit(1);
 }
 
 // Arrived here, versions match, all ok.
-fwrite(STDOUT, 'Matching version found: '.$changelogVersion.PHP_EOL);
+fwrite(STDOUT, 'Matching version found: ' . $changelogVersion . PHP_EOL);
 exit(0);

@@ -45,7 +45,7 @@ class PHPDocCommand extends AbstractMoodleCommand
         $this->outputHeading($output, 'Moodle PHPDoc Checker on %s');
 
         // We need local_moodlecheck plugin to run this check.
-        $pluginlocation  = __DIR__.'/../../vendor/moodlehq/moodle-local_moodlecheck';
+        $pluginlocation  = __DIR__ . '/../../vendor/moodlehq/moodle-local_moodlecheck';
         $plugin          = new MoodlePlugin($pluginlocation);
         $directory       = $this->moodle->getComponentInstallDirectory($plugin->getComponent());
         if (!is_dir($directory)) {
@@ -63,7 +63,7 @@ class PHPDocCommand extends AbstractMoodleCommand
             ProcessBuilder::create()
                 ->setPrefix('php')
                 ->add('local/moodlecheck/cli/moodlecheck.php')
-                ->add('-p='.implode(',', $files))
+                ->add('-p=' . implode(',', $files))
                 ->add('-f=text')
                 ->setTimeout(null)
                 ->setWorkingDirectory($this->moodle->directory)

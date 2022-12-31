@@ -37,7 +37,7 @@ class Vendors
     public function __construct($path)
     {
         if (!is_file($path)) {
-            throw new \InvalidArgumentException('Path does not exist: '.$path);
+            throw new \InvalidArgumentException('Path does not exist: ' . $path);
         }
         $this->path = $path;
         $this->xml  = simplexml_load_file($this->path);
@@ -54,7 +54,7 @@ class Vendors
         $paths = [];
         foreach ($this->xml->xpath('/libraries/library/location') as $location) {
             $location = trim((string) $location, '/');
-            $location = $base.'/'.$location;
+            $location = $base . '/' . $location;
 
             if (strpos($location, '*') !== false) {
                 $locations = glob($location);
@@ -79,7 +79,7 @@ class Vendors
      */
     public function getRelativeVendorPaths()
     {
-        $base = dirname($this->path).'/';
+        $base = dirname($this->path) . '/';
 
         return array_map(function ($path) use ($base) {
             return str_replace($base, '', $path);

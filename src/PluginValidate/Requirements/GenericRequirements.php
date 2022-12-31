@@ -23,7 +23,7 @@ class GenericRequirements extends AbstractRequirements
 {
     protected function getLangFile(): string
     {
-        return 'lang/en/'.$this->plugin->component.'.php';
+        return 'lang/en/' . $this->plugin->component . '.php';
     }
 
     public function getRequiredFiles(): array
@@ -37,7 +37,7 @@ class GenericRequirements extends AbstractRequirements
     public function getRequiredFunctions(): array
     {
         return [
-            FileTokens::create('db/upgrade.php')->mustHave('xmldb_'.$this->plugin->component.'_upgrade'),
+            FileTokens::create('db/upgrade.php')->mustHave('xmldb_' . $this->plugin->component . '_upgrade'),
         ];
     }
 
@@ -68,6 +68,6 @@ class GenericRequirements extends AbstractRequirements
 
     public function getRequiredBehatTags(): array
     {
-        return $this->behatTagsFactory(['@'.$this->plugin->type, '@'.$this->plugin->component]);
+        return $this->behatTagsFactory(['@' . $this->plugin->type, '@' . $this->plugin->component]);
     }
 }

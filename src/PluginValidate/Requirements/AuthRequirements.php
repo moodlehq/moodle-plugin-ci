@@ -29,7 +29,7 @@ class AuthRequirements extends GenericRequirements
     public function getRequiredClasses(): array
     {
         return [
-            FileTokens::create('auth.php')->mustHave('auth_plugin_'.$this->plugin->name),
+            FileTokens::create('auth.php')->mustHave('auth_plugin_' . $this->plugin->name),
         ];
     }
 }

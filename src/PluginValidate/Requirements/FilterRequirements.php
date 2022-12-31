@@ -29,7 +29,7 @@ class FilterRequirements extends GenericRequirements
     public function getRequiredClasses(): array
     {
         return [
-            FileTokens::create('filter.php')->mustHave('filter_'.$this->plugin->name),
+            FileTokens::create('filter.php')->mustHave('filter_' . $this->plugin->name),
         ];
     }
 

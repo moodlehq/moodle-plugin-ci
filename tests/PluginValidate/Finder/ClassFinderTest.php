@@ -19,7 +19,7 @@ class ClassFinderTest extends \PHPUnit\Framework\TestCase
 {
     public function testFindTokens()
     {
-        $file       = __DIR__.'/../../Fixture/moodle-local_ci/lib.php';
+        $file       = __DIR__ . '/../../Fixture/moodle-local_ci/lib.php';
         $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci_math');
 
         $finder = new ClassFinder();
@@ -30,7 +30,7 @@ class ClassFinderTest extends \PHPUnit\Framework\TestCase
 
     public function testFindTokensNameSpaceClass()
     {
-        $file       = __DIR__.'/../../Fixture/moodle-local_ci/classes/math.php';
+        $file       = __DIR__ . '/../../Fixture/moodle-local_ci/classes/math.php';
         $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci\math');
 
         $finder = new ClassFinder();

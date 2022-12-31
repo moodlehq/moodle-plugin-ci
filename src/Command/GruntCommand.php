@@ -74,12 +74,12 @@ class GruntCommand extends AbstractMoodleCommand
             }
 
             if (strlen($input->getOption('max-lint-warnings'))) {
-                $cmd[] = '--max-lint-warnings='.((int) $input->getOption('max-lint-warnings'));
+                $cmd[] = '--max-lint-warnings=' . ((int) $input->getOption('max-lint-warnings'));
             }
 
             // Remove build directory, so we can detect files that should be deleted.
             if (!empty($task->buildDirectory)) {
-                $files->remove($this->plugin->directory.'/'.$task->buildDirectory);
+                $files->remove($this->plugin->directory . '/' . $task->buildDirectory);
             }
 
             $process = $this->execute->passThroughProcess(new Process($cmd, $task->workingDirectory, null, null, null));
@@ -131,7 +131,7 @@ class GruntCommand extends AbstractMoodleCommand
         // Look for modified files or files that should be deleted.
         $files = Finder::create()->files()->in($this->backupDir)->name('*.js')->name('*.js.map')->name('*.css')->getIterator();
         foreach ($files as $file) {
-            $compareFile = $this->plugin->directory.'/'.$file->getRelativePathname();
+            $compareFile = $this->plugin->directory . '/' . $file->getRelativePathname();
             if (!file_exists($compareFile)) {
                 $output->writeln(sprintf('<error>File no longer generated and likely should be deleted: %s</error>', $file->getRelativePathname()));
                 $code = 1;
@@ -147,7 +147,7 @@ class GruntCommand extends AbstractMoodleCommand
         // Look for newly generated files.
         $files = Finder::create()->files()->in($this->plugin->directory)->name('*.js')->name('*.js.map')->name('*.css')->getIterator();
         foreach ($files as $file) {
-            if (!file_exists($this->backupDir.'/'.$file->getRelativePathname())) {
+            if (!file_exists($this->backupDir . '/' . $file->getRelativePathname())) {
                 $output->writeln(sprintf('<error>File is newly generated and needs to be added: %s</error>', $file->getRelativePathname()));
                 $code = 1;
             }
@@ -166,14 +166,14 @@ class GruntCommand extends AbstractMoodleCommand
     public function toGruntTask(string $task): ?GruntTaskModel
     {
         $workingDirectory = $this->moodle->directory;
-        if (is_file($this->plugin->directory.'/Gruntfile.js')) {
+        if (is_file($this->plugin->directory . '/Gruntfile.js')) {
             $workingDirectory = $this->plugin->directory;
         }
         $defaultTask = new GruntTaskModel($task, $workingDirectory);
 
         switch ($task) {
             case 'amd':
-                $amdDir = $this->plugin->directory.'/amd';
+                $amdDir = $this->plugin->directory . '/amd';
                 if (!is_dir($amdDir)) {
                     return null;
                 }
@@ -181,7 +181,7 @@ class GruntCommand extends AbstractMoodleCommand
                 return new GruntTaskModel($task, $amdDir, 'amd/build');
             case 'shifter':
             case 'yui':
-                $yuiDir = $this->plugin->directory.'/yui/src';
+                $yuiDir = $this->plugin->directory . '/yui/src';
                 if (!is_dir($yuiDir)) {
                     return null;
                 }

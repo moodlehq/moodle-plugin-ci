@@ -43,12 +43,12 @@ class VendorInstallerTest extends MoodleTestCase
         );
 
         // Remove .nvmrc
-        $this->fs->remove($this->moodleDir.'/.nvmrc');
+        $this->fs->remove($this->moodleDir . '/.nvmrc');
 
         // Expect .nvmrc containing legacy version of Node.
         $installer->installNode();
-        $this->assertTrue(is_file($this->moodleDir.'/.nvmrc'));
-        $this->assertSame('lts/carbon', file_get_contents($this->moodleDir.'/.nvmrc'));
+        $this->assertTrue(is_file($this->moodleDir . '/.nvmrc'));
+        $this->assertSame('lts/carbon', file_get_contents($this->moodleDir . '/.nvmrc'));
     }
 
     public function testInstallNodeUserVersion()
@@ -63,7 +63,7 @@ class VendorInstallerTest extends MoodleTestCase
         $installer->installNode();
 
         // Expect .nvmrc containing user specified version.
-        $this->assertTrue(is_file($this->moodleDir.'/.nvmrc'));
-        $this->assertSame($userVersion, file_get_contents($this->moodleDir.'/.nvmrc'));
+        $this->assertTrue(is_file($this->moodleDir . '/.nvmrc'));
+        $this->assertSame($userVersion, file_get_contents($this->moodleDir . '/.nvmrc'));
     }
 }

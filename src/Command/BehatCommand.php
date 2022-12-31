@@ -83,10 +83,10 @@ class BehatCommand extends AbstractMoodleCommand
 
         $cmd = [
             'php', 'admin/tool/behat/cli/run.php',
-            '--tags=@'.$this->plugin->getComponent(),
-            '--profile='.$input->getOption('profile'),
-            '--suite='.$input->getOption('suite'),
-            '--auto-rerun='.$input->getOption('auto-rerun'),
+            '--tags=@' . $this->plugin->getComponent(),
+            '--profile=' . $input->getOption('profile'),
+            '--suite=' . $input->getOption('suite'),
+            '--auto-rerun=' . $input->getOption('auto-rerun'),
             '--verbose',
             '-vvv',
         ];

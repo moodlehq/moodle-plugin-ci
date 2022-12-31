@@ -125,7 +125,7 @@ class PluginValidate
     public function findRequiredFiles(array $files): void
     {
         foreach ($files as $file) {
-            if (file_exists($this->plugin->directory.'/'.$file)) {
+            if (file_exists($this->plugin->directory . '/' . $file)) {
                 $this->addSuccess(sprintf('Found required file: %s', $file));
             } else {
                 $this->addError(sprintf('Failed to find required file: %s', $file));
@@ -145,7 +145,7 @@ class PluginValidate
             if (!$fileTokens->hasTokens()) {
                 continue;
             }
-            $file = $this->plugin->directory.'/'.$fileTokens->file;
+            $file = $this->plugin->directory . '/' . $fileTokens->file;
 
             if (!file_exists($file)) {
                 $this->addWarning(sprintf('Skipping validation of missing or optional file: %s', $fileTokens->file));

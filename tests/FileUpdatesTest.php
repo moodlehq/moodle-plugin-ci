@@ -18,7 +18,7 @@ class FileUpdatesTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertSame(
             '060fde69ff2cc75b70fe560c998735b80e2e0942',
-            sha1_file(__DIR__.'/../vendor/moodlehq/moodle-local_ci/package.json'),
+            sha1_file(__DIR__ . '/../vendor/moodlehq/moodle-local_ci/package.json'),
             'Check changes to vendor/moodlehq/moodle-local_ci/package.json and update MustacheCommand, etc if necessary'
         );
     }

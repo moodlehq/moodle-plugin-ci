@@ -59,7 +59,7 @@ class Moodle
             // Need this since Moodle will not be fully installed.
             define('ABORT_AFTER_CONFIG', true);
         }
-        $path = $this->directory.'/config.php';
+        $path = $this->directory . '/config.php';
 
         if (!is_file($path)) {
             throw new \RuntimeException('Failed to find Moodle config file');
@@ -109,7 +109,7 @@ class Moodle
             throw new \InvalidArgumentException(sprintf('The component %s has an unknown plugin type of %s', $component, $type));
         }
 
-        return $result[0][$type].'/'.$name;
+        return $result[0][$type] . '/' . $name;
     }
 
     /**
@@ -122,7 +122,7 @@ class Moodle
         $filter = new StatementFilter();
         $parser = new CodeParser();
 
-        $statements = $parser->parseFile($this->directory.'/version.php');
+        $statements = $parser->parseFile($this->directory . '/version.php');
         $assign     = $filter->findFirstVariableAssignment($statements, 'branch', 'Failed to find $branch in Moodle version.php');
 
         if ($assign->expr instanceof String_) {

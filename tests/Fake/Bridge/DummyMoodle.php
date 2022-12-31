@@ -33,7 +33,7 @@ class DummyMoodle extends Moodle
 
     public function getComponentInstallDirectory($component): string
     {
-        return $this->directory.'/local/travis';
+        return $this->directory . '/local/travis';
     }
 
     public function getBranch(): int

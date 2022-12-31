@@ -67,7 +67,7 @@ abstract class AbstractPluginCommand extends Command
     protected function outputSkip(OutputInterface $output, ?string $message = null): int
     {
         $message = $message ?: 'No relevant files found to process, free pass!';
-        $output->writeln('<info>'.$message.'</info>');
+        $output->writeln('<info>' . $message . '</info>');
 
         return 0;
     }

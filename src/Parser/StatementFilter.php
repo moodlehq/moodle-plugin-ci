@@ -69,7 +69,7 @@ class StatementFilter
 
         foreach ($this->filterNamespaces($statements) as $namespace) {
             foreach ($this->filterClasses($namespace->stmts) as $class) {
-                $names[] = $namespace->name.'\\'.$class->name;
+                $names[] = $namespace->name . '\\' . $class->name;
             }
         }
 

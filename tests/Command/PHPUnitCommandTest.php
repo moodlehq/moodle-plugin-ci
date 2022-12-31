@@ -54,7 +54,7 @@ class PHPUnitCommandTest extends MoodleTestCase
     public function testExecuteNoTests()
     {
         $fs = new Filesystem();
-        $fs->remove($this->pluginDir.'/tests/lib_test.php');
+        $fs->remove($this->pluginDir . '/tests/lib_test.php');
 
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -64,12 +64,12 @@ class PHPUnitCommandTest extends MoodleTestCase
     public function testExecuteNoPlugin()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->executeCommand($this->moodleDir.'/no/plugin');
+        $this->executeCommand($this->moodleDir . '/no/plugin');
     }
 
     public function testExecuteNoMoodle()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->executeCommand($this->moodleDir.'/no/moodle');
+        $this->executeCommand($this->moodleDir . '/no/moodle');
     }
 }

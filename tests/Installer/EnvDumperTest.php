@@ -19,11 +19,11 @@ class EnvDumperTest extends FilesystemTestCase
 {
     public function testDump()
     {
-        $toFile = $this->tempDir.'/.env';
+        $toFile = $this->tempDir . '/.env';
         $dumper = new EnvDumper();
         $dumper->dump(['TEST' => 'value', 'FOO' => 'bar'], $toFile);
 
-        $expected = 'TEST=value'.PHP_EOL.'FOO=bar'.PHP_EOL;
+        $expected = 'TEST=value' . PHP_EOL . 'FOO=bar' . PHP_EOL;
 
         $this->assertFileExists($toFile);
         $this->assertSame($expected, file_get_contents($toFile));
@@ -31,7 +31,7 @@ class EnvDumperTest extends FilesystemTestCase
 
     public function testNoDump()
     {
-        $toFile = $this->tempDir.'/.env';
+        $toFile = $this->tempDir . '/.env';
         $dumper = new EnvDumper();
         $dumper->dump([], $toFile);
 

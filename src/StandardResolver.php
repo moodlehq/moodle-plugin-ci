@@ -31,7 +31,7 @@ class StandardResolver
     {
         $defaultStandards = [
             'moodle' => [
-                __DIR__.'/../vendor/moodlehq/moodle-cs/moodle',
+                __DIR__ . '/../vendor/moodlehq/moodle-cs/moodle',
             ],
         ];
 
@@ -60,7 +60,7 @@ class StandardResolver
     public function resolve($name)
     {
         if (!$this->hasStandard($name)) {
-            throw new \InvalidArgumentException('Unknown coding standard: '.$name);
+            throw new \InvalidArgumentException('Unknown coding standard: ' . $name);
         }
 
         foreach ($this->standards[$name] as $location) {

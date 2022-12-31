@@ -22,7 +22,7 @@ class BlockRequirements extends GenericRequirements
     public function getRequiredFiles(): array
     {
         return array_merge(parent::getRequiredFiles(), [
-            $this->plugin->component.'.php',
+            $this->plugin->component . '.php',
             'db/access.php',
         ]);
     }
@@ -30,7 +30,7 @@ class BlockRequirements extends GenericRequirements
     public function getRequiredClasses(): array
     {
         return [
-            FileTokens::create($this->plugin->component.'.php')->mustHave($this->plugin->component),
+            FileTokens::create($this->plugin->component . '.php')->mustHave($this->plugin->component),
         ];
     }
 }

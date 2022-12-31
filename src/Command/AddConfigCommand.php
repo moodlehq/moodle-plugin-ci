@@ -43,7 +43,7 @@ class AddConfigCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $line = $input->getArgument('line');
-        $file = $this->moodle->directory.'/config.php';
+        $file = $this->moodle->directory . '/config.php';
 
         $config   = new MoodleConfig();
         $contents = $config->read($file);

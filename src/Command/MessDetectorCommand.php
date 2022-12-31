@@ -44,7 +44,7 @@ class MessDetectorCommand extends AbstractMoodleCommand
         if (count($files) === 0) {
             return $this->outputSkip($output);
         }
-        $rules = $input->getOption('rules') ?: __DIR__.'/../../res/config/phpmd.xml';
+        $rules = $input->getOption('rules') ?: __DIR__ . '/../../res/config/phpmd.xml';
 
         $renderer = new MessDetectorRenderer($output, $this->moodle->directory);
         $renderer->setWriter(new StreamWriter(STDOUT));

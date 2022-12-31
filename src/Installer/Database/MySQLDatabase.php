@@ -25,10 +25,10 @@ class MySQLDatabase extends AbstractDatabase
             'mysql',
             '-u',
             $this->user,
-            !empty($this->pass) ? '--password='.$this->pass : '',
+            !empty($this->pass) ? '--password=' . $this->pass : '',
             '-h',
             $this->host,
-            !empty($this->port) ? '--port='.$this->port : '',
+            !empty($this->port) ? '--port=' . $this->port : '',
             '-e',
             sprintf('CREATE DATABASE `%s` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;', $this->name),
         ]);

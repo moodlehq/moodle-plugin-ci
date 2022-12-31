@@ -54,7 +54,7 @@ class BehatCommandTest extends MoodleTestCase
 
     public function testExecuteNoFeatures()
     {
-        $this->fs->remove($this->pluginDir.'/tests/behat');
+        $this->fs->remove($this->pluginDir . '/tests/behat');
 
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -64,12 +64,12 @@ class BehatCommandTest extends MoodleTestCase
     public function testExecuteNoPlugin()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->executeCommand($this->moodleDir.'/no/plugin');
+        $this->executeCommand($this->moodleDir . '/no/plugin');
     }
 
     public function testExecuteNoMoodle()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->executeCommand($this->moodleDir.'/no/moodle');
+        $this->executeCommand($this->moodleDir . '/no/moodle');
     }
 }

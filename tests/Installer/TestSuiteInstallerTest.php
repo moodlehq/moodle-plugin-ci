@@ -27,7 +27,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
         parent::setUp();
 
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
-        $this->fs->dumpFile($this->pluginDir.'/.moodle-plugin-ci.yml', Yaml::dump($config));
+        $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
     public function testInstall()
@@ -53,7 +53,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
         $this->assertNotEmpty($installer->getBehatInstallProcesses());
         $this->assertCount(3, $installer->getPostInstallProcesses());
 
-        $this->fs->remove($this->pluginDir.'/tests/behat');
+        $this->fs->remove($this->pluginDir . '/tests/behat');
 
         $this->assertEmpty($installer->getBehatInstallProcesses());
         $this->assertCount(2, $installer->getPostInstallProcesses());
@@ -70,7 +70,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
         $this->assertNotEmpty($installer->getUnitTestInstallProcesses());
         $this->assertCount(3, $installer->getPostInstallProcesses());
 
-        $this->fs->remove($this->pluginDir.'/tests/lib_test.php');
+        $this->fs->remove($this->pluginDir . '/tests/lib_test.php');
 
         $this->assertEmpty($installer->getUnitTestInstallProcesses());
         $this->assertCount(1, $installer->getPostInstallProcesses());
@@ -78,7 +78,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
 
     public function testPHPUnitXMLFile()
     {
-        $xmlFile   = $this->pluginDir.'/phpunit.xml';
+        $xmlFile   = $this->pluginDir . '/phpunit.xml';
         $installer = new TestSuiteInstaller(
             new DummyMoodle(''),
             new MoodlePlugin($this->pluginDir),
@@ -86,26 +86,26 @@ class TestSuiteInstallerTest extends MoodleTestCase
         );
 
         // Test Moodle 3.2 PHPUnit XML file.
-        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-32.xml', $xmlFile, true);
+        $this->fs->copy(__DIR__ . '/../Fixture/phpunit/phpunit-32.xml', $xmlFile, true);
         $installer->injectPHPUnitFilter();
-        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
+        $this->assertXmlFileEqualsXmlFile(__DIR__ . '/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
 
         // Test Moodle 3.3 PHPUnit XML file.
-        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-33.xml', $xmlFile, true);
+        $this->fs->copy(__DIR__ . '/../Fixture/phpunit/phpunit-33.xml', $xmlFile, true);
         $installer->injectPHPUnitFilter();
-        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
+        $this->assertXmlFileEqualsXmlFile(__DIR__ . '/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
 
         // Test Moodle 3.3 PHPUnit when coverage.php is available.
-        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-33.xml', $xmlFile, true);
-        $this->fs->copy(__DIR__.'/../Fixture/phpunit/coverage.php', $this->pluginDir.'/tests/coverage.php', true);
+        $this->fs->copy(__DIR__ . '/../Fixture/phpunit/phpunit-33.xml', $xmlFile, true);
+        $this->fs->copy(__DIR__ . '/../Fixture/phpunit/coverage.php', $this->pluginDir . '/tests/coverage.php', true);
         $installer->injectPHPUnitFilter();
         // 3.3 did not support tests/coverage.php files, so defaults are applied normally.
-        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
+        $this->assertXmlFileEqualsXmlFile(__DIR__ . '/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
     }
 
     public function testPHPUnitXMLFile311()
     {
-        $xmlFile   = $this->pluginDir.'/phpunit.xml';
+        $xmlFile   = $this->pluginDir . '/phpunit.xml';
         $installer = new TestSuiteInstaller(
             new DummyMoodle311(''),
             new MoodlePlugin($this->pluginDir),
@@ -113,15 +113,15 @@ class TestSuiteInstallerTest extends MoodleTestCase
         );
 
         // Test Moodle 3.11 PHPUnit XML file.
-        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile, true);
+        $this->fs->copy(__DIR__ . '/../Fixture/phpunit/phpunit-311.xml', $xmlFile, true);
         $installer->injectPHPUnitFilter();
-        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected-311.xml', $xmlFile);
+        $this->assertXmlFileEqualsXmlFile(__DIR__ . '/../Fixture/phpunit/phpunit-expected-311.xml', $xmlFile);
 
         // Test Moodle 3.11 PHPUnit XML file when coverage.php is available.
-        $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile, true);
-        $this->fs->copy(__DIR__.'/../Fixture/phpunit/coverage.php', $this->pluginDir.'/tests/coverage.php', true);
+        $this->fs->copy(__DIR__ . '/../Fixture/phpunit/phpunit-311.xml', $xmlFile, true);
+        $this->fs->copy(__DIR__ . '/../Fixture/phpunit/coverage.php', $this->pluginDir . '/tests/coverage.php', true);
         $installer->injectPHPUnitFilter();
         // 3.11 supports tests/coverage.php files, so nothing is changed, expected file is the original one.
-        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile);
+        $this->assertXmlFileEqualsXmlFile(__DIR__ . '/../Fixture/phpunit/phpunit-311.xml', $xmlFile);
     }
 }

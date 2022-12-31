@@ -21,7 +21,7 @@ class PluginValidateTest extends \PHPUnit\Framework\TestCase
 {
     public function testVerifyRequirements()
     {
-        $plugin       = new Plugin('local_ci', 'local', 'travis', __DIR__.'/../Fixture/moodle-local_ci');
+        $plugin       = new Plugin('local_ci', 'local', 'travis', __DIR__ . '/../Fixture/moodle-local_ci');
         $requirements = new GenericRequirements($plugin, 29);
         $validate     = new PluginValidate($plugin, $requirements);
         $validate->verifyRequirements();
@@ -31,7 +31,7 @@ class PluginValidateTest extends \PHPUnit\Framework\TestCase
 
     public function testVerifyRequirementsFail()
     {
-        $plugin       = new Plugin('local_ci', 'local', 'travis', __DIR__.'/../Fixture/moodle-local_ci');
+        $plugin       = new Plugin('local_ci', 'local', 'travis', __DIR__ . '/../Fixture/moodle-local_ci');
         $requirements = new ModuleRequirements($plugin, 29);  // Trick! It's not a module, should fail!
         $validate     = new PluginValidate($plugin, $requirements);
         $validate->verifyRequirements();

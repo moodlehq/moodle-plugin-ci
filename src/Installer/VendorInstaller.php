@@ -108,11 +108,11 @@ class VendorInstaller extends AbstractInstaller
         if (!empty($this->nodeVer)) {
             // Use Node version specified by user.
             $reqversion = $this->nodeVer;
-            file_put_contents($this->moodle->directory.'/.nvmrc', $reqversion);
-        } elseif (!is_file($this->moodle->directory.'/.nvmrc')) {
+            file_put_contents($this->moodle->directory . '/.nvmrc', $reqversion);
+        } elseif (!is_file($this->moodle->directory . '/.nvmrc')) {
             // Use legacy version. Since Moodle 3.5, all branches have the .nvmrc file.
             $reqversion = $this->legacyNodeVersion;
-            file_put_contents($this->moodle->directory.'/.nvmrc', $reqversion);
+            file_put_contents($this->moodle->directory . '/.nvmrc', $reqversion);
         }
 
         $nvmDir  = getenv('NVM_DIR');
@@ -130,7 +130,7 @@ class VendorInstaller extends AbstractInstaller
         preg_match('/^NVM_BIN=(.+)$/m', trim($process->getOutput()), $matches);
         if (isset($matches[1]) && is_dir($matches[1])) {
             $this->addEnv('RUNTIME_NVM_BIN', $matches[1]);
-            putenv('RUNTIME_NVM_BIN='.$matches[1]);
+            putenv('RUNTIME_NVM_BIN=' . $matches[1]);
         } else {
             $this->getOutput()->debug('Can\'t retrieve NVM_BIN content from the command output.');
         }

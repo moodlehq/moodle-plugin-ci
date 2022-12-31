@@ -43,7 +43,7 @@ class StandardResolverTest extends \PHPUnit\Framework\TestCase
     public function testResolveNotFound()
     {
         $this->expectException(\RuntimeException::class);
-        $resolver = new StandardResolver(['moodle' => [__DIR__.'/bad/location']]);
+        $resolver = new StandardResolver(['moodle' => [__DIR__ . '/bad/location']]);
         $resolver->resolve('moodle');
     }
 }

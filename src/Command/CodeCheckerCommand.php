@@ -46,7 +46,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
     {
         parent::initialize($input, $output);
         $this->initializeExecute($output, $this->getHelper('process'));
-        $this->tempFile = sys_get_temp_dir().'/moodle-plugin-ci-code-checker-summary-'.time();
+        $this->tempFile = sys_get_temp_dir() . '/moodle-plugin-ci-code-checker-summary-' . time();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -59,8 +59,8 @@ class CodeCheckerCommand extends AbstractPluginCommand
         }
 
         $cmd = [
-            'php', __DIR__.'/../../vendor/squizlabs/php_codesniffer/bin/phpcs',
-            '--standard='.($input->getOption('standard') ?: 'moodle'),
+            'php', __DIR__ . '/../../vendor/squizlabs/php_codesniffer/bin/phpcs',
+            '--standard=' . ($input->getOption('standard') ?: 'moodle'),
             '--extensions=php',
             '-p',
             '-w',
@@ -79,7 +79,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
         } else {
             // If we are using the max-warnings option, we need the summary report somewhere to get
             // the total number of errors and warnings from there.
-            $cmd[] = '--report-json='.$this->tempFile;
+            $cmd[] = '--report-json=' . $this->tempFile;
         }
 
         // Add the files to process.

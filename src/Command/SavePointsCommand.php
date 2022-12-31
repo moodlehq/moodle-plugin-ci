@@ -39,13 +39,13 @@ class SavePointsCommand extends AbstractPluginCommand
     {
         $this->outputHeading($output, 'Check upgrade savepoints on %s');
 
-        if (!is_file($this->plugin->directory.'/db/upgrade.php')) {
+        if (!is_file($this->plugin->directory . '/db/upgrade.php')) {
             return $this->outputSkip($output);
         }
 
         $filesystem    = new Filesystem();
-        $upgradetester = __DIR__.'/../../vendor/moodlehq/moodle-local_ci/check_upgrade_savepoints/check_upgrade_savepoints.php';
-        $filesystem->copy($upgradetester, $this->plugin->directory.'/check_upgrade_savepoints.php');
+        $upgradetester = __DIR__ . '/../../vendor/moodlehq/moodle-local_ci/check_upgrade_savepoints/check_upgrade_savepoints.php';
+        $filesystem->copy($upgradetester, $this->plugin->directory . '/check_upgrade_savepoints.php');
 
         $process = $this->execute->passThroughProcess(
             (new Process(['php', 'check_upgrade_savepoints.php']))
@@ -59,7 +59,7 @@ class SavePointsCommand extends AbstractPluginCommand
             $code = 1;
         }
 
-        $filesystem->remove($this->plugin->directory.'/check_upgrade_savepoints.php');
+        $filesystem->remove($this->plugin->directory . '/check_upgrade_savepoints.php');
 
         return $code;
     }

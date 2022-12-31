@@ -36,11 +36,11 @@ class RepositoryRequirements extends GenericRequirements
 
     public function getRequiredStrings(): FileTokens
     {
-        return parent::getRequiredStrings()->mustHave($this->plugin->name.':view');
+        return parent::getRequiredStrings()->mustHave($this->plugin->name . ':view');
     }
 
     public function getRequiredCapabilities(): FileTokens
     {
-        return FileTokens::create('db/access.php')->mustHave('repository/'.$this->plugin->name.':view');
+        return FileTokens::create('db/access.php')->mustHave('repository/' . $this->plugin->name . ':view');
     }
 }

@@ -42,7 +42,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $process->run();
         $this->assertTrue($process->isSuccessful());
         // Expect path to match system one.
-        $this->assertStringContainsString('PATH='.$pathenv, $process->getOutput());
+        $this->assertStringContainsString('PATH=' . $pathenv, $process->getOutput());
         // Expect HOME is defined (system env vars present)
         $this->assertMatchesRegularExpression('/^HOME=/m', $process->getOutput());
 
@@ -51,11 +51,11 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $process = $execute->setNodeEnv($process);
         // Expect env is set for process.
         $this->assertArrayHasKey('PATH', $process->getEnv());
-        $this->assertSame('/test/bin:'.$pathenv, $process->getEnv()['PATH']);
+        $this->assertSame('/test/bin:' . $pathenv, $process->getEnv()['PATH']);
         $process->run();
         $this->assertTrue($process->isSuccessful());
         // RUNTIME_NVM_BIN is defined, expect it to be first item in the PATH .
-        $this->assertStringContainsString('PATH=/test/bin:'.$pathenv, $process->getOutput());
+        $this->assertStringContainsString('PATH=/test/bin:' . $pathenv, $process->getOutput());
         // Expect HOME is defined too (system env vars present)
         $this->assertMatchesRegularExpression('/^HOME=/m', $process->getOutput());
     }
@@ -149,7 +149,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $process = $execute->passThrough(['php', '-r', 'echo 42;']);
 
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
-        $this->assertSame(" RUN  'php' '-r' 'echo 42;'".PHP_EOL.'42', $output->fetch());
+        $this->assertSame(" RUN  'php' '-r' 'echo 42;'" . PHP_EOL . '42', $output->fetch());
 
         $process = $execute->passThrough(['env']);
         $this->assertInstanceOf('Symfony\Component\Process\Process', $process);

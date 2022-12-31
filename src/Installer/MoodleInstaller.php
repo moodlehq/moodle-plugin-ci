@@ -85,7 +85,7 @@ class MoodleInstaller extends AbstractInstaller
 
         $this->getOutput()->debug('Creating Moodle data directories');
 
-        $dirs = [$this->dataDir, $this->dataDir.'/phpu_moodledata', $this->dataDir.'/behat_moodledata', $this->dataDir.'/behat_dump'];
+        $dirs = [$this->dataDir, $this->dataDir . '/phpu_moodledata', $this->dataDir . '/behat_moodledata', $this->dataDir . '/behat_dump'];
 
         $filesystem = new Filesystem();
         $filesystem->mkdir($dirs);
@@ -96,7 +96,7 @@ class MoodleInstaller extends AbstractInstaller
 
         $this->getOutput()->debug('Creating Moodle\'s config file');
         $contents = $this->config->createContents($this->database, $this->expandPath($this->dataDir));
-        $this->config->dump($this->moodle->directory.'/config.php', $contents);
+        $this->config->dump($this->moodle->directory . '/config.php', $contents);
 
         $this->addEnv('MOODLE_DIR', $this->moodle->directory);
     }

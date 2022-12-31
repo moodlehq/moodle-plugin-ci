@@ -21,7 +21,7 @@ class MoodlePhpException extends \RuntimeException
 {
     public function __construct(Process $process)
     {
-        $error = sprintf('PHP error message was detected when running this command:'.PHP_EOL.'  %s'.PHP_EOL.
+        $error = sprintf('PHP error message was detected when running this command:' . PHP_EOL . '  %s' . PHP_EOL .
             'Moodle scripts should run without any PHP errors.',
             $process->getCommandLine()
         );

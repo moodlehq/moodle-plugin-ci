@@ -23,7 +23,7 @@ class MoodleConfigTest extends FilesystemTestCase
         $config   = new MoodleConfig();
         $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
 
-        $this->assertSame(file_get_contents(__DIR__.'/../Fixture/example-config.php'), $contents);
+        $this->assertSame(file_get_contents(__DIR__ . '/../Fixture/example-config.php'), $contents);
     }
 
     public function testInjectLineIntoConfig()
@@ -60,7 +60,7 @@ EOT;
         $this->dumpFile('test.txt', 'Test');
 
         $config   = new MoodleConfig();
-        $contents = $config->read($this->tempDir.'/test.txt');
+        $contents = $config->read($this->tempDir . '/test.txt');
 
         $this->assertSame('Test', $contents);
     }
@@ -69,7 +69,7 @@ EOT;
     {
         $this->expectException(\InvalidArgumentException::class);
         $config = new MoodleConfig();
-        $config->read($this->tempDir.'/test.txt');
+        $config->read($this->tempDir . '/test.txt');
     }
 
     public function testReadFail()
@@ -87,8 +87,8 @@ EOT;
     {
         $config   = new MoodleConfig();
         $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
-        $config->dump($this->tempDir.'/config.php', $contents);
+        $config->dump($this->tempDir . '/config.php', $contents);
 
-        $this->assertFileEquals(__DIR__.'/../Fixture/example-config.php', $this->tempDir.'/config.php');
+        $this->assertFileEquals(__DIR__ . '/../Fixture/example-config.php', $this->tempDir . '/config.php');
     }
 }

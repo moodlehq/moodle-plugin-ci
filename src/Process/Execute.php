@@ -91,7 +91,7 @@ class Execute
         if (getenv('RUNTIME_NVM_BIN')) {
             // Concatenate RUNTIME_NVM_BIN with PATH, so the correct version of
             // npm binary is used within process.
-            $env = ['PATH' => (getenv('RUNTIME_NVM_BIN') ?: '').':'.(getenv('PATH') ?: '')];
+            $env = ['PATH' => (getenv('RUNTIME_NVM_BIN') ?: '') . ':' . (getenv('PATH') ?: '')];
             $process->setEnv($env);
         }
 

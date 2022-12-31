@@ -21,7 +21,7 @@ class ModuleRequirements extends GenericRequirements
 {
     protected function getLangFile(): string
     {
-        return 'lang/en/'.$this->plugin->name.'.php';
+        return 'lang/en/' . $this->plugin->name . '.php';
     }
 
     public function getRequiredFiles(): array
@@ -38,8 +38,8 @@ class ModuleRequirements extends GenericRequirements
     public function getRequiredFunctions(): array
     {
         return [
-            FileTokens::create('lib.php')->mustHave($this->plugin->name.'_add_instance')->mustHave($this->plugin->name.'_update_instance'),
-            FileTokens::create('db/upgrade.php')->mustHave('xmldb_'.$this->plugin->name.'_upgrade'),
+            FileTokens::create('lib.php')->mustHave($this->plugin->name . '_add_instance')->mustHave($this->plugin->name . '_update_instance'),
+            FileTokens::create('db/upgrade.php')->mustHave('xmldb_' . $this->plugin->name . '_upgrade'),
         ];
     }
 
@@ -47,12 +47,12 @@ class ModuleRequirements extends GenericRequirements
     {
         return FileTokens::create($this->getLangFile())
             ->mustHaveAny(['modulename', 'pluginname'])
-            ->mustHave($this->plugin->name.':addinstance');
+            ->mustHave($this->plugin->name . ':addinstance');
     }
 
     public function getRequiredCapabilities(): FileTokens
     {
-        return FileTokens::create('db/access.php')->mustHave('mod/'.$this->plugin->name.':addinstance');
+        return FileTokens::create('db/access.php')->mustHave('mod/' . $this->plugin->name . ':addinstance');
     }
 
     public function getRequiredTables(): FileTokens

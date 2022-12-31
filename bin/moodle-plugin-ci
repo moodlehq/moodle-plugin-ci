@@ -33,15 +33,15 @@ use MoodlePluginCI\Command\ValidateCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
 
-if (file_exists(__DIR__.'/../../../autoload.php')) {
+if (file_exists(__DIR__ . '/../../../autoload.php')) {
     // Global install.
     /** @noinspection PhpIncludeInspection */
-    require_once __DIR__.'/../../../autoload.php';
-} elseif (file_exists(__DIR__.'/../vendor/autoload.php')) {
+    require_once __DIR__ . '/../../../autoload.php';
+} elseif (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     // Project install.
-    require_once __DIR__.'/../vendor/autoload.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
 } else {
-    fwrite(STDERR, 'Failed to find Composer\'s autoload file. You might need to run Composer\'s install on this project'.PHP_EOL);
+    fwrite(STDERR, 'Failed to find Composer\'s autoload file. You might need to run Composer\'s install on this project' . PHP_EOL);
     exit(1);
 }
 
@@ -49,7 +49,7 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
 define('MOODLE_PLUGIN_CI_VERSION', '3.4.6');
 
 define('MOODLE_PLUGIN_CI_BOXED', '@is_boxed@');
-define('ENV_FILE', dirname(__DIR__).'/.env');
+define('ENV_FILE', dirname(__DIR__) . '/.env');
 
 if (file_exists(ENV_FILE)) {
     // Use this file because PHP cannot write to the environment.
