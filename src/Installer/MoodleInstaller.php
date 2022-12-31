@@ -125,11 +125,6 @@ class MoodleInstaller extends AbstractInstaller
         $this->config->dump($this->moodle->directory.'/config.php', $contents);
 
         $this->addEnv('MOODLE_DIR', $this->moodle->directory);
-
-        // If PHP 5.6, add an INI file to disable a setting that causes a deprecation notice.
-        if (PHP_MAJOR_VERSION === 5 && PHP_MINOR_VERSION === 6) {
-            $this->execute->mustRun(sprintf('phpenv config-add %s', realpath(__DIR__.'/../../res/template/moodle.ini')));
-        }
     }
 
     /**
