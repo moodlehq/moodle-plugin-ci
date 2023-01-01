@@ -42,6 +42,8 @@ class BehatCommand extends AbstractMoodleCommand
 
     /**
      * Wait this many microseconds for Selenium server to start/stop.
+     *
+     * @var int<0,max>
      */
     private int $seleniumWaitTime = 5000000;
 
@@ -112,7 +114,11 @@ class BehatCommand extends AbstractMoodleCommand
     private function startServerProcesses(InputInterface $input): void
     {
         // Test we have docker cli.
-        $process = $this->execute->run('docker -v');
+        $cmd = [
+            'docker',
+            '-v',
+        ];
+        $process = $this->execute->run($cmd);
         if (!$process->isSuccessful()) {
             throw new \RuntimeException('Docker is not available, can\'t start Selenium server');
         }
@@ -162,7 +168,12 @@ class BehatCommand extends AbstractMoodleCommand
     private function stopServerProcesses(): void
     {
         // Stop docker. This will also destroy container.
-        $this->execute->mustRun('docker stop selenium');
+        $cmd = [
+            'docker',
+            'stop',
+            'selenium',
+        ];
+        $this->execute->mustRun($cmd);
         // Stop webserver.
         $this->webserver->stop();
     }

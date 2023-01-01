@@ -64,12 +64,20 @@ class StatementFilter
     {
         $names = [];
         foreach ($this->filterClasses($statements) as $class) {
-            $names[] = $class->name;
+            $className = $class->name;
+            if (!isset($className)) {
+                continue;
+            }
+            $names[] = $className;
         }
 
         foreach ($this->filterNamespaces($statements) as $namespace) {
             foreach ($this->filterClasses($namespace->stmts) as $class) {
-                $names[] = $namespace->name . '\\' . $class->name;
+                $className = $class->name;
+                if (!isset($className)) {
+                    continue;
+                }
+                $names[] = ($namespace->name ?? '') . '\\' . $className;
             }
         }
 

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 
 class PHPDocCommand extends AbstractMoodleCommand
 {
@@ -59,16 +59,14 @@ class PHPDocCommand extends AbstractMoodleCommand
             return $this->outputSkip($output);
         }
 
-        $process = $this->execute->passThroughProcess(
-            ProcessBuilder::create()
-                ->setPrefix('php')
-                ->add('local/moodlecheck/cli/moodlecheck.php')
-                ->add('-p=' . implode(',', $files))
-                ->add('-f=text')
-                ->setTimeout(null)
-                ->setWorkingDirectory($this->moodle->directory)
-                ->getProcess()
-        );
+        $cmd = [
+            'php',
+            'local/moodlecheck/cli/moodlecheck.php',
+            '-p=' . implode(',', $files),
+            '-f=text',
+        ];
+
+        $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->directory, null, null, null));
 
         if (isset($filesystem)) {
             // Remove plugin if we added it, so we leave things clean.

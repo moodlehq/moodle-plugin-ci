@@ -26,7 +26,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractPluginCommand extends Command
 {
-    public ?MoodlePlugin $plugin = null;
+    public MoodlePlugin $plugin;
 
     protected function configure(): void
     {
@@ -38,7 +38,7 @@ abstract class AbstractPluginCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        if (!$this->plugin instanceof MoodlePlugin) {
+        if (!isset($this->plugin)) {
             $validate     = new Validate();
             $pluginDir    = realpath($validate->directory($input->getArgument('plugin')));
             $this->plugin = new MoodlePlugin($pluginDir);

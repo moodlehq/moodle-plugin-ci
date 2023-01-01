@@ -100,7 +100,12 @@ class MustacheCommand extends AbstractMoodleCommand
         // Check for global install.
         $this->validateJarVersion();
 
-        $process = $this->execute->mustRun('npm -g prefix');
+        $cmd = [
+            'npm',
+            '-g',
+            'prefix',
+        ];
+        $process = $this->execute->mustRun($cmd);
         $file    = trim($process->getOutput()) . '/lib/node_modules/vnu-jar/build/dist/vnu.jar';
 
         if (!is_file($file)) {
@@ -112,7 +117,13 @@ class MustacheCommand extends AbstractMoodleCommand
 
     private function validateJarVersion(): void
     {
-        $json = json_decode($this->execute->mustRun('npm -g list --json')->getOutput(), true);
+        $cmd = [
+            'npm',
+            '-g',
+            'list',
+            '--json',
+        ];
+        $json = json_decode($this->execute->mustRun($cmd)->getOutput(), true);
         if (!isset($json['dependencies']['vnu-jar']['version'])) {
             throw new \RuntimeException('Failed to find vnu-jar');
         }

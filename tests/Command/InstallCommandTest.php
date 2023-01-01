@@ -57,7 +57,7 @@ class InstallCommandTest extends MoodleTestCase
      *
      * @dataProvider csvToArrayProvider
      */
-    public function testCsvToArray($value, array $expected)
+    public function testCsvToArray(?string $value, array $expected)
     {
         $command = new InstallCommand($this->tempDir . '/.env');
         $this->assertSame($expected, $command->csvToArray($value), "Converting this value: '$value'");

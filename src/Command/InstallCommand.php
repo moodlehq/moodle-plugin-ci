@@ -36,9 +36,9 @@ class InstallCommand extends Command
 {
     use ExecuteTrait;
 
-    public ?Install $install                = null;
-    public ?InstallerCollection $installers = null;
-    public ?InstallerFactory $factory       = null;
+    public Install $install;
+    public InstallerCollection $installers;
+    public InstallerFactory $factory;
     private string $envFile;
 
     /**
@@ -92,9 +92,9 @@ class InstallCommand extends Command
         $this->initializeExecute($output, $this->getHelper('process'));
 
         $installOutput    = $this->initializeInstallOutput($output);
-        $this->install    = $this->install ?: new Install($installOutput);
-        $this->factory    = $this->factory ?: $this->initializeInstallerFactory($input);
-        $this->installers = $this->installers ?: new InstallerCollection($installOutput);
+        $this->install    = $this->install ?? new Install($installOutput);
+        $this->factory    = $this->factory ?? $this->initializeInstallerFactory($input);
+        $this->installers = $this->installers ?? new InstallerCollection($installOutput);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -180,23 +180,29 @@ class InstallCommand extends Command
         $dumper->addSection('filter', 'notPaths', $this->csvToArray($input->getOption('not-paths')));
         $dumper->addSection('filter', 'notNames', $this->csvToArray($input->getOption('not-names')));
 
-        foreach ($this->getApplication()->all() as $command) {
+        $application = $this->getApplication();
+        if (!isset($application)) {
+            return $dumper;
+        }
+
+        foreach ($application->all() as $command) {
             if (!$command instanceof AbstractPluginCommand) {
                 continue;
             }
 
-            $prefix   = strtoupper($command->getName());
-            $envPaths = $prefix . '_IGNORE_PATHS';
-            $envNames = $prefix . '_IGNORE_NAMES';
+            $commandName = $command->getName() ?? '';
+            $prefix      = strtoupper($commandName);
+            $envPaths    = $prefix . '_IGNORE_PATHS';
+            $envNames    = $prefix . '_IGNORE_NAMES';
 
             $paths = getenv($envPaths) !== false ? getenv($envPaths) : null;
             $names = getenv($envNames) !== false ? getenv($envNames) : null;
 
             if (!empty($paths)) {
-                $dumper->addSection('filter-' . $command->getName(), 'notPaths', $this->csvToArray($paths));
+                $dumper->addSection('filter-' . $commandName, 'notPaths', $this->csvToArray($paths));
             }
             if (!empty($names)) {
-                $dumper->addSection('filter-' . $command->getName(), 'notNames', $this->csvToArray($names));
+                $dumper->addSection('filter-' . $commandName, 'notNames', $this->csvToArray($names));
             }
         }
 

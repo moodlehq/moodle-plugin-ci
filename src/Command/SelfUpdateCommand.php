@@ -43,10 +43,16 @@ class SelfUpdateCommand extends Command
             $stability = GithubStrategy::ANY;
         }
 
+        $application = $this->getApplication();
+        if (!isset($application)) {
+            $output->writeln('<error>Self update command failed!</error>');
+            exit(1);
+        }
+
         $strategy = new GithubStrategy();
         $strategy->setPackageName('moodlehq/moodle-plugin-ci');
         $strategy->setPharName('moodle-plugin-ci.phar');
-        $strategy->setCurrentLocalVersion($this->getApplication()->getVersion());
+        $strategy->setCurrentLocalVersion($application->getVersion());
         $strategy->setStability($stability);
 
         $path = $this->getBackupPath();

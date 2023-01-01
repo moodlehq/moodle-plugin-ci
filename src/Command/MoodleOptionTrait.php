@@ -23,7 +23,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 trait MoodleOptionTrait
 {
-    public ?Moodle $moodle = null;
+    public Moodle $moodle;
 
     /**
      * Adds the 'moodle' option to a command.
@@ -47,7 +47,7 @@ trait MoodleOptionTrait
      */
     protected function initializeMoodle(InputInterface $input): void
     {
-        if (!$this->moodle instanceof Moodle) {
+        if (!isset($this->moodle)) {
             $validate     = new Validate();
             $moodleDir    = realpath($validate->directory($input->getOption('moodle')));
             $this->moodle = new Moodle($moodleDir);

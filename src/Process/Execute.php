@@ -32,6 +32,8 @@ class Execute
      * Sleep for .2 seconds to avoid race conditions in Moodle scripts when running them in parallel.
      *
      * Example failure, making cache directories.
+     *
+     * @var int<0, max>
      */
     public int $parallelWaitTime = 200000;
 
@@ -193,7 +195,7 @@ class Execute
         if ($this->output->isVeryVerbose()) {
             $this->output->writeln(sprintf('<bg=blue;fg=white;> RUN </> <fg=blue>%s</>', $process->getCommandLine()));
         }
-        $this->setNodeEnv($process)->run(function ($type, $buffer) {
+        $this->setNodeEnv($process)->run(function (string $type, string $buffer) {
             $this->output->write($buffer);
         });
 

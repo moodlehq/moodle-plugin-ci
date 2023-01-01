@@ -55,7 +55,7 @@ class ParallelCommand extends AbstractMoodleCommand
      */
     public function initializeProcesses(): array
     {
-        $bin    = ['php', $_SERVER['PHP_SELF']];
+        $bin    = ['php', $_SERVER['PHP_SELF'] ?? 'moodle-plugin-ci'];
         $plugin = $this->plugin->directory;
         $moodle = $this->moodle->directory;
 

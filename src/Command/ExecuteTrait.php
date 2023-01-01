@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 trait ExecuteTrait
 {
-    public ?Execute $execute = null;
+    public Execute $execute;
 
     /**
      * Initialize the "execute" property if necessary.
@@ -31,7 +31,7 @@ trait ExecuteTrait
      */
     protected function initializeExecute(OutputInterface $output, ProcessHelper $helper): void
     {
-        if ($this->execute instanceof Execute) {
+        if (isset($this->execute)) {
             // Define output and process helper.
             $this->execute->setOutput($output);
             $this->execute->setHelper($helper);

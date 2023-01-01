@@ -16,7 +16,7 @@ use MoodlePluginCI\Bridge\MoodlePlugin;
 
 class DummyMoodlePlugin extends MoodlePlugin
 {
-    public $component      = 'local_ci';
-    public $dependencies   = ['mod_forum'];
-    public $subpluginTypes = [];
+    public string $component      = 'local_ci';
+    public array $dependencies    = ['mod_forum'];
+    public array $subpluginTypes  = [];
 }

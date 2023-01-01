@@ -68,7 +68,7 @@ class Moodle
         /** @noinspection PhpIncludeInspection */
         require_once $path;
 
-        // Save a local reference to Moodle's config.
+        // Save a local reference to Moodle config.
         if (empty($this->cfg)) {
             $this->cfg = $CFG;
         }
@@ -101,6 +101,7 @@ class Moodle
         list($type, $name) = $this->normalizeComponent($component);
 
         // Must use reflection to avoid using static cache.
+        /* @noinspection PhpUndefinedClassInspection */
         $method = new \ReflectionMethod(\core_component::class, 'fetch_plugintypes');
         $method->setAccessible(true);
         $result = $method->invoke(null);
