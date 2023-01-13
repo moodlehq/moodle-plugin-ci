@@ -63,7 +63,7 @@ script:
 jobs:
   include:
     - stage: CI test (make validate)
-      php: 7.3
+      php: 7.4
       before_install: skip
       install:
         - make init
@@ -72,13 +72,13 @@ jobs:
 
     - stage: Integration tests
       if: env(MOODLE_BRANCH) IS present
-    - php: 8.0
+    - php: 8.1
       env: MOODLE_BRANCH=master
-    - php: 7.4
+    - php: 8.1
       env: MOODLE_BRANCH=MOODLE_401_STABLE
-    - php: 7.4
+    - php: 8.0
       env: MOODLE_BRANCH=MOODLE_400_STABLE
-    - php: 7.4
+    - php: 8.0
       env: MOODLE_BRANCH=MOODLE_311_STABLE
     - php: 7.4
       env: MOODLE_BRANCH=MOODLE_310_STABLE
