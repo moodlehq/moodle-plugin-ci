@@ -66,7 +66,7 @@ class MoodlePluginCollection implements \Countable
             }
 
             // Add implied dependencies for subplugins.
-            list($type, $plugin) = explode('_', $item->getComponent(), 2);
+            $type = strtok($item->getComponent(), '_');
             if (array_key_exists($type, $subpluginTypes)) {
                 $elements[$item->getComponent()][] = $subpluginTypes[$type];
             }

@@ -13,6 +13,7 @@
 namespace MoodlePluginCI\Parser;
 
 use PhpParser\Error;
+use PhpParser\Node\Stmt;
 use PhpParser\ParserFactory;
 
 /**
@@ -27,7 +28,7 @@ class CodeParser
      *
      * @return string
      */
-    protected function loadFile($path)
+    protected function loadFile(string $path): string
     {
         if (pathinfo($path, PATHINFO_EXTENSION) !== 'php') {
             throw new \InvalidArgumentException('Can only parse files with ".php" extensions');
@@ -46,9 +47,9 @@ class CodeParser
      *
      * @throws \Exception
      *
-     * @return \PhpParser\Node[]
+     * @return Stmt[]
      */
-    public function parseFile($path)
+    public function parseFile(string $path): array
     {
         $factory = new ParserFactory();
         $parser  = $factory->create(ParserFactory::PREFER_PHP7);

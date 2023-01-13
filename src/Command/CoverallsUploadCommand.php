@@ -44,7 +44,6 @@ class CoverallsUploadCommand extends AbstractPluginCommand
     {
         $coverage = realpath($input->getOption('coverage-file'));
         if ($coverage === false) {
-            /** @psalm-suppress PossiblyInvalidArgument */
             $message = sprintf('Did not find coverage file at <info>%s</info>', $input->getOption('coverage-file'));
             $output->writeln($message);
 

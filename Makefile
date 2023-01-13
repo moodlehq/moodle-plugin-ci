@@ -30,7 +30,7 @@ validate-version:
 
 .PHONY:psalm
 psalm: check-init
-	$(PSALM)
+	$(PSALM) --show-info=true
 
 .PHONY:psalm-update-baseline
 psalm-update-baseline: check-init

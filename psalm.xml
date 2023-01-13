@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="2"
-    reportMixedIssues="false"
-    errorBaseline="psalm-baseline.xml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
-    xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    errorLevel="2"
+    reportMixedIssues="false"
+    resolveFromConfigFile="true"
+    disableSuppressAll="true"
 >
     <projectFiles>
         <directory name="src" />
@@ -15,91 +17,24 @@
     </projectFiles>
 
     <issueHandlers>
-        <DeprecatedMethod errorLevel="info" />
-        <DeprecatedProperty errorLevel="info" />
-        <DeprecatedClass errorLevel="info" />
-        <DeprecatedConstant errorLevel="info" />
-        <DeprecatedInterface errorLevel="info" />
-        <DeprecatedTrait errorLevel="info" />
-
-        <MissingClosureReturnType errorLevel="suppress" />
-        <MissingPropertyType errorLevel="suppress" />
-
+        <!-- Not every property is set in the constructors. Many of them
+            (Commands...) do get them initialised by different methods) -->
         <PropertyNotSetInConstructor errorLevel="suppress" />
+        <RedundantPropertyInitializationCheck errorLevel="suppress" />
         <MissingConstructor errorLevel="info" />
-        <MissingClosureParamType errorLevel="suppress" />
 
-        <DocblockTypeContradiction errorLevel="suppress" />
-        <RedundantConditionGivenDocblockType errorLevel="suppress" />
-
-        <!-- Doing an include to Moodle -->
-        <UnresolvableInclude errorLevel="info">
-            <errorLevel type="suppress">
-                <file name="src/Bridge/Moodle.php"/>
-            </errorLevel>
-        </UnresolvableInclude>
-
-        <!-- These are due to how Command classes work with properties -->
-        <PossiblyNullArgument>
-            <errorLevel type="suppress">
-                 <file name="src/Command/InstallCommand.php"/>
-            </errorLevel>
-        </PossiblyNullArgument>
-
-        <!-- These are due to how PhpParser and Command classes work with properties -->
-        <PossiblyNullOperand>
-            <errorLevel type="suppress">
-                 <file name="src/Parser/StatementFilter.php"/>
-                 <file name="src/Command/InstallCommand.php"/>
-            </errorLevel>
-        </PossiblyNullOperand>
-
-        <!-- These are due to how Command classes work with Application properties -->
-        <PossiblyNullReference>
-            <errorLevel type="suppress">
-                <file name="src/Command/InstallCommand.php"/>
-                <file name="src/Command/SelfUpdateCommand.php"/>
-            </errorLevel>
-        </PossiblyNullReference>
-
-        <!-- Psalm complains that getenv output can't be concatenated -->
-        <PossiblyFalseOperand>
-            <errorLevel type="suppress">
-                 <file name="src/Process/Execute.php"/>
-            </errorLevel>
-        </PossiblyFalseOperand>
-
-        <!-- Psalm complains that getenv output can't be concatenated -->
-        <PossiblyFalseArgument>
-            <errorLevel type="suppress">
-                 <file name="src/Installer/VendorInstaller.php"/>
-            </errorLevel>
-        </PossiblyFalseArgument>
-
-        <!-- Psalm is not finding inherited PHPDoc -->
-        <MissingReturnType>
-            <errorLevel type="suppress">
-                <directory name="src/PluginValidate/Requirements"/>
-                <file name="src/Command/CodeFixerCommand.php"/>
-                <file name="src/Installer/AbstractInstaller.php"/>
-                <file name="src/PluginValidate/Finder/FinderInterface.php"/>
-            </errorLevel>
-        </MissingReturnType>
-
-        <!-- CodeSniffer has some bad PHPDoc -->
-        <NullArgument>
-            <errorLevel type="suppress">
-                <file name="src/Command/CodeFixerCommand.php"/>
-                <file name="src/Command/CodeCheckerCommand.php"/>
-            </errorLevel>
-        </NullArgument>
-
-        <!-- It is defined in Moodle itself or included by the commands -->
         <UndefinedClass>
             <errorLevel type="suppress">
-                <file name="src/Bridge/Moodle.php"/>
-                <file name="src/Command/CodeCheckerCommand.php"/>
-                <file name="src/Command/CodeFixerCommand.php"/>
+                <!-- It is defined in Moodle itself or included by the commands -->
+                <referencedClass name="core_component" />
+                <!-- This is using abandoned humbug/phar-updater component, that we
+                    are not loading at the moment, hence, completely ignore all
+                    UndefinedClass errors there. TODO: Consider to move to
+                    laravel-zero/phar-updater that is a maintained fork, using a version
+                    compatible with us (PHP 7.4 and up right now). In any case
+                    this is very low priority. -->
+                <referencedClass name="Humbug\SelfUpdate\Strategy\GithubStrategy" />
+                <referencedClass name="Humbug\SelfUpdate\Updater" />
             </errorLevel>
         </UndefinedClass>
     </issueHandlers>
