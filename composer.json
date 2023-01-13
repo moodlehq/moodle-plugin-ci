@@ -63,7 +63,7 @@
   ],
   "require": {
     "php": ">=7.4",
-    "moodlehq/moodle-cs": "^3.2.4",
+    "moodlehq/moodle-cs": "^3.3.1",
     "moodlehq/moodle-local_ci": "^1.0.17",
     "moodlehq/moodle-local_moodlecheck": "^1.1.3",
     "sebastian/phpcpd": "^6.0.3",
@@ -81,7 +81,8 @@
     "psr/log": "^1.1.4",
     "nikic/php-parser": "^4.14",
     "stecman/symfony-console-completion": "^0.11.0",
-    "marcj/topsort": "^2.0.0"
+    "marcj/topsort": "^2.0.0",
+    "phpcompatibility/php-compatibility": "dev-develop#2fb82334"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",

@@ -78,10 +78,15 @@ class CodeCheckerCommandTest extends MoodleTestCase
 <?php
 
 if (true) {
-    $var = ldap_sort();  // To verify both PHPCompatibility and own moodle deprecations sniff.
+    $var = print_error();  // To verify various Moodle sniffs.
 } elseif (false) {
-    $var = print_object(); // To verify moodle own sniff.
+    $var = print_object();
+}
 
+class test {
+    public function test() { // To verify PHPCompatibility sniff.
+        // Old PHP 4.x constructor.
+    }
 } // No EOL @ EOF on purpose to verify it's detected.
 EOT;
 
@@ -94,11 +99,13 @@ EOT;
         $output = $commandTester->getDisplay();
         $this->assertMatchesRegularExpression('/E\.* 8\.* \/ 8 \(100%\)/', $output);                  // Progress.
         $this->assertMatchesRegularExpression('/\/fixable.php/', $output);                            // File.
-        $this->assertMatchesRegularExpression('/ (4|5) ERRORS AND (1|2) WARNINGS? AFFECTING 6 /', $output); // Summary (php70 shows one less)
+        $this->assertMatchesRegularExpression('/ 8 ERRORS AND 1 WARNING AFFECTING 7 /', $output);     // Summary.
         $this->assertMatchesRegularExpression('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
+        $this->assertMatchesRegularExpression('/print_error\(\) has been deprecated/', $output);      // Moodle sniff.
         $this->assertMatchesRegularExpression('/print_object\(\) is forbidden/', $output);            // Moodle sniff.
-        $this->assertMatchesRegularExpression('/FunctionUse\.RemovedFunctions\.ldap_sort/', $output); // PHPCompatibility sniff.
+        $this->assertMatchesRegularExpression('/RemovedPHP4StyleConstructors\.Removed/', $output);    // PHPCompatibility sniff.
         $this->assertMatchesRegularExpression('/Files\.EndFileNewline\.NotFound/', $output);          // End of file.
+        $this->assertMatchesRegularExpression('/PHPCBF CAN FIX THE 3 MARKED SNIFF/', $output);        // PHPCBF note.
         $this->assertMatchesRegularExpression('/Time:.*Memory:/', $output);                           // Time.
 
         // Also verify display info is correct.
