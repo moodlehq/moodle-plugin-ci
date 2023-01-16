@@ -53,9 +53,14 @@ define('ENV_FILE', dirname(__DIR__) . '/.env');
 
 if (file_exists(ENV_FILE)) {
     // Use this file because PHP cannot write to the environment.
-    // These are used to allow the install command to relay important
-    // information to the other commands so they can run with no args.
-    $env = new Dotenv();
+    // These are used to allow the installation command to relay important
+    // information to the other commands, so they can run with no args.
+
+    // While putenv()/getenv() are not thread safe, this is only used in the CLI,
+    // so it is not a problem. In the future we may want to stop using those functions
+    // everywhere and use $_ENV or $_SERVER instead. Of course getting rid of the .env
+    // file would be even better.
+    $env = (new Dotenv())->usePutenv(true);
     $env->load(ENV_FILE);
 }
 
