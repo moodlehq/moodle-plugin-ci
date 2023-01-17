@@ -32,13 +32,17 @@ class BehatCommand extends AbstractMoodleCommand
 
     /**
      * Selenium standalone Firefox image.
+     *
+     * @todo: Make this configurable.
      */
-    private string $seleniumFirefoxImage = 'selenium/standalone-firefox:4';
+    private string $seleniumFirefoxImage = 'selenium/standalone-firefox:3';
 
     /**
      * Selenium standalone Chrome image.
+     *
+     * @todo: Make this configurable.
      */
-    private string $seleniumChromeImage = 'selenium/standalone-chrome:4';
+    private string $seleniumChromeImage = 'selenium/standalone-chrome:3';
 
     /**
      * Wait this many microseconds for Selenium server to start/stop.
@@ -123,6 +127,14 @@ class BehatCommand extends AbstractMoodleCommand
             throw new \RuntimeException('Docker is not available, can\'t start Selenium server');
         }
 
+        // Depending on the OS the host is running on, we need different networking options.
+        $phpWebserverHost = 'localhost:8000';
+        $dockerNetworking = '--network=host';
+        if (PHP_OS_FAMILY === 'Windows' || PHP_OS_FAMILY === 'Darwin') { // Using Docker Desktop on Windows or Mac.
+            $phpWebserverHost = '0.0.0.0:8000';
+            $dockerNetworking = '--publish=4444:4444';
+        }
+
         // Start docker container using desired image.
         if ($input->getOption('profile') === 'chrome') {
             $image = $this->seleniumChromeImage;
@@ -138,7 +150,7 @@ class BehatCommand extends AbstractMoodleCommand
             '-d',
             '--rm',
             '--name=selenium',
-            '--publish=4444:4444',
+            $dockerNetworking,
             '--shm-size=2g',
             '-v',
             $this->moodle->directory . ':' . $this->moodle->directory,
@@ -153,7 +165,7 @@ class BehatCommand extends AbstractMoodleCommand
         $cmd = [
             'php',
             '-S',
-            'localhost:8000',
+            $phpWebserverHost,
         ];
         $web = new Process($cmd, $this->moodle->directory);
         $web->setTimeout(0);
