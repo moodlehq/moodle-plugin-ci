@@ -81,7 +81,8 @@
     "nikic/php-parser": "^4.0",
     "stecman/symfony-console-completion": "^0.7.0",
     "marcj/topsort": "^1.0",
-    "padraic/phar-updater": "^1.0"
+    "padraic/phar-updater": "^1.0",
+    "phpcompatibility/php-compatibility": "dev-develop#2fb82334"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.5",
