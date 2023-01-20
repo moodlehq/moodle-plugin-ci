@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.4.4] - 2022-01-20
 ### Changed
 - Updated to `php-compatibility` dev version. This was needed because the last release is from 2019 and, until a new release is available, it was the only way to get it working with PHP 8.1 and above and some good new Sniffs incorporated.
 
@@ -458,7 +460,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.3...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.4...master
+[3.4.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.3...3.4.4
 [3.4.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.2...3.4.3
 [3.4.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.0...3.4.1
