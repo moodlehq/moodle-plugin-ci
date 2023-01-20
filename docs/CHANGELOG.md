@@ -10,7 +10,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 
-## [3.4.4] - 2022-01-20
+## [3.4.4] - 2023-01-20
 ### Changed
 - Updated to `php-compatibility` dev version. This was needed because the last release is from 2019 and, until a new release is available, it was the only way to get it working with PHP 8.1 and above and some good new Sniffs incorporated.
 
