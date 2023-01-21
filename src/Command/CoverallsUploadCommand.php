@@ -51,13 +51,17 @@ class CoverallsUploadCommand extends AbstractPluginCommand
             return 0;
         }
 
-        $process = new Process('composer create-project -n --no-dev --prefer-dist satooshi/php-coveralls _php_coveralls ^1', $this->plugin->directory);
-        $this->execute->mustRun($process);
-
         $filesystem = new Filesystem();
+
+        // Only if it has not been installed before.
+        if (!$filesystem->exists($this->plugin->directory.'/coveralls')) {
+            $process = new Process('composer create-project -n --no-dev --prefer-dist php-coveralls/php-coveralls coveralls ^2', $this->plugin->directory);
+            $this->execute->mustRun($process);
+        }
+
         $filesystem->copy($coverage, $this->plugin->directory.'/build/logs/clover.xml');
 
-        $process = $this->execute->passThrough('_php_coveralls/bin/coveralls -v', $this->plugin->directory);
+        $process = $this->execute->passThrough('coveralls/bin/php-coveralls -v', $this->plugin->directory);
 
         return $process->isSuccessful() ? 0 : 1;
     }
