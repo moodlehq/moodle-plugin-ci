@@ -25,6 +25,36 @@ jobs:
     - name: Validate
       run: make validate
 
+  coverage:
+    if: github.repository == 'moodlehq/moodle-plugin-ci'
+    name: Code coverage (codecov)
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+
+    - name: Setup PHP 7.4
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 7.4
+        # We want to verify that xdebug works for coverage. Once we only support
+        # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
+        coverage: xdebug
+
+    - name: Initialise
+      run: make init
+
+    - name: Generate PHPUnit coverage
+      run: make coverage-phpunit
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./build/logs/clover.xml
+        verbose: true
+
+
   citest:
     name: Integration tests
     needs: selftest

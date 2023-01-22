@@ -21,6 +21,10 @@ validate: check-init validate-version psalm check-docs
 	$(COMPOSER) validate
 	XDEBUG_MODE=coverage $(PHPUNIT) --verbose --coverage-text
 
+.PHONY:coverage-phpunit
+coverage-phpunit: check-init
+	XDEBUG_MODE=coverage $(PHPUNIT) --verbose --coverage-clover build/logs/clover.xml
+
 .PHONY:build
 build: build/moodle-plugin-ci.phar
 
@@ -56,7 +60,7 @@ update: check-init
 .PHONY: clean
 clean:
 	rm -f build/*.phar
-	rm -f build/*.clover
+	rm -rf build/logs
 	rm -rf vendor
 	rm -f .php_cs.cache
 

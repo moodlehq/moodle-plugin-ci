@@ -70,6 +70,18 @@ jobs:
       script:
         - make validate
 
+    - stage: Code coverage (coveralls)
+      if: repo = moodlehq/moodle-plugin-ci
+      php: 7.4
+      before_install: skip
+      install:
+        - make init
+        - composer create-project -n --no-dev --prefer-dist php-coveralls/php-coveralls coveralls ^2
+      script:
+        - make coverage-phpunit
+      after_success:
+        - coveralls/bin/php-coveralls -v
+
     - stage: Integration tests
       if: env(MOODLE_BRANCH) IS present
     - php: 8.1
