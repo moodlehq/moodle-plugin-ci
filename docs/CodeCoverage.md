@@ -10,7 +10,7 @@ Code coverage will now automatically fallback between `pcov` => `xdebug` => `php
 
 The way you generate code coverage is to use one of the coverage options on the `phpunit` command.  The currently
 available options are `--coverage-text` and `--coverage-clover`.  The easiest way to start generating code coverage
-is to use the text option as that gets printed in the Travis CI logs.  Example:
+is to use the text option as that gets printed in the CI logs.  Example:
 
 ```yaml
 script:
@@ -42,9 +42,24 @@ If you would like to use Coveralls, then go to https://coveralls.io and login wi
 need to authorize access to your public repositories.  Once you have done that, navigate to your
 [REPOS](https://coveralls.io/repos) listing and use the _ADD REPOS_ button in the upper right to turn on your project.
 
-Then, you need to make the following changes to your plugin's `.travis.yml` file.  You need to tell the `phpunit`
-command to generate clover coverage and then use the `coveralls-upload` command to actually upload the coverage.
-Example:
+Then, you need to instruct to your favourite CI tool, so the `phpunit` command generates the clover coverage file and, then, use the `coveralls-upload` command to actually upload the coverage.
+
+Some examples follow:
+
+#### GitHub Actions
+
+```yaml
+      - name: PHPUnit tests
+        if: ${{ always() }}
+        run: |
+          moodle-plugin-ci phpunit --coverage-clover
+          moodle-plugin-ci coveralls-upload
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+Note that, instead of the automatically generated for every run `${{ secrets.GITHUB_TOKEN }}` token you can use any other GitHub token (PAT...) with the correct perms or, also, the token that Coveralls offers to you for every repository. Just it's easier to use the automatic GitHub one, because that way you don't need to create tokens or secrets manually and maintain them.
+
+#### Travis
 
 ```yaml
 script:
