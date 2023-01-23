@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
+
 ### Fixed
 - Updated to `php-coveralls/php-coveralls` v2 for uploading coverage results to [Coveralls](https://coveralls.io) with the `coveralls-upload` command.
 - ACTION REQUIRED: Review any use of the `coveralls-upload` command in GHA and ensure that `COVERALLS_REPO_TOKEN` is set in the environment. See [Coveralls integration](https://github.com/moodlehq/moodle-plugin-ci/blob/master/docs/CodeCoverage.md#coveralls-integration) for more information.
