@@ -42,8 +42,10 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
     public function testExecute()
     {
         $commandTester = $this->executeCommand([
-            'foo' => new Process(['php', '-r', 'usleep(100);']),
-            'bar' => new Process(['php', '-r', 'usleep(100);']),
+            [
+                'foo' => new Process(['php', '-r', 'usleep(100);']),
+                'bar' => new Process(['php', '-r', 'usleep(100);']),
+            ],
         ]);
         $this->assertSame(0, $commandTester->getStatusCode());
     }
@@ -51,7 +53,9 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
     public function testExecuteFailedProcess()
     {
         $commandTester = $this->executeCommand([
-            'foo' => new Process(['php', '-r', 'fwrite(STDERR, "Write to error\n"); exit(1);']),
+            [
+                'foo' => new Process(['php', '-r', 'fwrite(STDERR, "Write to error\n"); exit(1);']),
+            ],
         ]);
 
         $this->assertSame(1, $commandTester->getStatusCode());
@@ -67,10 +71,13 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
         $command->plugin = new DummyMoodlePlugin(__DIR__);
         $processes       = $command->initializeProcesses();
 
-        foreach ($processes as $name => $process) {
-            $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
-            $this->assertIsString($name);
-            $this->assertGreaterThan(1, strlen($name));
+        foreach ($processes as $processGroup) {
+            $this->assertIsArray($processGroup);
+            foreach ($processGroup as $name => $process) {
+                $this->assertInstanceOf('Symfony\Component\Process\Process', $process);
+                $this->assertIsString($name);
+                $this->assertGreaterThan(1, strlen($name));
+            }
         }
     }
 }
