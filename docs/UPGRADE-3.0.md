@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Upgrading from 2.X to 3.0
+title: Upgrading from 2.x to 3.0
 ---
 
 This document outlines the steps one should take when upgrading to the new major version.
