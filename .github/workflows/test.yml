@@ -136,7 +136,7 @@ jobs:
         moodle-plugin-ci validate
         moodle-plugin-ci savepoints
         moodle-plugin-ci mustache
-        moodle-plugin-ci grunt || [ "$MOODLE_BRANCH" == 'MOODLE_38_STABLE' ]
+        moodle-plugin-ci grunt || [[ "$MOODLE_BRANCH" =~ MOODLE_3[0-9]+_STABLE ]] # Fixtures only compatible with Moodle >= 4.0
         moodle-plugin-ci phpdoc
         moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
         moodle-plugin-ci behat --profile default
