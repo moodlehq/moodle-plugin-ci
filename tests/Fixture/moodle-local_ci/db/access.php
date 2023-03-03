@@ -26,12 +26,12 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
     'local/travis:view' => [
-        'captype'      => 'read',
+        'captype' => 'read',
         'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes'   => [
-            'teacher'        => CAP_ALLOW,
+        'archetypes' => [
+            'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager'        => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
         ],
     ],
 ];
