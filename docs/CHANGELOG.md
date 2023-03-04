@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) version.
 
 ## [3.4.6] - 2023-02-08
 ### Changed
