@@ -9,8 +9,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.4.7] - 2023-03-04
 ### Changed
 - Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) version.
+- Fix self-tests to pass with new introduced checks and Node 18.
 
 ## [3.4.6] - 2023-02-08
 ### Changed
@@ -474,7 +477,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.6...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.7...master
+[3.4.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.6...3.4.7
 [3.4.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.5...3.4.6
 [3.4.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.4...3.4.5
 [3.4.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.3...3.4.4
