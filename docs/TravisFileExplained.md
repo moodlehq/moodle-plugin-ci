@@ -11,6 +11,9 @@ see [Travis CI's documentation](http://docs.travis-ci.com/user/getting-started/)
 # This is the language of our project.
 language: php
 
+# Note that focal (20.04) is the minimum because Node 18 requires it.
+dist: focal
+
 # Installs the updated version of PostgreSQL and extra APT packages.
 addons:
   postgresql: "13"
@@ -34,9 +37,9 @@ cache:
 # listed here will create a separate build and run the tests against that
 # version of PHP.
 php:
- - 7.3
  - 7.4
  - 8.0
+ - 8.1
 
 # This section sets up the environment variables for the build.
 env:

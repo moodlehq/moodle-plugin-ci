@@ -1,5 +1,7 @@
 language: php
 
+dist: focal
+
 addons:
   postgresql: "13"
   apt:
@@ -17,9 +19,9 @@ cache:
     - $HOME/.npm
 
 php:
- - 7.3
  - 7.4
  - 8.0
+ - 8.1
 
 env:
  global:
