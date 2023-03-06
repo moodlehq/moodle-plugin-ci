@@ -45,7 +45,7 @@ if (file_exists(__DIR__ . '/../../../autoload.php')) {
 }
 
 // Current version. Keep it updated on releases.
-define('MOODLE_PLUGIN_CI_VERSION', '3.4.7');
+define('MOODLE_PLUGIN_CI_VERSION', '3.4.8');
 
 define('MOODLE_PLUGIN_CI_BOXED', '@is_boxed@');
 define('ENV_FILE', dirname(__DIR__) . '/.env');
