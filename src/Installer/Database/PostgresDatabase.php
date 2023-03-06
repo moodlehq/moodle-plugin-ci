@@ -41,6 +41,10 @@ class PostgresDatabase extends AbstractDatabase
                 if ($this->host === 'localhost') {
                     $this->host = ''; // Use sockets or we'll need to edit pg_hba.conf and restart the server. Only if not set.
                     $this->port = '5433'; // We also need the port to find the correct socket file.
+                    // Travis did it again, for PostgreSQL 13, they are back to port 5432. We need that to find the socket.
+                    if ((int) getenv('PGVER') === 13) {
+                        $this->port = '5432'; // We also need the port to find the correct socket file.
+                    }
                 }
             }
         }
