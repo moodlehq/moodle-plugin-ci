@@ -35,7 +35,8 @@ class CodeCheckerCommand extends AbstractPluginCommand
     {
         parent::configure();
 
-        $this->setName('codechecker')
+        $this->setName('phpcs')
+            ->setAliases(['codechecker'])
             ->setDescription('Run Moodle CodeSniffer standard on a plugin')
             ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle')
             ->addOption('max-warnings', null, InputOption::VALUE_REQUIRED,

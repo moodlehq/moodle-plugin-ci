@@ -28,6 +28,7 @@ class CodeFixerCommand extends CodeCheckerCommand
         AbstractPluginCommand::configure();
 
         $this->setName('phpcbf')
+            ->setAliases(['codefixer'])
             ->setDescription('Run Code Beautifier and Fixer on a plugin')
             ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle');
     }
