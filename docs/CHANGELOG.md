@@ -9,10 +9,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.4.8] - 2023-03-06
 ### Changed
 - Modified the Travis templates and docs to point that, since [MDL-75012](https://tracker.moodle.org/browse/MDL-75012) (core update to Node 18), Ubuntu Focal 20.04 is the minimum required by runs.
 - ACTION REQUIRED: Review any Travis configuration for 39_STABLE and up. Now they require Ubuntu 20.04 (focal) to be specified.
-- The `codechecker` command has been rename to `phpcs`, to better match other command names. The old name remains as alias, so no change is required.
+- The `codechecker` command has been renamed to `phpcs`, to better match other command names. The old name remains as alias, so no change is required.
 
 ## [3.4.7] - 2023-03-04
 ### Changed
@@ -481,7 +483,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.7...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.8...3.x
+[3.4.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.7...3.4.8
 [3.4.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.6...3.4.7
 [3.4.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.5...3.4.6
 [3.4.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.4...3.4.5
