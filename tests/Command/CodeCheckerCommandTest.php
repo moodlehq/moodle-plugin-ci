@@ -34,7 +34,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
-    protected function executeCommand($pluginDir = null, $maxWarnings = -1): CommandTester
+    protected function executeCommand($pluginDir = null, $maxWarnings = -1, $testVersion = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -49,6 +49,10 @@ class CodeCheckerCommandTest extends MoodleTestCase
         $options = ['plugin' => $pluginDir];
         if ($maxWarnings >= 0) {
             $options['--max-warnings'] = $maxWarnings;
+        }
+
+        if (null !== $testVersion) {
+            $options['--test-version'] = $testVersion;
         }
 
         $commandTester = new CommandTester($application->find('codechecker'));
@@ -143,6 +147,68 @@ EOT;
         // Allowing 3 warnings, it passes.
         $commandTester = $this->executeCommand($this->pluginDir, 3);
         $this->assertSame(0, $commandTester->getStatusCode());
+    }
+
+    public function testExecuteWithTestVersion()
+    {
+        // Let's add a file with some new and deprecated stuff, and verify that the test-version option affects to the outcome.
+        $content = <<<'EOT'
+<?php // phpcs:disable moodle
+mb_str_split();                       // New in PHP 7.4.
+ini_get('allow_url_include');         // Deprecated in PHP 7.4.
+ldap_count_references();              // New in PHP 8.0.
+pg_errormessage();                    // Deprecated in PHP 8.0.
+$fb = new ReflectionFiber();          // New in PHP 8.1.
+ini_get('auto_detect_line_endings');  // Deprecated in PHP 8.1.
+openssl_cipher_key_length();          // New in PHP 8.2.
+utf8_encode();                        // Deprecated in PHP 8.2.
+
+EOT;
+        $this->fs->dumpFile($this->pluginDir . '/test_versions.php', $content);
+
+        // By default, without specify test-version, only reports deprecation warnings and returns 0.
+        $commandTester = $this->executeCommand($this->pluginDir, -1, null);
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 3 WARNINGS AFFECTING 3 LINES/', $output);
+
+        // With test-version 7.4, reports 2 new errors and <= 7.4 specific warnings and returns 1.
+        $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4');
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(1, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 1 WARNING AFFECTING 3 LINES/', $output);
+
+        // With test-version 8.0, reports 1 new errors and <= 8.0 specific warnings and returns 1.
+        $commandTester = $this->executeCommand($this->pluginDir, -1, '8.0');
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(1, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 1 ERROR AND 2 WARNINGS AFFECTING 3 LINES/', $output);
+
+        // With test-version 8.1, reports 0 new errors and <= 8.1 specific warnings and returns 0.
+        $commandTester = $this->executeCommand($this->pluginDir, -1, '8.1');
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 3 WARNINGS AFFECTING 3 LINES/', $output);
+
+        // With test-version 7.4-8.0, reports 2 new errors and <= 8.0 specific warnings and returns 1.
+        $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-8.0');
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(1, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 2 WARNINGS AFFECTING 4 LINES/', $output);
+
+        // With test-version 7.4-8.1, reports 2 new errors and <= 8.1 specific warnings and returns 1.
+        $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-8.1');
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(1, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES/', $output);
+
+        // With test-version 7.4- (open range), reports 2 new errors and <= 8.2 specific warnings and returns 1.
+        // (note that it should be 1 more warning and 1 more error, but the PHPCompatibility sniffs are not
+        // still ready for many of the PHP 8.2 changes. We'll amend this test when they are ready).
+        $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-');
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(1, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES/', $output);
     }
 
     public function testExecuteNoFiles()
