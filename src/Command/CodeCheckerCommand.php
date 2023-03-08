@@ -40,7 +40,9 @@ class CodeCheckerCommand extends AbstractPluginCommand
             ->setDescription('Run Moodle CodeSniffer standard on a plugin')
             ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle')
             ->addOption('max-warnings', null, InputOption::VALUE_REQUIRED,
-                'Number of warnings to trigger nonzero exit code - default: -1', -1);
+                'Number of warnings to trigger nonzero exit code - default: -1', -1)
+            ->addOption('test-version', null, InputOption::VALUE_REQUIRED,
+                'Version or range of version to test with PHPCompatibility', 0);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -81,6 +83,12 @@ class CodeCheckerCommand extends AbstractPluginCommand
             // If we are using the max-warnings option, we need the summary report somewhere to get
             // the total number of errors and warnings from there.
             $cmd[] = '--report-json=' . $this->tempFile;
+        }
+
+        // Show PHPCompatibility backward-compatibility errors for a version or version range.
+        $testVersion = $input->getOption('test-version');
+        if (!empty($testVersion)) {
+            array_push($cmd, '--runtime-set', 'testVersion', $testVersion);
         }
 
         // Add the files to process.
