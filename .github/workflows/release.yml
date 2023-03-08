@@ -26,11 +26,20 @@ jobs:
           make build
           php build/moodle-plugin-ci.phar list
 
+      - name: Extract release notes from changelog
+        id: extract-release-notes
+        uses: yashanand1910/standard-release-notes@v1.3.0
+        with:
+          changelog_path: docs/CHANGELOG.md
+          version: ${{ github.ref }}
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: build/moodle-plugin-ci.phar
           artifactContentType: application/zip
           body: |
-            Take a look at the [CHANGELOG](https://moodlehq.github.io/moodle-plugin-ci/CHANGELOG.html) for details about the release.
+            ${{ steps.extract-release-notes.outputs.release_notes }}
+            #
+            Take a look at the [CHANGELOG](https://moodlehq.github.io/moodle-plugin-ci/CHANGELOG.html) for details about other releases.
             Please follow [3.0 Upgrade guide](https://moodlehq.github.io/moodle-plugin-ci/UPGRADE-3.0.html) when upgrading from 2.x.

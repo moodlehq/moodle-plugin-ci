@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- Improved release process: Now every version changelog (this file) is automatically added to the release notes.
 
 ## [3.4.8] - 2023-03-06
 ### Changed
