@@ -90,7 +90,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
         // Show PHPCompatibility backward-compatibility errors for a version or version range.
         $testVersion = $input->getOption('test-version');
         if (!empty($testVersion)) {
-            array_push($cmd, '--runtime-set', 'testVersion', $testVersion);
+            $builder->add('--runtime-set')->add('testVersion')->add(' '.$testVersion);
         }
 
         // Add the files to process.

@@ -157,43 +157,43 @@ openssl_cipher_key_length();          // New in PHP 8.2.
 utf8_encode();                        // Deprecated in PHP 8.2.
 
 EOT;
-        $this->fs->dumpFile($this->pluginDir . '/test_versions.php', $content);
+        $this->fs->dumpFile($this->pluginDir.'/test_versions.php', $content);
 
         // By default, without specify test-version, only reports deprecation warnings and returns 0.
         $commandTester = $this->executeCommand($this->pluginDir, -1, null);
         $output        = $commandTester->getDisplay();
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 3 WARNINGS AFFECTING 3 LINES/', $output);
+        $this->assertRegexp('/FOUND 0 ERRORS AND 3 WARNINGS AFFECTING 3 LINES/', $output);
 
         // With test-version 7.4, reports 2 new errors and <= 7.4 specific warnings and returns 1.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 1 WARNING AFFECTING 3 LINES/', $output);
+        $this->assertRegexp('/FOUND 2 ERRORS AND 1 WARNING AFFECTING 3 LINES/', $output);
 
         // With test-version 8.0, reports 1 new errors and <= 8.0 specific warnings and returns 1.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '8.0');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 1 ERROR AND 2 WARNINGS AFFECTING 3 LINES/', $output);
+        $this->assertRegexp('/FOUND 1 ERROR AND 2 WARNINGS AFFECTING 3 LINES/', $output);
 
         // With test-version 8.1, reports 0 new errors and <= 8.1 specific warnings and returns 0.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '8.1');
         $output        = $commandTester->getDisplay();
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 3 WARNINGS AFFECTING 3 LINES/', $output);
+        $this->assertRegexp('/FOUND 0 ERRORS AND 3 WARNINGS AFFECTING 3 LINES/', $output);
 
         // With test-version 7.4-8.0, reports 2 new errors and <= 8.0 specific warnings and returns 1.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-8.0');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 2 WARNINGS AFFECTING 4 LINES/', $output);
+        $this->assertRegexp('/FOUND 2 ERRORS AND 2 WARNINGS AFFECTING 4 LINES/', $output);
 
         // With test-version 7.4-8.1, reports 2 new errors and <= 8.1 specific warnings and returns 1.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-8.1');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES/', $output);
+        $this->assertRegexp('/FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES/', $output);
 
         // With test-version 7.4- (open range), reports 2 new errors and <= 8.2 specific warnings and returns 1.
         // (note that it should be 1 more warning and 1 more error, but the PHPCompatibility sniffs are not
@@ -201,7 +201,7 @@ EOT;
         $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES/', $output);
+        $this->assertRegexp('/FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES/', $output);
     }
 
     public function testExecuteNoFiles()
