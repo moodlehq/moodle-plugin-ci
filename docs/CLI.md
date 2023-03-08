@@ -8,7 +8,8 @@ title: Moodle Plugin CI Commands
 * [`add-config`](#add-config)
 * [`add-plugin`](#add-plugin)
 * [`behat`](#behat)
-* [`codechecker`](#codechecker)
+* [`codechecker`](#phpcs)
+* [`codefixer`](#phpcbf)
 * [`coveralls-upload`](#coveralls-upload)
 * [`grunt`](#grunt)
 * [`help`](#help)
@@ -18,6 +19,7 @@ title: Moodle Plugin CI Commands
 * [`parallel`](#parallel)
 * [`phpcbf`](#phpcbf)
 * [`phpcpd`](#phpcpd)
+* [`phpcs`](#phpcs)
 * [`phpdoc`](#phpdoc)
 * [`phplint`](#phplint)
 * [`phpmd`](#phpmd)
@@ -309,110 +311,6 @@ Print contents of Behat failure HTML files
 * Is value required: no
 * Is multiple: no
 * Default: `false`
-
-#### `--help|-h`
-
-Display this help message
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--quiet|-q`
-
-Do not output any message
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--verbose|-v|-vv|-vvv`
-
-Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--version|-V`
-
-Display this application version
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--ansi`
-
-Force ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--no-interaction|-n`
-
-Do not ask any interactive question
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-`codechecker`
--------------
-
-Run Moodle CodeSniffer standard on a plugin
-
-### Usage
-
-* `codechecker [-s|--standard STANDARD] [--max-warnings MAX-WARNINGS] [--] <plugin>`
-
-Run Moodle CodeSniffer standard on a plugin
-
-### Arguments
-
-#### `plugin`
-
-Path to the plugin
-
-* Is required: yes
-* Is array: no
-* Default: `NULL`
-
-### Options
-
-#### `--standard|-s`
-
-The name or path of the coding standard to use
-
-* Accept value: yes
-* Is value required: yes
-* Is multiple: no
-* Default: `'moodle'`
-
-#### `--max-warnings`
-
-Number of warnings to trigger nonzero exit code - default: -1
-
-* Accept value: yes
-* Is value required: yes
-* Is multiple: no
-* Default: `-1`
 
 #### `--help|-h`
 
@@ -1279,6 +1177,7 @@ Run Code Beautifier and Fixer on a plugin
 ### Usage
 
 * `phpcbf [-s|--standard STANDARD] [--] <plugin>`
+* `codefixer`
 
 Run Code Beautifier and Fixer on a plugin
 
@@ -1388,6 +1287,120 @@ Path to the plugin
 * Default: `NULL`
 
 ### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`phpcs`
+-------
+
+Run Moodle CodeSniffer standard on a plugin
+
+### Usage
+
+* `phpcs [-s|--standard STANDARD] [--max-warnings MAX-WARNINGS] [--test-version TEST-VERSION] [--] <plugin>`
+* `codechecker`
+
+Run Moodle CodeSniffer standard on a plugin
+
+### Arguments
+
+#### `plugin`
+
+Path to the plugin
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--standard|-s`
+
+The name or path of the coding standard to use
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `'moodle'`
+
+#### `--max-warnings`
+
+Number of warnings to trigger nonzero exit code - default: -1
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `-1`
+
+#### `--test-version`
+
+Version or range of version to test with PHPCompatibility
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `0`
 
 #### `--help|-h`
 
