@@ -34,9 +34,10 @@ env:
 before_install:
   - if [[ ${TRAVIS_PHP_VERSION:0:1} -gt 7 ]]; then pecl install xmlrpc-beta; fi
   - echo 'max_input_vars=5000' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-  # Don't disable xdebug if you want to get it used for code coverage.
+  # We remove xdebug by default for performance, because we're not checking code coverage.
+  # If you want to use xdebug for code coverage, remove this line.
   - phpenv config-rm xdebug.ini
-  # Alternative (for Moodle 3.10 and up) is to use pcov. It can be installed using:
+  # To use pcov for code coverage on Moodle 3.10 and up, install it using:
   # - pecl install pcov
   - cd ../..
   - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
