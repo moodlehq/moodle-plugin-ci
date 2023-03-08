@@ -1358,7 +1358,7 @@ Run Moodle CodeSniffer standard on a plugin
 
 ### Usage
 
-* `phpcs [-s|--standard STANDARD] [--max-warnings MAX-WARNINGS] [--] <plugin>`
+* `phpcs [-s|--standard STANDARD] [--max-warnings MAX-WARNINGS] [--test-version TEST-VERSION] [--] <plugin>`
 * `codechecker`
 
 Run Moodle CodeSniffer standard on a plugin
@@ -1392,6 +1392,15 @@ Number of warnings to trigger nonzero exit code - default: -1
 * Is value required: yes
 * Is multiple: no
 * Default: `-1`
+
+#### `--test-version`
+
+Version or range of version to test with PHPCompatibility
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `0`
 
 #### `--help|-h`
 

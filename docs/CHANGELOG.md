@@ -9,8 +9,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.4.9] - 2023-03-08
 ### Added
 - Improved release process: Now every version changelog (this file) is automatically added to the release notes.
+- New `--test-version` option added to the `phpcs` (`codechecker`) command in order to specify the PHP version `(x.y)` or range of PHP versions `(x.y-w.z)` to be checked by the `PHPCompatibility` standard (part of the `moodle` standard).
 
 ## [3.4.8] - 2023-03-06
 ### Changed
@@ -485,7 +488,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.8...3.x
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.9...3.x
+[3.4.9]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.8...3.4.9
 [3.4.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.7...3.4.8
 [3.4.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.6...3.4.7
 [3.4.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.5...3.4.6
