@@ -134,7 +134,7 @@ script:
 # conforms to the Moodle coding standards.  It is highly recommended
 # that you keep this step.
 # To fail on warnings use --max-warnings 0
-  - moodle-plugin-ci codechecker
+  - moodle-plugin-ci phpcs
 # This step runs Moodle PHPDoc checker on your plugin.
   - moodle-plugin-ci phpdoc
 # This step runs some light validation on the plugin file structure
