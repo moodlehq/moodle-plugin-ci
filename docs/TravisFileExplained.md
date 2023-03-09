@@ -89,8 +89,11 @@ before_install:
 - if [[ ${TRAVIS_PHP_VERSION:0:1} -gt 7 ]]; then pecl install xmlrpc-beta; fi
 # Setup a good default max_input_vars value for all runs.
 - echo 'max_input_vars=5000' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-# This disables XDebug which should speed up the build.
+# We remove xdebug by default for performance, because we're not checking code coverage.
+# If you want to use xdebug for code coverage, remove this line.
   - phpenv config-rm xdebug.ini
+# To use pcov for code coverage on Moodle 3.10 and up, install it using:
+# - pecl install pcov
 # Currently we are inside of the clone of your repository.  We move up two
 # directories to build the project.
   - cd ../..
@@ -131,7 +134,7 @@ script:
 # conforms to the Moodle coding standards.  It is highly recommended
 # that you keep this step.
 # To fail on warnings use --max-warnings 0
-  - moodle-plugin-ci codechecker
+  - moodle-plugin-ci phpcs
 # This step runs Moodle PHPDoc checker on your plugin.
   - moodle-plugin-ci phpdoc
 # This step runs some light validation on the plugin file structure
