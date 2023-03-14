@@ -10,6 +10,11 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 
+## [3.4.10] - 2023-03-14
+### Changed
+- Various improvements to the Travis & GHA dist files and documentation.
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) version.
+
 ## [3.4.9] - 2023-03-08
 ### Added
 - Improved release process: Now every version changelog (this file) is automatically added to the release notes.
@@ -488,7 +493,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.9...3.x
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.10...3.x
+[3.4.10]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.9...3.4.10
 [3.4.9]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.8...3.4.9
 [3.4.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.7...3.4.8
 [3.4.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.6...3.4.7
