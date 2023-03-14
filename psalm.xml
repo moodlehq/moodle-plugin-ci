@@ -5,6 +5,7 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     errorLevel="2"
+    cacheDirectory=".psalm.cache"
     reportMixedIssues="false"
     resolveFromConfigFile="true"
     disableSuppressAll="true"

@@ -63,6 +63,7 @@ clean:
 	rm -rf build/logs
 	rm -rf vendor
 	rm -f .php_cs.cache
+	rm -rf .psalm.cache
 
 # Output error if not initialised.
 check-init:
