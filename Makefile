@@ -59,6 +59,7 @@ clean:
 	rm -f build/*.clover
 	rm -rf vendor
 	rm -f .php_cs.cache
+	rm -rf .psalm.cache
 
 # Output error if not initialised.
 check-init:

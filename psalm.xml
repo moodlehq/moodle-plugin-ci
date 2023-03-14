@@ -4,6 +4,7 @@
     requireVoidReturnType="false"
     allowPhpStormGenerics="true"
     errorBaseline="psalm-baseline.xml"
+    cacheDirectory=".psalm.cache"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/master/config.xsd"
