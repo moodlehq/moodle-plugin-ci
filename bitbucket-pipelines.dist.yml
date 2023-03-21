@@ -3,7 +3,7 @@ definitions:
   setupdeps: &setupDeps
     export DEBIAN_FRONTEND='noninteractive' ;
     export COMPOSER_ALLOW_SUPERUSER=1 ;
-    export COMPOSER_CACHE_DIR='/root/.composer/cache' ;
+    export COMPOSER_CACHE_DIR=~/.composer/cache ;
     export MOODLE_START_BEHAT_SERVERS='NO' ;
     export CI_BUILD_DIR='/tmp/plugin' ;
     export MOODLE_BEHAT_WWWROOT="http://$BITBUCKET_DOCKER_HOST_INTERNAL:8000" ;
@@ -22,7 +22,7 @@ definitions:
   startbehat: &startBehat
     export MPATH="$BITBUCKET_CLONE_DIR/moodle" ;
     docker run -d -p 4444:4444 --shm-size=1g -v "$MPATH:$MPATH" 'selenium/standalone-firefox:3' &&
-    { php -S 0.0.0.0:8000 -t "$moodle" >/dev/null 2>&1 & } &&
+    { php -S 0.0.0.0:8000 -t "$MPATH" >/dev/null 2>&1 & } &&
     sleep 10s
   services:
     mariadb:
