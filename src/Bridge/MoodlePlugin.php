@@ -208,6 +208,16 @@ class MoodlePlugin
     }
 
     /**
+     * Determine if the plugin has a (phpunit.xml) configuration file.
+     *
+     * @return bool
+     */
+    public function hasPhpUnitConfig(): bool
+    {
+        return is_file($this->directory.'/phpunit.xml');
+    }
+
+    /**
      * Determine if the plugin has any Nodejs dependencies.
      *
      * @return bool

@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Plugin bundled `phpunit.xml` files are not overwritten or modified ever.
+- For Moodle 3.9 and up, when the plugin is missing any `tests/coverage.php` file, core defaults (`lib.php`, `locallib.php`, `classes/`, ...) will be applied. Previously, all the `*.php` files were applied by default (note that older Moodle versions will continue getting them).
 
 ## [3.4.10] - 2023-03-14
 ### Changed

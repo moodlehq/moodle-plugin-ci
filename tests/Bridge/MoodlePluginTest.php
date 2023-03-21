@@ -45,6 +45,17 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertTrue($plugin->hasUnitTests());
     }
 
+    public function testHasPhpUnitConfig()
+    {
+        // Our plugins doesn't have a phpunit.xml file.
+        $plugin = new MoodlePlugin($this->pluginDir);
+        $this->assertFalse($plugin->hasPhpUnitConfig());
+
+        // Let's create one.
+        $this->fs->dumpFile($this->pluginDir.'/phpunit.xml', '');
+        $this->assertTrue($plugin->hasPhpUnitConfig());
+    }
+
     public function testNoUnitTests()
     {
         // Remove the only unit test file.

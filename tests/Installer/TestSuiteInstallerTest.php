@@ -112,12 +112,12 @@ class TestSuiteInstallerTest extends MoodleTestCase
             new DummyExecute()
         );
 
-        // Test Moodle 3.11 PHPUnit XML file.
+        // Test Moodle 3.11 PHPUnit XML file. Nothing is changed.
         $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile, true);
         $installer->injectPHPUnitFilter();
-        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-expected-311.xml', $xmlFile);
+        $this->assertXmlFileEqualsXmlFile(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile);
 
-        // Test Moodle 3.11 PHPUnit XML file when coverage.php is available.
+        // Test Moodle 3.11 PHPUnit XML file when coverage.php is available. Nothing is changed either.
         $this->fs->copy(__DIR__.'/../Fixture/phpunit/phpunit-311.xml', $xmlFile, true);
         $this->fs->copy(__DIR__.'/../Fixture/phpunit/coverage.php', $this->pluginDir.'/tests/coverage.php', true);
         $installer->injectPHPUnitFilter();

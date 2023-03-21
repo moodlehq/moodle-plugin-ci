@@ -130,7 +130,11 @@ class TestSuiteInstaller extends AbstractInstaller
         if ($this->plugin->hasUnitTests()) {
             $this->getOutput()->debug('Build PHPUnit config');
             $processes[] = new MoodleProcess(sprintf('%s/admin/tool/phpunit/cli/util.php --buildconfig', $this->moodle->directory));
-            $processes[] = new MoodleProcess(sprintf('%s/admin/tool/phpunit/cli/util.php --buildcomponentconfigs', $this->moodle->directory));
+            // Only create the PHPUnit config file (phpunit.xml) if it does not exist.
+            // This is to avoid overwriting the file if it has been customized by the developer.
+            if (!$this->plugin->hasPHPUnitConfig()) {
+                $processes[] = new MoodleProcess(sprintf('%s/admin/tool/phpunit/cli/util.php --buildcomponentconfigs', $this->moodle->directory));
+            }
         }
 
         return $processes;
@@ -150,8 +154,16 @@ class TestSuiteInstaller extends AbstractInstaller
         // section is already configured following it. Nothing to do here.
         $coverage = $this->plugin->directory.'/tests/coverage.php';
         // If the file exists and we are Moodle >= 3.7.
-        // TODO: Remove the branch condition when 3.6 becomes unsupported by moodle-local-ci.
+        // TODO: Remove the branch condition when 3.6 becomes unsupported by moodle-plugin-ci.
         if ($this->moodle->getBranch() >= 37 && is_readable($coverage)) {
+            return;
+        }
+
+        // If the coverage.php file does not exist, and we are Moodle < 3.9, then try to inject the default
+        // filter/coverage information. Note that, for Moodle 3.9 and up, the filter/coverage information
+        // with good defaults is already present in the phpunit.xml file. See MDL-72701.
+        // TODO: Remove the whole code in the function after this line, when 3.8 becomes unsupported by moodle-plugin-ci.
+        if ($this->moodle->getBranch() >= 39) {
             return;
         }
 
@@ -162,12 +174,15 @@ class TestSuiteInstaller extends AbstractInstaller
 
         // Replace existing filter.
         $contents = preg_replace('/<coverage>(.|\n)*<\/coverage>/m', trim($filterXml), $subject, 1, $count);
-        // TODO: Remove this when 3.10 becomes unsupported by moodle-local-ci.
+        // TODO: Remove this when 3.10 becomes unsupported by moodle-plugin-ci.
         if ($this->moodle->getBranch() < 311) {
             $contents = preg_replace('/<filter>(.|\n)*<\/filter>/m', trim($filterXml), $subject, 1, $count);
         }
 
         // Or if no existing filter, inject the filter.
+        // We only do this for Moodle < 3.9, because in Moodle 3.9+ the filter with better defaults
+        // is already present in the phpunit.xml file. See MDL-72701.
+        // TODO: Remove this when 3.8 becomes unsupported by moodle-plugin-ci.
         if ($count === 0) {
             $contents  = str_replace('</phpunit>', $filterXml.'</phpunit>', $subject, $count);
         }
