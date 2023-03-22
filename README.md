@@ -1,6 +1,7 @@
 [![Latest Stable Version](https://poser.pugx.org/moodlehq/moodle-plugin-ci/v)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 ![Moodle Plugin CI](https://github.com/moodlehq/moodle-plugin-ci/workflows/Moodle%20Plugin%20CI/badge.svg)
 [![Build Status](https://travis-ci.com/moodlehq/moodle-plugin-ci.svg?branch=master)](https://travis-ci.com/moodlehq/moodle-plugin-ci)
+[![codecov](https://codecov.io/gh/moodlehq/moodle-plugin-ci/branch/master/graph/badge.svg?token=I3PPJ383G7)](https://codecov.io/gh/moodlehq/moodle-plugin-ci)
 [![Total Downloads](https://poser.pugx.org/moodlehq/moodle-plugin-ci/downloads)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 [![License](https://poser.pugx.org/moodlehq/moodle-plugin-ci/license)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 
