@@ -37,7 +37,8 @@ class PHPUnitCommand extends AbstractMoodleCommand
             ->addOption('fail-on-incomplete', null, InputOption::VALUE_NONE, 'Treat incomplete tests as failures')
             ->addOption('fail-on-risky', null, InputOption::VALUE_NONE, 'Treat risky tests as failures')
             ->addOption('fail-on-skipped', null, InputOption::VALUE_NONE, 'Treat skipped tests as failures')
-            ->addOption('fail-on-warning', null, InputOption::VALUE_NONE, 'Treat tests with warnings as failures');
+            ->addOption('fail-on-warning', null, InputOption::VALUE_NONE, 'Treat tests with warnings as failures')
+            ->addOption('testdox', null, InputOption::VALUE_NONE, 'Enable testdox formatter');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
