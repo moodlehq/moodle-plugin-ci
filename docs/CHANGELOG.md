@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [3.4.11] - 2023-03-22
 ### Changed
 - Plugin bundled `phpunit.xml` files are not overwritten or modified ever.
 - For Moodle 3.9 and up, when the plugin is missing any `tests/coverage.php` file, core defaults (`lib.php`, `locallib.php`, `classes/`, ...) will be applied. Previously, all the `*.php` files were applied by default (note that older Moodle versions will continue getting them).
@@ -496,7 +498,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.10...3.x
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.11...3.x
+[3.4.11]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.10...3.4.11
 [3.4.10]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.9...3.4.10
 [3.4.9]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.8...3.4.9
 [3.4.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.7...3.4.8
