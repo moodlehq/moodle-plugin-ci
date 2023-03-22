@@ -96,7 +96,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
                 '--verbose',
             ];
         }
-        foreach (['fail-on-incomplete', 'fail-on-risky', 'fail-on-skipped', 'fail-on-warning'] as $option) {
+        foreach (['fail-on-incomplete', 'fail-on-risky', 'fail-on-skipped', 'fail-on-warning', 'testdox'] as $option) {
             if ($input->getOption($option)) {
                 $options[] = [
                     '--' . $option,
