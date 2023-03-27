@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Small changes to documentation towards prioritise GitHub Actions over Travis CI.
 
 ## [3.4.11] - 2023-03-22
 ### Changed
