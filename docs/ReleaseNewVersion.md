@@ -13,9 +13,9 @@ Prior to tagging a release, ensure the following have been updated:
 * The `bin/moodle-plugin-ci` also needs to be updated accordingly, setting the `MOODLE_PLUGIN_CI_VERSION` constant
   to the version being released.
 * If this is a new major version, then CI tool example files and its docs need
-  to be updated to use the new major version (e.g. for Travis CI make changes
-  in `.travis.dist.yml` and `doc/TravisFileExplained.md`). Any other version
-  will automatically be used.
+  to be updated to use the new major version (e.g. for GitHub Actions
+  CI make changes in `gha.dist.yml` and `docs/GHAFileExplained.md`).
+  Any other version will automatically be used.
 
 When all the changes above have been performed, push them straight upstream to
 `master` or create a standard PR to get them reviewed and incorporated
