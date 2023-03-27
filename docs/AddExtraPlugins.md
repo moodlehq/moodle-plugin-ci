@@ -5,10 +5,9 @@ title: Adding extra plugins
 
 Sometimes the plugin that you are testing may depend on another plugin or even several other plugins.  This project
 provides a way to Git clone the extra plugins and add them to the Moodle test site. Here is an example of how to use
-it in your `.travis.yml` file:
+it in your `.github/workflow/*` or `.travis.yml` files:
 
 ```yaml
-install:
   - moodle-plugin-ci add-plugin moodlehq/moodle-local_hub
   - moodle-plugin-ci install
 ```
