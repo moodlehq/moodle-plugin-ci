@@ -13,6 +13,7 @@
 
 use MoodlePluginCI\Command\AddConfigCommand;
 use MoodlePluginCI\Command\AddPluginCommand;
+use MoodlePluginCI\Command\AddOfflinePluginCommand;
 use MoodlePluginCI\Command\BehatCommand;
 use MoodlePluginCI\Command\CodeCheckerCommand;
 use MoodlePluginCI\Command\CodeFixerCommand;
@@ -72,6 +73,7 @@ if (MOODLE_PLUGIN_CI_BOXED === 'BOXED') {
 $application = new Application('Moodle Plugin CI', $version);
 $application->add(new AddConfigCommand());
 $application->add(new AddPluginCommand(ENV_FILE));
+$application->add(new AddOfflinePluginCommand(ENV_FILE));
 $application->add(new BehatCommand());
 $application->add(new CodeCheckerCommand());
 $application->add(new CodeFixerCommand());
