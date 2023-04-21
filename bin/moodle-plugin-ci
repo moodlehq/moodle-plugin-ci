@@ -12,8 +12,8 @@
  */
 
 use MoodlePluginCI\Command\AddConfigCommand;
-use MoodlePluginCI\Command\AddPluginCommand;
 use MoodlePluginCI\Command\AddOfflinePluginCommand;
+use MoodlePluginCI\Command\AddPluginCommand;
 use MoodlePluginCI\Command\BehatCommand;
 use MoodlePluginCI\Command\CodeCheckerCommand;
 use MoodlePluginCI\Command\CodeFixerCommand;

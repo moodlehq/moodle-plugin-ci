@@ -63,7 +63,6 @@ class AddOfflinePluginCommand extends Command
         $source = realpath($validate->directory($source));
 
         if (!empty($branch)) {
-
             $process = new Process(explode(' ', 'git status'), $source, null, null, null);
             $process->run();
             if (!$process->isSuccessful()) {

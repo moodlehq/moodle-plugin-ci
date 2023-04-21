@@ -14,14 +14,13 @@ namespace MoodlePluginCI\Tests\Command;
 
 use MoodlePluginCI\Command\AddOfflinePluginCommand;
 use MoodlePluginCI\Process\Execute;
-use Symfony\Component\Process\Process;
 use MoodlePluginCI\Tests\FilesystemTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Process\Process;
 
 class AddOfflinePluginCommandTest extends FilesystemTestCase
 {
-
     /**
      * Creates a instance for testing the Command class.
      *
@@ -31,19 +30,23 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
     {
         $command          = new AddOfflinePluginCommand($this->tempDir . '/.env');
         $command->execute = new Execute();
-        $application = new Application();
+        $application      = new Application();
         $application->add($command);
+
         return new CommandTester($application->find('add-offline-plugin'));
     }
+
     /**
      * Creates the file and appends content to it.
      *
      * @param string $filename The filename that will be used to append the content
-     * @param string $path The path that contains your $filename
-     * @param string $content The content that will be added to the $filename
+     * @param string $path     The path that contains your $filename
+     * @param string $content  The content that will be added to the $filename
+     *
      * @return void
      */
-    private function createFileAndAppend(string $filename, string $path, string $content): void  {
+    private function createFileAndAppend(string $filename, string $path, string $content): void
+    {
         $this->fs->touch("$path/$filename");
         $this->fs->appendToFile("$path/$filename", $content);
     }
@@ -53,15 +56,16 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
      * Stays at the given branch.
      *
      * @param string $filename the filename that will be created
-     * @param string $path the path in which the filename will be created
-     * @param string $branch the branch, in which the file will be added and commited.
+     * @param string $path     the path in which the filename will be created
+     * @param string $branch   the branch, in which the file will be added and commited
+     *
      * @return void
      */
-    private function createFileAndCommit(string $filename, string $path, string $branch): void {
-
+    private function createFileAndCommit(string $filename, string $path, string $branch): void
+    {
         $process = new Process(['git', 'checkout', '-b', $branch], $path, null, null, null);
         $process->mustRun();
-        $this->createFileAndAppend($filename, $path, $branch.'_content');
+        $this->createFileAndAppend($filename, $path, $branch . '_content');
         $process = new Process(['git', 'add', "$filename"], $path, null, null, null);
         $process->mustRun();
         $process = new Process(['git', 'commit', '-m', "Commit to $path", "$filename"], $path, null, null, null);
@@ -78,10 +82,10 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
      *
      * @return void
      */
-    public function setUpGitAndFiles(string $folderName): void {
-
+    public function setUpGitAndFiles(string $folderName): void
+    {
         $fileNameMasterBranch = 'test_master.txt';
-        $fileNameDummyBranch = 'test_dummy.txt';
+        $fileNameDummyBranch  = 'test_dummy.txt';
         $this->fs->mkdir("$this->tempDir/$folderName");
         $process = new Process(['git', 'init'], "$this->tempDir/$folderName", null, null, null);
         $process->mustRun();
@@ -96,13 +100,14 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
      */
     public function testExecuteGit()
     {
-        $reponame = 'git_repo';
-        $projectName = 'dummy';
+        $reponame      = 'git_repo';
+        $projectName   = 'dummy';
         $commandTester = $this->getCommandTester();
-        $gitprocess = new Process(['git', '-v'], "$this->tempDir", null, null, null);
+        $gitprocess    = new Process(['git', '-v'], "$this->tempDir", null, null, null);
         $gitprocess->run();
         if (!$gitprocess->isSuccessful()) {
             $this->markTestSkipped('No git found, skipped git Test');
+
             return;
         }
 
@@ -110,9 +115,9 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
 
         $commandTester->execute([
             'projectname'   => $projectName,
-            '--branch' => 'dev-master',
-            '--source' => "$this->tempDir/$reponame",
-            '--storage' =>  "$this->tempDir/moodleplgn"
+            '--branch'      => 'dev-master',
+            '--source'      => "$this->tempDir/$reponame",
+            '--storage'     => "$this->tempDir/moodleplgn",
         ]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -133,17 +138,17 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
      */
     public function testExecuteNoGit()
     {
-        $reponame = 'repo';
+        $reponame    = 'repo';
         $projectName = 'dummy';
-        $filename = 'test_file.txt';
+        $filename    = 'test_file.txt';
         $this->fs->mkdir("$this->tempDir/$reponame");
-        $this->createFileAndAppend('test_file.txt', "$this->tempDir/$reponame", "test_content");
+        $this->createFileAndAppend('test_file.txt', "$this->tempDir/$reponame", 'test_content');
 
         $commandTester = $this->getCommandTester();
         $commandTester->execute([
             'projectname'   => $projectName,
-            '--source' => "$this->tempDir/$reponame",
-            '--storage' =>  "$this->tempDir/moodleplgn"
+            '--source'      => "$this->tempDir/$reponame",
+            '--storage'     => "$this->tempDir/moodleplgn",
         ]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -161,12 +166,12 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
         $reponame = 'repo_rand_name';
         $filename = 'test_file.txt';
         $this->fs->mkdir("$this->tempDir/$reponame");
-        $this->createFileAndAppend($filename, "$this->tempDir/$reponame", "test_content");
+        $this->createFileAndAppend($filename, "$this->tempDir/$reponame", 'test_content');
 
         $commandTester = $this->getCommandTester();
         $commandTester->execute([
-            '--source' => "$this->tempDir/$reponame",
-            '--storage' => "$this->tempDir/moodleplgn"
+            '--source'  => "$this->tempDir/$reponame",
+            '--storage' => "$this->tempDir/moodleplgn",
         ]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -186,9 +191,9 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
         $this->setUpGitAndFiles($reponame);
         $commandTester = $this->getCommandTester();
         $commandTester->execute([
-            '--branch' => 'dev-blahblah',
-            '--source' => "$this->tempDir/$reponame",
-            '--storage' =>  "$this->tempDir/moodleplgn"
+            '--branch'  => 'dev-blahblah',
+            '--source'  => "$this->tempDir/$reponame",
+            '--storage' => "$this->tempDir/moodleplgn",
         ]);
     }
 
@@ -206,9 +211,9 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
         $this->fs->remove("$this->tempDir/$reponame/.git");
         $commandTester = $this->getCommandTester();
         $commandTester->execute([
-            '--branch' => 'dev-master',
-            '--source' => "$this->tempDir/$reponame",
-            '--storage' =>  "$this->tempDir/moodleplgn"
+            '--branch'  => 'dev-master',
+            '--source'  => "$this->tempDir/$reponame",
+            '--storage' => "$this->tempDir/moodleplgn",
         ]);
     }
 }
