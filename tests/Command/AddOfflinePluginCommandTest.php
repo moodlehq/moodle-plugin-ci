@@ -87,6 +87,10 @@ class AddOfflinePluginCommandTest extends FilesystemTestCase
         $fileNameMasterBranch = 'test_master.txt';
         $fileNameDummyBranch  = 'test_dummy.txt';
         $this->fs->mkdir("$this->tempDir/$folderName");
+        $process = new Process(['git', 'config', '--global', 'user.email', 'you@example.com'], "$this->tempDir/$folderName", null, null, null);
+        $process->mustRun();
+        $process = new Process(['git', 'config', '--global', 'usern.name', 'You'], "$this->tempDir/$folderName", null, null, null);
+        $process->mustRun();
         $process = new Process(['git', 'init'], "$this->tempDir/$folderName", null, null, null);
         $process->mustRun();
         $this->createFileAndCommit($fileNameMasterBranch, "$this->tempDir/$folderName", 'dev-master');
