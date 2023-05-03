@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
-## [Unreleased]
+## [4.0.0] - 2023-05-03
 ### Added
 - Upgrade guide: [Upgrading from 3.x to 4.0](UPGRADE-4.0.md)
 - Support for PHP 8.1 and up.
@@ -519,7 +519,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.12...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.0.0...master
+[4.0.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.12...4.0.0
 [3.4.12]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.11...3.4.12
 [3.4.11]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.10...3.4.11
 [3.4.10]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.9...3.4.10
