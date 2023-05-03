@@ -38,11 +38,14 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+
       mariadb:
         image: mariadb:10
         env:
           MYSQL_USER: 'root'
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+          MYSQL_CHARACTER_SET_SERVER: "utf8mb4"
+          MYSQL_COLLATION_SERVER: "utf8mb4_unicode_ci"
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 3
@@ -50,17 +53,13 @@ jobs:
     # Determines build matrix. This is a list of PHP versions, databases and
     # branches to test our project against. For each combination a separate
     # build will be created. For example below 6 builds will be created in
-    # total (7.3-pgsql, 7.3-mariadb, 7.4-pgsql, 7.4-mariadb, etc.). If we add
+    # total (7.4-pgsql, 7.4-mariadb, 8.0-pgsql, 8.0-mariadb, etc.). If we add
     # another branch, total number of builds will become 12.
-    # If you need to use PHP 7.0 and run phpunit coverage test, make sure you are
-    # using ubuntu-16.04 virtual environment in this case to have phpdbg or
-    # this version in the system. See the "Setup PHP" step below for more details
-    # about PHPUnit code coverage.
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.3', '7.4', '8.0']
-        moodle-branch: ['MOODLE_311_STABLE']
+        php: ['7.4', '8.0', '8.1']
+        moodle-branch: ['MOODLE_401_STABLE']
         database: [pgsql, mariadb]
 
     # There is an alternative way allowing to define explicitly define which php, moodle-branch
@@ -69,16 +68,13 @@ jobs:
     # matrix:
     #   include:
     #     - php: '8.0'
-    #       moodle-branch: 'MOODLE_311_STABLE'
+    #       moodle-branch: 'MOODLE_401_STABLE'
     #       database: pgsql
-    # Optional line: Only needed if going to run php8 jobs and the plugin
-    # needs xmlrpc services or other special extensions.
-    #       extensions: xmlrpc-beta
-    #     - php: '7.4'
-    #       moodle-branch: 'MOODLE_310_STABLE'
+    #     - php: '8.0'
+    #       moodle-branch: 'MOODLE_400_STABLE'
     #       database: mariadb
-    #     - php: '7.3'
-    #       moodle-branch: 'MOODLE_39_STABLE'
+    #     - php: '7.4'
+    #       moodle-branch: 'MOODLE_311_STABLE'
     #       database: pgsql
 
     steps:
@@ -103,7 +99,7 @@ jobs:
       # locale, define nvm location.
       - name: Initialise moodle-plugin-ci
         run: |
-          composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
+          composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^4
           echo $(cd ci/bin; pwd) >> $GITHUB_PATH
           echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
           sudo locale-gen en_AU.UTF-8

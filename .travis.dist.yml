@@ -26,7 +26,7 @@ php:
 env:
  global:
   - PGVER=13
-  - MOODLE_BRANCH=MOODLE_311_STABLE
+  - MOODLE_BRANCH=MOODLE_402_STABLE
  matrix:
   - DB=pgsql
   - DB=mysqli
@@ -40,7 +40,7 @@ before_install:
   # To use pcov for code coverage on Moodle 3.10 and up, install it using:
   # - pecl install pcov
   - cd ../..
-  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
+  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^4
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:

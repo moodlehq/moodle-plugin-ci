@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Upgrading from 1.X to 2.0
+title: Upgrading from 1.x to 2.0
 ---
 
 This document outlines the steps one should take when upgrading to the new major version.

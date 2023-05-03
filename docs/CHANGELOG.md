@@ -9,6 +9,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- Upgrade guide: [Upgrading from 3.x to 4.0](UPGRADE-4.0.md)
+- Support for PHP 8.1 and up.
+
+### Changed
+- Lots of internals upgraded:
+  - [Symfony 5.4](https://symfony.com/releases/5.4).
+  - [PHPUnit 9.x](https://phpunit.de/announcements/phpunit-9.html).
+  - [Code coverage](https://app.codecov.io/gh/moodlehq/moodle-plugin-ci) reporting.
+  - [Psalm level 2](https://psalm.dev/docs/running_psalm/error_levels/) compliance.
+  - [PSR-12](https://www.php-fig.org/psr/psr-12/) compliance.
+- Small changes to documentation towards prioritise GitHub Actions over Travis CI.
+- In addition to the internal and doc changes above, this initial 4.x release has 100% feature-parity with current 3.x series, setting the base for further improvements and new features. No changes are expected in general, other than in order to meet the new requirements.
+
+### Removed
+- Support for PHP < 7.4 (the new minimum version).
+- Support for Moodle < 3.8.3, that was the [first release officially supporting PHP 7.4](https://moodledev.io/general/development/policies/php#php-74)).
 
 ## [3.4.12] - 2023-05-03
 ### Changed
@@ -267,7 +284,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Added
 - New help document: [CLI commands and options](CLI.md)
-- Upgrade guide: [Upgrading from 2.X to 3.0](UPGRADE-3.0.md)
+- Upgrade guide: [Upgrading from 2.x to 3.0](UPGRADE-3.0.md)
 
 ### Removed
 - Support for PHP 5.x (7.0.0 is now required).
