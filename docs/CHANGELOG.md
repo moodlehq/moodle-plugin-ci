@@ -25,7 +25,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Removed
 - Support for PHP < 7.4 (the new minimum version).
-- Support for Moodle < 3.8.3, that was the [first release officially supporting PHP 7.4](https://moodledev.io/general/development/policies/php#php-74)).
+- Support for Moodle < 3.8.3, that was the [first release officially supporting PHP 7.4](https://moodledev.io/general/development/policies/php#php-74).
 
 ## [3.4.12] - 2023-05-03
 ### Changed
