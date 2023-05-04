@@ -16,6 +16,7 @@ in your CI workflow file.  These environment variables wont work for Grunt tasks
 
 `.github/workflow/*` example:
 
+<!-- {% raw %} -->
 ```yaml
       - name: Install moodle-plugin-ci
         run: |
@@ -26,6 +27,7 @@ in your CI workflow file.  These environment variables wont work for Grunt tasks
           IGNORE_PATHS: 'vendor/widget,javascript/min-lib.js'
           IGNORE_NAMES: '*-m.js,bad_lib.php'
 ```
+<!-- {% endraw %} -->
 
 `.travis.yml` example:
 
@@ -50,6 +52,7 @@ variable names are the same as above, but prefixed with `COMMANDNAME_`.
 
 `.github/workflow/*` example:
 
+<!-- {% raw %} -->
 ```yaml
       - name: Install moodle-plugin-ci
         run: |
@@ -61,6 +64,7 @@ variable names are the same as above, but prefixed with `COMMANDNAME_`.
           CODECHECKER_IGNORE_NAMES: '*-m.js,bad_lib.php'
           MUSTACHE_IGNORE_NAMES: 'broken.mustache'
 ```
+<!-- {% endraw %} -->
 
 `.travis.yml` example:
 

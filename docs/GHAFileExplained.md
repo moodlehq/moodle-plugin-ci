@@ -13,6 +13,7 @@ the new syntax, also you may find this [migration
 manual](https://docs.github.com/en/actions/learn-github-actions/migrating-from-travis-ci-to-github-actions)
 useful.
 
+<!-- {% raw %} -->
 ```yaml
 # Title of the workflow
 name: Moodle Plugin CI
@@ -175,3 +176,4 @@ jobs:
         if: ${{ always() }}
         run: moodle-plugin-ci behat --profile chrome
 ```
+<!-- {% endraw %} -->

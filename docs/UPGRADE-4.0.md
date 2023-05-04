@@ -54,6 +54,7 @@ Despite our recommendations, if you still want to run both versions in the same 
 
 For example, for GitHub Actions, it can be setup as follows:
 
+<!-- {% raw %} -->
 ```yaml
 # WARNING - this is only a partial example,
 # several steps were excluded to keep it simple!
@@ -83,12 +84,13 @@ For example, for GitHub Actions, it can be setup as follows:
       ...
       - name: Initialise moodle-plugin-ci
         run: |
-          // Apply here for the configured plugin-ci version.
+          # Apply here for the configured plugin-ci version.
           composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ${{ matrix.plugin-ci }}
           echo $(cd ci/bin; pwd) >> $GITHUB_PATH
           echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
           ...
           ...
 ```
+<!-- {% endraw %} -->
 
 The same can be also implemented for Travis CI jobs, adding the `plugin-ci` version as one more element in the jobs matrix `env` element.
