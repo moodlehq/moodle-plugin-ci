@@ -78,6 +78,8 @@ jobs:
           - php: '8.1'
             moodle-branch: 'master'
           - php: '8.1'
+            moodle-branch: 'MOODLE_402_STABLE'
+          - php: '8.1'
             moodle-branch: 'MOODLE_401_STABLE'
           - php: '8.0'
             moodle-branch: 'MOODLE_400_STABLE'

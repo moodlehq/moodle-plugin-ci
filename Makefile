@@ -88,4 +88,5 @@ docs/CLI.md: $(CMDS)
 	@echo "" >> $@
 	@echo "<!-- AUTOMATICALLY GENERATED VIA: make $@ -->" >> $@
 	@php bin/moodle-plugin-ci list --format md | sed 1,2d >> $@
+	@sed -i "s~${PWD}~/path/to~" $@
 	@echo "REGENERATED $@"

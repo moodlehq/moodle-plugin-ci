@@ -28,8 +28,8 @@ Once all code and commits are in place and verified, you need to tag a
 release. Tag `master` branch `HEAD` and push using commands:
 
 ```bash
-$ git tag -a 3.1.0 -m "Release version 3.1.0"
-$ git push origin 3.1.0
+$ git tag -a 4.0.8 -m "Release version 4.0.8"
+$ git push origin 4.0.8
 ```
 
 (while it's also possible to use GitHub interface, we have decided not to do
@@ -53,6 +53,6 @@ to be created manually. First build PHAR file manually:
 $ make build
 ```
 
-Once the above command suceeded, navigate to latest release in [GitHub
+Once the above command succeeds, navigate to latest release in [GitHub
 interface](https://github.com/moodlehq/moodle-plugin-ci/releases), click
 "Edit" and attach generated PHAR file to release (you will find it at `./build` subdir).

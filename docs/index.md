@@ -33,15 +33,15 @@ This project supports the following testing frameworks and code analysis tools:
 
 ## Requirements
 
-The requirements for **Version 3** are **PHP 7.0** or later and **Moodle 3.2** or later.
+The requirements for **Version 4** are **PHP 7.4** or later and **Moodle 3.8.3** or later.
 
 In addition, the plugin being tested must have a [version.php](https://docs.moodle.org/dev/version.php) file
 and `$plugin->component` must be defined within it.
 
 If you need to run your plugin in earlier versions of Moodle, then please use previous versions of this tool.  Documentation
-and more [information about Version 2 can be found here](https://github.com/moodlehq/moodle-plugin-ci/tree/2.5.0/docs/index.md). Similarly, [information about Version 1 can be found in here](https://github.com/moodlehq/moodle-plugin-ci/blob/1.5.8/README.md)
+and more [information about Version 3 can be found here](https://github.com/moodlehq/moodle-plugin-ci/tree/3.x/docs/index.md).
 
-Please know older versions (1 and 2) are no longer getting new features and may not receive additional updates.
+Please know older versions (1, 2 and 3) are no longer getting new features and may not receive additional updates.
 
 ## Getting started
 
@@ -97,6 +97,7 @@ Next steps on your continuous build journey may include:
 
 Guides to updating your plugin's `.travis.yml` file to use the latest versions of this tool.
 
+* [Upgrade to 4.0](UPGRADE-4.0.md)
 * [Upgrade to 3.0](UPGRADE-3.0.md)
 * [Upgrade to 2.0](UPGRADE-2.0.md)
 

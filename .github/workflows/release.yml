@@ -42,4 +42,4 @@ jobs:
             ${{ steps.extract-release-notes.outputs.release_notes }}
             #
             Take a look at the [CHANGELOG](https://moodlehq.github.io/moodle-plugin-ci/CHANGELOG.html) for details about other releases.
-            Please follow [3.0 Upgrade guide](https://moodlehq.github.io/moodle-plugin-ci/UPGRADE-3.0.html) when upgrading from 2.x.
+            Please follow the [4.0 Upgrade guide](https://moodlehq.github.io/moodle-plugin-ci/UPGRADE-4.0.html) when upgrading from 3.x.

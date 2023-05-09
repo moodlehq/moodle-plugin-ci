@@ -50,12 +50,12 @@ env:
 # socketed connections instead of localhost ones.
   - PGVER=13
 # This line determines which version branch of Moodle to test against.
-  - MOODLE_BRANCH=MOODLE_311_STABLE
+  - MOODLE_BRANCH=MOODLE_402_STABLE
 # This matrix is used for testing against multiple databases.  So for
 # each version of PHP being tested, one build will be created for each
-# database listed here.  EG: for PHP 7.3, one build will be created
-# using PHP 7.3 and pgsql.  In addition, another build will be created
-# using PHP 7.3 and mysqli.
+# database listed here.  EG: for PHP 7.4, one build will be created
+# using PHP 7.4 and pgsql.  In addition, another build will be created
+# using PHP 7.4 and mysqli.
  matrix:
   - DB=pgsql
   - DB=mysqli
@@ -73,10 +73,10 @@ env:
 # jobs:
 #   include:
 #     - php: 8.0
-#       env: MOODLE_BRANCH=MOODLE_311_STABLE    DB=pgsql
+#       env: MOODLE_BRANCH=MOODLE_401_STABLE    DB=pgsql
+#     - php: 8.0
+#       env: MOODLE_BRANCH=MOODLE_400_STABLE    DB=pgsql
 #     - php: 7.4
-#       env: MOODLE_BRANCH=MOODLE_311_STABLE    DB=pgsql
-#     - php: 7.3
 #       env: MOODLE_BRANCH=MOODLE_311_STABLE    DB=mysqli
 #     ....
 # Note: this also enables to add specific env variables (NODE_VERSION,
@@ -98,7 +98,7 @@ before_install:
 # directories to build the project.
   - cd ../..
 # Install this project into a directory called "ci".
-  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
+  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^4
 # Update the $PATH so scripts from this project can be called easily.
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 

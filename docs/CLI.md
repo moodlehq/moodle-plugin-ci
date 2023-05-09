@@ -11,6 +11,7 @@ title: Moodle Plugin CI Commands
 * [`behat`](#behat)
 * [`codechecker`](#phpcs)
 * [`codefixer`](#phpcbf)
+* [`completion`](#completion)
 * [`coveralls-upload`](#coveralls-upload)
 * [`grunt`](#grunt)
 * [`help`](#help)
@@ -58,15 +59,17 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -76,6 +79,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -85,6 +89,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -94,25 +99,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -121,6 +119,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 
@@ -268,6 +267,7 @@ The branch to checkout in plugin repo (if non-default)
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--clone|-c`
@@ -277,6 +277,7 @@ Git clone URL, can't be used with --project option
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--storage`
@@ -286,15 +287,17 @@ Plugin storage directory
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'moodle-plugin-ci-plugins'`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -304,6 +307,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -313,6 +317,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -322,25 +327,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -349,6 +347,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `behat`
@@ -381,6 +380,7 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--profile|-p`
@@ -390,6 +390,7 @@ Behat profile to use
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'default'`
 
 #### `--suite`
@@ -399,6 +400,7 @@ Behat suite to use (Moodle theme)
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'default'`
 
 #### `--start-servers`
@@ -408,6 +410,7 @@ Start Selenium and PHP servers
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--auto-rerun`
@@ -417,6 +420,7 @@ Number of times to rerun failures
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `2`
 
 #### `--dump`
@@ -426,15 +430,17 @@ Print contents of Behat failure HTML files
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -444,6 +450,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -453,6 +460,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -462,25 +470,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -489,6 +490,125 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+`completion`
+------------
+
+Dump the shell completion script
+
+### Usage
+
+* `completion [--debug] [--] [<shell>]`
+
+The completion command dumps the shell completion script required
+to use shell autocompletion (currently only bash completion is supported).
+
+Static installation
+-------------------
+
+Dump the script to a global completion file and restart your shell:
+
+    bin/moodle-plugin-ci completion bash | sudo tee /etc/bash_completion.d/moodle-plugin-ci
+
+Or dump the script to a local file and source it:
+
+    bin/moodle-plugin-ci completion bash > completion.sh
+
+    # source the file whenever you use the project
+    source completion.sh
+
+    # or add this line at the end of your "~/.bashrc" file:
+    source /path/to/completion.sh
+
+Dynamic installation
+--------------------
+
+Add this to the end of your shell configuration file (e.g. "~/.bashrc"):
+
+    eval "$(/path/to/bin/moodle-plugin-ci completion bash)"
+
+### Arguments
+
+#### `shell`
+
+The shell type (e.g. "bash"), the value of the "$SHELL" env var will be used if this is not given
+
+* Is required: no
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--debug`
+
+Tail the completion debug log
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--help|-h`
+
+Display help for the given command. When no command is given display help for the list command
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--ansi|--no-ansi`
+
+Force (or disable --no-ansi) ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: yes
+* Default: `NULL`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `coveralls-upload`
@@ -521,15 +641,17 @@ Location of the Clover XML file to upload
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'./coverage.xml'`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -539,6 +661,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -548,6 +671,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -557,25 +681,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -584,6 +701,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `grunt`
@@ -616,6 +734,7 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--tasks|-t`
@@ -625,6 +744,7 @@ The Grunt tasks to run
 * Accept value: yes
 * Is value required: yes
 * Is multiple: yes
+* Is negatable: no
 * Default: `array (  0 => 'amd',  1 => 'yui',  2 => 'gherkinlint',  3 => 'stylelint:css',  4 => 'stylelint:less',  5 => 'stylelint:scss',)`
 
 #### `--show-lint-warnings`
@@ -634,6 +754,7 @@ Show eslint warnings
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--max-lint-warnings`
@@ -643,15 +764,17 @@ Maximum number of eslint warnings
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `''`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -661,6 +784,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -670,6 +794,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -679,25 +804,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -706,12 +824,13 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `help`
 ------
 
-Displays help for a command
+Display help for a command
 
 ### Usage
 
@@ -719,11 +838,11 @@ Displays help for a command
 
 The help command displays help for a given command:
 
-  php bin/moodle-plugin-ci help list
+  bin/moodle-plugin-ci help list
 
 You can also output the help in other formats by using the --format option:
 
-  php bin/moodle-plugin-ci help --format=xml list
+  bin/moodle-plugin-ci help --format=xml list
 
 To display the list of available commands, please use the list command.
 
@@ -746,6 +865,7 @@ The output format (txt, xml, json, or md)
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'txt'`
 
 #### `--raw`
@@ -755,15 +875,17 @@ To output raw command help
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -773,6 +895,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -782,6 +905,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -791,25 +915,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -818,6 +935,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `install`
@@ -840,6 +958,7 @@ Clone Moodle to this directory
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'moodle'`
 
 #### `--data`
@@ -849,6 +968,7 @@ Directory create for Moodle data files
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'moodledata'`
 
 #### `--repo`
@@ -858,6 +978,7 @@ Moodle repository to clone
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'https://github.com/moodle/moodle.git'`
 
 #### `--branch`
@@ -867,6 +988,7 @@ Moodle git branch to clone, EG: MOODLE_29_STABLE
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--plugin`
@@ -876,6 +998,7 @@ Path to Moodle plugin
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--db-type`
@@ -885,6 +1008,7 @@ Database type, mysqli, pgsql or mariadb
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--db-user`
@@ -894,6 +1018,7 @@ Database user
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--db-pass`
@@ -903,6 +1028,7 @@ Database pass
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `''`
 
 #### `--db-name`
@@ -912,6 +1038,7 @@ Database name
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'moodle'`
 
 #### `--db-host`
@@ -921,6 +1048,7 @@ Database host
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'localhost'`
 
 #### `--db-port`
@@ -930,6 +1058,7 @@ Database port
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `''`
 
 #### `--not-paths`
@@ -939,6 +1068,7 @@ CSV of file paths to exclude
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--not-names`
@@ -948,6 +1078,7 @@ CSV of file names to exclude
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--extra-plugins`
@@ -957,6 +1088,7 @@ Directory of extra plugins to install
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--no-init`
@@ -966,6 +1098,7 @@ Prevent PHPUnit and Behat initialization
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--node-version`
@@ -975,15 +1108,17 @@ Node.js version to use for nvm install (this will override one defined in .nvmrc
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -993,6 +1128,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1002,6 +1138,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1011,25 +1148,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1038,32 +1168,33 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `list`
 ------
 
-Lists commands
+List commands
 
 ### Usage
 
-* `list [--raw] [--format FORMAT] [--] [<namespace>]`
+* `list [--raw] [--format FORMAT] [--short] [--] [<namespace>]`
 
 The list command lists all commands:
 
-  php bin/moodle-plugin-ci list
+  bin/moodle-plugin-ci list
 
 You can also display the commands for a specific namespace:
 
-  php bin/moodle-plugin-ci list test
+  bin/moodle-plugin-ci list test
 
 You can also output the information in other formats by using the --format option:
 
-  php bin/moodle-plugin-ci list --format=xml
+  bin/moodle-plugin-ci list --format=xml
 
 It's also possible to get raw list of commands (useful for embedding command runner):
 
-  php bin/moodle-plugin-ci list --raw
+  bin/moodle-plugin-ci list --raw
 
 ### Arguments
 
@@ -1084,6 +1215,7 @@ To output raw command list
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--format`
@@ -1093,7 +1225,78 @@ The output format (txt, xml, json, or md)
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'txt'`
+
+#### `--short`
+
+To skip describing commands' arguments
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--help|-h`
+
+Display help for the given command. When no command is given display help for the list command
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--ansi|--no-ansi`
+
+Force (or disable --no-ansi) ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: yes
+* Default: `NULL`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
 
 `mustache`
 ----------
@@ -1125,15 +1328,17 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1143,6 +1348,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1152,6 +1358,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1161,25 +1368,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1188,6 +1388,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `parallel`
@@ -1220,15 +1421,17 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1238,6 +1441,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1247,6 +1451,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1256,25 +1461,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1283,6 +1481,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `phpcbf`
@@ -1316,15 +1515,17 @@ The name or path of the coding standard to use
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'moodle'`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1334,6 +1535,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1343,6 +1545,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1352,25 +1555,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1379,6 +1575,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `phpcpd`
@@ -1406,11 +1603,12 @@ Path to the plugin
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1420,6 +1618,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1429,6 +1628,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1438,25 +1638,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1465,6 +1658,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `phpcs`
@@ -1498,6 +1692,7 @@ The name or path of the coding standard to use
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'moodle'`
 
 #### `--max-warnings`
@@ -1507,6 +1702,7 @@ Number of warnings to trigger nonzero exit code - default: -1
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `-1`
 
 #### `--test-version`
@@ -1516,15 +1712,17 @@ Version or range of version to test with PHPCompatibility
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `0`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1534,6 +1732,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1543,6 +1742,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1552,25 +1752,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1579,6 +1772,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `phpdoc`
@@ -1611,15 +1805,17 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1629,6 +1825,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1638,6 +1835,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1647,25 +1845,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1674,6 +1865,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `phplint`
@@ -1701,11 +1893,12 @@ Path to the plugin
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1715,6 +1908,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1724,6 +1918,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1733,25 +1928,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1760,6 +1948,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `phpmd`
@@ -1792,6 +1981,7 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--rules|-r`
@@ -1801,15 +1991,17 @@ Path to PHP Mess Detector rule set
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `NULL`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1819,6 +2011,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -1828,6 +2021,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -1837,25 +2031,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -1864,6 +2051,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `phpunit`
@@ -1896,6 +2084,7 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--coverage-text`
@@ -1905,6 +2094,7 @@ Generate and print code coverage report in text format
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--coverage-clover`
@@ -1914,6 +2104,7 @@ Generate code coverage report in Clover XML format
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--coverage-pcov`
@@ -1923,6 +2114,7 @@ Use the pcov extension to calculate code coverage
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--coverage-xdebug`
@@ -1932,6 +2124,7 @@ Use the xdebug extension to calculate code coverage
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--coverage-phpdbg`
@@ -1941,6 +2134,7 @@ Use the phpdbg binary to calculate code coverage
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--fail-on-incomplete`
@@ -1950,6 +2144,7 @@ Treat incomplete tests as failures
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--fail-on-risky`
@@ -1959,6 +2154,7 @@ Treat risky tests as failures
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--fail-on-skipped`
@@ -1968,6 +2164,7 @@ Treat skipped tests as failures
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--fail-on-warning`
@@ -1977,15 +2174,17 @@ Treat tests with warnings as failures
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -1995,6 +2194,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -2004,6 +2204,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -2013,25 +2214,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -2040,6 +2234,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `savepoints`
@@ -2067,11 +2262,12 @@ Path to the plugin
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -2081,6 +2277,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -2090,6 +2287,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -2099,25 +2297,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -2126,6 +2317,7 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 `validate`
@@ -2158,15 +2350,17 @@ Path to Moodle
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
+* Is negatable: no
 * Default: `'.'`
 
 #### `--help|-h`
 
-Display this help message
+Display help for the given command. When no command is given display help for the list command
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--quiet|-q`
@@ -2176,6 +2370,7 @@ Do not output any message
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--verbose|-v|-vv|-vvv`
@@ -2185,6 +2380,7 @@ Increase the verbosity of messages: 1 for normal output, 2 for more verbose outp
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
 #### `--version|-V`
@@ -2194,25 +2390,18 @@ Display this application version
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`
 
-#### `--ansi`
+#### `--ansi|--no-ansi`
 
-Force ANSI output
+Force (or disable --no-ansi) ANSI output
 
 * Accept value: no
 * Is value required: no
 * Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
+* Is negatable: yes
+* Default: `NULL`
 
 #### `--no-interaction|-n`
 
@@ -2221,4 +2410,5 @@ Do not ask any interactive question
 * Accept value: no
 * Is value required: no
 * Is multiple: no
+* Is negatable: no
 * Default: `false`

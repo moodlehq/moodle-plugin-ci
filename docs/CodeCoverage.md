@@ -48,6 +48,7 @@ Some examples follow:
 
 #### GitHub Actions
 
+<!-- {% raw %} -->
 ```yaml
       - name: PHPUnit tests
         if: ${{ always() }}
@@ -57,6 +58,8 @@ Some examples follow:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+<!-- {% endraw %} -->
+
 Note that, instead of the automatically generated for every run `${{ secrets.GITHUB_TOKEN }}` token you can use any other GitHub token (PAT...) with the correct perms or, also, the token that Coveralls offers to you for every repository. Just it's easier to use the automatic GitHub one, because that way you don't need to create tokens or secrets manually and maintain them.
 
 #### Travis
