@@ -1666,7 +1666,7 @@ Run Moodle PHPDoc Checker on a plugin
 
 ### Usage
 
-* `phpdoc [-m|--moodle MOODLE] [--] <plugin>`
+* `phpdoc [-m|--moodle MOODLE] [--max-warnings MAX-WARNINGS] [--] <plugin>`
 
 Run Moodle PHPDoc Checker on a plugin
 
@@ -1691,6 +1691,16 @@ Path to Moodle
 * Is multiple: no
 * Is negatable: no
 * Default: `'.'`
+
+#### `--max-warnings`
+
+Number of warnings to trigger nonzero exit code - default: -1
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `-1`
 
 #### `--help|-h`
 
