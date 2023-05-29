@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
-## [Unreleased]
+## [4.1.0] - 2023-05-29
 ### Added
 - Add the `--testdox` option to the `phpunit` command.
 - Add the `--max-warnings` option to the `phpdoc` command, so it behaves the same than the `phpcs` command. Note that this modifies current behaviour (see next point) and plugins with only warnings won't be failing any more.
@@ -534,7 +534,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.0.0...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.0...master
+[4.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.12...4.0.0
 [3.4.12]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.11...3.4.12
 [3.4.11]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.10...3.4.11
