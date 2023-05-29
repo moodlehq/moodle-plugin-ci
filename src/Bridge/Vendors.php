@@ -50,9 +50,10 @@ class Vendors
      */
     public function getVendorPaths()
     {
-        $base  = dirname($this->path);
-        $paths = [];
-        foreach ($this->xml->xpath('/libraries/library/location') as $location) {
+        $base      = dirname($this->path);
+        $paths     = [];
+        $locations = $this->xml->xpath('/libraries/library/location') ?? false ?: [];
+        foreach ($locations as $location) {
             $location = trim((string) $location, '/');
             $location = $base . '/' . $location;
 

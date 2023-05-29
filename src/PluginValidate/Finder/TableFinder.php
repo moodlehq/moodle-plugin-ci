@@ -36,9 +36,10 @@ class TableFinder implements FinderInterface
      */
     protected function findTables(string $file): array
     {
-        $tables = [];
-        $xml    = simplexml_load_file($file);
-        foreach ($xml->xpath('TABLES/TABLE') as $element) {
+        $tables   = [];
+        $xml      = simplexml_load_file($file);
+        $elements = $xml->xpath('TABLES/TABLE') ?? false ?: [];
+        foreach ($elements as $element) {
             if (isset($element['NAME'])) {
                 $tables[] = (string) $element['NAME'];
             }
