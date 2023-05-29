@@ -17,6 +17,8 @@ use Symfony\Component\Process\Process;
 
 class DummyExecute extends Execute
 {
+    public string $returnOutput = '';
+
     private function getMockProcess($cmd)
     {
         $process = \Mockery::mock('Symfony\Component\Process\Process');
@@ -33,7 +35,7 @@ class DummyExecute extends Execute
         );
 
         $process->shouldReceive('isSuccessful')->andReturn(true);
-        $process->shouldReceive('getOutput')->andReturn('');
+        $process->shouldReceive('getOutput')->andReturn($this->returnOutput);
         $process->shouldReceive('getCommandLine')->andReturn($cmd);
 
         return $process;
