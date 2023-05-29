@@ -26,7 +26,7 @@ class MoodleProcess extends Process
      * @param array|null  $env     The environment variables or null to inherit
      * @param ?int        $timeout The timeout in seconds or null (default) to disable
      */
-    public function __construct(array $command, string $cwd = null, array $env = null, ?int $timeout = null)
+    public function __construct(array $command, ?string $cwd = null, ?array $env = null, ?int $timeout = null)
     {
         // Let's find our beloved php.
         $phpBinaryFinder = new PhpExecutableFinder();

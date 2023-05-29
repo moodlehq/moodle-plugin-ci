@@ -39,7 +39,7 @@ class DummyExecute extends Execute
         return $process;
     }
 
-    public function run($cmd, string $error = null): Process
+    public function run($cmd, ?string $error = null): Process
     {
         if ($cmd instanceof Process) {
             // Get the command line from process.
@@ -49,7 +49,7 @@ class DummyExecute extends Execute
         return $this->helper->run($this->output, $this->getMockProcess($cmd), $error);
     }
 
-    public function mustRun($cmd, string $error = null): Process
+    public function mustRun($cmd, ?string $error = null): Process
     {
         if ($cmd instanceof Process) {
             // Get the command line from process.

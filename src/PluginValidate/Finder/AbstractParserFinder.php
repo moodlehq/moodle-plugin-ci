@@ -32,7 +32,7 @@ abstract class AbstractParserFinder implements FinderInterface
      */
     protected $filter;
 
-    public function __construct(CodeParser $parser = null, StatementFilter $filter = null)
+    public function __construct(?CodeParser $parser = null, ?StatementFilter $filter = null)
     {
         $this->parser = $parser ?: new CodeParser();
         $this->filter = $filter ?: new StatementFilter();

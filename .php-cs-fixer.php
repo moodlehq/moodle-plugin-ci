@@ -15,6 +15,10 @@ return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony'                              => true,
         '@Symfony:risky'                        => true,
+        # Couple of changes from Symfony defaults
+        'modernize_strpos'                      => false, # TODO: Enable this once PHP8.0 is the min. req.
+        'nullable_type_declaration_for_default_null_value' => true, # We prefer explicit typing, no matter the defaults.
+        # We continue here.
         'array_syntax'                          => ['syntax' => 'short'],
         'combine_consecutive_unsets'            => true,
         'combine_consecutive_issets'            => true,
