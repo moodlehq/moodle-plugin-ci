@@ -136,6 +136,7 @@ script:
 # To fail on warnings use --max-warnings 0
   - moodle-plugin-ci phpcs
 # This step runs Moodle PHPDoc checker on your plugin.
+# To fail on warnings use --max-warnings 0
   - moodle-plugin-ci phpdoc
 # This step runs some light validation on the plugin file structure
 # and code.  Validation can be plugin specific.

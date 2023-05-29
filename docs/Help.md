@@ -45,7 +45,7 @@ you keep this step.  To fail on warnings use `--max-warnings 0`
 
 **moodle-plugin-ci phpdoc**
 
-This step runs Moodle PHPDoc checker on your plugin.
+This step runs Moodle PHPDoc checker on your plugin. To fail on warnings use `--max-warnings 0`
 
 **moodle-plugin-ci validate**
 

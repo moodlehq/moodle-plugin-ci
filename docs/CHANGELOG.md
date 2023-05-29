@@ -10,7 +10,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 ### Added
-- Add the `--testdox` option within the `phpunit` command.
+- Add the `--testdox` option to the `phpunit` command.
+- Add the `--max-warnings` option to the `phpdoc` command, so it behaves the same than the `phpcs` command. Note that this modifies current behaviour (see next point) and plugins with only warnings won't be failing any more.
+- ACTION SUGGESTED: In order to keep the previous behaviour, it's recommended to use the new `--max-warnings 0` (or any other number) option to specify the warnings threshold.
 
 ### Changed
 - Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs), [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions. Also, to various internal / development tools.
