@@ -1945,7 +1945,7 @@ Run PHPUnit on a plugin
 
 ### Usage
 
-* `phpunit [-m|--moodle MOODLE] [--coverage-text] [--coverage-clover] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
+* `phpunit [-m|--moodle MOODLE] [--coverage-text] [--coverage-clover] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--testdox] [--] <plugin>`
 
 Run PHPUnit on a plugin
 
@@ -2054,6 +2054,16 @@ Treat skipped tests as failures
 #### `--fail-on-warning`
 
 Treat tests with warnings as failures
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--testdox`
+
+Enable testdox formatter
 
 * Accept value: no
 * Is value required: no
