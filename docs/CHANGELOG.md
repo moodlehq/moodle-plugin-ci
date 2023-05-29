@@ -8,6 +8,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
+## [Unreleased]
+### Added
+- Add the `--testdox` option within the `phpunit` command.
+
+### Changed
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs), [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions. Also, to various internal / development tools.
+
+
+### Fixed
+- Fix problems in the documentation causing coding snippets to display partially.
+
+
+
 ## [4.0.0] - 2023-05-03
 ### Added
 - Upgrade guide: [Upgrading from 3.x to 4.0](UPGRADE-4.0.md)
