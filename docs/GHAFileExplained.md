@@ -120,6 +120,10 @@ jobs:
       #   MUSTACHE_IGNORE_NAMES: 'broken.mustache'
       #   CODECHECKER_IGNORE_PATHS: 'ignoreme'
       #   CODECHECKER_IGNORE_NAMES: 'ignoreme_name.php'
+      #
+      # Other env vars are available for install, namely:
+      #   - DB_USER / DB_PASS / DB_NAME / DB_HOST / DB_PORT: used
+      #     by install to feed the corresponding --db-xxxx options.
       - name: Install moodle-plugin-ci
         run: |
           moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1

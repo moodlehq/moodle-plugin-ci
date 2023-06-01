@@ -8,6 +8,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
+## [Unreleased]
+### Added
+- Add support for the following optional env variables, that will be used on installation, getting precedence over the corresponding existing option:
+    - `DB_USER`: To specify the database username (alternative to `--db-user`)
+    - `DB_PASS`: To specify the database password (alternative to `--db-pass`)
+    - `DB_NAME`: To specify the database name (alternative to `--db-name`)
+    - `DB_HOST`: To specify the database host (alternative to `--db-host`)
+    - `DB_PORT`: To specify the database port (alternative to `--db-port`)
+
+    Note that these new env variables behave exactly the same than the existing (and often used) `DB` one, that is also a priority alternative to `--db-type` on install.
+
 ## [4.1.0] - 2023-05-29
 ### Added
 - Add the `--testdox` option to the `phpunit` command.

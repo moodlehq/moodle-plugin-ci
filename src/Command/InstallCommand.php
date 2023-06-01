@@ -67,6 +67,13 @@ class InstallCommand extends Command
             $plugin = getenv('CI_BUILD_DIR') !== false ? getenv('CI_BUILD_DIR') : null;
         }
 
+        // Add more options mapped to environment variables.
+        $dbUser = getenv('DB_USER') !== false ? getenv('DB_USER') : null;
+        $dbPass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
+        $dbName = getenv('DB_NAME') !== false ? getenv('DB_NAME') : 'moodle';
+        $dbHost = getenv('DB_HOST') !== false ? getenv('DB_HOST') : 'localhost';
+        $dbPort = getenv('DB_PORT') !== false ? getenv('DB_PORT') : '';
+
         $this->setName('install')
             ->setDescription('Install everything required for CI testing')
             ->addOption('moodle', null, InputOption::VALUE_REQUIRED, 'Clone Moodle to this directory', 'moodle')
@@ -75,11 +82,11 @@ class InstallCommand extends Command
             ->addOption('branch', null, InputOption::VALUE_REQUIRED, 'Moodle git branch to clone, EG: MOODLE_29_STABLE', $branch)
             ->addOption('plugin', null, InputOption::VALUE_REQUIRED, 'Path to Moodle plugin', $plugin)
             ->addOption('db-type', null, InputOption::VALUE_REQUIRED, 'Database type, mysqli, pgsql or mariadb', $type)
-            ->addOption('db-user', null, InputOption::VALUE_REQUIRED, 'Database user')
-            ->addOption('db-pass', null, InputOption::VALUE_REQUIRED, 'Database pass', '')
-            ->addOption('db-name', null, InputOption::VALUE_REQUIRED, 'Database name', 'moodle')
-            ->addOption('db-host', null, InputOption::VALUE_REQUIRED, 'Database host', 'localhost')
-            ->addOption('db-port', null, InputOption::VALUE_REQUIRED, 'Database port', '')
+            ->addOption('db-user', null, InputOption::VALUE_REQUIRED, 'Database user', $dbUser)
+            ->addOption('db-pass', null, InputOption::VALUE_REQUIRED, 'Database pass', $dbPass)
+            ->addOption('db-name', null, InputOption::VALUE_REQUIRED, 'Database name', $dbName)
+            ->addOption('db-host', null, InputOption::VALUE_REQUIRED, 'Database host', $dbHost)
+            ->addOption('db-port', null, InputOption::VALUE_REQUIRED, 'Database port', $dbPort)
             ->addOption('not-paths', null, InputOption::VALUE_REQUIRED, 'CSV of file paths to exclude', $paths)
             ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names)
             ->addOption('extra-plugins', null, InputOption::VALUE_REQUIRED, 'Directory of extra plugins to install', $extra)

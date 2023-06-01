@@ -55,7 +55,9 @@ env:
 # each version of PHP being tested, one build will be created for each
 # database listed here.  EG: for PHP 7.4, one build will be created
 # using PHP 7.4 and pgsql.  In addition, another build will be created
-# using PHP 7.4 and mysqli.
+# using PHP 7.4 and mysqli. Also, note that DB_USER / DB_PASS / DB_NAME
+# / DB_HOST / DB_PORT env vars can be used by install to feed the
+# corresponding --db-xxxx options.
  matrix:
   - DB=pgsql
   - DB=mysqli
