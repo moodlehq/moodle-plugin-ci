@@ -26,7 +26,7 @@ use Symfony\Component\Process\Process;
  */
 class TestSuiteInstaller extends AbstractInstaller
 {
-    private Moodle$moodle;
+    private Moodle $moodle;
     private MoodlePlugin $plugin;
     private Execute $execute;
 
