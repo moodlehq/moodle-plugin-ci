@@ -40,11 +40,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_ci",
-        "version": "1.0.18",
+        "version": "1.0.19",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_ci.git",
           "type": "git",
-          "reference": "v1.0.18"
+          "reference": "v1.0.19"
         }
       }
     },
@@ -52,11 +52,11 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_moodlecheck",
-        "version": "1.1.5",
+        "version": "1.1.6",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
           "type": "git",
-          "reference": "v1.1.5"
+          "reference": "v1.1.6"
         }
       }
     }
@@ -64,8 +64,8 @@
   "require": {
     "php": ">=7.4",
     "moodlehq/moodle-cs": "^3.3.4",
-    "moodlehq/moodle-local_ci": "^1.0.18",
-    "moodlehq/moodle-local_moodlecheck": "^1.1.5",
+    "moodlehq/moodle-local_ci": "^1.0.19",
+    "moodlehq/moodle-local_moodlecheck": "^1.1.6",
     "sebastian/phpcpd": "^6.0.3",
     "sebastian/version": "^3.0.2",
     "phpunit/php-timer": "^5.0.3",
