@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
-## [Unreleased]
+## [4.1.1] - 2023-07-14
 ### Added
 - Add support for the following optional env variables, that will be used on installation, getting precedence over the corresponding existing option:
     - `DB_USER`: To specify the database username (alternative to `--db-user`)
@@ -18,6 +18,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
     - `DB_PORT`: To specify the database port (alternative to `--db-port`)
 
     Note that these new env variables behave exactly the same than the existing (and often used) `DB` one, that is also a priority alternative to `--db-type` on install.
+
+### Changed
+- Updated project dependencies to current [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
 
 ## [4.1.0] - 2023-05-29
 ### Added
@@ -545,7 +548,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.0...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.1...master
+[4.1.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.0...4.1.1
 [4.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.12...4.0.0
 [3.4.12]: https://github.com/moodlehq/moodle-plugin-ci/compare/3.4.11...3.4.12
