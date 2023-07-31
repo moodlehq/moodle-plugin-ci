@@ -87,8 +87,10 @@ jobs:
 
     - stage: Integration tests
       if: env(MOODLE_BRANCH) IS present
-    - php: 8.1
+    - php: 8.2
       env: MOODLE_BRANCH=master
+    - php: 8.2
+      env: MOODLE_BRANCH=MOODLE_402_STABLE
     - php: 8.1
       env: MOODLE_BRANCH=MOODLE_401_STABLE
     - php: 8.0
