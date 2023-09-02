@@ -8,6 +8,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
+## [Unreleased]
+### Changed
+- Modified `moodle-local_ci` composer dependencies and manage them normally, removing some ancient bits that have [stopped working with Composer 2.6.0 and up](https://github.com/composer/composer/issues/11613).
+- Updated project dependencies to current [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) version.
+
 ## [4.1.1] - 2023-07-14
 ### Added
 - Add support for the following optional env variables, that will be used on installation, getting precedence over the corresponding existing option:
@@ -34,8 +39,6 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Fixed
 - Fix problems in the documentation causing coding snippets to display partially.
-
-
 
 ## [4.0.0] - 2023-05-03
 ### Added
