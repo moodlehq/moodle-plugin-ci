@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Modified `moodle-local_ci` composer dependencies and manage them normally, removing some ancient bits that have [stopped working with Composer 2.6.0 and up](https://github.com/composer/composer/issues/11613).
+- Updated project dependencies to current [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) version.
 
 ## [3.4.12] - 2023-05-03
 ### Changed

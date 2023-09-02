@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da1b9b2de12008e1037cba49d79d40ff",
+    "content-hash": "98f6872ebc9dc2daed9e92cf72355d43",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -406,13 +406,41 @@
         },
         {
             "name": "moodlehq/moodle-local_ci",
-            "version": "1.0.17",
+            "version": "v1.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_ci.git",
-                "reference": "v1.0.17"
+                "reference": "5a901554521deb90fb6a2c8bdbcd783e060306ac"
             },
-            "type": "library"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moodlehq/moodle-local_ci/zipball/5a901554521deb90fb6a2c8bdbcd783e060306ac",
+                "reference": "5a901554521deb90fb6a2c8bdbcd783e060306ac",
+                "shasum": ""
+            },
+            "require": {
+                "moodlehq/moodle-cs": "^3.3.3",
+                "mustache/mustache": "^2.14.1",
+                "phpcompatibility/php-compatibility": "dev-develop#70e4ca24"
+            },
+            "type": "library",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Stuff run by Moodle CI integration servers.",
+            "keywords": [
+                "automations",
+                "ci",
+                "integration",
+                "jenkins",
+                "jira",
+                "moodle"
+            ],
+            "support": {
+                "source": "https://github.com/moodlehq/moodle-local_ci/tree/v1.0.21",
+                "issues": "https://github.com/moodlehq/moodle-local_ci/issues"
+            },
+            "time": "2023-09-02T14:37:53+00:00"
         },
         {
             "name": "moodlehq/moodle-local_moodlecheck",
@@ -423,6 +451,56 @@
                 "reference": "v1.1.4"
             },
             "type": "library"
+        },
+        {
+            "name": "mustache/mustache",
+            "version": "v2.14.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bobthecow/mustache.php.git",
+                "reference": "e62b7c3849d22ec55f3ec425507bf7968193a6cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/e62b7c3849d22ec55f3ec425507bf7968193a6cb",
+                "reference": "e62b7c3849d22ec55f3ec425507bf7968193a6cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~1.11",
+                "phpunit/phpunit": "~3.7|~4.0|~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mustache": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Justin Hileman",
+                    "email": "justin@justinhileman.info",
+                    "homepage": "http://justinhileman.com"
+                }
+            ],
+            "description": "A Mustache implementation in PHP.",
+            "homepage": "https://github.com/bobthecow/mustache.php",
+            "keywords": [
+                "mustache",
+                "templating"
+            ],
+            "support": {
+                "issues": "https://github.com/bobthecow/mustache.php/issues",
+                "source": "https://github.com/bobthecow/mustache.php/tree/v2.14.2"
+            },
+            "time": "2022-08-23T13:07:01+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3946,5 +4024,5 @@
     "platform-overrides": {
         "php": "7.0.8"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
