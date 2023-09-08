@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs), [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions. Also, to various internal / development tools.
+
 ### Fixed
 - Updated the PHAR packaging utility ([box](https://github.com/box-project/box)) to actual one, to avoid various issues happening with PHP 8.1 and up.
 

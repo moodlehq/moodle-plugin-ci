@@ -44,20 +44,20 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_moodlecheck",
-        "version": "1.1.6",
+        "version": "1.1.8",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
           "type": "git",
-          "reference": "v1.1.6"
+          "reference": "v1.1.8"
         }
       }
     }
   ],
   "require": {
     "php": ">=7.4",
-    "moodlehq/moodle-cs": "^3.3.4",
-    "moodlehq/moodle-local_ci": "^1.0.21",
-    "moodlehq/moodle-local_moodlecheck": "^1.1.6",
+    "moodlehq/moodle-cs": "^3.3.5",
+    "moodlehq/moodle-local_ci": "^1.0.22",
+    "moodlehq/moodle-local_moodlecheck": "^1.1.8",
     "sebastian/phpcpd": "^6.0.3",
     "sebastian/version": "^3.0.2",
     "phpunit/php-timer": "^5.0.3",
@@ -73,10 +73,10 @@
     "psr/log": "^1.1.4",
     "nikic/php-parser": "^4.14",
     "marcj/topsort": "^2.0.0",
-    "phpcompatibility/php-compatibility": "dev-develop#70e4ca24"
+    "phpcompatibility/php-compatibility": "dev-develop#0a17f9ed"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.5",
+    "phpunit/phpunit": "^9.6",
     "mockery/mockery": "^1.5.0",
     "friendsofphp/php-cs-fixer": "^3.4.0",
     "vimeo/psalm": "^5.4.0"

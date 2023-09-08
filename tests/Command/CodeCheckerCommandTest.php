@@ -88,8 +88,8 @@ if (true) {
 }
 
 class test {
-    public function test() { // To verify PHPCompatibility sniff.
-        // Old PHP 4.x constructor.
+    abstract private function somefunc() { // To verify PHPCompatibility sniff.
+        // Private & abstract forbidden since PHP 5.1.
     }
 } // No EOL @ EOF on purpose to verify it's detected.
 EOT;
@@ -103,11 +103,11 @@ EOT;
         $output = $commandTester->getDisplay();
         $this->assertMatchesRegularExpression('/E\.* 8\.* \/ 8 \(100%\)/', $output);                  // Progress.
         $this->assertMatchesRegularExpression('/\/fixable.php/', $output);                            // File.
-        $this->assertMatchesRegularExpression('/ 8 ERRORS AND 1 WARNING AFFECTING 7 /', $output);     // Summary.
+        $this->assertMatchesRegularExpression('/ 7 ERRORS AND 1 WARNING AFFECTING 7 /', $output);     // Summary.
         $this->assertMatchesRegularExpression('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
         $this->assertMatchesRegularExpression('/print_error\(\) has been deprecated/', $output);      // Moodle sniff.
         $this->assertMatchesRegularExpression('/print_object\(\) is forbidden/', $output);            // Moodle sniff.
-        $this->assertMatchesRegularExpression('/RemovedPHP4StyleConstructors\.Removed/', $output);    // PHPCompatibility sniff.
+        $this->assertMatchesRegularExpression('/AbstractPrivateMethods\.Found/', $output);    // PHPCompatibility sniff.
         $this->assertMatchesRegularExpression('/Files\.EndFileNewline\.NotFound/', $output);          // End of file.
         $this->assertMatchesRegularExpression('/PHPCBF CAN FIX THE 3 MARKED SNIFF/', $output);        // PHPCBF note.
         $this->assertMatchesRegularExpression('/Time:.*Memory:/', $output);                           // Time.
@@ -170,45 +170,43 @@ EOT;
         $commandTester = $this->executeCommand($this->pluginDir, -1, null);
         $output        = $commandTester->getDisplay();
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 3 WARNINGS AFFECTING 3 LINES/', $output);
+        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 4 WARNINGS AFFECTING 4 LINES/', $output);
 
-        // With test-version 7.4, reports 2 new errors and <= 7.4 specific warnings and returns 1.
+        // With test-version 7.4, reports 3 new errors and <= 7.4 specific warnings and returns 1.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 1 WARNING AFFECTING 3 LINES/', $output);
+        $this->assertMatchesRegularExpression('/FOUND 3 ERRORS AND 1 WARNING AFFECTING 4 LINES/', $output);
 
-        // With test-version 8.0, reports 1 new errors and <= 8.0 specific warnings and returns 1.
+        // With test-version 8.0, reports 2 new errors and <= 8.0 specific warnings and returns 1.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '8.0');
-        $output        = $commandTester->getDisplay();
-        $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 1 ERROR AND 2 WARNINGS AFFECTING 3 LINES/', $output);
-
-        // With test-version 8.1, reports 0 new errors and <= 8.1 specific warnings and returns 0.
-        $commandTester = $this->executeCommand($this->pluginDir, -1, '8.1');
-        $output        = $commandTester->getDisplay();
-        $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 3 WARNINGS AFFECTING 3 LINES/', $output);
-
-        // With test-version 7.4-8.0, reports 2 new errors and <= 8.0 specific warnings and returns 1.
-        $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-8.0');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 2 WARNINGS AFFECTING 4 LINES/', $output);
 
-        // With test-version 7.4-8.1, reports 2 new errors and <= 8.1 specific warnings and returns 1.
+        // With test-version 8.1, reports 1 new errors and <= 8.1 specific warnings and returns 0.
+        $commandTester = $this->executeCommand($this->pluginDir, -1, '8.1');
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(1, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 1 ERROR AND 3 WARNINGS AFFECTING 4 LINES/', $output);
+
+        // With test-version 7.4-8.0, reports 3 new errors and <= 8.0 specific warnings and returns 1.
+        $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-8.0');
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(1, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 3 ERRORS AND 2 WARNINGS AFFECTING 5 LINES/', $output);
+
+        // With test-version 7.4-8.1, reports 3 new errors and <= 8.1 specific warnings and returns 1.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-8.1');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES/', $output);
+        $this->assertMatchesRegularExpression('/FOUND 3 ERRORS AND 3 WARNINGS AFFECTING 6 LINES/', $output);
 
-        // With test-version 7.4- (open range), reports 2 new errors and <= 8.2 specific warnings and returns 1.
-        // (note that it should be 1 more warning and 1 more error, but the PHPCompatibility sniffs are not
-        // still ready for many of the PHP 8.2 changes. We'll amend this test when they are ready).
+        // With test-version 7.4- (open range), reports 3 new errors and <= 8.2 specific warnings and returns 1.
         $commandTester = $this->executeCommand($this->pluginDir, -1, '7.4-');
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES/', $output);
+        $this->assertMatchesRegularExpression('/FOUND 3 ERRORS AND 4 WARNINGS AFFECTING 7 LINES/', $output);
     }
 
     public function testExecuteNoFiles()
