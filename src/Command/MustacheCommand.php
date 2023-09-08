@@ -52,9 +52,13 @@ class MustacheCommand extends AbstractMoodleCommand
         $jarFile = $this->resolveJarFile();
 
         // This is a workaround to execute mustache_lint.php file from within a phar.
+        // (by copying both the script and the jar file to a temporary directory)
         $filesystem = new Filesystem();
-        $wrapper    = tempnam(sys_get_temp_dir(), 'mustache-linter-wrapper');
+        $tmpDir     = sys_get_temp_dir();
+        $wrapper    = tempnam($tmpDir, 'mustache-linter-wrapper');
+        $jarTmpFile = $tmpDir . '/vnu.jar';
         $filesystem->dumpFile($wrapper, sprintf('<?php include \'%s\';', $linter));
+        $filesystem->copy($jarFile, $jarTmpFile, true);
 
         $code = 0;
         foreach ($files as $file) {
@@ -68,7 +72,7 @@ class MustacheCommand extends AbstractMoodleCommand
                 'php',
                 $wrapper,
                 '--filename=' . $file,
-                '--validator=' . $jarFile,
+                '--validator=' . $jarTmpFile,
                 '--basename=' . $this->moodle->directory,
             ];
             // _JAVA_OPTIONS is something Travis CI started to set in Trusty.  This breaks Mustache because
@@ -82,6 +86,7 @@ class MustacheCommand extends AbstractMoodleCommand
         }
 
         $filesystem->remove($wrapper);
+        $filesystem->remove($jarTmpFile);
 
         return $code;
     }
@@ -94,7 +99,8 @@ class MustacheCommand extends AbstractMoodleCommand
         // Check if locally installed.
         $file = __DIR__ . '/../../vendor/moodlehq/moodle-local_ci/node_modules/vnu-jar/build/dist/vnu.jar';
         if (is_file($file)) {
-            return realpath($file);
+            // No need to use realpath() when running from a phar.
+            return (\Phar::running() !== '') ? $file : realpath($file);
         }
 
         // Check for global install.

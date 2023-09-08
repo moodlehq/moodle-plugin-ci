@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Fixed
+- Fix the `mustache` command to work from within the PHAR archive.
+
 ## [4.1.3] - 2023-09-08
 ### Changed
 - Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs), [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions. Also, to various internal / development tools.
