@@ -1,5 +1,4 @@
 {
-  "chmod": "0755",
   "compression": "GZ",
   "directories": [
     "src",
@@ -39,13 +38,11 @@
       ]
     }
   ],
-  "compactors": "Herrera\\Box\\Compactor\\Php",
+  "compactors": "KevinGH\\Box\\Compactor\\Php",
   "git-version": "package_version",
   "replacements": {
     "is_boxed": "BOXED"
   },
   "intercept": true,
-  "main": "bin/moodle-plugin-ci",
-  "output": "build/moodle-plugin-ci.phar",
-  "stub": true
+  "output": "build/moodle-plugin-ci.phar"
 }

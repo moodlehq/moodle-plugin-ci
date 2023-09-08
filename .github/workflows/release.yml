@@ -15,10 +15,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Setup PHP 7.4
+      - name: Setup PHP 8.1
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.1
           ini-values: phar.readonly = false
 
       - name: Build PHAR

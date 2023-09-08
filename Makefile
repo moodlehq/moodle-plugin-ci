@@ -72,11 +72,11 @@ ifeq (, $(wildcard vendor))
 endif
 
 build/box.phar:
-	@cd build && curl -LSs https://box-project.github.io/box2/installer.php | php
+	curl -LSs https://github.com/box-project/box/releases/download/4.3.8/box.phar -o build/box.phar
 
 build/moodle-plugin-ci.phar: build/box.phar
 	$(COMPOSER) install --no-dev --prefer-dist --classmap-authoritative --quiet
-	php -d memory_limit=-1 -d phar.readonly=false build/box.phar build
+	php -d memory_limit=-1 -d phar.readonly=false build/box.phar compile
 	$(COMPOSER) install --prefer-dist --quiet
 
 docs/CLI.md: $(CMDS)
