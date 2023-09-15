@@ -54,7 +54,6 @@ jobs:
         files: ./build/logs/clover.xml
         verbose: true
 
-
   citest:
     name: Integration tests
     needs: selftest
@@ -144,3 +143,23 @@ jobs:
         moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
         moodle-plugin-ci behat --profile default
         moodle-plugin-ci behat --profile chrome
+
+  buildphar:
+    name: Build moodle-plugin-ci.phar
+    needs: selftest
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+
+    - name: Setup PHP 8.1
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.1
+        ini-values: phar.readonly = false
+
+    - name: Build PHAR
+      run: |
+        make build
+        php build/moodle-plugin-ci.phar list
