@@ -10,6 +10,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 ### Fixed
+- Fix the `.env` support when running from within the PHAR archive.
 - Fix the `mustache` command to work from within the PHAR archive.
 - Fix the `phpcs` and `phpcbf` commands to work from within the PHAR archive.
 

@@ -38,7 +38,7 @@ abstract class AbstractPluginCommand extends Command
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        if (!isset($this->plugin)) {
+        if (!isset($this->plugin) && $input->getArgument('plugin') !== null) {
             $validate     = new Validate();
             $pluginDir    = realpath($validate->directory($input->getArgument('plugin')));
             $this->plugin = new MoodlePlugin($pluginDir);
