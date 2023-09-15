@@ -9,10 +9,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Reduced the number of own CI tests (internal change) executed with Travis.
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs).
+
 ### Fixed
-- Fix the `.env` support when running from within the PHAR archive.
-- Fix the `mustache` command to work from within the PHAR archive.
-- Fix the `phpcs` and `phpcbf` commands to work from within the PHAR archive.
+- Solved various problems related with the execution of checks from PHAR:
+  - Fixed the `.env` support.
+  - Fixed the `mustache` command execution.
+  - Fixed the `phpcs` and `phpcbf` commands execution.
+  - Fixed the `phpdoc` command to use the bundled `coreapis.txt` file.
 
 ## [4.1.3] - 2023-09-08
 ### Changed

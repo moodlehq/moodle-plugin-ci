@@ -38,6 +38,12 @@
       ]
     },
     {
+      "in": "vendor/moodlehq/moodle-local_moodlecheck",
+      "name": [
+        "coreapis.*"
+      ]
+    },
+    {
       "in": "vendor/squizlabs/php_codesniffer",
       "name": [
         "phpcs",
