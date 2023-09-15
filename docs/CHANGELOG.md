@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- Covered the PHAR package with some new integration tests.
+
 ### Changed
 - Reduced the number of own CI tests (internal change) executed with Travis.
 - Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs).

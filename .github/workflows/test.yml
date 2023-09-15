@@ -163,3 +163,96 @@ jobs:
       run: |
         make build
         php build/moodle-plugin-ci.phar list
+
+    - name: Upload PHAR artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: moodle-plugin-ci.phar
+        path: build/moodle-plugin-ci.phar
+
+  phartest:
+    name: Integration tests (PHAR)
+    needs: buildphar
+    runs-on: ubuntu-22.04
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: 'postgres'
+          POSTGRES_HOST_AUTH_METHOD: 'trust'
+        # Health check to wait for postgres to start.
+        ports:
+        - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Each supported PHP version once. That's enough.
+          - php: '8.2'
+            moodle-branch: 'master'
+          - php: '8.1'
+            moodle-branch: 'MOODLE_402_STABLE'
+          - php: '8.0'
+            moodle-branch: 'MOODLE_401_STABLE'
+          - php: '7.4'
+            moodle-branch: 'MOODLE_400_STABLE'
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+
+    - name: Setup PHP ${{ matrix.php }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: pgsql, zip, gd, xmlrpc, soap
+        ini-values: max_input_vars=5000
+        coverage: pcov
+
+    - name: Initialise moodle-plugin-ci
+      run: |
+        make init
+        cp -R tests/Fixture/moodle-local_ci ../moodle-local_ci
+        echo $(cd bin; pwd) >> $GITHUB_PATH
+        echo $(cd vendor/bin; pwd) >> $GITHUB_PATH
+        echo "CI_BUILD_DIR="$(cd ../moodle-local_ci; pwd) >> $GITHUB_ENV
+        # PHPUnit depends on en_AU.UTF-8 locale
+        sudo locale-gen en_AU.UTF-8
+        # Define NVM_DIR pointing to nvm installation.
+        echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
+
+    - name: Download PHAR artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: moodle-plugin-ci.phar
+        path: build
+
+    - name: Install moodle-plugin-ci (PHAR)
+      run: php build/moodle-plugin-ci.phar install -vvv
+      env:
+        DB: 'pgsql'
+        MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+        IGNORE_PATHS: 'ignore'
+        IGNORE_NAMES: 'ignore_name.php'
+        MUSTACHE_IGNORE_NAMES: 'broken.mustache'
+
+    - name: Run Integration tests (PHAR)
+      env:
+        MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+      run: |
+        php build/moodle-plugin-ci.phar phplint
+        php build/moodle-plugin-ci.phar phpcpd
+        php build/moodle-plugin-ci.phar phpmd
+        php build/moodle-plugin-ci.phar phpcs
+        php build/moodle-plugin-ci.phar phpcbf
+        php build/moodle-plugin-ci.phar validate
+        php build/moodle-plugin-ci.phar savepoints
+        php build/moodle-plugin-ci.phar mustache
+        php build/moodle-plugin-ci.phar grunt
+        php build/moodle-plugin-ci.phar phpdoc
+        php build/moodle-plugin-ci.phar phpunit --verbose --coverage-text --fail-on-warning
+        php build/moodle-plugin-ci.phar behat --profile default
+        php build/moodle-plugin-ci.phar behat --profile chrome
