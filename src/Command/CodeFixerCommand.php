@@ -15,6 +15,7 @@ namespace MoodlePluginCI\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
@@ -42,8 +43,23 @@ class CodeFixerCommand extends CodeCheckerCommand
             return $this->outputSkip($output);
         }
 
-        $cmd = [
-            'php', __DIR__ . '/../../vendor/squizlabs/php_codesniffer/bin/phpcbf',
+        $filesystem   = new Filesystem();
+        $pathToPHPCBF = __DIR__ . '/../../vendor/squizlabs/php_codesniffer/bin/phpcbf';
+        $pathToConf   = __DIR__ . '/../../vendor/squizlabs/php_codesniffer/CodeSniffer.conf';
+        $basicCMD     = ['php', $pathToPHPCBF];
+        // If we are running phpcs within a PHAR, the command is different, and we need also to copy the .conf file.
+        // @codeCoverageIgnoreStart
+        // (This is not executed when running tests, only when within a PHAR)
+        if (\Phar::running() !== '') {
+            // Invoke phpcbf from the PHAR (via include, own params after --).
+            $basicCMD = ['php', '-r', 'include "' . $pathToPHPCBF . '";', '--'];
+            // Copy the .conf file to the directory where the PHAR is running. That way phpcbf will find it.
+            $targetPathToConf = dirname(\Phar::running(false)) . '/CodeSniffer.conf';
+            $filesystem->copy($pathToConf, $targetPathToConf, true);
+        }
+        // @codeCoverageIgnoreEnd
+
+        $cmd = array_merge($basicCMD, [
             '--standard=' . ($input->getOption('standard') ?: 'moodle'),
             '--extensions=php',
             '-p',
@@ -54,7 +70,7 @@ class CodeFixerCommand extends CodeCheckerCommand
             '--report-full',
             '--report-width=132',
             '--encoding=utf-8',
-        ];
+        ]);
 
         // Add the files to process.
         foreach ($files as $file) {
@@ -62,6 +78,15 @@ class CodeFixerCommand extends CodeCheckerCommand
         }
 
         $this->execute->passThroughProcess(new Process($cmd, $this->plugin->directory, null, null, null));
+
+        // If we are running phpcbf within a PHAR, we need to remove the previously copied conf file.
+        // @codeCoverageIgnoreStart
+        // (This is not executed when running tests, only when within a PHAR)
+        if (\Phar::running() !== '') {
+            $targetPathToConf = dirname(\Phar::running(false)) . '/CodeSniffer.conf';
+            $filesystem->remove($targetPathToConf);
+        }
+        // @codeCoverageIgnoreEnd
 
         return 0;
     }

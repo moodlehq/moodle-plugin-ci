@@ -36,6 +36,14 @@
         "Docs",
         "pix"
       ]
+    },
+    {
+      "in": "vendor/squizlabs/php_codesniffer",
+      "name": [
+        "phpcs",
+        "phpcbf",
+        "CodeSniffer.conf"
+      ]
     }
   ],
   "compactors": "KevinGH\\Box\\Compactor\\Php",

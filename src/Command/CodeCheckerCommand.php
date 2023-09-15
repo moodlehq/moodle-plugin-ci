@@ -61,8 +61,23 @@ class CodeCheckerCommand extends AbstractPluginCommand
             return $this->outputSkip($output);
         }
 
-        $cmd = [
-            'php', __DIR__ . '/../../vendor/squizlabs/php_codesniffer/bin/phpcs',
+        $filesystem  = new Filesystem();
+        $pathToPHPCS = __DIR__ . '/../../vendor/squizlabs/php_codesniffer/bin/phpcs';
+        $pathToConf  = __DIR__ . '/../../vendor/squizlabs/php_codesniffer/CodeSniffer.conf';
+        $basicCMD    = ['php', $pathToPHPCS];
+        // If we are running phpcs within a PHAR, the command is different, and we need also to copy the .conf file.
+        // @codeCoverageIgnoreStart
+        // (This is not executed when running tests, only when within a PHAR)
+        if (\Phar::running() !== '') {
+            // Invoke phpcs from the PHAR (via include, own params after --).
+            $basicCMD = ['php', '-r', 'include "' . $pathToPHPCS . '";', '--'];
+            // Copy the .conf file to the directory where the PHAR is running. That way phpcs will find it.
+            $targetPathToConf = dirname(\Phar::running(false)) . '/CodeSniffer.conf';
+            $filesystem->copy($pathToConf, $targetPathToConf, true);
+        }
+        // @codeCoverageIgnoreEnd
+
+        $cmd = array_merge($basicCMD, [
             '--standard=' . ($input->getOption('standard') ?: 'moodle'),
             '--extensions=php',
             '-p',
@@ -73,7 +88,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
             '--report-full',
             '--report-width=132',
             '--encoding=utf-8',
-        ];
+        ]);
 
         // If we aren't using the max-warnings option, then we can forget about warnings and tell phpcs
         // to ignore them for exit-code purposes (still they will be reported in the output).
@@ -97,6 +112,15 @@ class CodeCheckerCommand extends AbstractPluginCommand
         }
 
         $process = $this->execute->passThroughProcess(new Process($cmd, $this->plugin->directory, null, null, null));
+
+        // If we are running phpcs within a PHAR, we need to remove the previously copied conf file.
+        // @codeCoverageIgnoreStart
+        // (This is not executed when running tests, only when within a PHAR)
+        if (\Phar::running() !== '') {
+            $targetPathToConf = dirname(\Phar::running(false)) . '/CodeSniffer.conf';
+            $filesystem->remove($targetPathToConf);
+        }
+        // @codeCoverageIgnoreEnd
 
         // If we aren't using the max-warnings option, process exit code is enough for us.
         if ($input->getOption('max-warnings') < 0) {

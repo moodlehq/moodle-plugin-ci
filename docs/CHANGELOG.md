@@ -11,6 +11,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Fixed
 - Fix the `mustache` command to work from within the PHAR archive.
+- Fix the `phpcs` and `phpcbf` commands to work from within the PHAR archive.
 
 ## [4.1.3] - 2023-09-08
 ### Changed
