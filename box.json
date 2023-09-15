@@ -27,13 +27,13 @@
       "name": [
         "*.php",
         "*.xml",
-        "*.sh"
+        "*.sh",
+        "*.jar"
       ],
       "exclude": [
         "Tests",
         "tests",
         "Docs",
-        "node_modules",
         "pix"
       ]
     }
