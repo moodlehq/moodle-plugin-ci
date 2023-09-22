@@ -14,7 +14,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Changed
 - Reduced the number of own CI tests (internal change) executed with Travis.
-- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs).
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
 
 ### Fixed
 - Solved various problems related with the execution of checks from PHAR:
