@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) version.
+
 ## [4.1.4] - 2023-09-22
 ### Added
 - Covered the PHAR package with some new integration tests.

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef0a8061bafd508aa9f5fbb238a61b5a",
+    "content-hash": "d39f93beadc2aa86c49cf909f0c9d460",
     "packages": [
         {
             "name": "composer/pcre",
@@ -285,16 +285,16 @@
         },
         {
             "name": "moodlehq/moodle-cs",
-            "version": "v3.3.7",
+            "version": "v3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-cs.git",
-                "reference": "163c65d47b5036bb8b25cb9d7af99cf3cef8739b"
+                "reference": "ff540d2a4f82a5681826be71dfbea19db1116cae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/163c65d47b5036bb8b25cb9d7af99cf3cef8739b",
-                "reference": "163c65d47b5036bb8b25cb9d7af99cf3cef8739b",
+                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/ff540d2a4f82a5681826be71dfbea19db1116cae",
+                "reference": "ff540d2a4f82a5681826be71dfbea19db1116cae",
                 "shasum": ""
             },
             "require": {
@@ -345,7 +345,7 @@
                 "source": "https://github.com/moodlehq/moodle-cs",
                 "wiki": "https://github.com/moodlehq/moodle-cs/wiki"
             },
-            "time": "2023-09-22T08:08:53+00:00"
+            "time": "2023-09-22T17:26:40+00:00"
         },
         {
             "name": "moodlehq/moodle-local_ci",
