@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## [4.1.4] - 2023-09-22
 ### Added
 - Covered the PHAR package with some new integration tests.
 
@@ -573,7 +574,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.3...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.4...master
+[4.1.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.3...4.1.4
 [4.1.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.2...4.1.3
 [4.1.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.1...4.1.2
 [4.1.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.0...4.1.1
