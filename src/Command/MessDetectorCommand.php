@@ -51,9 +51,16 @@ class MessDetectorCommand extends AbstractMoodleCommand
 
         $ruleSetFactory = new RuleSetFactory();
         $ruleSetFactory->setMinimumPriority(5);
+        $ruleSets = $ruleSetFactory->createRuleSets($rules);
 
         $messDetector = new PHPMD();
-        $messDetector->processFiles(implode(',', $files), $rules, [$renderer], $ruleSetFactory, new Report());
+        $messDetector->processFiles(
+            implode(',', $files),
+            [], // Ignored paths and files are managed by the plugin, so they are not needed here.
+            [$renderer],
+            $ruleSets,
+            new Report(),
+        );
 
         return 0;
     }
