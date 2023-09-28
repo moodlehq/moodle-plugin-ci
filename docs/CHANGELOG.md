@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Fixed
+- Fixed the `phpcmd` command for compatibility with versions `^2.14.0`.
+
 ## [4.1.6] - 2023-09-28
 ### Changed
 - Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
