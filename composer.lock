@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d39f93beadc2aa86c49cf909f0c9d460",
+    "content-hash": "271cdb231ad7b0c5b053d502cf2a8a14",
     "packages": [
         {
             "name": "composer/pcre",
@@ -285,16 +285,16 @@
         },
         {
             "name": "moodlehq/moodle-cs",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-cs.git",
-                "reference": "ff540d2a4f82a5681826be71dfbea19db1116cae"
+                "reference": "5503396df563cbe3244b67625246664ba5b663f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/ff540d2a4f82a5681826be71dfbea19db1116cae",
-                "reference": "ff540d2a4f82a5681826be71dfbea19db1116cae",
+                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/5503396df563cbe3244b67625246664ba5b663f1",
+                "reference": "5503396df563cbe3244b67625246664ba5b663f1",
                 "shasum": ""
             },
             "require": {
@@ -345,25 +345,25 @@
                 "source": "https://github.com/moodlehq/moodle-cs",
                 "wiki": "https://github.com/moodlehq/moodle-cs/wiki"
             },
-            "time": "2023-09-22T17:26:40+00:00"
+            "time": "2023-09-26T14:48:47+00:00"
         },
         {
             "name": "moodlehq/moodle-local_ci",
-            "version": "v1.0.23",
+            "version": "v1.0.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_ci.git",
-                "reference": "995ba4058dd897510590b0409c126b88c3fdfd4a"
+                "reference": "8e214a82f4d7ba82403da59c2ff5d85adb2553a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moodlehq/moodle-local_ci/zipball/995ba4058dd897510590b0409c126b88c3fdfd4a",
-                "reference": "995ba4058dd897510590b0409c126b88c3fdfd4a",
+                "url": "https://api.github.com/repos/moodlehq/moodle-local_ci/zipball/8e214a82f4d7ba82403da59c2ff5d85adb2553a8",
+                "reference": "8e214a82f4d7ba82403da59c2ff5d85adb2553a8",
                 "shasum": ""
             },
             "require": {
-                "moodlehq/moodle-cs": "^3.3.7",
-                "mustache/mustache": "^2.14.1",
+                "moodlehq/moodle-cs": "^3.3.9",
+                "mustache/mustache": "^2.14.2",
                 "phpcompatibility/php-compatibility": "dev-develop#0a17f9ed"
             },
             "type": "library",
@@ -380,10 +380,10 @@
                 "moodle"
             ],
             "support": {
-                "source": "https://github.com/moodlehq/moodle-local_ci/tree/v1.0.23",
+                "source": "https://github.com/moodlehq/moodle-local_ci/tree/v1.0.24",
                 "issues": "https://github.com/moodlehq/moodle-local_ci/issues"
             },
-            "time": "2023-09-22T08:17:20+00:00"
+            "time": "2023-09-28T08:41:44+00:00"
         },
         {
             "name": "moodlehq/moodle-local_moodlecheck",
@@ -503,16 +503,16 @@
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.14.0",
+            "version": "2.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "1121d4b04af06e33e9659bac3a6741b91cab1de1"
+                "reference": "0d4d8fb87aa74c358c1c4364514017f34b4a68b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/1121d4b04af06e33e9659bac3a6741b91cab1de1",
-                "reference": "1121d4b04af06e33e9659bac3a6741b91cab1de1",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/0d4d8fb87aa74c358c1c4364514017f34b4a68b9",
+                "reference": "0d4d8fb87aa74c358c1c4364514017f34b4a68b9",
                 "shasum": ""
             },
             "require": {
@@ -554,7 +554,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pdepend/pdepend/issues",
-                "source": "https://github.com/pdepend/pdepend/tree/2.14.0"
+                "source": "https://github.com/pdepend/pdepend/tree/2.15.0"
             },
             "funding": [
                 {
@@ -562,7 +562,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-26T13:15:18+00:00"
+            "time": "2023-09-22T02:30:39+00:00"
         },
         {
             "name": "php-parallel-lint/php-console-color",
@@ -3158,16 +3158,16 @@
         },
         {
             "name": "doctrine/deprecations",
-            "version": "v1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "612a3ee5ab0d5dd97b7cf3874a6efe24325efac3"
+                "reference": "4f2d4f2836e7ec4e7a8625e75c6aa916004db931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/612a3ee5ab0d5dd97b7cf3874a6efe24325efac3",
-                "reference": "612a3ee5ab0d5dd97b7cf3874a6efe24325efac3",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/4f2d4f2836e7ec4e7a8625e75c6aa916004db931",
+                "reference": "4f2d4f2836e7ec4e7a8625e75c6aa916004db931",
                 "shasum": ""
             },
             "require": {
@@ -3199,9 +3199,9 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/v1.1.1"
+                "source": "https://github.com/doctrine/deprecations/tree/1.1.2"
             },
-            "time": "2023-06-03T09:27:29+00:00"
+            "time": "2023-09-27T20:04:15+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -3437,16 +3437,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.27.0",
+            "version": "v3.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "e73ccaae1208f017bb7860986eebb3da48bd25d6"
+                "reference": "95c64693b2f149966a2bc05a7a4981b0343ea52f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/e73ccaae1208f017bb7860986eebb3da48bd25d6",
-                "reference": "e73ccaae1208f017bb7860986eebb3da48bd25d6",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/95c64693b2f149966a2bc05a7a4981b0343ea52f",
+                "reference": "95c64693b2f149966a2bc05a7a4981b0343ea52f",
                 "shasum": ""
             },
             "require": {
@@ -3520,7 +3520,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.27.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.30.0"
             },
             "funding": [
                 {
@@ -3528,7 +3528,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-09-17T14:37:54+00:00"
+            "time": "2023-09-26T22:10:43+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -4057,16 +4057,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.24.1",
+            "version": "1.24.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "9f854d275c2dbf84915a5c0ec9a2d17d2cd86b01"
+                "reference": "bcad8d995980440892759db0c32acae7c8e79442"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/9f854d275c2dbf84915a5c0ec9a2d17d2cd86b01",
-                "reference": "9f854d275c2dbf84915a5c0ec9a2d17d2cd86b01",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/bcad8d995980440892759db0c32acae7c8e79442",
+                "reference": "bcad8d995980440892759db0c32acae7c8e79442",
                 "shasum": ""
             },
             "require": {
@@ -4098,9 +4098,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.1"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.2"
             },
-            "time": "2023-09-18T12:18:02+00:00"
+            "time": "2023-09-26T12:28:12+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
