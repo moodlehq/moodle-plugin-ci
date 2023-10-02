@@ -82,6 +82,84 @@ remove anything that is not needed.  See this [help document](TravisFileExplaine
 contents of the this file. Once you have added the `.travis.yml` file, commit and push up to GitHub, to trigger a
 Travis CI build. Navigate back to [Travis CI](https://travis-ci.com) to see if your build passes or fails.
 
+### Using in a Local Dev Environment
+
+It is possible to use `moodle-plugin-ci` locally. It needs to be installed outside
+Moodle directory, so if you are within Moodle repo, execute:
+
+```
+$ php composer.phar create-project moodlehq/moodle-plugin-ci ../moodle-plugin-ci ^4
+```
+
+Once installed, you can run most of its commands to validate your code, e.g.
+
+```
+$ ../moodlepluginci/bin/moodle-plugin-ci mustache ./mod/forum/
+ RUN  Mustache Lint on mod_forum
+/home/ruslan/git/moodledev/mod/forum/templates/quick_search_form.mustache - OK: Mustache rendered html succesfully
+/home/ruslan/git/moodledev/mod/forum/templates/single_discussion_list.mustache - OK: Mustache rendered html succesfully
+...
+```
+
+Alternatively, one can use phar package obtained from the release page, this can
+be downloaded safely to Moodle directory (it is in Moodle's `.gitignore`):
+
+```
+$ wget https://github.com/moodlehq/moodle-plugin-ci/releases/download/4.1.6/moodle-plugin-ci.phar
+```
+
+Execute it in this case as follows:
+
+```
+$ php moodle-plugin-ci.phar mustache ./mod/forum/
+ RUN  Mustache Lint on mod_forum
+/home/ruslan/git/moodledev/mod/forum/templates/quick_search_form.mustache - OK: Mustache rendered html succesfully
+/home/ruslan/git/moodledev/mod/forum/templates/single_discussion_list.mustache - OK: Mustache rendered html succesfull
+```
+
+Notice that using this approach allows you running CI commands on plugins only.
+
+#### Using PHP CodeSniffer and PHP Code Beautifier and Fixer
+
+It is possible to use CodeSniffer from the package on individual files and directories, they don't have to be a part of plugin in this case. You need to have it installed using composer approach.
+
+```
+$ ../moodle-plugin-ci/vendor/bin/phpcs ./index.php
+
+FILE: /home/ruslan/git/moodledev/index.php
+-------------------------------------------------------------------------------------------------------------
+FOUND 2 ERRORS AND 3 WARNINGS AFFECTING 5 LINES
+-------------------------------------------------------------------------------------------------------------
+ 25 | ERROR   | [ ] Expected MOODLE_INTERNAL check or config.php inclusion. Change in global state detected.
+ 36 | WARNING | [x] Short array syntax must be used to define arrays
+ 58 | ERROR   | [ ] Logical operator "and" is prohibited; use "&&" instead
+ 86 | WARNING | [x] Short array syntax must be used to define arrays
+ 92 | WARNING | [x] Short array syntax must be used to define arrays
+-------------------------------------------------------------------------------------------------------------
+PHPCBF CAN FIX THE 3 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+-------------------------------------------------------------------------------------------------------------
+
+Time: 197ms; Memory: 16MB
+```
+
+From the example above, PHP Code Beautifier and Fixer may address 3 violations
+automatically, saving developer time:
+
+```
+$ ../moodle-plugin-ci/vendor/bin/phpcbf ./index.php
+
+PHPCBF RESULT SUMMARY
+----------------------------------------------------------------------
+FILE                                                  FIXED  REMAINING
+----------------------------------------------------------------------
+/home/ruslan/git/moodledev/index.php                  3      2
+----------------------------------------------------------------------
+A TOTAL OF 3 ERRORS WERE FIXED IN 1 FILE
+----------------------------------------------------------------------
+
+Time: 328ms; Memory: 16MB
+```
+
 ### Getting more of CI
 
 Next steps on your continuous build journey may include:
