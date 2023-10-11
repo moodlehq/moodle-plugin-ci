@@ -51,7 +51,7 @@ Some examples follow:
 <!-- {% raw %} -->
 ```yaml
       - name: PHPUnit tests
-        if: ${{ always() }}
+        if: ${{ !cancelled() }}
         run: |
           moodle-plugin-ci phpunit --coverage-clover
           moodle-plugin-ci coveralls-upload
