@@ -25,6 +25,7 @@ class SelfUpdateCommand extends Command
     protected function configure(): void
     {
         $this->setName('selfupdate')
+            ->setAliases(['self-update'])
             ->setDescription('Updates moodle-plugin-ci')
             ->addOption('rollback', 'r', InputOption::VALUE_NONE, 'Rollback to the last version')
             ->addOption('preview', null, InputOption::VALUE_NONE, 'Update to pre-release version')
