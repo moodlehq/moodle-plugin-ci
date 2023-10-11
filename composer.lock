@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "538b1ea2f0258c36ea65262025469fdf",
+    "content-hash": "d43390a9033fc4baebe8b85a26a92a6a",
     "packages": [
         {
             "name": "composer/pcre",
@@ -349,16 +349,16 @@
         },
         {
             "name": "moodlehq/moodle-local_ci",
-            "version": "v1.0.24",
+            "version": "v1.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-local_ci.git",
-                "reference": "8e214a82f4d7ba82403da59c2ff5d85adb2553a8"
+                "reference": "00fefa2b084aa5a6961e8c54924eb23bc800d8c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moodlehq/moodle-local_ci/zipball/8e214a82f4d7ba82403da59c2ff5d85adb2553a8",
-                "reference": "8e214a82f4d7ba82403da59c2ff5d85adb2553a8",
+                "url": "https://api.github.com/repos/moodlehq/moodle-local_ci/zipball/00fefa2b084aa5a6961e8c54924eb23bc800d8c3",
+                "reference": "00fefa2b084aa5a6961e8c54924eb23bc800d8c3",
                 "shasum": ""
             },
             "require": {
@@ -380,10 +380,10 @@
                 "moodle"
             ],
             "support": {
-                "source": "https://github.com/moodlehq/moodle-local_ci/tree/v1.0.24",
+                "source": "https://github.com/moodlehq/moodle-local_ci/tree/v1.0.25",
                 "issues": "https://github.com/moodlehq/moodle-local_ci/issues"
             },
-            "time": "2023-09-28T08:41:44+00:00"
+            "time": "2023-10-11T08:27:45+00:00"
         },
         {
             "name": "moodlehq/moodle-local_moodlecheck",
