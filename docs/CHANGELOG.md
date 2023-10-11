@@ -9,6 +9,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## [4.1.7] - 2023-10-11
+### Changed
+- Updated project dependencies to current [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) version.
+
+### Added
+- Added some docs regarding the `moodle-plugin-ci` use [in local dev environments](https://moodlehq.github.io/moodle-plugin-ci/#using-in-a-local-dev-environment).
+
 ### Fixed
 - Fixed the `phpcmd` command for compatibility with versions `^2.14.0`.
 
@@ -588,7 +595,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.6...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.7...master
+[4.1.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.6...4.1.7
 [4.1.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.5...4.1.6
 [4.1.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.4...4.1.5
 [4.1.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.3...4.1.4
