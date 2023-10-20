@@ -9,13 +9,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- ACTION SUGGESTED: If you are using GitHub Actions, it's recomended to use `!cancelled()` instead of `always()` for moodle-plugin-ci tests. Adding a final step that always returns failure when the workflow is cancelled will ensure that cancelled workflows are not marked as successful. For a working example, please reference the updated `gha.dist.yml` file.
+
 ## [4.1.8] - 2023-10-20
 ### Changed
 - Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) version.
 
 ### Added
 - Added back the `selfupdate` command, that enables easy updates of the PHAR package. Note this is experimental and may show some warnings with PHP 8.x.
-
 
 ## [4.1.7] - 2023-10-11
 ### Changed
