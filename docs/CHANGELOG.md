@@ -9,6 +9,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## [4.1.8] - 2023-10-20
+### Changed
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) version.
+
+### Added
+- Added back the `selfupdate` command, that enables easy updates of the PHAR package. Note this is experimental and may show some warnings with PHP 8.x.
+
+
 ## [4.1.7] - 2023-10-11
 ### Changed
 - Updated project dependencies to current [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) version.
@@ -595,7 +603,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.7...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.8...master
+[4.1.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.7...4.1.8
 [4.1.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.6...4.1.7
 [4.1.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.5...4.1.6
 [4.1.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.4...4.1.5
