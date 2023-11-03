@@ -241,7 +241,7 @@ Run Behat on a plugin
 
 ### Usage
 
-* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--start-servers] [--auto-rerun AUTO-RERUN] [--dump] [--] <plugin>`
+* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--tags TAGS] [--name NAME] [--start-servers] [--auto-rerun AUTO-RERUN] [--dump] [--] <plugin>`
 
 Run Behat on a plugin
 
@@ -269,7 +269,7 @@ Path to Moodle
 
 #### `--profile|-p`
 
-Behat profile to use
+Behat profile option to use
 
 * Accept value: yes
 * Is value required: yes
@@ -279,13 +279,33 @@ Behat profile to use
 
 #### `--suite`
 
-Behat suite to use (Moodle theme)
+Behat suite option to use (Moodle theme)
 
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
 * Is negatable: no
 * Default: `'default'`
+
+#### `--tags`
+
+Behat tags option to use. If not set, defaults to the component name
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `''`
+
+#### `--name`
+
+Behat name option to use
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `''`
 
 #### `--start-servers`
 

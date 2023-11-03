@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- Added support for the `--tags` and `--name` options into the `behat` command.
+
 ### Changed
 - ACTION SUGGESTED: If you are using GitHub Actions, it's recomended to use `!cancelled()` instead of `always()` for moodle-plugin-ci tests. Adding a final step that always returns failure when the workflow is cancelled will ensure that cancelled workflows are not marked as successful. For a working example, please reference the updated `gha.dist.yml` file.
 - ACTION SUGGESTED: For some (unknown) reason, Travis environments with PHP 8.2 have started to fail with error:

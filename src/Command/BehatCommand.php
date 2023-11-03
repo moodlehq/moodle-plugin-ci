@@ -58,8 +58,11 @@ class BehatCommand extends AbstractMoodleCommand
         parent::configure();
 
         $this->setName('behat')
-            ->addOption('profile', 'p', InputOption::VALUE_REQUIRED, 'Behat profile to use', 'default')
-            ->addOption('suite', null, InputOption::VALUE_REQUIRED, 'Behat suite to use (Moodle theme)', 'default')
+            ->addOption('profile', 'p', InputOption::VALUE_REQUIRED, 'Behat profile option to use', 'default')
+            ->addOption('suite', null, InputOption::VALUE_REQUIRED, 'Behat suite option to use (Moodle theme)', 'default')
+            ->addOption('tags', null, InputOption::VALUE_REQUIRED, 'Behat tags option to use. ' .
+                'If not set, defaults to the component name', '')
+            ->addOption('name', null, InputOption::VALUE_REQUIRED, 'Behat name option to use', '')
             ->addOption('start-servers', null, InputOption::VALUE_NONE, 'Start Selenium and PHP servers')
             ->addOption('auto-rerun', null, InputOption::VALUE_REQUIRED, 'Number of times to rerun failures', 2)
             ->addOption('dump', null, InputOption::VALUE_NONE, 'Print contents of Behat failure HTML files')
@@ -89,13 +92,18 @@ class BehatCommand extends AbstractMoodleCommand
 
         $cmd = [
             'php', 'admin/tool/behat/cli/run.php',
-            '--tags=@' . $this->plugin->getComponent(),
             '--profile=' . $input->getOption('profile'),
             '--suite=' . $input->getOption('suite'),
+            '--tags=' . ($input->getOption('tags') ?: '@' . $this->plugin->getComponent()),
             '--auto-rerun=' . $input->getOption('auto-rerun'),
             '--verbose',
             '-vvv',
         ];
+
+        $name = $input->getOption('name');
+        if (!empty($name) && is_string($name)) {
+            $cmd[] = '--name=\'' . $name . '\'';
+        }
 
         if ($output->isDecorated()) {
             $cmd[] = '--colors';
