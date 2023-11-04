@@ -21,6 +21,7 @@ addons:
     packages:
       - postgresql-13
       - postgresql-client-13
+      - libonig5
 
 # Ensure DB and docker services are running.
 services:

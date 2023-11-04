@@ -8,6 +8,7 @@ addons:
     packages:
       - postgresql-13
       - postgresql-client-13
+      - libonig5
 
 services:
   - mysql
