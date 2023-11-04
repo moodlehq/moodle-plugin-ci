@@ -21,7 +21,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class PHPUnitCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null): CommandTester
+    protected function executeCommand($pluginDir = null, $moodleDir = null, array $cmdOptions = []): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -37,10 +37,15 @@ class PHPUnitCommandTest extends MoodleTestCase
         $application->add($command);
 
         $commandTester = new CommandTester($application->find('phpunit'));
-        $commandTester->execute([
-            'plugin'   => $pluginDir,
-            '--moodle' => $moodleDir,
-        ]);
+        $cmdOptions    = array_merge(
+            [
+                'plugin'   => $pluginDir,
+                '--moodle' => $moodleDir,
+            ],
+            $cmdOptions
+        );
+        $commandTester->execute($cmdOptions);
+        $this->lastCmd = $command->execute->lastCmd; // We need this for assertions against the command run.
 
         return $commandTester;
     }
@@ -49,6 +54,50 @@ class PHPUnitCommandTest extends MoodleTestCase
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/vendor.bin.phpunit/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--testsuite.*local_ci_testsuite/', $this->lastCmd);
+        $this->assertDoesNotMatchRegularExpression('/--configuration.*local\/ci/', $this->lastCmd);
+    }
+
+    public function testExecuteWithCustomPHPUnitXMLFile()
+    {
+        $commandTester = $this->executeCommand(null, null, ['--configuration' => 'some_config.xml']);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/vendor.bin.phpunit/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--configuration.*.*local\/ci\/some_config.xml/', $this->lastCmd);
+        $this->assertDoesNotMatchRegularExpression('/--configuration.*local\/ci\/phpunit.xml/', $this->lastCmd);
+        $this->assertDoesNotMatchRegularExpression('/--testsuite.*local_ci_testsuite/', $this->lastCmd);
+    }
+
+    public function testExecuteWithGeneratedPHPUnitXMLFile()
+    {
+        $fs = new Filesystem();
+        $fs->touch($this->pluginDir . '/phpunit.xml');
+        $commandTester = $this->executeCommand();
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/vendor.bin.phpunit/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--configuration.*local\/ci\/phpunit.xml/', $this->lastCmd);
+        $this->assertDoesNotMatchRegularExpression('/--testsuite.*local_ci_testsuite/', $this->lastCmd);
+    }
+
+    public function testExecuteWithTestSuite()
+    {
+        $commandTester = $this->executeCommand(null, null, ['--testsuite' => 'some_testsuite']);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/vendor.bin.phpunit/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--testsuite.*some_testsuite/', $this->lastCmd);
+        $this->assertDoesNotMatchRegularExpression('/--configuration.*local\/ci/', $this->lastCmd);
+        $this->assertDoesNotMatchRegularExpression('/--testsuite.*local_ci_testsuite/', $this->lastCmd);
+    }
+
+    public function testExecuteWithFilter()
+    {
+        $commandTester = $this->executeCommand(null, null, ['--filter' => 'some_filter']);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/vendor.bin.phpunit/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--filter.*some_filter/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--testsuite.*local_ci_testsuite/', $this->lastCmd);
+        $this->assertDoesNotMatchRegularExpression('/--configuration.*local\/ci/', $this->lastCmd);
     }
 
     public function testExecuteNoTests()
@@ -70,6 +119,7 @@ class PHPUnitCommandTest extends MoodleTestCase
     public function testExecuteNoMoodle()
     {
         $this->expectException(\InvalidArgumentException::class);
+        // TODO: Check what's happening here. moodleDir should be the 2nd parameter, but then the test fails.
         $this->executeCommand($this->moodleDir . '/no/moodle');
     }
 }

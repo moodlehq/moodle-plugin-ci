@@ -1975,7 +1975,7 @@ Run PHPUnit on a plugin
 
 ### Usage
 
-* `phpunit [-m|--moodle MOODLE] [--coverage-text] [--coverage-clover] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--testdox] [--] <plugin>`
+* `phpunit [-m|--moodle MOODLE] [-c|--configuration CONFIGURATION] [--testsuite TESTSUITE] [--filter FILTER] [--testdox] [--coverage-text] [--coverage-clover] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
 
 Run PHPUnit on a plugin
 
@@ -2000,6 +2000,46 @@ Path to Moodle
 * Is multiple: no
 * Is negatable: no
 * Default: `'.'`
+
+#### `--configuration|-c`
+
+PHPUnit configuration XML file (relative to plugin directory)
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `NULL`
+
+#### `--testsuite`
+
+PHPUnit testsuite option to use (must exist in the configuration file being used)
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `NULL`
+
+#### `--filter`
+
+PHPUnit filter option to use
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `NULL`
+
+#### `--testdox`
+
+Enable testdox formatter
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
 
 #### `--coverage-text`
 
@@ -2084,16 +2124,6 @@ Treat skipped tests as failures
 #### `--fail-on-warning`
 
 Treat tests with warnings as failures
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: no
-* Default: `false`
-
-#### `--testdox`
-
-Enable testdox formatter
 
 * Accept value: no
 * Is value required: no
