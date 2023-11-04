@@ -16,6 +16,7 @@ class MoodleTestCase extends FilesystemTestCase
 {
     protected string $moodleDir;
     protected string $pluginDir;
+    protected string $lastCmd = ''; // We need this for assertions against the command run.
 
     protected function setUp(): void
     {
@@ -23,6 +24,7 @@ class MoodleTestCase extends FilesystemTestCase
 
         $this->moodleDir = $this->tempDir;
         $this->pluginDir = $this->tempDir . '/local/ci';
+        $this->lastCmd   = '';
 
         $this->fs->mirror(__DIR__ . '/Fixture/moodle', $this->moodleDir);
         $this->fs->mirror(__DIR__ . '/Fixture/moodle-local_ci', $this->pluginDir);

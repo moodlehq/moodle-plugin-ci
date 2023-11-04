@@ -18,8 +18,9 @@ use Symfony\Component\Process\Process;
 class DummyExecute extends Execute
 {
     public string $returnOutput = '';
+    public string $lastCmd      = ''; // We need this for assertions against the command run.
 
-    private function getMockProcess($cmd)
+    private function getMockProcess(string $cmd)
     {
         $process = \Mockery::mock('Symfony\Component\Process\Process');
         $process->shouldReceive(
@@ -43,22 +44,12 @@ class DummyExecute extends Execute
 
     public function run($cmd, ?string $error = null): Process
     {
-        if ($cmd instanceof Process) {
-            // Get the command line from process.
-            $cmd = $cmd->getCommandLine();
-        }
-
-        return $this->helper->run($this->output, $this->getMockProcess($cmd), $error);
+        return $this->helper->run($this->output, $this->getMockProcess($this->getCommandLine($cmd)), $error);
     }
 
     public function mustRun($cmd, ?string $error = null): Process
     {
-        if ($cmd instanceof Process) {
-            // Get the command line from process.
-            $cmd = $cmd->getCommandLine();
-        }
-
-        return $this->helper->mustRun($this->output, $this->getMockProcess($cmd), $error);
+        return $this->helper->mustRun($this->output, $this->getMockProcess($this->getCommandLine($cmd)), $error);
     }
 
     public function runAll(array $processes): void
@@ -73,15 +64,29 @@ class DummyExecute extends Execute
 
     public function passThrough(array $commandline, ?string $cwd = null, ?float $timeout = null): Process
     {
-        return $this->passThroughProcess($this->getMockProcess($commandline));
+        return $this->getMockProcess($this->getCommandLine($commandline));
     }
 
     public function passThroughProcess(Process $process): Process
     {
-        if ($process instanceof \Mockery\MockInterface) {
-            return $process;
+        return $this->getMockProcess($this->getCommandLine($process));
+    }
+
+    /**
+     * Helper function to get the command line from a Process object or array.
+     *
+     * @param Process|array $cmd the command to run and its arguments listed as different entities
+     *
+     * @return string the command to run in a shell
+     */
+    private function getCommandLine($cmd): string
+    {
+        if (is_array($cmd)) {
+            $this->lastCmd = (new Process($cmd))->getCommandLine();
+        } else {
+            $this->lastCmd = $cmd->getCommandLine();
         }
 
-        return $this->getMockProcess($process->getCommandLine());
+        return $this->lastCmd;
     }
 }
