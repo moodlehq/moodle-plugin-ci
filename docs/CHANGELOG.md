@@ -11,6 +11,13 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Changed
 - ACTION SUGGESTED: If you are using GitHub Actions, it's recomended to use `!cancelled()` instead of `always()` for moodle-plugin-ci tests. Adding a final step that always returns failure when the workflow is cancelled will ensure that cancelled workflows are not marked as successful. For a working example, please reference the updated `gha.dist.yml` file.
+- ACTION SUGGESTED: For some (unknown) reason, Travis environments with PHP 8.2 have started to fail with error:
+
+  ```
+  php: error while loading shared libraries: libonig.so.5
+  ```
+
+  To avoid that problem it's recommended to to add the `libonig5` package to the `travis.yml` file. For a working example, please reference the updated `.travis.dist.yml`file.
 
 ## [4.1.8] - 2023-10-20
 ### Changed
