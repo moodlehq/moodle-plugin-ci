@@ -241,7 +241,7 @@ Run Behat on a plugin
 
 ### Usage
 
-* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--start-servers] [--auto-rerun AUTO-RERUN] [--dump] [--] <plugin>`
+* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--tags TAGS] [--name NAME] [--start-servers] [--auto-rerun AUTO-RERUN] [--dump] [--] <plugin>`
 
 Run Behat on a plugin
 
@@ -269,7 +269,7 @@ Path to Moodle
 
 #### `--profile|-p`
 
-Behat profile to use
+Behat profile option to use
 
 * Accept value: yes
 * Is value required: yes
@@ -279,13 +279,33 @@ Behat profile to use
 
 #### `--suite`
 
-Behat suite to use (Moodle theme)
+Behat suite option to use (Moodle theme)
 
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
 * Is negatable: no
 * Default: `'default'`
+
+#### `--tags`
+
+Behat tags option to use. If not set, defaults to the component name
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `''`
+
+#### `--name`
+
+Behat name option to use
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `''`
 
 #### `--start-servers`
 
@@ -1955,7 +1975,7 @@ Run PHPUnit on a plugin
 
 ### Usage
 
-* `phpunit [-m|--moodle MOODLE] [--coverage-text] [--coverage-clover] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--testdox] [--] <plugin>`
+* `phpunit [-m|--moodle MOODLE] [-c|--configuration CONFIGURATION] [--testsuite TESTSUITE] [--filter FILTER] [--testdox] [--coverage-text] [--coverage-clover] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
 
 Run PHPUnit on a plugin
 
@@ -1980,6 +2000,46 @@ Path to Moodle
 * Is multiple: no
 * Is negatable: no
 * Default: `'.'`
+
+#### `--configuration|-c`
+
+PHPUnit configuration XML file (relative to plugin directory)
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `NULL`
+
+#### `--testsuite`
+
+PHPUnit testsuite option to use (must exist in the configuration file being used)
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `NULL`
+
+#### `--filter`
+
+PHPUnit filter option to use
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `NULL`
+
+#### `--testdox`
+
+Enable testdox formatter
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
 
 #### `--coverage-text`
 
@@ -2064,16 +2124,6 @@ Treat skipped tests as failures
 #### `--fail-on-warning`
 
 Treat tests with warnings as failures
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: no
-* Default: `false`
-
-#### `--testdox`
-
-Enable testdox formatter
 
 * Accept value: no
 * Is value required: no

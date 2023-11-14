@@ -29,6 +29,20 @@ class PHPUnitCommand extends AbstractMoodleCommand
 
         $this->setName('phpunit')
             ->setDescription('Run PHPUnit on a plugin')
+            ->addOption(
+                'configuration',
+                'c',
+                InputOption::VALUE_REQUIRED,
+                'PHPUnit configuration XML file (relative to plugin directory)'
+            )
+            ->addOption(
+                'testsuite',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'PHPUnit testsuite option to use (must exist in the configuration file being used)'
+            )
+            ->addOption('filter', null, InputOption::VALUE_REQUIRED, 'PHPUnit filter option to use')
+            ->addOption('testdox', null, InputOption::VALUE_NONE, 'Enable testdox formatter')
             ->addOption('coverage-text', null, InputOption::VALUE_NONE, 'Generate and print code coverage report in text format')
             ->addOption('coverage-clover', null, InputOption::VALUE_NONE, 'Generate code coverage report in Clover XML format')
             ->addOption('coverage-pcov', null, InputOption::VALUE_NONE, 'Use the pcov extension to calculate code coverage')
@@ -37,8 +51,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
             ->addOption('fail-on-incomplete', null, InputOption::VALUE_NONE, 'Treat incomplete tests as failures')
             ->addOption('fail-on-risky', null, InputOption::VALUE_NONE, 'Treat risky tests as failures')
             ->addOption('fail-on-skipped', null, InputOption::VALUE_NONE, 'Treat skipped tests as failures')
-            ->addOption('fail-on-warning', null, InputOption::VALUE_NONE, 'Treat tests with warnings as failures')
-            ->addOption('testdox', null, InputOption::VALUE_NONE, 'Enable testdox formatter');
+            ->addOption('fail-on-warning', null, InputOption::VALUE_NONE, 'Treat tests with warnings as failures');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -80,6 +93,28 @@ class PHPUnitCommand extends AbstractMoodleCommand
     private function resolveOptions(InputInterface $input): array
     {
         $options = [];
+
+        if ($input->getOption('configuration')) {
+            $options[] = [
+                '--configuration',
+                $this->plugin->directory . '/' . $input->getOption('configuration'),
+            ];
+        }
+
+        if ($input->getOption('testsuite')) {
+            $options[] = [
+                '--testsuite',
+                $input->getOption('testsuite'),
+            ];
+        }
+
+        if ($input->getOption('filter')) {
+            $options[] = [
+                '--filter',
+                $input->getOption('filter'),
+            ];
+        }
+
         if ($this->supportsCoverage() && $input->getOption('coverage-text')) {
             $options[] = [
                 '--coverage-text',
@@ -103,16 +138,25 @@ class PHPUnitCommand extends AbstractMoodleCommand
                 ];
             }
         }
-        if (is_file($this->plugin->directory . '/phpunit.xml')) {
-            $options[] = [
-                '--configuration',
-                $this->plugin->directory,
-            ];
-        } else {
-            $options[] = [
-                '--testsuite',
-                $this->plugin->getComponent(),
-            ];
+
+        // Only can set configuration or testsuite here (auto) if the former has not been set via command line option.
+        if (!$input->getOption('configuration')) {
+            // Use default configuration (phpunit.xml) only if it exists.
+            if (is_file($this->plugin->directory . '/phpunit.xml')) {
+                $options[] = [
+                    '--configuration',
+                    $this->plugin->directory . '/phpunit.xml',
+                ];
+            } else {
+                // Fallback to try to use the best testsuite potentially available.
+                // Only can set automatic testsuite if it has not been passed via command line option.
+                if (!$input->getOption('testsuite')) {
+                    $options[] = [
+                        '--testsuite',
+                        $this->plugin->getComponent() . '_testsuite', // This is our best guess.
+                    ];
+                }
+            }
         }
 
         return array_merge(...$options); // Merge all options into a single array.

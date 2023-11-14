@@ -21,7 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class BehatCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null): CommandTester
+    protected function executeCommand($pluginDir = null, $moodleDir = null, array $cmdOptions = []): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -38,10 +38,15 @@ class BehatCommandTest extends MoodleTestCase
         $application->add($command);
 
         $commandTester = new CommandTester($application->find('behat'));
-        $commandTester->execute([
-            'plugin'   => $pluginDir,
-            '--moodle' => $moodleDir,
-        ]);
+        $cmdOptions    = array_merge(
+            [
+                'plugin'   => $pluginDir,
+                '--moodle' => $moodleDir,
+            ],
+            $cmdOptions
+        );
+        $commandTester->execute($cmdOptions);
+        $this->lastCmd = $command->execute->lastCmd; // We need this for assertions against the command run.
 
         return $commandTester;
     }
@@ -50,6 +55,28 @@ class BehatCommandTest extends MoodleTestCase
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/php.*admin.tool.behat.cli.run/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--profile=default.*--suite=default/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--tags=@local_ci/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--verbose.*-vvv/', $this->lastCmd);
+    }
+
+    public function testExecuteWithTags()
+    {
+        $commandTester = $this->executeCommand(null, null, ['--tags' => '@tag1&&@tag2']);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/--tags=@tag1&&@tag2/', $this->lastCmd);
+        $this->assertDoesNotMatchRegularExpression('/--tags=@local_ci/', $this->lastCmd);
+    }
+
+    public function testExecuteWithName()
+    {
+        $featureName = 'With "double quotes" and \'single quotes\'';
+        // Note that everything is escaped for shell execution, plus own regexp quoting.
+        $expectedName  = preg_quote(escapeshellarg("--name='$featureName'"));
+        $commandTester = $this->executeCommand(null, null, ['--name' => $featureName]);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression("/{$expectedName}/", $this->lastCmd);
     }
 
     public function testExecuteNoFeatures()
@@ -70,6 +97,7 @@ class BehatCommandTest extends MoodleTestCase
     public function testExecuteNoMoodle()
     {
         $this->expectException(\InvalidArgumentException::class);
+        // TODO: Check what's happening here. moodleDir should be the 2nd parameter, but then the test fails.
         $this->executeCommand($this->moodleDir . '/no/moodle');
     }
 }
