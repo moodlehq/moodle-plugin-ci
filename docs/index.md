@@ -167,6 +167,7 @@ Next steps on your continuous build journey may include:
 * Reviewing the [help documentation](Help.md) to further improve and customize your build.
 * Resolve any build errors you may currently have. Get to that ever rewarding Green Build status.
 * Show off your build status by adding the build status badge to your plugin's README file.
+* Learn how to [configure CI for your mobile plugins in the Moodle App](MoodleApp.md).
 * Write new tests to increase your code coverage.
 * Contribute to this repo if you have improvement idea or found an issue.
 * Enjoy your favorite beverage because you no longer have to waste time manually testing your plugin!

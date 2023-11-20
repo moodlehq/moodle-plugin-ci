@@ -35,6 +35,7 @@
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <file>classes/math.php</file>
+            <file>classes/output/mobile.php</file>
             <file>lib.php</file>
         </whitelist>
     </filter>

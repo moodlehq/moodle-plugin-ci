@@ -16,6 +16,7 @@ Always a good idea to check the [change log](CHANGELOG.md) if something suddenly
 * [Ignoring files](IgnoringFiles.md): how to ignore files that might be causing failures.
 * [Generating code coverage](CodeCoverage.md): how to generate code coverage of your plugin.
 * [CLI commands and options](CLI.md): the available `moodle-plugin-ci` commands and their options.
+* [Moodle App](MoodleApp.md): how to configure `moodle-plugin-ci` to test plugins with mobile support.
 
 ## Test steps quick start
 
@@ -84,7 +85,10 @@ There are few important options that you may want to use:
 - The suite option allows you to set the theme to use for behat test. If
   not specified, the default theme is used, e.g. usage: `--suite boost`
 - The profile option allows you to set the browser driver to use,
-  default is Firefox. If you need Chrome, set `--profile chrome`.
+  default is Firefox (or Chrome when `MOODLE_APP` is set). If you need a specific browser,
+  use `--profile chrome` or `--profile firefox`.
+- The tags option allows you to specify which scenarios to run filtered by tags,
+  default is the tag with the plugin's component name, e.g. usage: `--tags="@local_myplugin~@ciskip"`
 
 ## Upgrade guides
 

@@ -29,6 +29,9 @@ $CFG->debugdisplay = 1;
 $CFG->noemailever    = true;
 $CFG->noreplyaddress = 'noreply@localhost.local';
 
+// App settings.
+$CFG->behat_ionic_wwwroot = '{{BEHATIONICWWWROOT}}';
+
 // PHPUnit settings.
 $CFG->phpunit_prefix   = 'phpu_';
 $CFG->phpunit_dataroot = '{{PHPUNITDATAROOT}}';
@@ -40,11 +43,15 @@ $CFG->behat_wwwroot       = '{{BEHATWWWROOT}}';
 $CFG->behat_faildump_path = '{{BEHATDUMP}}';
 $CFG->behat_profiles      = [
     'default' => [
-        'browser' => 'firefox',
+        'browser' => '{{BEHATDEFAULTBROWSER}}',
         'wd_host' => '{{BEHATWDHOST}}',
     ],
     'chrome' => [
         'browser' => 'chrome',
+        'wd_host' => '{{BEHATWDHOST}}',
+    ],
+    'firefox' => [
+        'browser' => 'firefox',
         'wd_host' => '{{BEHATWDHOST}}',
     ],
 ];

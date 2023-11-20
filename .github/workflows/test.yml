@@ -87,11 +87,7 @@ jobs:
           - php: '8.0'
             moodle-branch: 'MOODLE_311_STABLE'
           - php: '7.4'
-            moodle-branch: 'MOODLE_310_STABLE'
-          - php: '7.4'
             moodle-branch: 'MOODLE_39_STABLE'
-          - php: '7.4'
-            moodle-branch: 'MOODLE_38_STABLE'
 
     steps:
     - name: Check out repository code
@@ -127,6 +123,7 @@ jobs:
         IGNORE_PATHS: 'ignore'
         IGNORE_NAMES: 'ignore_name.php'
         MUSTACHE_IGNORE_NAMES: 'broken.mustache'
+        MOODLE_APP: 'true'
 
     - name: Run Integration tests
       env:
@@ -145,6 +142,7 @@ jobs:
         moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
         moodle-plugin-ci behat --profile default
         moodle-plugin-ci behat --profile chrome
+        moodle-plugin-ci behat --profile firefox --tags="@local_ci&&~@app"
 
   buildphar:
     name: Build moodle-plugin-ci.phar
@@ -240,6 +238,7 @@ jobs:
         IGNORE_PATHS: 'ignore'
         IGNORE_NAMES: 'ignore_name.php'
         MUSTACHE_IGNORE_NAMES: 'broken.mustache'
+        MOODLE_APP: 'true'
 
     - name: Run Integration tests (PHAR)
       env:
@@ -258,3 +257,4 @@ jobs:
         php build/moodle-plugin-ci.phar phpunit --verbose --coverage-text --fail-on-warning
         php build/moodle-plugin-ci.phar behat --profile default
         php build/moodle-plugin-ci.phar behat --profile chrome
+        php build/moodle-plugin-ci.phar behat --profile firefox --tags="@local_ci&&~@app"

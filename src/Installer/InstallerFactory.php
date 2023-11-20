@@ -43,6 +43,13 @@ class InstallerFactory
     public function addInstallers(InstallerCollection $installers): void
     {
         $installers->add(new MoodleInstaller($this->execute, $this->database, $this->moodle, new MoodleConfig(), $this->repo, $this->branch, $this->dataDir));
+
+        if (getenv('MOODLE_APP')) {
+            $this->pluginsDir = $this->pluginsDir ?? 'moodle-plugin-ci-plugins';
+
+            $installers->add(new MoodleAppInstaller($this->execute, $this->pluginsDir));
+        }
+
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->pluginsDir, $this->dumper));
         $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute, $this->nodeVer));
 

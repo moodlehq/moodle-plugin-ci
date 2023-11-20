@@ -144,7 +144,13 @@ class BehatCommand extends AbstractMoodleCommand
         }
 
         // Start docker container using desired image.
-        if ($input->getOption('profile') === 'chrome') {
+        $profile = $input->getOption('profile');
+
+        if ($profile === 'default') {
+            $profile = getenv('MOODLE_BEHAT_DEFAULT_BROWSER') ?: (getenv('MOODLE_APP') ? 'chrome' : 'firefox');
+        }
+
+        if ($profile === 'chrome') {
             $image = $this->seleniumChromeImage;
         } elseif ($this->usesLegacyPhpWebdriver()) {
             $image = $this->seleniumLegacyFirefoxImage;

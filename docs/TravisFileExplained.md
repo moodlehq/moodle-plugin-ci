@@ -52,6 +52,9 @@ env:
   - PGVER=13
 # This line determines which version branch of Moodle to test against.
   - MOODLE_BRANCH=MOODLE_402_STABLE
+# Uncomment this to run Behat tests using the Moodle App.
+#   - MOODLE_APP=true
+
 # This matrix is used for testing against multiple databases.  So for
 # each version of PHP being tested, one build will be created for each
 # database listed here.  EG: for PHP 7.4, one build will be created

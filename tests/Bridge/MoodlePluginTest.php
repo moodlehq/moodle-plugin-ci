@@ -125,7 +125,9 @@ class MoodlePluginTest extends MoodleTestCase
         $files    = $plugin->getFiles($finder);
         $expected = [
             $this->pluginDir . '/classes/math.php',
+            $this->pluginDir . '/classes/output/mobile.php',
             $this->pluginDir . '/db/access.php',
+            $this->pluginDir . '/db/mobile.php',
             $this->pluginDir . '/db/upgrade.php',
             $this->pluginDir . '/lang/en/local_ci.php',
             $this->pluginDir . '/lib.php',
@@ -151,7 +153,9 @@ class MoodlePluginTest extends MoodleTestCase
         $plugin   = new MoodlePlugin($this->pluginDir);
         $expected = [
             'classes/math.php',
+            'classes/output/mobile.php',
             'db/access.php',
+            'db/mobile.php',
             'db/upgrade.php',
             'lang/en/local_ci.php',
             'lib.php',
