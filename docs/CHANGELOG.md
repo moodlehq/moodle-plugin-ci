@@ -9,11 +9,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## [4.2.0] - 2023-11-30
 ### Added
 - Added support for the `--tags` and `--name` options to the `behat` command.
 - Added support for the `--configure`, `--testsuite` and `--filter` options to the `phpunit` command.
 
 ### Changed
+- The default branch of this repository has been renamed from `master` to `main`. You can visit [this issue (#258)](https://github.com/moodlehq/moodle-plugin-ci/issues/258) for more information about the potential actions required (if you use this, or clones/forks of this, repository).
 - ACTION SUGGESTED: If you are using GitHub Actions, it's recomended to use `!cancelled()` instead of `always()` for moodle-plugin-ci tests. Adding a final step that always returns failure when the workflow is cancelled will ensure that cancelled workflows are not marked as successful. For a working example, please reference the updated `gha.dist.yml` file.
 - ACTION SUGGESTED: For some (unknown) reason, Travis environments with PHP 8.2 have started to fail with error:
 
@@ -617,7 +619,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.8...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.2.0...main
+[4.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.8...4.2.0
 [4.1.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.7...4.1.8
 [4.1.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.6...4.1.7
 [4.1.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.5...4.1.6
