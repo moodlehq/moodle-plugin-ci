@@ -22,6 +22,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   ```
 
   To avoid that problem, it's recommended to to add the `libonig5` package to the `travis.yml` file. For a working example, please reference the updated `.travis.dist.yml`file.
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) and [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) versions.
 
 ## [4.1.8] - 2023-10-20
 ### Changed

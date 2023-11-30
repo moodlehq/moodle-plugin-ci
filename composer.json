@@ -44,20 +44,20 @@
       "type": "package",
       "package": {
         "name": "moodlehq/moodle-local_moodlecheck",
-        "version": "1.1.8",
+        "version": "1.2.0",
         "source": {
           "url": "https://github.com/moodlehq/moodle-local_moodlecheck.git",
           "type": "git",
-          "reference": "v1.1.8"
+          "reference": "v1.2.0"
         }
       }
     }
   ],
   "require": {
     "php": ">=7.4",
-    "moodlehq/moodle-cs": "^v3.3.10",
+    "moodlehq/moodle-cs": "^v3.3.11",
     "moodlehq/moodle-local_ci": "^1.0.25",
-    "moodlehq/moodle-local_moodlecheck": "^1.1.8",
+    "moodlehq/moodle-local_moodlecheck": "^1.2.0",
     "sebastian/phpcpd": "^6.0.3",
     "sebastian/version": "^3.0.2",
     "phpunit/php-timer": "^5.0.3",
