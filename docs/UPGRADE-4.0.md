@@ -17,7 +17,7 @@ Detailed information about what changed in Version 4 can be found in the [change
 
 ### GitHub Actions
 
-Review the updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml)
+Review the updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml)
 and update the GitHub Action workflow file in your plugin (for example, `.github/workflows/ci.yml`). For detailed information about the contents of that `ci.yml` file, please see our [sample GitHub Action workflow explanation](GHAFileExplained.md).
 
 A summary of the actions required for version 4 is:
@@ -27,7 +27,7 @@ A summary of the actions required for version 4 is:
 
 ### Travis CI
 
-Review the updated [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
+Review the updated [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml)
 and update your `.travis.yml` file in your plugin. For detailed information about the contents of `.travis.dist.yml`
 file, please see our [sample Travis workflow file explanation](TravisFileExplained.md).
 
@@ -63,7 +63,7 @@ For example, for GitHub Actions, it can be setup as follows:
       matrix:
         include:
           - php: 8.2
-            moodle-branch: master
+            moodle-branch: main
             database: pgsql
             plugin-ci: ^4 # Decide the version to use per matrix element.
           ...

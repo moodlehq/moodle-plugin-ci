@@ -51,7 +51,7 @@ Follow steps to get your Moodle plugin building in CI tool of your choice.
 
 #### Step 1
 
-Copy [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) file to `.github/workflows` directory
+Copy [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml) file to `.github/workflows` directory
 in your project. You can give this file any name, e.g. `moodle-ci.yml` which we use in this document. Review the `moodle-ci.yml` contents and
 remove anything that is not needed.  See this [help document](GHAFileExplained.md) for an explanation about the
 contents of the this file. Once you have added the `.github/workflows/moodle-ci.yml` file, commit and push up to GitHub, to trigger a
@@ -76,7 +76,7 @@ run a build to make sure nothing broke.
 
 #### Step 2
 
-Copy the [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml) file into the
+Copy the [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml) file into the
 root of your plugin and rename it to `.travis.yml`. Now might be a good time to review the `.travis.yml` contents and
 remove anything that is not needed.  See this [help document](TravisFileExplained.md) for an explanation about the
 contents of the this file. Once you have added the `.travis.yml` file, commit and push up to GitHub, to trigger a
@@ -197,4 +197,4 @@ Semantic Versioning.
 ## License
 
 This project is licensed under the GNU GPL v3 or later.  See the
-[LICENSE](https://github.com/moodlehq/moodle-plugin-ci/blob/master/LICENSE) file for details.
+[LICENSE](https://github.com/moodlehq/moodle-plugin-ci/blob/main/LICENSE) file for details.

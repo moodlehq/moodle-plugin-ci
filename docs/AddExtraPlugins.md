@@ -16,7 +16,7 @@ You may add as many plugins as you like, by simply calling the `add-plugin` comm
 command takes a single argument and that is your GitHub account name and the project name.  So, in the example, it
 would clone `https://github.com/moodlehq/moodle-local_hub.git`.
 
-By default, the branch that is cloned is the `master` branch.  You can use the `--branch` (`-b`) option to override
+If not specified, the default branch of the repository is used (normally `main`).  You can use the `--branch` (`-b`) option to override
 this behavior.  If you use the same branch names as Moodle (EG: `MOODLE_XY_STABLE`), then a handy trick is to pass
 the `$MOODLE_BRANCH` build variable to the `add-plugin` command.  Here is an example:
 

@@ -107,7 +107,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
     public function gitBranchProvider()
     {
         return [
-            ['master'],
+            ['main'],
             ['MOODLE_27_STABLE'],
             ['MOODLE_28_STABLE'],
             ['MOODLE_29_STABLE'],

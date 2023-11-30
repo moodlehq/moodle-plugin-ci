@@ -13,9 +13,9 @@ Requirements have changed, this project now requires PHP 5.6 or later and Moodle
 
 Detailed information about what changed in Version 2 can be found in the [change log](CHANGELOG.md).
 
-## Step 3: Review the Travis CI configuration file 
+## Step 3: Review the Travis CI configuration file
 
-Review the updated [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
+Review the updated [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml)
 and update your `.travis.yml` file in your plugin. For detailed information about the contents of `.travis.dist.yml`
 file, please see this [help document](TravisFileExplained.md).  **Please carefully** review the updated
 `.travis.dist.yml` as some steps have been removed and others added, like installation of Java 8,

@@ -88,9 +88,9 @@ jobs:
 
     - stage: Integration tests
       if: env(MOODLE_BRANCH) IS present
-    # Only master with highest supported PHP version.
+    # Only main with highest supported PHP version.
     - php: 8.2
-      env: MOODLE_BRANCH=master
+      env: MOODLE_BRANCH=main
     # Last stable with highest supported PHP version.
     - php: 8.2
       env: MOODLE_BRANCH=MOODLE_402_STABLE

@@ -21,7 +21,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   php: error while loading shared libraries: libonig.so.5
   ```
 
-  To avoid that problem it's recommended to to add the `libonig5` package to the `travis.yml` file. For a working example, please reference the updated `.travis.dist.yml`file.
+  To avoid that problem, it's recommended to to add the `libonig5` package to the `travis.yml` file. For a working example, please reference the updated `.travis.dist.yml`file.
 
 ## [4.1.8] - 2023-10-20
 ### Changed
@@ -164,7 +164,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Fixed
 - Updated to `php-coveralls/php-coveralls` v2 for uploading coverage results to [Coveralls](https://coveralls.io) with the `coveralls-upload` command.
-- ACTION REQUIRED: Review any use of the `coveralls-upload` command in GHA and ensure that `COVERALLS_REPO_TOKEN` is set in the environment. See [Coveralls integration](https://github.com/moodlehq/moodle-plugin-ci/blob/master/docs/CodeCoverage.md#coveralls-integration) for more information.
+- ACTION REQUIRED: Review any use of the `coveralls-upload` command in GHA and ensure that `COVERALLS_REPO_TOKEN` is set in the environment. See [Coveralls integration](https://github.com/moodlehq/moodle-plugin-ci/blob/main/docs/CodeCoverage.md#coveralls-integration) for more information.
 
 ## [3.4.4] - 2023-01-20
 ### Changed
@@ -172,10 +172,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [3.4.3] - 2022-12-24
 ### Changed
-- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
-  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
+- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml) and
+  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml)
   (and documentation) to fulfil [Moodle 4.2 new requirements](https://tracker.moodle.org/browse/MDL-74905).
-- ACTION REQUIRED: Review existing integrations running tests against master (4.2dev). There are a few Moodle 4.2 new requirements:
+- ACTION REQUIRED: Review existing integrations running tests against main (4.2dev). There are a few Moodle 4.2 new requirements:
   - PHP 8.0 is required (instead of 7.4).
   - PostgreSQL 13 is required (instead of 12).
   - MariaDB 10.6 is required (instead of 10.4).
@@ -198,10 +198,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci install` now provides an option `--db-port` to define a custom database port.
 
 ### Changed
-- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
-  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
+- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml) and
+  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml)
   (and documentation) to fulfil [Moodle 4.1 new requirements](https://tracker.moodle.org/browse/MDL-71747).
-- ACTION REQUIRED: Review existing integrations running tests against master (4.1dev). There are a few Moodle 4.1 new requirements:
+- ACTION REQUIRED: Review existing integrations running tests against main (4.1dev). There are a few Moodle 4.1 new requirements:
   - PHP 7.4 is required (instead of 7.3).
   - PostgreSQL 12 is required (instead of 10). Pay special attention to the changes needed for this and Travis!
   - MariaDB 10.4 is required (instead of 10.2.29).
@@ -229,7 +229,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [3.2.5] - 2022-03-31
 ### Changed
 - ACTION SUGGESTED: Now, it's safe to 'unpin' the MariaDB version in all integrations. With MariaDB 10.6.7 and 10.7.3 already released, the existing problems are gone, so it's possible to move away from the older 10.5 version. To achieve that, just look for any use of `image: mariadb:10.5` and change it to `image: mariadb:10`. For more information, see [MDL-72131](https://tracker.moodle.org/browse/MDL-72131).
-- Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.1.0. For list of changes see [changelog](https://github.com/moodlehq/moodle-local_codechecker/blob/master/CHANGES.md#changes-in-version-310-20220225---fondant-chocolate), you should expect numerous `@covers` annotation warnings in particular.
+- Updated version of [moodle-local_codechecker](https://github.com/moodlehq/moodle-local_codechecker) to v3.1.0. For list of changes see [changelog](https://github.com/moodlehq/moodle-local_codechecker/blob/main/CHANGES.md#changes-in-version-310-20220225---fondant-chocolate), you should expect numerous `@covers` annotation warnings in particular.
 
 ### Added
 - Use utf8mb4 for MySQL and MariaDB setup.
@@ -267,8 +267,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - New tool-agnostic `CI_BUILD_DIR` env. variable that can be used instead of the old `TRAVIS_BUILD_DIR` one. Note that support for the later [will be removed](https://github.com/moodlehq/moodle-plugin-ci/issues/118) at some point in the future.
 
 ### Changed
-- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
-  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml)
+- Updated [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml) and
+  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml)
   to use PostgreSQL 10 (Moodle 4.0 new requirement).
 - ACTION REQUIRED: Existing integrations running tests with PostgreSQL now need to use version 10 or newer.
 - ACTION REQUIRED: Existing integrations running tests with MariaDB must avoid using the 10.6 version and use 10.5 instead. It comes with some changes making it incompatible with Moodle default installation. To achieve that, just look for any use of `image: mariadb:10` and change it to `image: mariadb:10.5`. This is being tracked @ [MDL-72131]( https://tracker.moodle.org/browse/MDL-72131) and, once fixed, it will be possible to go back to the original image.
@@ -283,8 +283,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   only if adding PHP 8 jobs. These changes include 1) Setting up the `max_input_vars=5000`
   PHP configuration setting, for all runs, and 2) Enabling the `xmlrpc-beta` extension
   if the plugin requires xmlrpc services, only for PHP 8 runs. See
-  [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml) and
-  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml) for more information.
+  [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml) and
+  [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml) for more information.
 
 ### Changed
 - Updated various internal dependencies and tools.
@@ -311,12 +311,12 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - ACTION REQUIRED: If you are using GitHub Actions, add `NVM_DIR` definition
   in "Initialise moodle-plugin-ci" step. Without it `nvm` can't be used for
   node version switching, see the step definition at
-  [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml)
+  [gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml)
   and add missing `NVM_DIR` line your plugin's GHA workflow file.
 
 ### Changed
 - `moodle-plugin-ci add-plugin` command now uses default banch to checkout
-  instead of `master` if `--branch` param is not specified..
+  instead of `main` if `--branch` param is not specified..
 
 ## [3.0.4] - 2021-01-29
 ### Fixed
@@ -333,7 +333,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Added
 - Detect existence of legacy php-webdriver, and use a different Firefox image when it is in use.
-- Add [manual](https://github.com/moodlehq/moodle-plugin-ci/blob/master/docs/index.md) and [example](https://github.com/moodlehq/moodle-plugin-ci/blob/master/docs/GHAFileExplained.md) on using GitHub Actions as CI tool.
+- Add [manual](https://github.com/moodlehq/moodle-plugin-ci/blob/main/docs/index.md) and [example](https://github.com/moodlehq/moodle-plugin-ci/blob/main/docs/GHAFileExplained.md) on using GitHub Actions as CI tool.
 
 ## [3.0.3] - 2020-10-16
 ### Changed
@@ -616,7 +616,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.8...master
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.8...main
 [4.1.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.7...4.1.8
 [4.1.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.6...4.1.7
 [4.1.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.5...4.1.6
@@ -681,4 +681,4 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 [1.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/1.0.0...1.1.0
-[.travis.dist.yml]: https://github.com/moodlehq/moodle-plugin-ci/blob/master/.travis.dist.yml
+[.travis.dist.yml]: https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml

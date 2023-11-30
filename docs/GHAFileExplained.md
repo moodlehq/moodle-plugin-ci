@@ -4,7 +4,7 @@ title: GitHub Actions CI workflow file explained
 ---
 
 Below is the
-[gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/master/gha.dist.yml)
+[gha.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml)
 file with comments added to explain what each section is doing. For additional
 information please refer to [workflow syntax reference](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions).
 
