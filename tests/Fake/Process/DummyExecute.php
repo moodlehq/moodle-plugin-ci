@@ -18,6 +18,7 @@ use Symfony\Component\Process\Process;
 class DummyExecute extends Execute
 {
     public string $returnOutput = '';
+    public array $allCmds       = [];
     public string $lastCmd      = ''; // We need this for assertions against the command run.
 
     private function getMockProcess(string $cmd)
@@ -86,6 +87,8 @@ class DummyExecute extends Execute
         } else {
             $this->lastCmd = $cmd->getCommandLine();
         }
+
+        $this->allCmds[] = $this->lastCmd;
 
         return $this->lastCmd;
     }

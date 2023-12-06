@@ -26,6 +26,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   To avoid that problem, it's recommended to to add the `libonig5` package to the `travis.yml` file. For a working example, please reference the updated `.travis.dist.yml`file.
 - Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) and [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) versions.
 
+### Added
+- Support and document usage with the [Moodle App](MoodleApp.md).
+
 ## [4.1.8] - 2023-10-20
 ### Changed
 - Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) version.
@@ -429,7 +432,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Fixed
 - `moodle-plugin-ci validate` now only regards required language strings as present if they are assigned to the
-  `$string` array. Before, other array variables were accepted although Moodle would not recognise them.  
+  `$string` array. Before, other array variables were accepted although Moodle would not recognise them.
 
 ### Added
 - `moodle-plugin-ci install` now provides an option `--no-init` to skip initialization of the Behat and PHPUnit
@@ -468,7 +471,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
   PHP compatibility issues for the **currently** running PHP version.  This makes it important to run this command
   on your lowest and highest supported PHP version.  EG: on PHP 5.6 and 7.1.
 - `moodle-plugin-ci validate` command now validates tags in Behat feature files.  EG: mod_forum should have @mod
-  and @mod_forum tags in each feature file. 
+  and @mod_forum tags in each feature file.
 - The `.travis.dist.yml` now installs Version 2 of this tool.
 - Updated Moodle coding standard to v2.7.0.
 

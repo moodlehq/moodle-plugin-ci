@@ -28,6 +28,8 @@ env:
  global:
   - PGVER=13
   - MOODLE_BRANCH=MOODLE_402_STABLE
+  # Uncomment this to run Behat tests using the Moodle App.
+  # - MOODLE_APP=true
  matrix:
   - DB=pgsql
   - DB=mysqli

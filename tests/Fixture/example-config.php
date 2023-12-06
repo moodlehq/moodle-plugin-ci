@@ -29,6 +29,9 @@ $CFG->debugdisplay = 1;
 $CFG->noemailever    = true;
 $CFG->noreplyaddress = 'noreply@localhost.local';
 
+// App settings.
+$CFG->behat_ionic_wwwroot = '';
+
 // PHPUnit settings.
 $CFG->phpunit_prefix   = 'phpu_';
 $CFG->phpunit_dataroot = '/path/to/moodledata/phpu_moodledata';
@@ -45,6 +48,10 @@ $CFG->behat_profiles      = [
     ],
     'chrome' => [
         'browser' => 'chrome',
+        'wd_host' => 'http://localhost:4444/wd/hub',
+    ],
+    'firefox' => [
+        'browser' => 'firefox',
         'wd_host' => 'http://localhost:4444/wd/hub',
     ],
 ];

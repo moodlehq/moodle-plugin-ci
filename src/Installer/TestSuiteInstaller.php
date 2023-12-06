@@ -18,7 +18,6 @@ use MoodlePluginCI\Process\Execute;
 use MoodlePluginCI\Process\MoodleProcess;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Process\Process;
 
 /**

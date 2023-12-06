@@ -124,12 +124,16 @@ jobs:
       # Other env vars are available for install, namely:
       #   - DB_USER / DB_PASS / DB_NAME / DB_HOST / DB_PORT: used
       #     by install to feed the corresponding --db-xxxx options.
+      #   - MOODLE_APP: used to install dependencies to run Behat tests
+      #     using the Moodle App.
       - name: Install moodle-plugin-ci
         run: |
           moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
         env:
           DB: ${{ matrix.database }}
           MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+          # Uncomment this to run Behat tests using the Moodle App.
+          # MOODLE_APP: 'true'
 
       # Steps that are run for the purpose of testing.  Any of these steps
       # can be re-ordered or removed to your liking.  And of course, you can

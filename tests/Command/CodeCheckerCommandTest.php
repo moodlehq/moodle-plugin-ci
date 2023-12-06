@@ -69,7 +69,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         // Verify various parts of the output.
         $output = $commandTester->getDisplay();
         // Verify that the progress information is always printed, no matter there aren't warnings/errors.
-        $this->assertMatchesRegularExpression('/\.{7} 7 \/ 7 \(100%\)/', $output);
+        $this->assertMatchesRegularExpression('/\.{9} 9 \/ 9 \(100%\)/', $output);
 
         // Also verify display info is correct.
         $this->assertMatchesRegularExpression('/RUN  Moodle CodeSniffer standard on local_ci/', $output);
@@ -101,7 +101,7 @@ EOT;
 
         // Verify various parts of the output.
         $output = $commandTester->getDisplay();
-        $this->assertMatchesRegularExpression('/E\.* 8\.* \/ 8 \(100%\)/', $output);                  // Progress.
+        $this->assertMatchesRegularExpression('/E\.* 10\.* \/ 10 \(100%\)/', $output);                // Progress.
         $this->assertMatchesRegularExpression('/\/fixable.php/', $output);                            // File.
         $this->assertMatchesRegularExpression('/ 7 ERRORS AND 1 WARNING AFFECTING 7 /', $output);     // Summary.
         $this->assertMatchesRegularExpression('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
