@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- Added support for the `--exclude` option to the `phpcs` command.
+
 ## [4.2.0] - 2023-11-30
 ### Added
 - Added support for the `--tags` and `--name` options to the `behat` command.
