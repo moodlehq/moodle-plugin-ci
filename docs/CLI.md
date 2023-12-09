@@ -6,6 +6,7 @@ title: Moodle Plugin CI Commands
 <!-- AUTOMATICALLY GENERATED VIA: make docs/CLI.md -->
 
 * [`add-config`](#add-config)
+* [`add-offline-plugin`](#add-offline-plugin)
 * [`add-plugin`](#add-plugin)
 * [`behat`](#behat)
 * [`codechecker`](#phpcs)
@@ -120,6 +121,121 @@ Do not ask any interactive question
 * Is multiple: no
 * Is negatable: no
 * Default: `false`
+
+
+`add-offline-plugin`
+------------
+
+Queue up an additional plugin to be installed in the test site
+
+### Usage
+
+* `add-plugin [-b|--branch BRANCH] [-s|--source SOURCE] [--storage STORAGE] [--] [<projectname>]`
+
+Queue up an additional plugin to be installed in the test site from an offline source
+
+### Arguments
+
+#### `projectname`
+
+Name of your project folder everything is copied to
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--branch|-b`
+
+The branch to checkout in plugin directory if it is a repo
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `NULL`
+
+#### `--source|-s`
+
+The path to the directory of the moodle plugin to copy
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `NULL`
+
+#### `--storage`
+
+Plugin storage directory
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `'moodle-plugin-ci-plugins'`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
 
 `add-plugin`
 ------------
