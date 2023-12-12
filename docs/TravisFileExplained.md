@@ -129,9 +129,6 @@ install:
 script:
 # This step lints your PHP files to check for syntax errors.
   - moodle-plugin-ci phplint
-# This step runs the PHP Copy/Paste Detector on your plugin.
-# This helps to find code duplication.
-  - moodle-plugin-ci phpcpd
 # This step runs the PHP Mess Detector on your plugin. This helps to find
 # potential problems with your code which can result in
 # refactoring opportunities.

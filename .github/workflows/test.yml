@@ -130,7 +130,6 @@ jobs:
         MOODLE_BRANCH: ${{ matrix.moodle-branch }}
       run: |
         moodle-plugin-ci phplint
-        moodle-plugin-ci phpcpd
         moodle-plugin-ci phpmd
         moodle-plugin-ci phpcs
         moodle-plugin-ci phpcbf
@@ -245,7 +244,6 @@ jobs:
         MOODLE_BRANCH: ${{ matrix.moodle-branch }}
       run: |
         php build/moodle-plugin-ci.phar phplint
-        php build/moodle-plugin-ci.phar phpcpd
         php build/moodle-plugin-ci.phar phpmd
         php build/moodle-plugin-ci.phar phpcs
         php build/moodle-plugin-ci.phar phpcbf

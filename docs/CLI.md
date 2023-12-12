@@ -19,7 +19,6 @@ title: Moodle Plugin CI Commands
 * [`mustache`](#mustache)
 * [`parallel`](#parallel)
 * [`phpcbf`](#phpcbf)
-* [`phpcpd`](#phpcpd)
 * [`phpcs`](#phpcs)
 * [`phpdoc`](#phpdoc)
 * [`phplint`](#phplint)
@@ -1481,17 +1480,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Is negatable: no
 * Default: `false`
-
-`phpcpd`
---------
-
-Run PHP Copy/Paste Detector on a plugin
-
-### Usage
-
-* `phpcpd <plugin>`
-
-Run PHP Copy/Paste Detector on a plugin
 
 ### Arguments
 
