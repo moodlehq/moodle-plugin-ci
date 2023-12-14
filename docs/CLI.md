@@ -1619,6 +1619,16 @@ Version or range of version to test with PHPCompatibility
 * Is negatable: no
 * Default: `0`
 
+#### `--exclude|-x`
+
+Comma separated list of sniff codes to exclude from checking
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `''`
+
 #### `--help|-h`
 
 Display help for the given command. When no command is given display help for the list command

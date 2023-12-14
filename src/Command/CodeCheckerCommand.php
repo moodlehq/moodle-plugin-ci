@@ -39,6 +39,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
             ->setAliases(['codechecker'])
             ->setDescription('Run Moodle CodeSniffer standard on a plugin')
             ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle')
+            ->addOption('exclude', 'x', InputOption::VALUE_REQUIRED, 'Comma separated list of sniff codes to exclude from checking', '')
             ->addOption('max-warnings', null, InputOption::VALUE_REQUIRED,
                 'Number of warnings to trigger nonzero exit code - default: -1', -1)
             ->addOption('test-version', null, InputOption::VALUE_REQUIRED,
@@ -77,13 +78,15 @@ class CodeCheckerCommand extends AbstractPluginCommand
         }
         // @codeCoverageIgnoreEnd
 
-        $cmd = array_merge($basicCMD, [
+        $exclude = $input->getOption('exclude');
+        $cmd     = array_merge($basicCMD, [
             '--standard=' . ($input->getOption('standard') ?: 'moodle'),
             '--extensions=php',
             '-p',
             '-w',
             '-s',
             '--no-cache',
+            empty($exclude) ? '' : ('--exclude=' . $exclude),
             $output->isDecorated() ? '--colors' : '--no-colors',
             '--report-full',
             '--report-width=132',
