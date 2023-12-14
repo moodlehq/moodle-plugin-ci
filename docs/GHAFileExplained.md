@@ -142,7 +142,7 @@ jobs:
         if: ${{ !cancelled() }} # prevents CI run stopping if step failed.
         run: moodle-plugin-ci phplint
 
-      - name: PHP Copy/Paste Detector
+      - name: PHP Copy/Paste Detector # DEPRECATED
         continue-on-error: true # This step will show errors but will not fail
         if: ${{ !cancelled() }}
         run: moodle-plugin-ci phpcpd

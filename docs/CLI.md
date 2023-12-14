@@ -19,7 +19,7 @@ title: Moodle Plugin CI Commands
 * [`mustache`](#mustache)
 * [`parallel`](#parallel)
 * [`phpcbf`](#phpcbf)
-* [`phpcpd`](#phpcpd)
+* [`phpcpd` (DEPRECATED)](#phpcpd)
 * [`phpcs`](#phpcs)
 * [`phpdoc`](#phpdoc)
 * [`phplint`](#phplint)
@@ -1485,7 +1485,15 @@ Do not ask any interactive question
 `phpcpd`
 --------
 
-Run PHP Copy/Paste Detector on a plugin
+Run PHP Copy/Paste Detector on a plugin.
+
+### Deprecation Notice
+
+[PHP Copy/Paste Detector](https://github.com/sebastianbergmann/phpcpd) has been abandoned by its maintainers.
+
+The integration with it will be removed without replacement from future versions of this plugin.
+
+_Usage of the `phpcpd` command is discouraged._
 
 ### Usage
 

@@ -23,6 +23,8 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Run PHP Copy/Paste Detector on a plugin.
+ *
+ * @deprecated
  */
 class CopyPasteDetectorCommand extends AbstractPluginCommand
 {
@@ -31,7 +33,7 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
         parent::configure();
 
         $this->setName('phpcpd')
-            ->setDescription('Run PHP Copy/Paste Detector on a plugin');
+            ->setDescription('Run PHP Copy/Paste Detector on a plugin (DEPRECATED)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
