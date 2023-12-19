@@ -9,8 +9,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## [4.3.0] - 2023-12-19
 ### Added
+- Added [Moodle App](MoodleApp.md) Behat testing support.
 - Added support for the `--exclude` option to the `phpcs` command.
+
+### Changed
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci](https://github.com/moodlehq/moodle-local_ci) versions.
 
 ## [4.2.0] - 2023-11-30
 ### Added
@@ -28,9 +33,6 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
   To avoid that problem, it's recommended to to add the `libonig5` package to the `travis.yml` file. For a working example, please reference the updated `.travis.dist.yml`file.
 - Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs) and [moodle-local_moodlecheck](https://github.com/moodlehq/moodle-local_moodlecheck) versions.
-
-### Added
-- Support and document usage with the [Moodle App](MoodleApp.md).
 
 ## [4.1.8] - 2023-10-20
 ### Changed
@@ -625,7 +627,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.2.0...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.0...main
+[4.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.8...4.2.0
 [4.1.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.7...4.1.8
 [4.1.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.6...4.1.7
