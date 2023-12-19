@@ -55,8 +55,8 @@
   ],
   "require": {
     "php": ">=7.4",
-    "moodlehq/moodle-cs": "^v3.3.11",
-    "moodlehq/moodle-local_ci": "^1.0.25",
+    "moodlehq/moodle-cs": "^v3.3.12",
+    "moodlehq/moodle-local_ci": "^1.0.26",
     "moodlehq/moodle-local_moodlecheck": "^1.2.0",
     "sebastian/phpcpd": "^6.0.3",
     "sebastian/version": "^3.0.2",
@@ -73,7 +73,7 @@
     "psr/log": "^1.1.4",
     "nikic/php-parser": "^4.14",
     "marcj/topsort": "^2.0.0",
-    "phpcompatibility/php-compatibility": "dev-develop#0a17f9ed",
+    "phpcompatibility/php-compatibility": "dev-develop#306cd263",
     "laravel-zero/phar-updater": "^1.0.0"
   },
   "require-dev": {

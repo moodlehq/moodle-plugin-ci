@@ -1572,7 +1572,7 @@ Run Moodle CodeSniffer standard on a plugin
 
 ### Usage
 
-* `phpcs [-s|--standard STANDARD] [--max-warnings MAX-WARNINGS] [--test-version TEST-VERSION] [--] <plugin>`
+* `phpcs [-s|--standard STANDARD] [-x|--exclude EXCLUDE] [--max-warnings MAX-WARNINGS] [--test-version TEST-VERSION] [--] <plugin>`
 * `codechecker`
 
 Run Moodle CodeSniffer standard on a plugin
@@ -1599,6 +1599,16 @@ The name or path of the coding standard to use
 * Is negatable: no
 * Default: `'moodle'`
 
+#### `--exclude|-x`
+
+Comma separated list of sniff codes to exclude from checking
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `''`
+
 #### `--max-warnings`
 
 Number of warnings to trigger nonzero exit code - default: -1
@@ -1618,16 +1628,6 @@ Version or range of version to test with PHPCompatibility
 * Is multiple: no
 * Is negatable: no
 * Default: `0`
-
-#### `--exclude|-x`
-
-Comma separated list of sniff codes to exclude from checking
-
-* Accept value: yes
-* Is value required: yes
-* Is multiple: no
-* Is negatable: no
-* Default: `''`
 
 #### `--help|-h`
 
