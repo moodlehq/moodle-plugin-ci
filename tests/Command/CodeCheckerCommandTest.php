@@ -220,6 +220,39 @@ EOT;
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
+    public function testExecuteWithTodoCommentRegex()
+    {
+        // Let's add a file with some comments having links and some without
+        $content = <<<'EOT'
+            <?php
+            // phpcs:disable moodle.Files.BoilerplateComment
+            // Without any CUSTOM-[0-9]+ reference.
+
+            // TODO: This is the simplest TODO comment.
+            /** @todo This is also the simplest, but within a phpdoc block */
+            // With a CUSTOM-[0-9]+ reference.
+
+            // TODO: This is the simplest TODO comment. CUSTOM-123.
+            /** @todo This is also the simplest, but within a phpdoc block. CUSTOM-123 */
+
+            EOT;
+
+        $this->fs->dumpFile($this->pluginDir . '/test_comment_todos.php', $content);
+
+        // Without any regex configured.
+        $commandTester = $this->executeCommand($this->pluginDir);
+        $output        = $commandTester->getDisplay();
+        $this->assertMatchesRegularExpression('/\.{10} 10 \/ 10 \(100%\)/', $output);
+        $this->assertSame(0, $commandTester->getStatusCode());
+
+        // With a "CUSTOM-[0-9]+" regex configured.
+        $commandTester = $this->executeCommand($this->pluginDir, ['--todo-comment-regex' => 'CUSTOM-[0-9]+']);
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 2 WARNINGS AFFECTING 2 LINES/', $output);
+        $this->assertMatchesRegularExpression('/Missing required "CUSTOM-\[0-9\]\+"/', $output);
+    }
+
     public function testExecuteNoFiles()
     {
         // Just random directory with no PHP files.
