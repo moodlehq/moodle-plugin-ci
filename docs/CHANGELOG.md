@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## [4.3.1] - 2024-01-19
 ### Added
 - Added support for the `--todo-comment-regex` option to the `phpcs` command. When specified, all the todo comments (`TODO` and `@todo`) are inspected to ensure that they contain some text matching the regular expression (a tracker issue key: `MDL-[0-9]+`, a link to GitHub: `github.com/moodle/moodle/pull/[0-9]+`, ... or any other valid alternative).
 
@@ -633,7 +634,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.0...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.1...main
+[4.3.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.0...4.3.1
 [4.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.8...4.2.0
 [4.1.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.1.7...4.1.8
