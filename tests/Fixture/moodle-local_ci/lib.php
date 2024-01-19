@@ -22,6 +22,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// TODO: This todo comment without any MDL link is good for moodle-plugin-ci
+// (because, by default, the moodle.Commenting.TodoComment Sniff
+// isn't checked - empty todo-comment-regex option is applied). But if it's
+// set then can check for anything, like CUSTOM-123 or https://github.com
+// or whatever.
+
 /**
  * Add
  *

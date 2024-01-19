@@ -43,7 +43,9 @@ class CodeCheckerCommand extends AbstractPluginCommand
             ->addOption('max-warnings', null, InputOption::VALUE_REQUIRED,
                 'Number of warnings to trigger nonzero exit code - default: -1', -1)
             ->addOption('test-version', null, InputOption::VALUE_REQUIRED,
-                'Version or range of version to test with PHPCompatibility', 0);
+                'Version or range of version to test with PHPCompatibility', 0)
+            ->addOption('todo-comment-regex', null, InputOption::VALUE_REQUIRED,
+                'Regex to use to match TODO/@todo comments', '');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -79,6 +81,7 @@ class CodeCheckerCommand extends AbstractPluginCommand
         // @codeCoverageIgnoreEnd
 
         $exclude = $input->getOption('exclude');
+
         $cmd     = array_merge($basicCMD, [
             '--standard=' . ($input->getOption('standard') ?: 'moodle'),
             '--extensions=php',
@@ -108,6 +111,13 @@ class CodeCheckerCommand extends AbstractPluginCommand
         if (!empty($testVersion)) {
             array_push($cmd, '--runtime-set', 'testVersion', $testVersion);
         }
+
+        // Set the regex to use to match TODO/@todo comments.
+        // Note that the option defaults to an empty string,
+        // meaning that no checks will be performed. Configure it
+        // to a valid regex ('MDL-[0-9]+', 'https:', ...) to enable the checks.
+        $todoCommentRegex = $input->getOption('todo-comment-regex');
+        array_push($cmd, '--runtime-set', 'moodleTodoCommentRegex', $todoCommentRegex);
 
         // Add the files to process.
         foreach ($files as $file) {
