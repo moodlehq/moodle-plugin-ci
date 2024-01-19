@@ -55,8 +55,8 @@
   ],
   "require": {
     "php": ">=7.4",
-    "moodlehq/moodle-cs": "^v3.3.12",
-    "moodlehq/moodle-local_ci": "^1.0.26",
+    "moodlehq/moodle-cs": "^v3.3.13",
+    "moodlehq/moodle-local_ci": "^1.0.27",
     "moodlehq/moodle-local_moodlecheck": "^1.2.0",
     "sebastian/phpcpd": "^6.0.3",
     "sebastian/version": "^3.0.2",
@@ -80,7 +80,7 @@
     "phpunit/phpunit": "^9.6",
     "mockery/mockery": "^1.5.0",
     "friendsofphp/php-cs-fixer": "^3.4.0",
-    "vimeo/psalm": "^5.4.0"
+    "vimeo/psalm": "^5.18.0"
   },
   "config": {
     "platform": {
