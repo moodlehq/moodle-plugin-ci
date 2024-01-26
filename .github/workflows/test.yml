@@ -32,7 +32,7 @@ jobs:
 
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup PHP 7.4
       uses: shivammathur/setup-php@v2
@@ -166,7 +166,7 @@ jobs:
         php build/moodle-plugin-ci.phar list
 
     - name: Upload PHAR artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: moodle-plugin-ci.phar
         path: build/moodle-plugin-ci.phar
@@ -226,7 +226,7 @@ jobs:
         echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
 
     - name: Download PHAR artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: moodle-plugin-ci.phar
         path: build
