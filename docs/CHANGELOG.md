@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated all uses of `actions/checkout` from `v3` (using node 16) to `v4` (using node 20), because [actions using node 16 are deprecated](https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/) and will stop working in the future.
+* ACTION SUGGESTED: In order to avoid the node 16 deprecation warnings, update your workflows to use `actions/checkout@v4`.
+
 ## [4.3.2] - 2024-01-26
 ### Changed
 - Modified internal CI scripts towards better Codecov future support.
