@@ -11,4 +11,7 @@
       <directory suffix=".php">./src/</directory>
     </include>
   </coverage>
+  <php>
+    <const name="PHPUNIT_TEST" value="true"/>
+  </php>
 </phpunit>
