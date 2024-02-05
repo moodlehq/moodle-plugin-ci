@@ -23,6 +23,8 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Run PHP Copy/Paste Detector on a plugin.
+ *
+ * @deprecated Since 4.4.0, to be removed in 5.0.0. No replacement is planned.
  */
 class CopyPasteDetectorCommand extends AbstractPluginCommand
 {
@@ -31,11 +33,25 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
         parent::configure();
 
         $this->setName('phpcpd')
-            ->setDescription('Run PHP Copy/Paste Detector on a plugin');
+            ->setDescription('Run PHP Copy/Paste Detector on a plugin (**DEPRECATED**)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (!defined('PHPUNIT_TEST')) { // Only show deprecation warnings in non-test environments.
+            trigger_deprecation(
+                'moodle-plugin-ci',
+                '4,4,0',
+                'The "%s" command is deprecated and will be removed in %s. No replacement is planned.',
+                $this->getName(),
+                '5.0.0'
+            );
+            if (getenv('GITHUB_ACTIONS')) { // Only show deprecation annotations in GitHub Actions.
+                echo '::warning title=Deprecated command::The phpcpd command ' .
+                    'is deprecated and will be removed in 5.0.0. No replacement is planned.' . PHP_EOL;
+            }
+        }
+
         $timer = new Timer();
         $timer->start();
 

@@ -1485,13 +1485,13 @@ Do not ask any interactive question
 `phpcpd`
 --------
 
-Run PHP Copy/Paste Detector on a plugin
+Run PHP Copy/Paste Detector on a plugin (**DEPRECATED**)
 
 ### Usage
 
 * `phpcpd <plugin>`
 
-Run PHP Copy/Paste Detector on a plugin
+Run PHP Copy/Paste Detector on a plugin (**DEPRECATED**)
 
 ### Arguments
 

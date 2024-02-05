@@ -131,6 +131,7 @@ script:
   - moodle-plugin-ci phplint
 # This step runs the PHP Copy/Paste Detector on your plugin.
 # This helps to find code duplication.
+# (DEPRECATED)
   - moodle-plugin-ci phpcpd
 # This step runs the PHP Mess Detector on your plugin. This helps to find
 # potential problems with your code which can result in
