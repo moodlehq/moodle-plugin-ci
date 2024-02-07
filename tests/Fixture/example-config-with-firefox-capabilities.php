@@ -45,7 +45,7 @@ $CFG->behat_profiles      = [
     'default' => [
         'browser'      => 'firefox',
         'wd_host'      => 'http://localhost:4444/wd/hub',
-        'capabilities' => [],
+        'capabilities' => ['extra_capabilities'=>['firefoxOptions'=>['args'=>['-headless']]]],
     ],
     'chrome' => [
         'browser'      => 'chrome',
@@ -55,7 +55,7 @@ $CFG->behat_profiles      = [
     'firefox' => [
         'browser'      => 'firefox',
         'wd_host'      => 'http://localhost:4444/wd/hub',
-        'capabilities' => [],
+        'capabilities' => ['extra_capabilities'=>['firefoxOptions'=>['args'=>['-headless']]]],
     ],
 ];
 
