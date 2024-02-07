@@ -62,6 +62,17 @@ class InstallCommand extends Command
         $extra  = getenv('EXTRA_PLUGINS_DIR') !== false ? getenv('EXTRA_PLUGINS_DIR') : null;
         $node   = getenv('NODE_VERSION') !== false ? getenv('NODE_VERSION') : null;
 
+        // Emit a warning/annotation under GHA if the branch is master (recommending to move to main).
+        // @codeCoverageIgnoreStart
+        if (getenv('GITHUB_ACTIONS')) { // Only show annotations in GitHub Actions.
+            if ($branch === 'master') { // And only if the branch being used is master.
+                echo '::warning title=`master` branch use detected::The `master` branch of Moodle has been ' .
+                    'moved to `main` and will stop working soon. Please consider moving to `main` in your ' .
+                    'workflows. Ref.: MDLSITE-7418' . PHP_EOL;
+            }
+        }
+        // @codeCoverageIgnoreEnd
+
         // As there is not only Travis CI, it can also be passed a generic environment variable.
         if (null === $plugin) {
             $plugin = getenv('CI_BUILD_DIR') !== false ? getenv('CI_BUILD_DIR') : null;

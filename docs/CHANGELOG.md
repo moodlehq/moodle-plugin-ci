@@ -9,14 +9,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-
 ### Changed
 - Updated all uses of `actions/checkout` from `v3` (using node 16) to `v4` (using node 20), because [actions using node 16 are deprecated](https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/) and will stop working in the future.
-* ACTION SUGGESTED: In order to avoid the node 16 deprecation warnings, update your workflows to use `actions/checkout@v4`.
+- ACTION SUGGESTED: In order to avoid the node 16 deprecation warnings, update your workflows to use `actions/checkout@v4`.
 
 ### Deprecated
 - The `phpcpd` command (that uses the [PHP Copy/Paste Detector](https://github.com/sebastianbergmann/phpcpd), now abandoned) has been deprecated in this `moodle-plugin-ci` release (4.4.0) and will be removed in 5.0.0. No replacement is planned.
 - ACTION SUGGESTED: In order to avoid deprecation warnings or annotations, proceed to remove this command from your workflows. Note that any use will throw an error in the next major release (5.0.0).
+- The `master` branch of Moodle upstream repositories has been moved to `main` and will stop working soon (see [MDLSITE-7418](https://tracker.moodle.org/browse/MDLSITE-7418) for details). GitHub workflows will start emitting warnings/annotations when uses of the `master` branch are detected.
+- ACTION SUGGESTED: In order to avoid deprecation warnings or annotations, proceed to replace `master` by `main` in your workflows. Note that any use of the former (to be removed) will throw an error in the future.
 
 ## [4.3.2] - 2024-01-26
 ### Changed
