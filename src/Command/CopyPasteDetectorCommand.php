@@ -38,6 +38,7 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // @codeCoverageIgnoreStart
         if (!defined('PHPUNIT_TEST')) { // Only show deprecation warnings in non-test environments.
             trigger_deprecation(
                 'moodle-plugin-ci',
@@ -51,6 +52,7 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
                     'is deprecated and will be removed in 5.0.0. No replacement is planned.' . PHP_EOL;
             }
         }
+        // @codeCoverageIgnoreEnd
 
         $timer = new Timer();
         $timer->start();
