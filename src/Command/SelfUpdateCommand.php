@@ -93,13 +93,17 @@ class SelfUpdateCommand extends Command
     }
 
     /**
+     * Calculate the full path where the old PHAR file will be backup (to be able to roll back to it).
+     *
+     * @param string|null $directory the directory where the backup will be stored
+     *
      * @return string
      */
-    protected function getBackupPath(): string
+    protected function getBackupPath(?string $directory = null): string
     {
-        $directory = getenv('HOME');
+        $directory = $directory ?? getenv('HOME'); // Default to $HOME as base directory if not provided.
         if (empty($directory) || !is_dir($directory)) {
-            throw new \RuntimeException('Your $HOME enviroment variable is either not set or is not a directory');
+            throw new \RuntimeException("The {$directory} path is not an existing directory");
         }
         $directory .= '/.moodle-plugin-ci';
 
