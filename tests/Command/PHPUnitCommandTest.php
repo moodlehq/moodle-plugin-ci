@@ -45,7 +45,10 @@ class PHPUnitCommandTest extends MoodleTestCase
             $cmdOptions
         );
         $commandTester->execute($cmdOptions);
-        $this->lastCmd = $command->execute->lastCmd; // We need this for assertions against the command run.
+
+        // We need these for assertions against the commands run.
+        $this->allCmds = $command->execute->allCmds;
+        $this->lastCmd = $command->execute->lastCmd;
 
         return $commandTester;
     }

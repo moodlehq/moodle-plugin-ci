@@ -241,7 +241,7 @@ Run Behat on a plugin
 
 ### Usage
 
-* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--tags TAGS] [--name NAME] [--start-servers] [--auto-rerun AUTO-RERUN] [--dump] [--] <plugin>`
+* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--tags TAGS] [--name NAME] [--start-servers] [--auto-rerun AUTO-RERUN] [--selenium SELENIUM] [--dump] [--] <plugin>`
 
 Run Behat on a plugin
 
@@ -326,6 +326,16 @@ Number of times to rerun failures
 * Is multiple: no
 * Is negatable: no
 * Default: `2`
+
+#### `--selenium`
+
+Selenium Docker image
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `NULL`
 
 #### `--dump`
 

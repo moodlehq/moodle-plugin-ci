@@ -26,25 +26,6 @@ class BehatCommand extends AbstractMoodleCommand
     use ExecuteTrait;
 
     /**
-     * Selenium legacy Firefox image.
-     */
-    private string $seleniumLegacyFirefoxImage = 'selenium/standalone-firefox:2.53.1';
-
-    /**
-     * Selenium standalone Firefox image.
-     *
-     * @todo: Make this configurable.
-     */
-    private string $seleniumFirefoxImage = 'selenium/standalone-firefox:3';
-
-    /**
-     * Selenium standalone Chrome image.
-     *
-     * @todo: Make this configurable.
-     */
-    private string $seleniumChromeImage = 'selenium/standalone-chrome:3';
-
-    /**
      * Wait this many microseconds for Selenium server to start/stop.
      *
      * @var int<0,max>
@@ -65,6 +46,7 @@ class BehatCommand extends AbstractMoodleCommand
             ->addOption('name', null, InputOption::VALUE_REQUIRED, 'Behat name option to use', '')
             ->addOption('start-servers', null, InputOption::VALUE_NONE, 'Start Selenium and PHP servers')
             ->addOption('auto-rerun', null, InputOption::VALUE_REQUIRED, 'Number of times to rerun failures', 2)
+            ->addOption('selenium', null, InputOption::VALUE_REQUIRED, 'Selenium Docker image')
             ->addOption('dump', null, InputOption::VALUE_NONE, 'Print contents of Behat failure HTML files')
             ->setDescription('Run Behat on a plugin');
     }
@@ -150,13 +132,7 @@ class BehatCommand extends AbstractMoodleCommand
             $profile = getenv('MOODLE_BEHAT_DEFAULT_BROWSER') ?: (getenv('MOODLE_APP') ? 'chrome' : 'firefox');
         }
 
-        if ($profile === 'chrome') {
-            $image = $this->seleniumChromeImage;
-        } elseif ($this->usesLegacyPhpWebdriver()) {
-            $image = $this->seleniumLegacyFirefoxImage;
-        } else {
-            $image = $this->seleniumFirefoxImage;
-        }
+        $image = $this->getSeleniumImage($input, $profile);
 
         $cmd = [
             'docker',
@@ -225,5 +201,24 @@ class BehatCommand extends AbstractMoodleCommand
         $composerlock = "{$this->moodle->directory}/composer.lock";
 
         return strpos(file_get_contents($composerlock), 'instaclick/php-webdriver') !== false;
+    }
+
+    private function getSeleniumImage(InputInterface $input, string $profile): string
+    {
+        $image = $input->getOption('selenium') ?: getenv('MOODLE_BEHAT_SELENIUM_IMAGE');
+
+        if (!empty($image)) {
+            return $image;
+        }
+
+        if ($profile === 'chrome') {
+            return 'selenium/standalone-chrome:3';
+        }
+
+        if ($this->usesLegacyPhpWebdriver()) {
+            return 'selenium/standalone-firefox:2.53.1';
+        }
+
+        return 'selenium/standalone-firefox:3';
     }
 }
