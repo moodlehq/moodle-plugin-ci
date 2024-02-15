@@ -50,7 +50,7 @@ $CFG->behat_profiles      = [
     'chrome' => [
         'browser'      => 'chrome',
         'wd_host'      => 'http://localhost:4444/wd/hub',
-        'capabilities' => [],
+        'capabilities' => ['extra_capabilities'=>['chromeOptions'=>['args'=>['--ignore-certificate-errors','--allow-running-insecure-content']]]],
     ],
     'firefox' => [
         'browser'      => 'firefox',

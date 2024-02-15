@@ -32,25 +32,31 @@ class MoodleConfig
      */
     public function createContents(AbstractDatabase $database, string $dataDir): string
     {
-        $template  = file_get_contents(__DIR__ . '/../../res/template/config.php.txt');
-        $variables = [
-            '{{DBTYPE}}'              => $database->type,
-            '{{DBLIBRARY}}'           => $database->library,
-            '{{DBHOST}}'              => $database->host,
-            '{{DBPORT}}'              => $database->port,
-            '{{DBNAME}}'              => $database->name,
-            '{{DBUSER}}'              => $database->user,
-            '{{DBPASS}}'              => $database->pass,
-            '{{WWWROOT}}'             => 'http://localhost/moodle',
-            '{{DATAROOT}}'            => $dataDir,
-            '{{PHPUNITDATAROOT}}'     => $dataDir . '/phpu_moodledata',
-            '{{BEHATDATAROOT}}'       => $dataDir . '/behat_moodledata',
-            '{{BEHATDUMP}}'           => $dataDir . '/behat_dump',
-            '{{BEHATWWWROOT}}'        => getenv('MOODLE_BEHAT_WWWROOT') ?: 'http://localhost:8000',
-            '{{BEHATWDHOST}}'         => getenv('MOODLE_BEHAT_WDHOST') ?: 'http://localhost:4444/wd/hub',
-            '{{BEHATDEFAULTBROWSER}}' => getenv('MOODLE_BEHAT_DEFAULT_BROWSER') ?: (getenv('MOODLE_APP') ? 'chrome' : 'firefox'),
-            '{{BEHATIONICWWWROOT}}'   => getenv('MOODLE_APP') ? 'http://localhost:8100' : (getenv('MOODLE_BEHAT_IONIC_WWWROOT') ?: ''),
-            '{{EXTRACONFIG}}'         => self::PLACEHOLDER,
+        $template                 = file_get_contents(__DIR__ . '/../../res/template/config.php.txt');
+        $behatdefaultbrowser      = getenv('MOODLE_BEHAT_DEFAULT_BROWSER') ?: (getenv('MOODLE_APP') ? 'chrome' : 'firefox');
+        $behatchromecapabilities  = getenv('MOODLE_BEHAT_CHROME_CAPABILITIES') ?: '[]';
+        $behatfirefoxcapabilities = getenv('MOODLE_BEHAT_FIREFOX_CAPABILITIES') ?: '[]';
+        $variables                = [
+            '{{DBTYPE}}'                   => $database->type,
+            '{{DBLIBRARY}}'                => $database->library,
+            '{{DBHOST}}'                   => $database->host,
+            '{{DBPORT}}'                   => $database->port,
+            '{{DBNAME}}'                   => $database->name,
+            '{{DBUSER}}'                   => $database->user,
+            '{{DBPASS}}'                   => $database->pass,
+            '{{WWWROOT}}'                  => 'http://localhost/moodle',
+            '{{DATAROOT}}'                 => $dataDir,
+            '{{PHPUNITDATAROOT}}'          => $dataDir . '/phpu_moodledata',
+            '{{BEHATDATAROOT}}'            => $dataDir . '/behat_moodledata',
+            '{{BEHATDUMP}}'                => $dataDir . '/behat_dump',
+            '{{BEHATWWWROOT}}'             => getenv('MOODLE_BEHAT_WWWROOT') ?: 'http://localhost:8000',
+            '{{BEHATWDHOST}}'              => getenv('MOODLE_BEHAT_WDHOST') ?: 'http://localhost:4444/wd/hub',
+            '{{BEHATDEFAULTBROWSER}}'      => $behatdefaultbrowser,
+            '{{BEHATIONICWWWROOT}}'        => getenv('MOODLE_APP') ? 'http://localhost:8100' : (getenv('MOODLE_BEHAT_IONIC_WWWROOT') ?: ''),
+            '{{BEHATDEFAULTCAPABILITIES}}' => $behatdefaultbrowser === 'chrome' ? $behatchromecapabilities : $behatfirefoxcapabilities,
+            '{{BEHATCHROMECAPABILITIES}}'  => $behatchromecapabilities,
+            '{{BEHATFIREFOXCAPABILITIES}}' => $behatfirefoxcapabilities,
+            '{{EXTRACONFIG}}'              => self::PLACEHOLDER,
         ];
 
         return str_replace(array_keys($variables), array_values($variables), $template);

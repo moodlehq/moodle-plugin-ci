@@ -12,6 +12,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Added
 - `--selenium` option or `MOODLE_BEHAT_SELENIUM_IMAGE` env variable to `behat` to specify Selenium Docker image.
+- `MOODLE_BEHAT_CHROME_CAPABILITIES` and `MOODLE_BEHAT_FIREFOX_CAPABILITIES` env variables to configure additional browser capabilities.
 
 ### Changed
 - Updated all uses of `actions/checkout` from `v3` (using node 16) to `v4` (using node 20), because [actions using node 16 are deprecated](https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/) and will stop working in the future.

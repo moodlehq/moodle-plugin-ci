@@ -18,12 +18,38 @@ use MoodlePluginCI\Tests\FilesystemTestCase;
 
 class MoodleConfigTest extends FilesystemTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        putenv('MOODLE_BEHAT_CHROME_CAPABILITIES=');
+        putenv('MOODLE_BEHAT_FIREFOX_CAPABILITIES=');
+    }
+
     public function testCreateContents()
     {
         $config   = new MoodleConfig();
         $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
 
         $this->assertSame(file_get_contents(__DIR__ . '/../Fixture/example-config.php'), $contents);
+    }
+
+    public function testConfigureChromeBrowserCapabilities()
+    {
+        putenv("MOODLE_BEHAT_CHROME_CAPABILITIES=['extra_capabilities'=>['chromeOptions'=>['args'=>['--ignore-certificate-errors','--allow-running-insecure-content']]]]");
+        $config   = new MoodleConfig();
+        $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
+
+        $this->assertSame(file_get_contents(__DIR__ . '/../Fixture/example-config-with-chrome-capabilities.php'), $contents);
+    }
+
+    public function testConfigureFirefoxBrowserCapabilities()
+    {
+        putenv("MOODLE_BEHAT_FIREFOX_CAPABILITIES=['extra_capabilities'=>['firefoxOptions'=>['args'=>['-headless']]]]");
+        $config   = new MoodleConfig();
+        $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
+
+        $this->assertSame(file_get_contents(__DIR__ . '/../Fixture/example-config-with-firefox-capabilities.php'), $contents);
     }
 
     public function testInjectLineIntoConfig()
