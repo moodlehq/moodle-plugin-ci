@@ -9,14 +9,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-
+## [4.4.0] - 2024-02-16
 ### Added
-- `--selenium` option or `MOODLE_BEHAT_SELENIUM_IMAGE` env variable to `behat` to specify Selenium Docker image.
-- `MOODLE_BEHAT_CHROME_CAPABILITIES` and `MOODLE_BEHAT_FIREFOX_CAPABILITIES` env variables to configure additional browser capabilities.
+- New `--selenium` option or `MOODLE_BEHAT_SELENIUM_IMAGE` env variable to the `behat` command, to be able to specify the Selenium Docker image to use (defaults apply if not specified).
+- New `MOODLE_BEHAT_CHROME_CAPABILITIES` and `MOODLE_BEHAT_FIREFOX_CAPABILITIES` env variables to configure additional browser capabilities (they will be needed - internally - soon, to allow the command to perform some special behat runs).
+- Extend own CI tests to cover:
+    - PHP 8.3 (all tests).
+    - `selfupdate` PHAR command (unit and integration tests).
 
 ### Changed
 - Updated all uses of `actions/checkout` from `v3` (using node 16) to `v4` (using node 20), because [actions using node 16 are deprecated](https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/) and will stop working in the future.
-- ACTION SUGGESTED: In order to avoid the node 16 deprecation warnings, update your workflows to use `actions/checkout@v4`.
+- ACTION SUGGESTED: In order to avoid the node 16 deprecation warnings, update your workflows to use `actions/checkout@v4`. Note: the same may apply to other actions being used in your workflows (check your latest runs).
+- Updated project dependencies to current [moodle-cs](https://github.com/moodlehq/moodle-cs).
 
 ### Deprecated
 - The `phpcpd` command (that uses the [PHP Copy/Paste Detector](https://github.com/sebastianbergmann/phpcpd), now abandoned) has been deprecated in this `moodle-plugin-ci` release (4.4.0) and will be removed in 5.0.0. No replacement is planned.
@@ -654,7 +658,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.2...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.0...main
+[4.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.2...4.4.0
 [4.3.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.1...4.3.2
 [4.3.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.0...4.3.1
 [4.3.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.2.0...4.3.0
