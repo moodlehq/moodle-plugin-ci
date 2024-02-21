@@ -46,7 +46,7 @@ before_install:
     fi
 
 install:
-  - MOODLE_APP=true moodle-plugin-ci install -vvv
+  - moodle-plugin-ci install -vvv
 
 script:
   # This is basically "integration" testing.
@@ -91,10 +91,14 @@ jobs:
       if: env(MOODLE_BRANCH) IS present
     # Only main with highest supported PHP version.
     - php: 8.3
-      env: MOODLE_BRANCH=main
+      env:
+        - MOODLE_BRANCH=main
+        - MOODLE_APP=true
     # Last stable with highest supported PHP version.
     - php: 8.3
-      env: MOODLE_BRANCH=MOODLE_404_STABLE
+      env:
+        - MOODLE_BRANCH=MOODLE_404_STABLE
+        - MOODLE_APP=true
     # And older stable supported (with lowest supported PHP version).
     - php: 7.4
       env: MOODLE_BRANCH=MOODLE_39_STABLE

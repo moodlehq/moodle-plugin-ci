@@ -39,6 +39,7 @@ class MoodleAppInstaller extends AbstractInstaller
         $this->getOutput()->step('Launch Moodle App docker image');
 
         $image = getenv('MOODLE_APP_DOCKER_IMAGE') ?: 'moodlehq/moodleapp:latest-test';
+        $port  = getenv('MOODLE_APP_PORT') ?: '443';
 
         $this->execute->mustRun([
             'docker',
@@ -47,7 +48,7 @@ class MoodleAppInstaller extends AbstractInstaller
             '--rm',
             '--name=moodleapp',
             '-p',
-            '8100:80',
+            "8100:$port",
             $image,
         ]);
 
