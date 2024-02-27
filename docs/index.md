@@ -94,7 +94,7 @@ $ php composer.phar create-project moodlehq/moodle-plugin-ci ../moodle-plugin-ci
 Once installed, you can run most of its commands to validate your code, e.g.
 
 ```
-$ ../moodlepluginci/bin/moodle-plugin-ci mustache ./mod/forum/
+$ ../moodle-plugin-ci/bin/moodle-plugin-ci mustache ./mod/forum/
  RUN  Mustache Lint on mod_forum
 /home/ruslan/git/moodledev/mod/forum/templates/quick_search_form.mustache - OK: Mustache rendered html succesfully
 /home/ruslan/git/moodledev/mod/forum/templates/single_discussion_list.mustache - OK: Mustache rendered html succesfully
