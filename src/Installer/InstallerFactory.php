@@ -33,8 +33,8 @@ class InstallerFactory
     public ConfigDumper $dumper;
     public ?string $pluginsDir;
     public bool $noInit;
+    public bool $noPluginNode;
     public ?string $nodeVer;
-    public ?string $ignoreNpmDependencies;
 
     /**
      * Given a big bag of install options, add installers to the collection.
@@ -52,7 +52,7 @@ class InstallerFactory
         }
 
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->pluginsDir, $this->dumper));
-        $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute, $this->nodeVer, $this->ignoreNpmDependencies));
+        $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute, $this->noPluginNode, $this->nodeVer));
 
         if ($this->noInit) {
             return;

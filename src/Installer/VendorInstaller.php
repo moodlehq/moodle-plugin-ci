@@ -25,8 +25,8 @@ class VendorInstaller extends AbstractInstaller
     private Moodle $moodle;
     private MoodlePlugin $plugin;
     private Execute $execute;
+    private bool $noPluginNode;
     public ?string $nodeVer;
-    private ?string $ignoreNpmDependencies;
     /**
      * Define legacy Node version to use when .nvmrc is absent (Moodle < 3.5).
      */
@@ -38,13 +38,13 @@ class VendorInstaller extends AbstractInstaller
      * @param Execute      $execute
      * @param string|null  $nodeVer
      */
-    public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute, ?string $nodeVer, ?string $ignoreNpmDependencies)
+    public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute, bool $noPluginNode, ?string $nodeVer)
     {
-        $this->moodle  = $moodle;
-        $this->plugin  = $plugin;
-        $this->execute = $execute;
-        $this->nodeVer = $nodeVer;
-        $this->ignoreNpmDependencies = $ignoreNpmDependencies;
+        $this->moodle       = $moodle;
+        $this->plugin       = $plugin;
+        $this->execute      = $execute;
+        $this->nodeVer      = $nodeVer;
+        $this->noPluginNode = $noPluginNode;
     }
 
     public function install(): void
@@ -65,12 +65,13 @@ class VendorInstaller extends AbstractInstaller
 
         $this->execute->mustRunAll($processes);
 
-        $this->getOutput()->step('Install npm dependencies');
+        $this->getOutput()->step('Install Moodle npm dependencies');
 
         $this->execute->mustRun(
             Process::fromShellCommandline('npm install --no-progress', $this->moodle->directory, null, null, null)
         );
-        if (is_null($this->ignoreNpmDependencies) && $this->plugin->hasNodeDependencies()) {
+        if (!$this->noPluginNode && $this->plugin->hasNodeDependencies()) {
+            $this->getOutput()->step('Install plugin npm dependencies');
             $this->execute->mustRun(
                 Process::fromShellCommandline('npm install --no-progress', $this->plugin->directory, null, null, null)
             );
@@ -83,7 +84,9 @@ class VendorInstaller extends AbstractInstaller
 
     public function stepCount(): int
     {
-        return ($this->canInstallNode()) ? 3 : 2;
+        return 2 + // Normally 2 steps: global dependencies and Moodle npm dependencies.
+            ($this->canInstallNode() ? 1 : 0) + // Plus Node.js installation.
+            ((!$this->noPluginNode && $this->plugin->hasNodeDependencies()) ? 1 : 0); // Plus plugin npm dependencies step.
     }
 
     /**

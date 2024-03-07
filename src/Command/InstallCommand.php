@@ -102,8 +102,8 @@ class InstallCommand extends Command
             ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names)
             ->addOption('extra-plugins', null, InputOption::VALUE_REQUIRED, 'Directory of extra plugins to install', $extra)
             ->addOption('no-init', null, InputOption::VALUE_NONE, 'Prevent PHPUnit and Behat initialization')
-            ->addOption('node-version', null, InputOption::VALUE_REQUIRED, 'Node.js version to use for nvm install (this will override one defined in .nvmrc)', $node)
-            ->addOption('ignore-npm-dependencies', null, InputOption::VALUE_NONE, 'Does not execute npm install for the plugin');
+            ->addOption('no-plugin-node', null, InputOption::VALUE_NONE, 'Prevent Node.js plugin dependencies installation')
+            ->addOption('node-version', null, InputOption::VALUE_REQUIRED, 'Node.js version to use for nvm install (this will override one defined in .nvmrc)', $node);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -165,19 +165,19 @@ class InstallCommand extends Command
             $pluginsDir = realpath($validate->directory($pluginsDir));
         }
 
-        $factory             = new InstallerFactory();
-        $factory->moodle     = new Moodle($input->getOption('moodle'));
-        $factory->plugin     = new MoodlePlugin($pluginDir);
-        $factory->execute    = $this->execute;
-        $factory->repo       = $validate->gitUrl($input->getOption('repo'));
-        $factory->branch     = $validate->gitBranch($input->getOption('branch'));
-        $factory->dataDir    = $input->getOption('data');
-        $factory->dumper     = $this->initializePluginConfigDumper($input);
-        $factory->pluginsDir = $pluginsDir;
-        $factory->noInit     = $input->getOption('no-init');
-        $factory->nodeVer    = $input->getOption('node-version');
-        $factory->ignoreNpmDependencies = $input->getOption('ignore-npm-dependencies');
-        $factory->database   = $resolver->resolveDatabase(
+        $factory               = new InstallerFactory();
+        $factory->moodle       = new Moodle($input->getOption('moodle'));
+        $factory->plugin       = new MoodlePlugin($pluginDir);
+        $factory->execute      = $this->execute;
+        $factory->repo         = $validate->gitUrl($input->getOption('repo'));
+        $factory->branch       = $validate->gitBranch($input->getOption('branch'));
+        $factory->dataDir      = $input->getOption('data');
+        $factory->dumper       = $this->initializePluginConfigDumper($input);
+        $factory->pluginsDir   = $pluginsDir;
+        $factory->noInit       = $input->getOption('no-init');
+        $factory->noPluginNode = $input->getOption('no-plugin-node');
+        $factory->nodeVer      = $input->getOption('node-version');
+        $factory->database     = $resolver->resolveDatabase(
             $input->getOption('db-type'),
             $input->getOption('db-name'),
             $input->getOption('db-user'),
