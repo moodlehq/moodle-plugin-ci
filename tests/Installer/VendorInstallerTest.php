@@ -26,6 +26,7 @@ class VendorInstallerTest extends MoodleTestCase
             new DummyMoodle($this->moodleDir),
             new MoodlePlugin($this->pluginDir),
             new DummyExecute(),
+            false,
             null
         );
         $installer->install();
@@ -39,6 +40,7 @@ class VendorInstallerTest extends MoodleTestCase
             new DummyMoodle($this->moodleDir),
             new MoodlePlugin($this->pluginDir),
             new DummyExecute(),
+            false,
             null
         );
 
@@ -58,6 +60,7 @@ class VendorInstallerTest extends MoodleTestCase
             new DummyMoodle($this->moodleDir),
             new MoodlePlugin($this->pluginDir),
             new DummyExecute(),
+            false,
             $userVersion
         );
         $installer->installNode();
@@ -65,5 +68,39 @@ class VendorInstallerTest extends MoodleTestCase
         // Expect .nvmrc containing user specified version.
         $this->assertTrue(is_file($this->moodleDir . '/.nvmrc'));
         $this->assertSame($userVersion, file_get_contents($this->moodleDir . '/.nvmrc'));
+    }
+
+    public function testInstallNodePluginDependencies()
+    {
+        $installer = new VendorInstaller(
+            new DummyMoodle($this->moodleDir),
+            new MoodlePlugin($this->pluginDir),
+            new DummyExecute(),
+            false,
+            null
+        );
+
+        $this->fs->copy(__DIR__ . '/../Fixture/plugin/package.json', $this->pluginDir . '/package.json');
+
+        $installer->install();
+
+        $this->assertSame(4, $installer->getOutput()->getStepCount());
+    }
+
+    public function testSkipNodePluginDependencies()
+    {
+        $installer = new VendorInstaller(
+            new DummyMoodle($this->moodleDir),
+            new MoodlePlugin($this->pluginDir),
+            new DummyExecute(),
+            true,
+            null
+        );
+
+        $this->fs->copy(__DIR__ . '/../Fixture/plugin/package.json', $this->pluginDir . '/package.json');
+
+        $installer->install();
+
+        $this->assertSame(3, $installer->getOutput()->getStepCount());
     }
 }

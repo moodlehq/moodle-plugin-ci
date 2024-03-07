@@ -332,7 +332,7 @@ Number of times to rerun failures
 Selenium Docker image
 
 * Accept value: yes
-* Is value required: no
+* Is value required: yes
 * Is multiple: no
 * Is negatable: no
 * Default: `NULL`
@@ -859,7 +859,7 @@ Install everything required for CI testing
 
 ### Usage
 
-* `install [--moodle MOODLE] [--data DATA] [--repo REPO] [--branch BRANCH] [--plugin PLUGIN] [--db-type DB-TYPE] [--db-user DB-USER] [--db-pass DB-PASS] [--db-name DB-NAME] [--db-host DB-HOST] [--db-port DB-PORT] [--not-paths NOT-PATHS] [--not-names NOT-NAMES] [--extra-plugins EXTRA-PLUGINS] [--no-init] [--node-version NODE-VERSION]`
+* `install [--moodle MOODLE] [--data DATA] [--repo REPO] [--branch BRANCH] [--plugin PLUGIN] [--db-type DB-TYPE] [--db-user DB-USER] [--db-pass DB-PASS] [--db-name DB-NAME] [--db-host DB-HOST] [--db-port DB-PORT] [--not-paths NOT-PATHS] [--not-names NOT-NAMES] [--extra-plugins EXTRA-PLUGINS] [--no-init] [--no-plugin-node] [--node-version NODE-VERSION]`
 
 Install everything required for CI testing
 
@@ -1008,6 +1008,16 @@ Directory of extra plugins to install
 #### `--no-init`
 
 Prevent PHPUnit and Behat initialization
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--no-plugin-node`
+
+Prevent Node.js plugin dependencies installation
 
 * Accept value: no
 * Is value required: no

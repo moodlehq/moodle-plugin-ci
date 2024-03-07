@@ -33,6 +33,7 @@ class InstallerFactory
     public ConfigDumper $dumper;
     public ?string $pluginsDir;
     public bool $noInit;
+    public bool $noPluginNode;
     public ?string $nodeVer;
 
     /**
@@ -51,7 +52,7 @@ class InstallerFactory
         }
 
         $installers->add(new PluginInstaller($this->moodle, $this->plugin, $this->pluginsDir, $this->dumper));
-        $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute, $this->nodeVer));
+        $installers->add(new VendorInstaller($this->moodle, $this->plugin, $this->execute, $this->noPluginNode, $this->nodeVer));
 
         if ($this->noInit) {
             return;
