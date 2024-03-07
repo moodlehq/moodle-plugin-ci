@@ -26,7 +26,7 @@ class VendorInstaller extends AbstractInstaller
     private MoodlePlugin $plugin;
     private Execute $execute;
     public ?string $nodeVer;
-
+    private ?string $ignoreNpmDependencies;
     /**
      * Define legacy Node version to use when .nvmrc is absent (Moodle < 3.5).
      */
@@ -38,12 +38,13 @@ class VendorInstaller extends AbstractInstaller
      * @param Execute      $execute
      * @param string|null  $nodeVer
      */
-    public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute, ?string $nodeVer)
+    public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute, ?string $nodeVer, ?string $ignoreNpmDependencies)
     {
         $this->moodle  = $moodle;
         $this->plugin  = $plugin;
         $this->execute = $execute;
         $this->nodeVer = $nodeVer;
+        $this->ignoreNpmDependencies = $ignoreNpmDependencies;
     }
 
     public function install(): void
@@ -69,7 +70,7 @@ class VendorInstaller extends AbstractInstaller
         $this->execute->mustRun(
             Process::fromShellCommandline('npm install --no-progress', $this->moodle->directory, null, null, null)
         );
-        if ($this->plugin->hasNodeDependencies()) {
+        if (is_null($this->ignoreNpmDependencies) && $this->plugin->hasNodeDependencies()) {
             $this->execute->mustRun(
                 Process::fromShellCommandline('npm install --no-progress', $this->plugin->directory, null, null, null)
             );

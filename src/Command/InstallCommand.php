@@ -102,7 +102,8 @@ class InstallCommand extends Command
             ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names)
             ->addOption('extra-plugins', null, InputOption::VALUE_REQUIRED, 'Directory of extra plugins to install', $extra)
             ->addOption('no-init', null, InputOption::VALUE_NONE, 'Prevent PHPUnit and Behat initialization')
-            ->addOption('node-version', null, InputOption::VALUE_REQUIRED, 'Node.js version to use for nvm install (this will override one defined in .nvmrc)', $node);
+            ->addOption('node-version', null, InputOption::VALUE_REQUIRED, 'Node.js version to use for nvm install (this will override one defined in .nvmrc)', $node)
+            ->addOption('ignore-npm-dependencies', null, InputOption::VALUE_NONE, 'Does not execute npm install for the plugin');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -175,6 +176,7 @@ class InstallCommand extends Command
         $factory->pluginsDir = $pluginsDir;
         $factory->noInit     = $input->getOption('no-init');
         $factory->nodeVer    = $input->getOption('node-version');
+        $factory->ignoreNpmDependencies = $input->getOption('ignore-npm-dependencies');
         $factory->database   = $resolver->resolveDatabase(
             $input->getOption('db-type'),
             $input->getOption('db-name'),

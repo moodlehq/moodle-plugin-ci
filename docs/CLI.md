@@ -332,7 +332,7 @@ Number of times to rerun failures
 Selenium Docker image
 
 * Accept value: yes
-* Is value required: no
+* Is value required: yes
 * Is multiple: no
 * Is negatable: no
 * Default: `NULL`
@@ -859,7 +859,7 @@ Install everything required for CI testing
 
 ### Usage
 
-* `install [--moodle MOODLE] [--data DATA] [--repo REPO] [--branch BRANCH] [--plugin PLUGIN] [--db-type DB-TYPE] [--db-user DB-USER] [--db-pass DB-PASS] [--db-name DB-NAME] [--db-host DB-HOST] [--db-port DB-PORT] [--not-paths NOT-PATHS] [--not-names NOT-NAMES] [--extra-plugins EXTRA-PLUGINS] [--no-init] [--node-version NODE-VERSION]`
+* `install [--moodle MOODLE] [--data DATA] [--repo REPO] [--branch BRANCH] [--plugin PLUGIN] [--db-type DB-TYPE] [--db-user DB-USER] [--db-pass DB-PASS] [--db-name DB-NAME] [--db-host DB-HOST] [--db-port DB-PORT] [--not-paths NOT-PATHS] [--not-names NOT-NAMES] [--extra-plugins EXTRA-PLUGINS] [--no-init] [--node-version NODE-VERSION] [--ignore-npm-dependencies]`
 
 Install everything required for CI testing
 
@@ -1024,6 +1024,16 @@ Node.js version to use for nvm install (this will override one defined in .nvmrc
 * Is multiple: no
 * Is negatable: no
 * Default: `NULL`
+
+#### `--ignore-npm-dependencies`
+
+Does not execute npm install for the plugin
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
 
 #### `--help|-h`
 
