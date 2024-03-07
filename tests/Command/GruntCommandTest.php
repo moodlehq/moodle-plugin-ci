@@ -140,7 +140,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertInstanceOf(GruntTaskModel::class, $task);
         $this->assertSame('stylelint:css', $task->taskName);
         $this->assertSame('', $task->buildDirectory);
-        $this->assertSame($this->moodleDir, $task->workingDirectory);
+        $this->assertSame($this->pluginDir, $task->workingDirectory);
 
         $this->fs->remove($this->pluginDir . '/styles.css');
 
