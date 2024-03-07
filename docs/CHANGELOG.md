@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to current [moodle-cs v3.4.1](https://github.com/moodlehq/moodle-cs), [moodle-local_moodlecheck v1.3.0](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci v1.0.28](https://github.com/moodlehq/moodle-local_ci) releases.
+
 ## [4.4.0] - 2024-02-16
 ### Added
 - New `--selenium` option or `MOODLE_BEHAT_SELENIUM_IMAGE` env variable to the `behat` command, to be able to specify the Selenium Docker image to use (defaults apply if not specified).
