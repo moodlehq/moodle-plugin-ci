@@ -19,7 +19,6 @@ title: Moodle Plugin CI Commands
 * [`mustache`](#mustache)
 * [`parallel`](#parallel)
 * [`phpcbf`](#phpcbf)
-* [`phpcpd`](#phpcpd)
 * [`phpcs`](#phpcs)
 * [`phpdoc`](#phpdoc)
 * [`phplint`](#phplint)
@@ -417,7 +416,7 @@ Dump the shell completion script
 * `completion [--debug] [--] [<shell>]`
 
 The completion command dumps the shell completion script required
-to use shell autocompletion (currently only bash completion is supported).
+to use shell autocompletion (currently, bash, fish, zsh completion are supported).
 
 Static installation
 -------------------
@@ -1441,89 +1440,6 @@ The name or path of the coding standard to use
 * Is multiple: no
 * Is negatable: no
 * Default: `'moodle'`
-
-#### `--help|-h`
-
-Display help for the given command. When no command is given display help for the list command
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: no
-* Default: `false`
-
-#### `--quiet|-q`
-
-Do not output any message
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: no
-* Default: `false`
-
-#### `--verbose|-v|-vv|-vvv`
-
-Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: no
-* Default: `false`
-
-#### `--version|-V`
-
-Display this application version
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: no
-* Default: `false`
-
-#### `--ansi|--no-ansi`
-
-Force (or disable --no-ansi) ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: yes
-* Default: `NULL`
-
-#### `--no-interaction|-n`
-
-Do not ask any interactive question
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: no
-* Default: `false`
-
-`phpcpd`
---------
-
-Run PHP Copy/Paste Detector on a plugin (**DEPRECATED**)
-
-### Usage
-
-* `phpcpd <plugin>`
-
-Run PHP Copy/Paste Detector on a plugin (**DEPRECATED**)
-
-### Arguments
-
-#### `plugin`
-
-Path to the plugin
-
-* Is required: yes
-* Is array: no
-* Default: `NULL`
-
-### Options
 
 #### `--help|-h`
 
