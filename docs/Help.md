@@ -27,11 +27,6 @@ inclide in the CI scenario. For detailed information, see [CLI commands and opti
 
 This step lints your PHP files to check for syntax errors.
 
-**moodle-plugin-ci phpcpd (DEPRECATED)**
-
-This step runs the PHP Copy/Paste Detector on your plugin. This helps to find
-code duplication.
-
 **moodle-plugin-ci phpmd**
 
 This step runs the PHP Mess Detector on your plugin. This helps to find
