@@ -75,7 +75,6 @@ class ParallelCommand extends AbstractMoodleCommand
             ],
             [
                 'phplint'     => new Process(array_merge($bin, ['phplint', '--ansi', $plugin])),
-                'phpcpd'      => new Process(array_merge($bin, ['phpcpd', '--ansi', $plugin])),
                 'phpmd'       => new Process(array_merge($bin, ['phpmd', '--ansi', '-m', $moodle, $plugin])),
                 'codechecker' => new Process(array_merge($bin, ['codechecker', '--ansi', $plugin])),
                 'validate'    => new Process(array_merge($bin, ['validate', '--ansi', '-m', $moodle, $plugin])),
