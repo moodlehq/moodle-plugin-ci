@@ -9,8 +9,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## [4.4.1] - 2024-03-08
+### Added
+- New `--no-plugin-node` option added to the `install` command, to be able to skip the installation of any NodeJS stuff that the plugin may include. The previous default has not changed and both Moodle's and plugin's NodeJS installation continues happening normally.
+
 ### Changed
 - Updated project dependencies to current [moodle-cs v3.4.1](https://github.com/moodlehq/moodle-cs), [moodle-local_moodlecheck v1.3.0](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci v1.0.28](https://github.com/moodlehq/moodle-local_ci) releases.
+
+### Fixed
+- Some small fixes to documentation.
 
 ## [4.4.0] - 2024-02-16
 ### Added
@@ -661,7 +668,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.0...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.1...main
+[4.4.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.0...4.4.1
 [4.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.2...4.4.0
 [4.3.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.1...4.3.2
 [4.3.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.0...4.3.1
