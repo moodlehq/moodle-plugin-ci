@@ -72,7 +72,7 @@ if (file_exists(ENV_FILE)) {
     $env->load(ENV_FILE);
 }
 
-$version = (new SebastianBergmann\Version(MOODLE_PLUGIN_CI_VERSION, dirname(__DIR__)))->getVersion();
+$version = (new SebastianBergmann\Version(MOODLE_PLUGIN_CI_VERSION, dirname(__DIR__)))->asString();
 // Let's make Box to find the better version for the phar from git.
 if (MOODLE_PLUGIN_CI_BOXED === 'BOXED') {
     $version = '@package_version@';
