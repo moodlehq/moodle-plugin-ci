@@ -28,7 +28,6 @@ This project supports the following testing frameworks and code analysis tools:
 * [Mustache Linting](https://docs.moodle.org/dev/Templates)
 * [Grunt tasks](https://docs.moodle.org/dev/Grunt)
 * [PHP Linting](https://github.com/JakubOnderka/PHP-Parallel-Lint)
-* [PHP Copy/Paste Detector (DEPRECATED)](https://github.com/sebastianbergmann/phpcpd)
 * [PHP Mess Detector](http://phpmd.org)
 
 ## Requirements
