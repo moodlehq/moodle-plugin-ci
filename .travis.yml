@@ -67,7 +67,7 @@ script:
 jobs:
   include:
     - stage: CI test (make validate)
-      php: 7.4
+      php: 8.1
       before_install: skip
       install:
         - make init
@@ -76,7 +76,7 @@ jobs:
 
     - stage: Code coverage (coveralls)
       if: repo = moodlehq/moodle-plugin-ci
-      php: 7.4
+      php: 8.1
       before_install: skip
       install:
         - make init
@@ -94,6 +94,6 @@ jobs:
     # Last stable with highest supported PHP version.
     - php: 8.2
       env: MOODLE_BRANCH=MOODLE_403_STABLE
-    # And older stable supported (with lowest supported PHP version).
-    - php: 7.4
-      env: MOODLE_BRANCH=MOODLE_39_STABLE
+    # And oldest stable supported (with lowest supported PHP version).
+    - php: 8.1
+      env: MOODLE_BRANCH=MOODLE_401_STABLE
