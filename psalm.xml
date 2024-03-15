@@ -9,34 +9,50 @@
     reportMixedIssues="false"
     resolveFromConfigFile="true"
     disableSuppressAll="true"
+    findUnusedCode="true"
+    findUnusedPsalmSuppress="true"
+    findUnusedBaselineEntry="true"
+    findUnusedIssueHandlerSuppression="true"
 >
     <projectFiles>
-        <directory name="src" />
+        <directory name="src"/>
+        <directory name="tests"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="vendor"/>
+            <directory name="tests/Fixture"/>
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
         <!-- Not every property is set in the constructors. Many of them
             (Commands...) do get them initialised by different methods) -->
-        <PropertyNotSetInConstructor errorLevel="suppress" />
-        <RedundantPropertyInitializationCheck errorLevel="suppress" />
-        <MissingConstructor errorLevel="info" />
+        <PropertyNotSetInConstructor errorLevel="suppress"/>
+        <RedundantPropertyInitializationCheck errorLevel="suppress"/>
+        <MissingConstructor errorLevel="info"/>
+
+        <!-- Test classes are, apparently, not used but, for sure, they are used by PHPUnit. -->
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </UnusedClass>
 
         <UndefinedClass>
             <errorLevel type="suppress">
                 <!-- It is defined in Moodle itself or included by the commands -->
-                <referencedClass name="core_component" />
+                <referencedClass name="core_component"/>
                 <!-- This is using abandoned humbug/phar-updater component, that we
                     are not loading at the moment, hence, completely ignore all
                     UndefinedClass errors there. TODO: Consider to move to
                     laravel-zero/phar-updater that is a maintained fork, using a version
                     compatible with us (PHP 7.4 and up right now). In any case
                     this is very low priority. -->
-                <referencedClass name="Humbug\SelfUpdate\Strategy\GithubStrategy" />
-                <referencedClass name="Humbug\SelfUpdate\Updater" />
+                <referencedClass name="Humbug\SelfUpdate\Strategy\GithubStrategy"/>
+                <referencedClass name="Humbug\SelfUpdate\Updater"/>
             </errorLevel>
         </UndefinedClass>
     </issueHandlers>
+    <plugins>
+        <pluginClass class="Psalm\MockeryPlugin\Plugin"/>
+    </plugins>
 </psalm>

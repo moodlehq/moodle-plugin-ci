@@ -63,6 +63,9 @@ class AddPluginCommand extends Command
         if (!empty($project) && !empty($clone)) {
             throw new \InvalidArgumentException('Cannot use both the project argument and the --clone option');
         }
+        if (!is_string($storage)) {
+            throw new \InvalidArgumentException('The storage option must be a string');
+        }
         if (!empty($project)) {
             $cloneUrl = sprintf('https://github.com/%s.git', $project);
         } elseif (!empty($clone)) {
