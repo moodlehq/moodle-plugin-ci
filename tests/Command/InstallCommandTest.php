@@ -52,8 +52,8 @@ class InstallCommandTest extends MoodleTestCase
     }
 
     /**
-     * @param string $value
-     * @param array  $expected
+     * @param string|null $value
+     * @param array       $expected
      *
      * @dataProvider csvToArrayProvider
      */
@@ -97,7 +97,7 @@ class InstallCommandTest extends MoodleTestCase
         $this->assertFileEquals($expected, $actual);
     }
 
-    public function csvToArrayProvider(): array
+    public static function csvToArrayProvider(): array
     {
         return [
             [' , foo , bar ', ['foo', 'bar']],

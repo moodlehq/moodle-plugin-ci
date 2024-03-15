@@ -24,7 +24,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class GruntCommandTest extends MoodleTestCase
 {
-    protected function executeCommand()
+    protected function executeCommand(): CommandTester
     {
         $command            = new GruntCommand();
         $command->moodle    = new DummyMoodle($this->moodleDir);
@@ -44,7 +44,7 @@ class GruntCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    protected function newCommand()
+    protected function newCommand(): GruntCommand
     {
         $command            = new GruntCommand();
         $command->moodle    = new DummyMoodle($this->moodleDir);

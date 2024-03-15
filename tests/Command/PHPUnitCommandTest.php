@@ -21,7 +21,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class PHPUnitCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null, array $cmdOptions = []): CommandTester
+    protected function executeCommand(?string $pluginDir = null, ?string $moodleDir = null, array $cmdOptions = []): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;

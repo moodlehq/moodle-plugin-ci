@@ -17,9 +17,7 @@
 
 namespace MoodlePluginCI\Tests\Command;
 
-use MoodlePluginCI\Bridge\MoodleConfig;
 use MoodlePluginCI\Command\PHPDocCommand;
-use MoodlePluginCI\Installer\Database\MySQLDatabase;
 use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePHPDoc;
 use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 use MoodlePluginCI\Tests\Fake\Process\DummyExecute;
@@ -35,7 +33,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class PHPDocCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $maxWarnings = -1, $mockOutput = ''): CommandTester
+    protected function executeCommand(?string $pluginDir = null, int $maxWarnings = -1, string $mockOutput = ''): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -45,13 +43,13 @@ class PHPDocCommandTest extends MoodleTestCase
         $command->moodle                = new DummyMoodlePHPDoc($this->moodleDir);
         $command->plugin                = new DummyMoodlePlugin($pluginDir);
         $command->execute               = new DummyExecute(); // Mocked execution.
-        $command->execute->returnOutput = $mockOutput;          // Mocked output.
+        $command->execute->returnOutput = $mockOutput;        // Mocked output.
 
         // Note: we leave this here as reference for any other command test needing a config.php file,
         // but it's not needed for this unit tess that is using a mocked execute() method.
         // Create a basic config.php file. This command requires it.
         // $config         = new MoodleConfig();
-        // $configContents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
+        // $configContents = $config->createContents(new MySQLDatabase(), '/path/to/moodle-data');
         // $config->dump($this->moodleDir . DIRECTORY_SEPARATOR . 'config.php', $configContents);
 
         $application = new Application();
@@ -91,7 +89,7 @@ class PHPDocCommandTest extends MoodleTestCase
         // as we do in other tests. Only the title is available.
         // Some day all the mocks should be refactored to allow this.
         // $output = $commandTester->getDisplay();
-        // $this->assertMatchesRegularExpression('xxxxxxx/', $output);                  // Progress.
+        // $this->assertMatchesRegularExpression('/something/', $output);                  // Progress.
 
         // Also verify display info is correct.
         $this->assertMatchesRegularExpression('/RUN  Moodle PHPDoc Checker/', $commandTester->getDisplay());

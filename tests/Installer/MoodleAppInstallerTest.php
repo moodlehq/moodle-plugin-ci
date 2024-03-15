@@ -34,6 +34,9 @@ class MoodleAppInstallerTest extends MoodleTestCase
 
         $this->assertMatchesRegularExpression('/git/', $execute->allCmds[1]);
         $this->assertMatchesRegularExpression('/clone/', $execute->allCmds[1]);
-        $this->assertMatchesRegularExpression('/https:\/\/github\.com\/moodlehq\/moodle-local_moodleappbehat\.git/', $execute->allCmds[1]);
+        $this->assertMatchesRegularExpression(
+            '/https:\/\/github\.com\/moodlehq\/moodle-local_moodleappbehat\.git/',
+            $execute->allCmds[1]
+        );
     }
 }

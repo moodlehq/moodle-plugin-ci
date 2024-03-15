@@ -36,7 +36,21 @@ class MoodleConfigTest extends FilesystemTestCase
 
     public function testConfigureChromeBrowserCapabilities(): void
     {
-        putenv("MOODLE_BEHAT_CHROME_CAPABILITIES=['extra_capabilities'=>['chromeOptions'=>['args'=>['--ignore-certificate-errors','--allow-running-insecure-content']]]]");
+        $capabilities = <<<'END'
+            MOODLE_BEHAT_CHROME_CAPABILITIES = [
+                'extra_capabilities' => [
+                    'chromeOptions' => [
+                        'args' => [
+                            '--ignore-certificate-errors',
+                            '--allow-running-insecure-content'
+                        ]
+                    ]
+                ]
+            ]
+            END;
+        $capabilities = preg_replace('/\s+/', '', $capabilities); // Remove all spacing.
+        putenv($capabilities);
+
         $config   = new MoodleConfig();
         $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
 

@@ -21,7 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class BehatCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null, array $cmdOptions = []): CommandTester
+    protected function executeCommand(?string $pluginDir = null, ?string $moodleDir = null, array $cmdOptions = []): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -99,7 +99,11 @@ class BehatCommandTest extends MoodleTestCase
 
     public function testExecuteWithSeleniumImageOption(): void
     {
-        $commandTester = $this->executeCommand(null, null, ['--start-servers' => true, '--selenium' => 'seleniarm/standalone-chromium:latest']);
+        $commandTester = $this->executeCommand(
+            null,
+            null,
+            ['--start-servers' => true, '--selenium' => 'seleniarm/standalone-chromium:latest']
+        );
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/seleniarm\/standalone-chromium:latest/', $this->allCmds[1]);
     }
@@ -125,7 +129,7 @@ class BehatCommandTest extends MoodleTestCase
     public function testExecuteWithFirefoxProfile(): void
     {
         putenv('MOODLE_BEHAT_SELENIUM_IMAGE=');
-        file_put_contents("{$this->moodleDir}/composer.lock", '');
+        file_put_contents("$this->moodleDir/composer.lock", '');
 
         $commandTester = $this->executeCommand(null, null, ['--start-servers' => true, '--profile' => 'firefox']);
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -135,7 +139,7 @@ class BehatCommandTest extends MoodleTestCase
     public function testExecuteWithLegacyFirefoxProfile(): void
     {
         putenv('MOODLE_BEHAT_SELENIUM_IMAGE=');
-        file_put_contents("{$this->moodleDir}/composer.lock", 'instaclick/php-webdriver');
+        file_put_contents("$this->moodleDir/composer.lock", 'instaclick/php-webdriver');
 
         $commandTester = $this->executeCommand(null, null, ['--start-servers' => true, '--profile' => 'firefox']);
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -149,7 +153,7 @@ class BehatCommandTest extends MoodleTestCase
         $expectedName  = preg_quote(escapeshellarg("--name='$featureName'"));
         $commandTester = $this->executeCommand(null, null, ['--name' => $featureName]);
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression("/{$expectedName}/", $this->lastCmd);
+        $this->assertMatchesRegularExpression("/$expectedName/", $this->lastCmd);
     }
 
     public function testExecuteWithScssDeprecations(): void

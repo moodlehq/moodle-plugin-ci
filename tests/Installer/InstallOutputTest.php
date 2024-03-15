@@ -35,6 +35,11 @@ class InstallOutputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('Step 1', $progressBar->getMessage('message'));
 
         $output->end('End');
+        /**
+         * This seems to be a real bug in Psalm: https://github.com/vimeo/psalm/issues/7669#issuecomment-1986896033.
+         *
+         * @psalm-suppress DocblockTypeContradiction
+         */
         $this->assertSame(5, $progressBar->getProgress());
         $this->assertSame('End', $progressBar->getMessage('message'));
     }

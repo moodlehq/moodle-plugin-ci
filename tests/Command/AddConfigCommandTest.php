@@ -26,7 +26,7 @@ class AddConfigCommandTest extends FilesystemTestCase
         $this->fs->copy(__DIR__ . '/../Fixture/example-config.php', $this->tempDir . '/config.php');
     }
 
-    protected function executeCommand($line = '$CFG->foo = "bar";')
+    protected function executeCommand(string $line = '$CFG->foo = "bar";'): CommandTester
     {
         $command         = new AddConfigCommand();
         $command->moodle = new DummyMoodle($this->tempDir);

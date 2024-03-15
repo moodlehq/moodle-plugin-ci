@@ -21,7 +21,7 @@ class PHPLintCommandTest extends \PHPUnit\Framework\TestCase
 {
     private string $pluginDir = __DIR__ . '/../Fixture/moodle-local_ci';
 
-    protected function executeCommand(?string $customPluginDir = null)
+    protected function executeCommand(?string $customPluginDir = null): CommandTester
     {
         if ($customPluginDir) {
             $this->pluginDir = $customPluginDir;

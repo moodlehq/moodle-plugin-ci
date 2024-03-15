@@ -22,7 +22,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class MustacheCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null, $command = null)
+    protected function executeCommand(?string $pluginDir = null, ?string $moodleDir = null, ?MustacheCommand $command = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
