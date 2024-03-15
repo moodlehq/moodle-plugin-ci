@@ -32,7 +32,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         return new CommandTester($application->find('add-plugin'));
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->getCommandTester();
         $commandTester->execute([
@@ -49,7 +49,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         );
     }
 
-    public function testExecuteWithClone()
+    public function testExecuteWithClone(): void
     {
         $commandTester = $this->getCommandTester();
         // Execute with verbosity, so process helper outputs command line.
@@ -59,8 +59,10 @@ class AddPluginCommandTest extends FilesystemTestCase
         ], ['verbosity' => OutputInterface::VERBOSITY_VERY_VERBOSE]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertStringContainsString("'git' 'clone' '--depth' '1' 'https://github.com/user/moodle-mod_foo.git'",
-            $commandTester->getDisplay());
+        $this->assertStringContainsString(
+            "'git' 'clone' '--depth' '1' 'https://github.com/user/moodle-mod_foo.git'",
+            $commandTester->getDisplay()
+        );
         $this->assertTrue(is_dir($this->tempDir . '/plugins'));
         $this->assertFileExists($this->tempDir . '/.env');
         $this->assertSame(
@@ -69,7 +71,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         );
     }
 
-    public function testExecuteWithCloneAndBranch()
+    public function testExecuteWithCloneAndBranch(): void
     {
         $commandTester = $this->getCommandTester();
         // Execute with verbosity, so process helper outputs command line.
@@ -80,8 +82,10 @@ class AddPluginCommandTest extends FilesystemTestCase
         ], ['verbosity' => OutputInterface::VERBOSITY_VERY_VERBOSE]);
 
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertStringContainsString("'git' 'clone' '--depth' '1' '--branch' 'dev' 'https://github.com/user/moodle-mod_foo.git'",
-            $commandTester->getDisplay());
+        $this->assertStringContainsString(
+            "'git' 'clone' '--depth' '1' '--branch' 'dev' 'https://github.com/user/moodle-mod_foo.git'",
+            $commandTester->getDisplay()
+        );
         $this->assertTrue(is_dir($this->tempDir . '/plugins'));
         $this->assertFileExists($this->tempDir . '/.env');
         $this->assertSame(
@@ -90,7 +94,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         );
     }
 
-    public function testExecuteBothProjectAndClone()
+    public function testExecuteBothProjectAndClone(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -102,7 +106,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         ]);
     }
 
-    public function testExecuteMissingProjectAndClone()
+    public function testExecuteMissingProjectAndClone(): void
     {
         $this->expectException(\RuntimeException::class);
 

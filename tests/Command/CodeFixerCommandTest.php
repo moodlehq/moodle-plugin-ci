@@ -49,7 +49,7 @@ EOT;
         $this->fs->dumpFile($this->pluginDir . '/fixable.php', $content);
     }
 
-    protected function executeCommand($pluginDir = null)
+    protected function executeCommand(?string $pluginDir = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -69,7 +69,7 @@ EOT;
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -97,7 +97,7 @@ EOT;
         $this->assertSame($expected, file_get_contents($this->pluginDir . '/fixable.php'));
     }
 
-    public function testExecuteNoFiles()
+    public function testExecuteNoFiles(): void
     {
         // Just random directory with no PHP files.
         $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');

@@ -16,7 +16,7 @@ use MoodlePluginCI\Installer\Database\PostgresDatabase;
 
 class PostgresDatabaseTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetCreateDatabaseCommand()
+    public function testGetCreateDatabaseCommand(): void
     {
         $database       = new PostgresDatabase();
         $database->name = 'TestName';
