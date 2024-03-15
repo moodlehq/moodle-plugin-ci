@@ -11,13 +11,11 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v4
 
-    - name: Setup PHP 7.4
+    - name: Setup PHP 8.1
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 7.4
-        # We want to verify that xdebug works for coverage. Once we only support
-        # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
-        coverage: xdebug
+        php-version: 8.1
+        coverage: pcov
 
     - name: Initialise
       run: make init
@@ -34,13 +32,11 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v4
 
-    - name: Setup PHP 7.4
+    - name: Setup PHP 8.1
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 7.4
-        # We want to verify that xdebug works for coverage. Once we only support
-        # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
-        coverage: xdebug
+        php-version: 8.1
+        coverage: pcov
 
     - name: Initialise
       run: make init
@@ -90,12 +86,6 @@ jobs:
           - php: '8.1'
             moodle-branch: 'MOODLE_401_STABLE'
             moodle-app: 'true'
-          - php: '8.0'
-            moodle-branch: 'MOODLE_400_STABLE'
-          - php: '8.0'
-            moodle-branch: 'MOODLE_311_STABLE'
-          - php: '7.4'
-            moodle-branch: 'MOODLE_39_STABLE'
 
     steps:
     - name: Check out repository code
@@ -138,16 +128,15 @@ jobs:
         MOODLE_BRANCH: ${{ matrix.moodle-branch }}
       run: |
         moodle-plugin-ci phplint
-        moodle-plugin-ci phpcpd
         moodle-plugin-ci phpmd
         moodle-plugin-ci phpcs --max-warnings 0
         moodle-plugin-ci phpcbf
         moodle-plugin-ci validate
         moodle-plugin-ci savepoints
         moodle-plugin-ci mustache
-        moodle-plugin-ci grunt || [[ "$MOODLE_BRANCH" =~ MOODLE_3[0-9]+_STABLE ]] # Fixtures only compatible with Moodle >= 4.0
+        moodle-plugin-ci grunt
         moodle-plugin-ci phpdoc
-        moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
+        moodle-plugin-ci phpunit --coverage-text --fail-on-warning
         moodle-plugin-ci behat --profile default
         moodle-plugin-ci behat --profile chrome
         moodle-plugin-ci behat --profile firefox --tags="@local_ci&&~@app"
@@ -211,11 +200,9 @@ jobs:
           - php: '8.1'
             moodle-branch: 'MOODLE_402_STABLE'
             moodle-app: 'true'
-          - php: '8.0'
+          - php: '8.1'
             moodle-branch: 'MOODLE_401_STABLE'
             moodle-app: 'true'
-          - php: '7.4'
-            moodle-branch: 'MOODLE_400_STABLE'
 
     steps:
     - name: Check out repository code
@@ -262,7 +249,6 @@ jobs:
         MOODLE_BRANCH: ${{ matrix.moodle-branch }}
       run: |
         php build/moodle-plugin-ci.phar phplint
-        php build/moodle-plugin-ci.phar phpcpd
         php build/moodle-plugin-ci.phar phpmd
         php build/moodle-plugin-ci.phar phpcs --max-warnings 0
         php build/moodle-plugin-ci.phar phpcbf
@@ -271,7 +257,7 @@ jobs:
         php build/moodle-plugin-ci.phar mustache
         php build/moodle-plugin-ci.phar grunt
         php build/moodle-plugin-ci.phar phpdoc
-        php build/moodle-plugin-ci.phar phpunit --verbose --coverage-text --fail-on-warning
+        php build/moodle-plugin-ci.phar phpunit --coverage-text --fail-on-warning
         php build/moodle-plugin-ci.phar behat --profile default
         php build/moodle-plugin-ci.phar behat --profile chrome
         php build/moodle-plugin-ci.phar behat --profile firefox --tags="@local_ci&&~@app"
@@ -291,8 +277,6 @@ jobs:
           - php: '8.3'
           - php: '8.2'
           - php: '8.1'
-          - php: '8.0'
-          - php: '7.4'
 
     steps:
     - name: Setup PHP ${{ matrix.php }}
