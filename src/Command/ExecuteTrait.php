@@ -13,6 +13,7 @@
 namespace MoodlePluginCI\Command;
 
 use MoodlePluginCI\Process\Execute;
+use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -27,10 +28,18 @@ trait ExecuteTrait
      * Initialize the "execute" property if necessary.
      *
      * @param OutputInterface $output
-     * @param ProcessHelper   $helper
+     * @param HelperInterface $helper
      */
-    protected function initializeExecute(OutputInterface $output, ProcessHelper $helper): void
+    protected function initializeExecute(OutputInterface $output, HelperInterface $helper): void
     {
+        // The helper must be a ProcessHelper. If it's not, pass null.
+        // (note this is needed only because Command->getHelper() in Symfony 6.4 has PHPDoc for the helper
+        // as HelperInterface instead of ProcessHelper, which is the actual type,
+        // and static analysers (psalm, ...) need to be satisfied).
+        if (!$helper instanceof ProcessHelper) {
+            $helper = null;
+        }
+
         if (isset($this->execute)) {
             // Define output and process helper.
             $this->execute->setOutput($output);
