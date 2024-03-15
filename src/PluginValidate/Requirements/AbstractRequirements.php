@@ -27,13 +27,18 @@ abstract class AbstractRequirements
     protected Plugin $plugin;
 
     /**
-     * The major Moodle version, EG: 29, 30, 31.
+     * The major Moodle version, EG: 38, 39, 310, 311, 400, ...
+     *
+     * Right now, none of the requirements have any version specific check, so this
+     * is not being used right now. But it is here for future use.
+     *
+     * @psalm-suppress PossiblyUnusedProperty
      */
     protected int $moodleVersion;
 
     /**
      * @param Plugin $plugin        Details about the plugin
-     * @param int    $moodleVersion The major Moodle version, EG: 29, 30, 31
+     * @param int    $moodleVersion The major Moodle version EG: 38, 39, 310, 311, 400, ...
      */
     public function __construct(Plugin $plugin, int $moodleVersion)
     {
