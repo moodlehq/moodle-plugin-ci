@@ -20,12 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class SavePointsCommandTest extends MoodleTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    protected function executeCommand($pluginDir = null)
+    protected function executeCommand(?string $pluginDir = null): CommandTester
     {
         if (null === $pluginDir) {
             $pluginDir = $this->pluginDir;

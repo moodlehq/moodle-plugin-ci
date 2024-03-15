@@ -27,7 +27,7 @@ class CoverallsUploadCommandTest extends MoodleTestCase
         $this->fs->touch($this->moodleDir . '/coverage.xml');
     }
 
-    protected function executeCommand($pluginDir = null)
+    protected function executeCommand(?string $pluginDir = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;

@@ -10,7 +10,7 @@
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
  */
 
-namespace Command;
+namespace MoodlePluginCI\Tests\Command;
 
 use MoodlePluginCI\Command\SelfUpdateCommand;
 use Symfony\Component\Filesystem\Filesystem;
@@ -38,7 +38,6 @@ class SelfUpdateCommandTest extends \PHPUnit\Framework\TestCase
 
         // Use reflection to test the protected method.
         $method = new \ReflectionMethod($command, 'getBackupPath');
-        $method->setAccessible(true);
         $this->assertSame($rollBackFile, $method->invoke($command, $rollBackDir));
     }
 
@@ -49,14 +48,13 @@ class SelfUpdateCommandTest extends \PHPUnit\Framework\TestCase
     {
         $command = new SelfUpdateCommand();
 
-        // Try with a existing directory.
+        // Try with an existing directory.
         $rollBackDir = sys_get_temp_dir() . '/existing_dir';
         (new Filesystem())->mkdir($rollBackDir); // Let's create the directory.
         $rollBackFile = $rollBackDir . '/.moodle-plugin-ci/moodle-plugin-ci-old.phar';
 
         // Use reflection to test the protected method.
         $method = new \ReflectionMethod($command, 'getBackupPath');
-        $method->setAccessible(true);
         $this->assertSame($rollBackFile, $method->invoke($command, $rollBackDir));
     }
 }

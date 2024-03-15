@@ -63,7 +63,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider gitBranchProvider
      */
-    public function testGitBranch($branch): void
+    public function testGitBranch(string $branch): void
     {
         $validate = new Validate();
         $this->assertSame($branch, $validate->gitBranch($branch), "Validate that $branch is valid");
@@ -74,7 +74,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider invalidGitBranchProvider
      */
-    public function testGitBranchInvalid($branch): void
+    public function testGitBranchInvalid(string $branch): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $validate = new Validate();
@@ -86,7 +86,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider urlProvider
      */
-    public function testUrl($url): void
+    public function testUrl(string $url): void
     {
         $validate = new Validate();
         $this->assertSame($url, $validate->gitUrl($url), "Validate that $url is valid");
@@ -97,14 +97,14 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider invalidUrlProvider
      */
-    public function testInvalidUrl($url): void
+    public function testInvalidUrl(string $url): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $validate = new Validate();
         $validate->gitUrl($url);
     }
 
-    public function gitBranchProvider()
+    public static function gitBranchProvider(): array
     {
         return [
             ['main'],
@@ -115,7 +115,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function invalidGitBranchProvider()
+    public static function invalidGitBranchProvider(): array
     {
         return [
             ['bad!'],
@@ -123,7 +123,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function urlProvider()
+    public static function urlProvider(): array
     {
         return [
             ['git@github.com:moodle/moodle.git'],
@@ -137,7 +137,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function invalidUrlProvider()
+    public static function invalidUrlProvider(): array
     {
         return [
             ['http://google.com'], // Not .git

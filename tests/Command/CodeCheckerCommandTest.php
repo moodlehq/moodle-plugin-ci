@@ -34,7 +34,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
-    protected function executeCommand($pluginDir = null, array $options = []): CommandTester
+    protected function executeCommand(?string $pluginDir = null, array $options = []): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -272,7 +272,7 @@ EOT;
      *
      * @return array of options to use for the command, all them known to fail
      */
-    public function commandFailedSomethingIsWrongProvider()
+    public static function commandFailedSomethingIsWrongProvider(): array
     {
         return [
             'default' => [

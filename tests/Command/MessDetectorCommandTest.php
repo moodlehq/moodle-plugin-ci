@@ -19,14 +19,14 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class MessDetectorCommandTest extends \PHPUnit\Framework\TestCase
 {
-    private $pluginDir;
+    private string $pluginDir;
 
     protected function setUp(): void
     {
         $this->pluginDir = __DIR__ . '/../Fixture/moodle-local_ci';
     }
 
-    protected function executeCommand($pluginDir = null)
+    protected function executeCommand(?string $pluginDir = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;

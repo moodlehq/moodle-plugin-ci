@@ -49,7 +49,7 @@ EOT;
         $this->fs->dumpFile($this->pluginDir . '/fixable.php', $content);
     }
 
-    protected function executeCommand($pluginDir = null)
+    protected function executeCommand(?string $pluginDir = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;

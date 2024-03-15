@@ -10,8 +10,9 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
+use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\FilterRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
@@ -34,18 +35,12 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->requirements    = new FilterRequirements(new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 405);
     }
 
-    protected function tearDown(): void
-    {
-        $this->requirements404 = null;
-        $this->requirements    = null;
-    }
-
     public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\FilterRequirements',
+            FilterRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'filter', '', ''), 404)
         );
     }
@@ -74,7 +69,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
 
     public function testGetRequiredClasses404(): void
     {
-        $requirements = $this->getMockBuilder('MoodlePluginCI\PluginValidate\Requirements\FilterRequirements')
+        $requirements = $this->getMockBuilder(FilterRequirements::class)
             ->setConstructorArgs([new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 404])
             ->onlyMethods(['fileExists'])
             ->getMock();
@@ -87,14 +82,14 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $classes = $requirements->getRequiredClasses();
         $this->assertCount(1, $classes);
         $class = reset($classes);
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+        $this->assertInstanceOf(FileTokens::class, $class);
         $this->assertSame('filter.php', $class->file);
 
         // If classes/text_filter.php exists, expect class presence in it (4.5 plugin backward compatibility).
         $classes = $requirements->getRequiredClasses();
         $this->assertCount(1, $classes);
         $class = reset($classes);
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+        $this->assertInstanceOf(FileTokens::class, $class);
         $this->assertSame('classes/text_filter.php', $class->file);
     }
 
@@ -104,20 +99,21 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
 
         $this->assertCount(1, $classes);
         $class = reset($classes);
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+        $this->assertInstanceOf(FileTokens::class, $class);
         $this->assertSame('classes/text_filter.php', $class->file);
     }
 
     public function testGetRequiredStrings(): void
     {
         $fileToken = $this->requirements->getRequiredStrings();
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+
+        $this->assertInstanceOf(FileTokens::class, $fileToken);
         $this->assertSame('lang/en/filter_activitynames.php', $fileToken->file);
     }
 
     public function testGetRequiredFunctionCalls404(): void
     {
-        $requirements = $this->getMockBuilder('MoodlePluginCI\PluginValidate\Requirements\FilterRequirements')
+        $requirements = $this->getMockBuilder(FilterRequirements::class)
             ->setConstructorArgs([new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 404])
             ->onlyMethods(['fileExists'])
             ->getMock();
@@ -134,7 +130,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $calls = $requirements->getRequiredFunctionCalls();
         $this->assertCount(1, $calls);
         $call = reset($calls);
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $call);
+        $this->assertInstanceOf(FileTokens::class, $call);
         $this->assertSame('filter.php', $call->file);
     }
 
@@ -144,7 +140,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
 
         $this->assertCount(1, $calls);
         $call = reset($calls);
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $call);
+        $this->assertInstanceOf(FileTokens::class, $call);
         $this->assertSame('filter.php', $call->file);
     }
 }
