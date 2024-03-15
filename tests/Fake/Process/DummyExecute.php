@@ -26,13 +26,12 @@ class DummyExecute extends Execute
     {
         /** @var Process&MockInterface $process */
         $process = \Mockery::mock(Process::class);
-        $process->shouldReceive([
-            // We only need the following right now. Add more as needed.
-            'run'            => 0,
-            'isSuccessful'   => true,
-            'getOutput'      => $this->returnOutput,
-            'getCommandLine' => $cmd,
-        ]);
+
+        // We only need the following right now. Add more as needed.
+        $process->shouldReceive('run')->andReturn(0);
+        $process->shouldReceive('isSuccessful')->andReturn(true);
+        $process->shouldReceive('getOutput')->andReturn($this->returnOutput);
+        $process->shouldReceive('getCommandLine')->andReturn($cmd);
 
         return $process;
     }
