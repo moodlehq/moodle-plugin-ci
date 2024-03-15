@@ -17,7 +17,7 @@ use MoodlePluginCI\Tests\Fake\Bridge\DummyMoodlePlugin;
 
 class MoodlePluginCollectionTest extends \PHPUnit\Framework\TestCase
 {
-    public function testSortByDependencies()
+    public function testSortByDependencies(): void
     {
         $plugin1               = new DummyMoodlePlugin('');
         $plugin1->component    = 'mod_1';
@@ -49,7 +49,7 @@ class MoodlePluginCollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * Moodle plugins can have circular dependencies, ensure we do not error when this happens.
      */
-    public function testSortByDependenciesCircularError()
+    public function testSortByDependenciesCircularError(): void
     {
         $plugin1               = new DummyMoodlePlugin('');
         $plugin1->component    = 'mod_1';
@@ -76,7 +76,7 @@ class MoodlePluginCollectionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($plugin1, $all[2]);
     }
 
-    public function testSortByDependenciesWithSubplugins()
+    public function testSortByDependenciesWithSubplugins(): void
     {
         $plugin1                 = new DummyMoodlePlugin('');
         $plugin1->component      = 'mod_1';

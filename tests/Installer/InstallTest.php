@@ -19,7 +19,7 @@ use MoodlePluginCI\Tests\Fake\Installer\DummyInstaller;
 
 class InstallTest extends \PHPUnit\Framework\TestCase
 {
-    public function testRunInstallation()
+    public function testRunInstallation(): void
     {
         $output    = new InstallOutput();
         $installer = new DummyInstaller();

@@ -17,7 +17,7 @@ use MoodlePluginCI\PluginValidate\Finder\TablePrefixFinder;
 
 class TablePrefixFinderTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFindTokens()
+    public function testFindTokens(): void
     {
         $file       = __DIR__ . '/../../Fixture/moodle-local_ci/db/install.xml';
         $fileTokens = FileTokens::create('db/install.xml')->mustHave('local_ci');
@@ -28,7 +28,7 @@ class TablePrefixFinderTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($fileTokens->hasFoundAllTokens());
     }
 
-    public function testFindTokensFail()
+    public function testFindTokensFail(): void
     {
         $file       = __DIR__ . '/../../Fixture/bad-install.xml';
         $fileTokens = FileTokens::create('db/install.xml')->mustHave('local_ci');

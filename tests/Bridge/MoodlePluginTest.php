@@ -19,19 +19,19 @@ use Symfony\Component\Yaml\Yaml;
 
 class MoodlePluginTest extends MoodleTestCase
 {
-    public function testGetComponent()
+    public function testGetComponent(): void
     {
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertSame('local_ci', $plugin->getComponent());
     }
 
-    public function testGetDependencies()
+    public function testGetDependencies(): void
     {
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertSame(['mod_forum'], $plugin->getDependencies());
     }
 
-    public function testGetSubpluginTypes()
+    public function testGetSubpluginTypes(): void
     {
         $plugintypes = ['subplugin' => 'some/plugin/dir'];
         file_put_contents($this->pluginDir . '/db/subplugins.json', json_encode(['plugintypes' => $plugintypes]));
@@ -39,15 +39,15 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertSame(array_keys($plugintypes), $plugin->getSubpluginTypes());
     }
 
-    public function testHasUnitTests()
+    public function testHasUnitTests(): void
     {
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertTrue($plugin->hasUnitTests());
     }
 
-    public function testHasPhpUnitConfig()
+    public function testHasPhpUnitConfig(): void
     {
-        // Our plugins doesn't have a phpunit.xml file.
+        // Our plugins don't have a phpunit.xml file.
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertFalse($plugin->hasPhpUnitConfig());
 
@@ -56,7 +56,7 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertTrue($plugin->hasPhpUnitConfig());
     }
 
-    public function testNoUnitTests()
+    public function testNoUnitTests(): void
     {
         // Remove the only unit test file.
         $this->fs->remove($this->pluginDir . '/tests/lib_test.php');
@@ -65,13 +65,13 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertFalse($plugin->hasUnitTests());
     }
 
-    public function testHasBehatFeatures()
+    public function testHasBehatFeatures(): void
     {
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertTrue($plugin->hasBehatFeatures());
     }
 
-    public function testNoBehatFeatures()
+    public function testNoBehatFeatures(): void
     {
         // Remove the only unit test file.
         $this->fs->remove($this->pluginDir . '/tests/behat/login.feature');
@@ -80,14 +80,14 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertFalse($plugin->hasBehatFeatures());
     }
 
-    public function testGetThirdPartyLibraryPaths()
+    public function testGetThirdPartyLibraryPaths(): void
     {
         $plugin   = new MoodlePlugin($this->pluginDir);
         $expected = ['vendor.php', 'vendor', 'vendor_glob1.php', 'vendor_glob2.php'];
         $this->assertSame($expected, $plugin->getThirdPartyLibraryPaths());
     }
 
-    public function testGetThirdPartyLibraryPathsError()
+    public function testGetThirdPartyLibraryPathsError(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -98,7 +98,7 @@ class MoodlePluginTest extends MoodleTestCase
         $plugin->getThirdPartyLibraryPaths();
     }
 
-    public function testGetIgnores()
+    public function testGetIgnores(): void
     {
         $expected = ['filter' => [
             'notPaths' => ['foo/bar', 'very/bad.php'],
@@ -111,7 +111,7 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertSame($expected['filter'], $plugin->getIgnores());
     }
 
-    public function testGetFiles()
+    public function testGetFiles(): void
     {
         // Ignore some files for better testing.
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
@@ -140,7 +140,7 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertSame($expected, $files);
     }
 
-    public function testGetRelativeFiles()
+    public function testGetRelativeFiles(): void
     {
         // Ignore some files for better testing.
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
