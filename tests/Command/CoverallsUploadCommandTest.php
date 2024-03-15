@@ -27,7 +27,7 @@ class CoverallsUploadCommandTest extends MoodleTestCase
         $this->fs->touch($this->moodleDir . '/coverage.xml');
     }
 
-    protected function executeCommand($pluginDir = null)
+    protected function executeCommand(?string $pluginDir = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -48,20 +48,20 @@ class CoverallsUploadCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertFileExists($this->pluginDir . '/build/logs/clover.xml');
     }
 
-    public function testExecuteNoPlugin()
+    public function testExecuteNoPlugin(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir . '/no/plugin');
     }
 
-    public function testExecuteNoCoverageFile()
+    public function testExecuteNoCoverageFile(): void
     {
         $fs = new Filesystem();
         $fs->remove($this->moodleDir . '/coverage.xml');

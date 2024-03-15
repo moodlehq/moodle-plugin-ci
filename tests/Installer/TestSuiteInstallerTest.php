@@ -30,7 +30,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
         $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
-    public function testInstall()
+    public function testInstall(): void
     {
         $installer = new TestSuiteInstaller(
             new DummyMoodle(''),
@@ -42,7 +42,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
     }
 
-    public function testBehatProcesses()
+    public function testBehatProcesses(): void
     {
         $installer = new TestSuiteInstaller(
             new DummyMoodle(''),
@@ -59,7 +59,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
         $this->assertCount(2, $installer->getPostInstallProcesses());
     }
 
-    public function testUnitTestProcesses()
+    public function testUnitTestProcesses(): void
     {
         $installer = new TestSuiteInstaller(
             new DummyMoodle(''),
@@ -76,7 +76,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
         $this->assertCount(1, $installer->getPostInstallProcesses());
     }
 
-    public function testPHPUnitXMLFile()
+    public function testPHPUnitXMLFile(): void
     {
         $xmlFile   = $this->pluginDir . '/phpunit.xml';
         $installer = new TestSuiteInstaller(
@@ -103,7 +103,7 @@ class TestSuiteInstallerTest extends MoodleTestCase
         $this->assertXmlFileEqualsXmlFile(__DIR__ . '/../Fixture/phpunit/phpunit-expected.xml', $xmlFile);
     }
 
-    public function testPHPUnitXMLFile311()
+    public function testPHPUnitXMLFile311(): void
     {
         $xmlFile   = $this->pluginDir . '/phpunit.xml';
         $installer = new TestSuiteInstaller(

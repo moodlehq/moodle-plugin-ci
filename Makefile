@@ -13,17 +13,17 @@ test-fixer: check-init
 
 .PHONY:test-phpunit
 test-phpunit: check-init
-	$(PHPUNIT) --verbose
+	$(PHPUNIT) 
 
 .PHONY:validate
 validate: check-init validate-version psalm check-docs
 	$(FIXER) fix --dry-run --stop-on-violation
 	$(COMPOSER) validate
-	XDEBUG_MODE=coverage $(PHPUNIT) --verbose --coverage-text
+	XDEBUG_MODE=coverage $(PHPUNIT) --coverage-text
 
 .PHONY:coverage-phpunit
 coverage-phpunit: check-init
-	XDEBUG_MODE=coverage $(PHPUNIT) --verbose --coverage-clover build/logs/clover.xml
+	XDEBUG_MODE=coverage $(PHPUNIT) --coverage-clover build/logs/clover.xml
 
 .PHONY:build
 build: build/moodle-plugin-ci.phar

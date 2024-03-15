@@ -10,42 +10,29 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
+use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\FilterRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var FilterRequirements
-     */
-    private $requirements;
-
-    protected function setUp(): void
-    {
-        $this->requirements = new FilterRequirements(new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 29);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->requirements = null;
-    }
-
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\FilterRequirements',
+            FilterRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'filter', '', ''), 29)
         );
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
-        $files = $this->requirements->getRequiredFiles();
+        $requirements = new FilterRequirements(new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 29);
+        $files        = $requirements->getRequiredFiles();
 
         $this->assertNotEmpty($files);
         $this->assertTrue(in_array('filter.php', $files, true));
@@ -54,20 +41,23 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredClasses()
+    public function testGetRequiredClasses(): void
     {
-        $classes = $this->requirements->getRequiredClasses();
+        $requirements = new FilterRequirements(new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 29);
+        $classes      = $requirements->getRequiredClasses();
 
         $this->assertNotEmpty($classes);
         foreach ($classes as $class) {
-            $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+            $this->assertInstanceOf(FileTokens::class, $class);
         }
     }
 
-    public function testGetRequiredStrings()
+    public function testGetRequiredStrings(): void
     {
-        $fileToken = $this->requirements->getRequiredStrings();
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+        $requirements = new FilterRequirements(new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 29);
+        $fileToken    = $requirements->getRequiredStrings();
+
+        $this->assertInstanceOf(FileTokens::class, $fileToken);
         $this->assertSame('lang/en/filter_activitynames.php', $fileToken->file);
     }
 }

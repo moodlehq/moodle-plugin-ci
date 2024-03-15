@@ -20,12 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class SavePointsCommandTest extends MoodleTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    protected function executeCommand($pluginDir = null)
+    protected function executeCommand(?string $pluginDir = null): CommandTester
     {
         if (null === $pluginDir) {
             $pluginDir = $this->pluginDir;
@@ -45,20 +40,20 @@ class SavePointsCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
-    public function testExecuteNoUpgradeFile()
+    public function testExecuteNoUpgradeFile(): void
     {
         $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
-    public function testExecuteFail()
+    public function testExecuteFail(): void
     {
         $this->fs->copy(__DIR__ . '/../Fixture/broken-upgrade.php', $this->pluginDir . '/db/upgrade.php', true);
         $commandTester = $this->executeCommand();

@@ -16,7 +16,7 @@ use MoodlePluginCI\StandardResolver;
 
 class StandardResolverTest extends \PHPUnit\Framework\TestCase
 {
-    public function testHasStandard()
+    public function testHasStandard(): void
     {
         $resolver = new StandardResolver();
         $this->assertTrue($resolver->hasStandard('moodle'));
@@ -27,20 +27,20 @@ class StandardResolverTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($resolver->hasStandard('foo'));
     }
 
-    public function testResolve()
+    public function testResolve(): void
     {
         $resolver = new StandardResolver();
         $this->assertNotEmpty($resolver->resolve('moodle'));
     }
 
-    public function testResolveUnknown()
+    public function testResolveUnknown(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $resolver = new StandardResolver();
         $resolver->resolve('foo');
     }
 
-    public function testResolveNotFound()
+    public function testResolveNotFound(): void
     {
         $this->expectException(\RuntimeException::class);
         $resolver = new StandardResolver(['moodle' => [__DIR__ . '/bad/location']]);

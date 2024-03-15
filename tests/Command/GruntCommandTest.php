@@ -24,7 +24,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class GruntCommandTest extends MoodleTestCase
 {
-    protected function executeCommand()
+    protected function executeCommand(): CommandTester
     {
         $command            = new GruntCommand();
         $command->moodle    = new DummyMoodle($this->moodleDir);
@@ -44,7 +44,7 @@ class GruntCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    protected function newCommand()
+    protected function newCommand(): GruntCommand
     {
         $command            = new GruntCommand();
         $command->moodle    = new DummyMoodle($this->moodleDir);
@@ -54,13 +54,13 @@ class GruntCommandTest extends MoodleTestCase
         return $command;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
-    public function testToGruntTaskWithAMD()
+    public function testToGruntTaskWithAMD(): void
     {
         $command = $this->newCommand();
 
@@ -75,7 +75,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertNull($command->toGruntTask('amd'));
     }
 
-    public function testToGruntTaskWithYUI()
+    public function testToGruntTaskWithYUI(): void
     {
         $command = $this->newCommand();
 
@@ -97,7 +97,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertNull($command->toGruntTask('shifter'));
     }
 
-    public function testToGruntTaskWithLegacyYUI()
+    public function testToGruntTaskWithLegacyYUI(): void
     {
         $command = $this->newCommand();
         $this->fs->remove($this->pluginDir . '/yui/src');
@@ -107,7 +107,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertNull($command->toGruntTask('shifter'));
     }
 
-    public function testToGruntTaskWithGherkin()
+    public function testToGruntTaskWithGherkin(): void
     {
         $command = $this->newCommand();
 
@@ -132,7 +132,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertNull($command->toGruntTask('gherkinlint'));
     }
 
-    public function testToGruntTaskWithStyles()
+    public function testToGruntTaskWithStyles(): void
     {
         $command = $this->newCommand();
 
@@ -149,7 +149,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertNull($command->toGruntTask('stylelint:scss'));
     }
 
-    public function testToGruntTaskDefaultTask()
+    public function testToGruntTaskDefaultTask(): void
     {
         $command = $this->newCommand();
 
@@ -168,7 +168,7 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame($this->pluginDir, $task->workingDirectory);
     }
 
-    public function testValidatePluginFiles()
+    public function testValidatePluginFiles(): void
     {
         $command = $this->newCommand();
         $command->backupPlugin();

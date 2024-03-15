@@ -16,42 +16,42 @@ use MoodlePluginCI\Validate;
 
 class ValidateTest extends \PHPUnit\Framework\TestCase
 {
-    public function testDirectory()
+    public function testDirectory(): void
     {
         $validate = new Validate();
         $this->assertSame(__DIR__, $validate->directory(__DIR__));
         $this->assertSame(__DIR__ . '/..', $validate->directory(__DIR__ . '/..'));
     }
 
-    public function testDirectoryRealPathFail()
+    public function testDirectoryRealPathFail(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $validate = new Validate();
         $validate->directory('aaa');
     }
 
-    public function testDirectoryIsFile()
+    public function testDirectoryIsFile(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $validate = new Validate();
         $validate->directory(__FILE__);
     }
 
-    public function testFilePath()
+    public function testFilePath(): void
     {
         $validate = new Validate();
         $this->assertSame(__FILE__, $validate->filePath(__FILE__));
         $this->assertSame(__DIR__ . '/../README.md', $validate->filePath(__DIR__ . '/../README.md'));
     }
 
-    public function testFilePathRealPathFail()
+    public function testFilePathRealPathFail(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $validate = new Validate();
         $validate->filePath('aaa.txt');
     }
 
-    public function testFilePathIsDirectory()
+    public function testFilePathIsDirectory(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $validate = new Validate();
@@ -63,7 +63,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider gitBranchProvider
      */
-    public function testGitBranch($branch)
+    public function testGitBranch(string $branch): void
     {
         $validate = new Validate();
         $this->assertSame($branch, $validate->gitBranch($branch), "Validate that $branch is valid");
@@ -74,7 +74,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider invalidGitBranchProvider
      */
-    public function testGitBranchInvalid($branch)
+    public function testGitBranchInvalid(string $branch): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $validate = new Validate();
@@ -86,7 +86,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider urlProvider
      */
-    public function testUrl($url)
+    public function testUrl(string $url): void
     {
         $validate = new Validate();
         $this->assertSame($url, $validate->gitUrl($url), "Validate that $url is valid");
@@ -97,14 +97,14 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider invalidUrlProvider
      */
-    public function testInvalidUrl($url)
+    public function testInvalidUrl(string $url): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $validate = new Validate();
         $validate->gitUrl($url);
     }
 
-    public function gitBranchProvider()
+    public static function gitBranchProvider(): array
     {
         return [
             ['main'],
@@ -115,7 +115,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function invalidGitBranchProvider()
+    public static function invalidGitBranchProvider(): array
     {
         return [
             ['bad!'],
@@ -123,7 +123,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function urlProvider()
+    public static function urlProvider(): array
     {
         return [
             ['git@github.com:moodle/moodle.git'],
@@ -131,7 +131,7 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function invalidUrlProvider()
+    public static function invalidUrlProvider(): array
     {
         return [
             ['foo/bar'],

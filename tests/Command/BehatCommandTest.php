@@ -21,7 +21,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class BehatCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null, array $cmdOptions = []): CommandTester
+    protected function executeCommand(?string $pluginDir = null, ?string $moodleDir = null, array $cmdOptions = []): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -54,7 +54,7 @@ class BehatCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -64,7 +64,7 @@ class BehatCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/--verbose.*-vvv/', $this->lastCmd);
     }
 
-    public function testExecuteWithTags()
+    public function testExecuteWithTags(): void
     {
         $commandTester = $this->executeCommand(null, null, ['--tags' => '@tag1&&@tag2']);
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -72,14 +72,18 @@ class BehatCommandTest extends MoodleTestCase
         $this->assertDoesNotMatchRegularExpression('/--tags=@local_ci/', $this->lastCmd);
     }
 
-    public function testExecuteWithSeleniumImageOption()
+    public function testExecuteWithSeleniumImageOption(): void
     {
-        $commandTester = $this->executeCommand(null, null, ['--start-servers' => true, '--selenium' => 'seleniarm/standalone-chromium:latest']);
+        $commandTester = $this->executeCommand(
+            null,
+            null,
+            ['--start-servers' => true, '--selenium' => 'seleniarm/standalone-chromium:latest']
+        );
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/seleniarm\/standalone-chromium:latest/', $this->allCmds[1]);
     }
 
-    public function testExecuteWithSeleniumImageEnv()
+    public function testExecuteWithSeleniumImageEnv(): void
     {
         putenv('MOODLE_BEHAT_SELENIUM_IMAGE=seleniarm/standalone-chromium:latest');
 
@@ -88,7 +92,7 @@ class BehatCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/seleniarm\/standalone-chromium:latest/', $this->allCmds[1]);
     }
 
-    public function testExecuteWithChromeProfile()
+    public function testExecuteWithChromeProfile(): void
     {
         putenv('MOODLE_BEHAT_SELENIUM_IMAGE=');
 
@@ -97,37 +101,37 @@ class BehatCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/selenium\/standalone-chrome:3/', $this->allCmds[1]);
     }
 
-    public function testExecuteWithFirefoxProfile()
+    public function testExecuteWithFirefoxProfile(): void
     {
         putenv('MOODLE_BEHAT_SELENIUM_IMAGE=');
-        file_put_contents("{$this->moodleDir}/composer.lock", '');
+        file_put_contents("$this->moodleDir/composer.lock", '');
 
         $commandTester = $this->executeCommand(null, null, ['--start-servers' => true, '--profile' => 'firefox']);
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/selenium\/standalone-firefox:3/', $this->allCmds[1]);
     }
 
-    public function testExecuteWithLegacyFirefoxProfile()
+    public function testExecuteWithLegacyFirefoxProfile(): void
     {
         putenv('MOODLE_BEHAT_SELENIUM_IMAGE=');
-        file_put_contents("{$this->moodleDir}/composer.lock", 'instaclick/php-webdriver');
+        file_put_contents("$this->moodleDir/composer.lock", 'instaclick/php-webdriver');
 
         $commandTester = $this->executeCommand(null, null, ['--start-servers' => true, '--profile' => 'firefox']);
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/selenium\/standalone-firefox:2.53.1/', $this->allCmds[1]);
     }
 
-    public function testExecuteWithName()
+    public function testExecuteWithName(): void
     {
         $featureName = 'With "double quotes" and \'single quotes\'';
         // Note that everything is escaped for shell execution, plus own regexp quoting.
         $expectedName  = preg_quote(escapeshellarg("--name='$featureName'"));
         $commandTester = $this->executeCommand(null, null, ['--name' => $featureName]);
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression("/{$expectedName}/", $this->lastCmd);
+        $this->assertMatchesRegularExpression("/$expectedName/", $this->lastCmd);
     }
 
-    public function testExecuteNoFeatures()
+    public function testExecuteNoFeatures(): void
     {
         $this->fs->remove($this->pluginDir . '/tests/behat');
 
@@ -136,13 +140,13 @@ class BehatCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/No Behat features to run, free pass!/', $commandTester->getDisplay());
     }
 
-    public function testExecuteNoPlugin()
+    public function testExecuteNoPlugin(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir . '/no/plugin');
     }
 
-    public function testExecuteNoMoodle()
+    public function testExecuteNoMoodle(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         // TODO: Check what's happening here. moodleDir should be the 2nd parameter, but then the test fails.
