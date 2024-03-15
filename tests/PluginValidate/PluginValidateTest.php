@@ -19,7 +19,7 @@ use MoodlePluginCI\PluginValidate\Requirements\ModuleRequirements;
 
 class PluginValidateTest extends \PHPUnit\Framework\TestCase
 {
-    public function testVerifyRequirements()
+    public function testVerifyRequirements(): void
     {
         $plugin       = new Plugin('local_ci', 'local', 'travis', __DIR__ . '/../Fixture/moodle-local_ci');
         $requirements = new GenericRequirements($plugin, 29);
@@ -29,7 +29,7 @@ class PluginValidateTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($validate->isValid);
     }
 
-    public function testVerifyRequirementsFail()
+    public function testVerifyRequirementsFail(): void
     {
         $plugin       = new Plugin('local_ci', 'local', 'travis', __DIR__ . '/../Fixture/moodle-local_ci');
         $requirements = new ModuleRequirements($plugin, 29);  // Trick! It's not a module, should fail!

@@ -17,7 +17,7 @@ use MoodlePluginCI\PluginValidate\Finder\FunctionFinder;
 
 class FunctionFinderTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFindTokens()
+    public function testFindTokens(): void
     {
         $file       = __DIR__ . '/../../Fixture/moodle-local_ci/lib.php';
         $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci_subtract');

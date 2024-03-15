@@ -26,7 +26,7 @@ class AddConfigCommandTest extends FilesystemTestCase
         $this->fs->copy(__DIR__ . '/../Fixture/example-config.php', $this->tempDir . '/config.php');
     }
 
-    protected function executeCommand($line = '$CFG->foo = "bar";')
+    protected function executeCommand(string $line = '$CFG->foo = "bar";'): CommandTester
     {
         $command         = new AddConfigCommand();
         $command->moodle = new DummyMoodle($this->tempDir);
@@ -43,14 +43,14 @@ class AddConfigCommandTest extends FilesystemTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/\$CFG->foo = "bar";\n/', file_get_contents($this->tempDir . '/config.php'));
     }
 
-    public function testExecuteSyntaxError()
+    public function testExecuteSyntaxError(): void
     {
         $commandTester = $this->executeCommand('$CFG->foo = "bar"');
         $this->assertSame(1, $commandTester->getStatusCode());
