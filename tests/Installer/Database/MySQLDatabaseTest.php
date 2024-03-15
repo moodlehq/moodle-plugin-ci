@@ -16,7 +16,7 @@ use MoodlePluginCI\Installer\Database\MySQLDatabase;
 
 class MySQLDatabaseTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetCreateDatabaseCommand()
+    public function testGetCreateDatabaseCommand(): void
     {
         $database       = new MySQLDatabase();
         $database->name = 'TestName';
@@ -24,7 +24,8 @@ class MySQLDatabaseTest extends \PHPUnit\Framework\TestCase
         $database->pass = 'TestPass';
         $database->host = 'TestHost';
 
-        $expected = 'mysql -u TestUser --password=TestPass -h TestHost -e CREATE DATABASE `TestName` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
+        $expected = 'mysql -u TestUser --password=TestPass -h TestHost -e CREATE DATABASE `TestName` ' .
+            'DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;';
         $this->assertSame($expected, implode(' ', $database->getCreateDatabaseCommand()));
     }
 }

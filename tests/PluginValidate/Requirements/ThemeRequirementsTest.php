@@ -10,7 +10,7 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
@@ -18,34 +18,20 @@ use MoodlePluginCI\PluginValidate\Requirements\ThemeRequirements;
 
 class ThemeRequirementsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var ThemeRequirements
-     */
-    private $requirements;
-
-    protected function setUp(): void
-    {
-        $this->requirements = new ThemeRequirements(new Plugin('theme_base', 'theme', 'base', ''), 29);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->requirements = null;
-    }
-
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\ThemeRequirements',
+            ThemeRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'theme', '', ''), 29)
         );
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
-        $files = $this->requirements->getRequiredFiles();
+        $requirements = new ThemeRequirements(new Plugin('theme_base', 'theme', 'base', ''), 29);
+        $files        = $requirements->getRequiredFiles();
 
         $this->assertNotEmpty($files);
         $this->assertTrue(in_array('config.php', $files, true));

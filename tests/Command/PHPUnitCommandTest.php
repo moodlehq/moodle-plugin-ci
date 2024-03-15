@@ -21,7 +21,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class PHPUnitCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null, array $cmdOptions = []): CommandTester
+    protected function executeCommand(?string $pluginDir = null, ?string $moodleDir = null, array $cmdOptions = []): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -53,7 +53,7 @@ class PHPUnitCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -62,7 +62,7 @@ class PHPUnitCommandTest extends MoodleTestCase
         $this->assertDoesNotMatchRegularExpression('/--configuration.*local\/ci/', $this->lastCmd);
     }
 
-    public function testExecuteWithCustomPHPUnitXMLFile()
+    public function testExecuteWithCustomPHPUnitXMLFile(): void
     {
         $commandTester = $this->executeCommand(null, null, ['--configuration' => 'some_config.xml']);
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -72,7 +72,7 @@ class PHPUnitCommandTest extends MoodleTestCase
         $this->assertDoesNotMatchRegularExpression('/--testsuite.*local_ci_testsuite/', $this->lastCmd);
     }
 
-    public function testExecuteWithGeneratedPHPUnitXMLFile()
+    public function testExecuteWithGeneratedPHPUnitXMLFile(): void
     {
         $fs = new Filesystem();
         $fs->touch($this->pluginDir . '/phpunit.xml');
@@ -83,7 +83,7 @@ class PHPUnitCommandTest extends MoodleTestCase
         $this->assertDoesNotMatchRegularExpression('/--testsuite.*local_ci_testsuite/', $this->lastCmd);
     }
 
-    public function testExecuteWithTestSuite()
+    public function testExecuteWithTestSuite(): void
     {
         $commandTester = $this->executeCommand(null, null, ['--testsuite' => 'some_testsuite']);
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -93,7 +93,7 @@ class PHPUnitCommandTest extends MoodleTestCase
         $this->assertDoesNotMatchRegularExpression('/--testsuite.*local_ci_testsuite/', $this->lastCmd);
     }
 
-    public function testExecuteWithFilter()
+    public function testExecuteWithFilter(): void
     {
         $commandTester = $this->executeCommand(null, null, ['--filter' => 'some_filter']);
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -103,7 +103,7 @@ class PHPUnitCommandTest extends MoodleTestCase
         $this->assertDoesNotMatchRegularExpression('/--configuration.*local\/ci/', $this->lastCmd);
     }
 
-    public function testExecuteNoTests()
+    public function testExecuteNoTests(): void
     {
         $fs = new Filesystem();
         $fs->remove($this->pluginDir . '/tests/lib_test.php');
@@ -113,13 +113,13 @@ class PHPUnitCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/No PHPUnit tests to run, free pass!/', $commandTester->getDisplay());
     }
 
-    public function testExecuteNoPlugin()
+    public function testExecuteNoPlugin(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir . '/no/plugin');
     }
 
-    public function testExecuteNoMoodle()
+    public function testExecuteNoMoodle(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         // TODO: Check what's happening here. moodleDir should be the 2nd parameter, but then the test fails.
