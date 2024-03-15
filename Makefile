@@ -72,7 +72,7 @@ ifeq (, $(wildcard vendor))
 endif
 
 build/box.phar:
-	curl -LSs https://github.com/box-project/box/releases/download/4.3.8/box.phar -o build/box.phar
+	curl -LSs https://github.com/box-project/box/releases/download/4.6.1/box.phar -o build/box.phar
 
 build/moodle-plugin-ci.phar: build/box.phar
 	$(COMPOSER) install --no-dev --prefer-dist --classmap-authoritative --quiet

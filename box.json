@@ -13,7 +13,10 @@
       "name": [
         "*.php",
         "*.xml",
-        "*.xsd"
+        "*.xsd",
+        "completion.bash",
+        "completion.fish",
+        "completion.zsh"
       ],
       "exclude": [
         "moodlehq",
