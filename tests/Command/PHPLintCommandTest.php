@@ -21,7 +21,7 @@ class PHPLintCommandTest extends \PHPUnit\Framework\TestCase
 {
     private string $pluginDir = __DIR__ . '/../Fixture/moodle-local_ci';
 
-    protected function executeCommand(?string $customPluginDir = null)
+    protected function executeCommand(?string $customPluginDir = null): CommandTester
     {
         if ($customPluginDir) {
             $this->pluginDir = $customPluginDir;
@@ -41,7 +41,7 @@ class PHPLintCommandTest extends \PHPUnit\Framework\TestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $this->expectOutputRegex('/No syntax error found/');
         $commandTester = $this->executeCommand();
@@ -49,7 +49,7 @@ class PHPLintCommandTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
-    public function testExecuteNoFiles()
+    public function testExecuteNoFiles(): void
     {
         // Just random directory with no PHP files.
         $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');
@@ -57,7 +57,7 @@ class PHPLintCommandTest extends \PHPUnit\Framework\TestCase
         $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
-    public function testExecuteNoPlugin()
+    public function testExecuteNoPlugin(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand('/path/to/no/plugin');

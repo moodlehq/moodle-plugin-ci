@@ -16,7 +16,7 @@ use MoodlePluginCI\Bridge\Moodle;
 
 class MoodleTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetBranch()
+    public function testGetBranch(): void
     {
         $moodle = new Moodle(__DIR__ . '/../Fixture/moodle');
         $this->assertSame(39, $moodle->getBranch());

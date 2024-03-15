@@ -18,7 +18,7 @@ use MoodlePluginCI\Tests\Fake\Installer\DummyInstaller;
 
 class InstallerCollectionTest extends \PHPUnit\Framework\TestCase
 {
-    public function testAll()
+    public function testAll(): void
     {
         $installer1 = new DummyInstaller();
         $installer2 = new DummyInstaller();
@@ -30,7 +30,7 @@ class InstallerCollectionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame([$installer1, $installer2], $installers->all());
     }
 
-    public function testMergeEnv()
+    public function testMergeEnv(): void
     {
         $installer1 = new DummyInstaller();
         $installer1->addEnv('FOO', 'bar');
@@ -53,7 +53,7 @@ class InstallerCollectionTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, $installers->mergeEnv());
     }
 
-    public function testTotalSteps()
+    public function testTotalSteps(): void
     {
         $installer  = new DummyInstaller();
         $installers = new InstallerCollection(new InstallOutput());

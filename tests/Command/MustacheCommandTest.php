@@ -22,7 +22,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class MustacheCommandTest extends MoodleTestCase
 {
-    protected function executeCommand($pluginDir = null, $moodleDir = null, $command = null)
+    protected function executeCommand(?string $pluginDir = null, ?string $moodleDir = null, ?MustacheCommand $command = null): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -50,7 +50,7 @@ class MustacheCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         // Assert that the mobile app template is skipped.
         $command = $this->getMockBuilder(MustacheCommand::class)
@@ -69,13 +69,13 @@ class MustacheCommandTest extends MoodleTestCase
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
-    public function testExecuteNoPlugin()
+    public function testExecuteNoPlugin(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir . '/no/plugin');
     }
 
-    public function testExecuteNoMoodle()
+    public function testExecuteNoMoodle(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand($this->moodleDir . '/no/moodle');

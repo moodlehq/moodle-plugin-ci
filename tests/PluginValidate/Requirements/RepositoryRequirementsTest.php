@@ -10,42 +10,29 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
+use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\RepositoryRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var RepositoryRequirements
-     */
-    private $requirements;
-
-    protected function setUp(): void
-    {
-        $this->requirements = new RepositoryRequirements(new Plugin('repository_upload', 'repository', 'upload', ''), 29);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->requirements = null;
-    }
-
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\RepositoryRequirements',
+            RepositoryRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'repository', '', ''), 29)
         );
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
-        $files = $this->requirements->getRequiredFiles();
+        $requirements = new RepositoryRequirements(new Plugin('repository_upload', 'repository', 'upload', ''), 29);
+        $files        = $requirements->getRequiredFiles();
 
         $this->assertNotEmpty($files);
         foreach ($files as $file) {
@@ -53,27 +40,43 @@ class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredClasses()
+    public function testGetRequiredClasses(): void
     {
-        $classes = $this->requirements->getRequiredClasses();
+        $requirements = new RepositoryRequirements(new Plugin('repository_upload', 'repository', 'upload', ''), 29);
+        $classes      = $requirements->getRequiredClasses();
 
         $this->assertNotEmpty($classes);
         foreach ($classes as $class) {
-            $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+            $this->assertInstanceOf(FileTokens::class, $class);
         }
     }
 
-    public function testGetRequiredStrings()
+    public function testGetRequiredStrings(): void
     {
-        $fileToken = $this->requirements->getRequiredStrings();
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+        $requirements = new RepositoryRequirements(new Plugin('repository_upload', 'repository', 'upload', ''), 29);
+        $fileToken    = $requirements->getRequiredStrings();
+
+        $this->assertInstanceOf(FileTokens::class, $fileToken);
         $this->assertSame('lang/en/repository_upload.php', $fileToken->file);
     }
 
-    public function testGetRequiredCapabilities()
+    public function testGetRequiredCapabilities(): void
     {
-        $fileToken = $this->requirements->getRequiredCapabilities();
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+        $requirements = new RepositoryRequirements(new Plugin('repository_upload', 'repository', 'upload', ''), 29);
+        $fileToken    = $requirements->getRequiredCapabilities();
+
+        $this->assertInstanceOf(FileTokens::class, $fileToken);
         $this->assertSame('db/access.php', $fileToken->file);
+    }
+
+    public function testPluginAndMoodleAreSet(): void
+    {
+        // Let's check, via reflection, that the plugin and the moodle version are always set,
+        // no matter that we aren't using them for anything within the RepositoryRequirements class.
+        $requirements   = new RepositoryRequirements(new Plugin('repository_upload', 'repository', 'upload', ''), 1234);
+        $reflectedClass = new \ReflectionClass($requirements);
+
+        $this->assertSame('upload', $reflectedClass->getProperty('plugin')->getValue($requirements)->name);
+        $this->assertSame(1234, $reflectedClass->getProperty('moodleVersion')->getValue($requirements));
     }
 }

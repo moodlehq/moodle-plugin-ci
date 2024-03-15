@@ -10,42 +10,29 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
+use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\FormatRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class FormatRequirementsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var FormatRequirements
-     */
-    private $requirements;
-
-    protected function setUp(): void
-    {
-        $this->requirements = new FormatRequirements(new Plugin('format_weeks', 'format', 'weeks', ''), 29);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->requirements = null;
-    }
-
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\FormatRequirements',
+            FormatRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'format', '', ''), 29)
         );
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
-        $files = $this->requirements->getRequiredFiles();
+        $requirements = new FormatRequirements(new Plugin('format_weeks', 'format', 'weeks', ''), 29);
+        $files        = $requirements->getRequiredFiles();
 
         $this->assertNotEmpty($files);
         $this->assertTrue(in_array('format.php', $files, true));
@@ -54,13 +41,14 @@ class FormatRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredClasses()
+    public function testGetRequiredClasses(): void
     {
-        $classes = $this->requirements->getRequiredClasses();
+        $requirements = new FormatRequirements(new Plugin('format_weeks', 'format', 'weeks', ''), 29);
+        $classes      = $requirements->getRequiredClasses();
 
         $this->assertNotEmpty($classes);
         foreach ($classes as $class) {
-            $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+            $this->assertInstanceOf(FileTokens::class, $class);
         }
     }
 }

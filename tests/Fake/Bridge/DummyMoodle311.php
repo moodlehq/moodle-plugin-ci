@@ -25,5 +25,5 @@ namespace MoodlePluginCI\Tests\Fake\Bridge;
  */
 class DummyMoodle311 extends DummyMoodle
 {
-    public $branch = 311;
+    public int $branch = 311;
 }

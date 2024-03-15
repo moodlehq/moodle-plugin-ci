@@ -19,7 +19,7 @@ use MoodlePluginCI\Bridge\Moodle;
  */
 class DummyMoodle extends Moodle
 {
-    public $branch = 33;
+    public int $branch = 33;
 
     public function requireConfig(): void
     {

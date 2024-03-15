@@ -12,6 +12,7 @@
 
 namespace MoodlePluginCI\Tests\Fake\Process;
 
+use Mockery\MockInterface;
 use MoodlePluginCI\Process\Execute;
 use Symfony\Component\Process\Process;
 
@@ -21,24 +22,17 @@ class DummyExecute extends Execute
     public array $allCmds       = [];
     public string $lastCmd      = ''; // We need this for assertions against the command run.
 
-    private function getMockProcess(string $cmd)
+    private function getMockProcess(string $cmd): Process&MockInterface
     {
-        $process = \Mockery::mock('Symfony\Component\Process\Process');
-        $process->shouldReceive(
-            'setTimeout',
-            'run',
-            'wait',
-            'stop',
-            'getExitCode',
-            'getExitCodeText',
-            'getWorkingDirectory',
-            'isOutputDisabled',
-            'getErrorOutput'
-        );
-
-        $process->shouldReceive('isSuccessful')->andReturn(true);
-        $process->shouldReceive('getOutput')->andReturn($this->returnOutput);
-        $process->shouldReceive('getCommandLine')->andReturn($cmd);
+        /** @var Process&MockInterface $process */
+        $process = \Mockery::mock(Process::class);
+        $process->shouldReceive([
+            // We only need the following right now. Add more as needed.
+            'run'            => 0,
+            'isSuccessful'   => true,
+            'getOutput'      => $this->returnOutput,
+            'getCommandLine' => $cmd,
+        ]);
 
         return $process;
     }
@@ -80,7 +74,7 @@ class DummyExecute extends Execute
      *
      * @return string the command to run in a shell
      */
-    private function getCommandLine($cmd): string
+    private function getCommandLine(Process|array $cmd): string
     {
         if (is_array($cmd)) {
             $this->lastCmd = (new Process($cmd))->getCommandLine();

@@ -20,7 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class ValidateCommandTest extends MoodleTestCase
 {
-    protected function executeCommand()
+    protected function executeCommand(): CommandTester
     {
         $command         = new ValidateCommand();
         $command->moodle = new DummyMoodle($this->moodleDir);
@@ -36,7 +36,7 @@ class ValidateCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());

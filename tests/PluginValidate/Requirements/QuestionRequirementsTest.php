@@ -10,43 +10,31 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
+use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\QuestionRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class QuestionRequirementsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var QuestionRequirements
-     */
-    private $requirements;
-
-    protected function setUp(): void
-    {
-        $this->requirements = new QuestionRequirements(new Plugin('qtype_calculated', 'qtype', 'calculated', ''), 29);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->requirements = null;
-    }
-
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\QuestionRequirements',
+            QuestionRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'qtype', '', ''), 29)
         );
     }
 
-    public function testGetRequiredPrefixes()
+    public function testGetRequiredPrefixes(): void
     {
-        $fileTokens = $this->requirements->getRequiredTablePrefix();
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileTokens);
+        $requirements = new QuestionRequirements(new Plugin('qtype_calculated', 'qtype', 'calculated', ''), 29);
+        $fileTokens   = $requirements->getRequiredTablePrefix();
+
+        $this->assertInstanceOf(FileTokens::class, $fileTokens);
         $this->assertSame('db/install.xml', $fileTokens->file);
     }
 }

@@ -34,7 +34,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($config));
     }
 
-    protected function executeCommand($pluginDir = null, array $options = []): CommandTester
+    protected function executeCommand(?string $pluginDir = null, array $options = []): CommandTester
     {
         if ($pluginDir === null) {
             $pluginDir = $this->pluginDir;
@@ -54,7 +54,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -68,7 +68,7 @@ class CodeCheckerCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/RUN  Moodle CodeSniffer standard on local_ci/', $output);
     }
 
-    public function testExecuteFail()
+    public function testExecuteFail(): void
     {
         // Add a file known to have moodle errors.
         $content = <<<'EOT'
@@ -116,7 +116,7 @@ EOT;
         $this->assertMatchesRegularExpression('/RUN  Moodle CodeSniffer/', $commandTester->getDisplay());
     }
 
-    public function testExecuteWithWarningsAndThreshold()
+    public function testExecuteWithWarningsAndThreshold(): void
     {
         // Let's add a file with 2 warnings, and verify how the max-warnings affects the outcome.
         $content = <<<'EOT'
@@ -149,7 +149,7 @@ EOT;
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
-    public function testExecuteWithExclusions()
+    public function testExecuteWithExclusions(): void
     {
         // Add a file with errors and warnings, and verify that they are suppressed with the exclusions.
         $content = "<?php require(__DIR__.'/../../config.php');\n";
@@ -175,7 +175,7 @@ EOT;
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
-    public function testExecuteWithTodoCommentRegex()
+    public function testExecuteWithTodoCommentRegex(): void
     {
         // Let's add a file with some comments having links and some without.
         $content = <<<'EOT'
@@ -215,7 +215,7 @@ EOT;
         $this->assertMatchesRegularExpression('/Missing required "CUSTOM-\[0-9\]\+"/', $output);
     }
 
-    public function testExecuteWithLicenseRegex()
+    public function testExecuteWithLicenseRegex(): void
     {
         // Let's add a file with some comments having various licenses.
         $content = <<<'EOT'
@@ -253,7 +253,7 @@ EOT;
         $this->assertMatchesRegularExpression('/Value ".+invented-license IL v3 or later" does not match/', $output);
     }
 
-    public function testExecuteNoFiles()
+    public function testExecuteNoFiles(): void
     {
         // Just random directory with no PHP files.
         $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');
@@ -261,7 +261,7 @@ EOT;
         $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
     }
 
-    public function testExecuteNoPlugin()
+    public function testExecuteNoPlugin(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand('/path/to/no/plugin');
@@ -272,7 +272,7 @@ EOT;
      *
      * @return array of options to use for the command, all them known to fail
      */
-    public function commandFailedSomethingIsWrongProvider()
+    public static function commandFailedSomethingIsWrongProvider(): array
     {
         return [
             'default' => [
@@ -298,7 +298,7 @@ EOT;
      *
      * @dataProvider commandFailedSomethingIsWrongProvider
      */
-    public function testCommandFailedSomethingIsWrong(array $options, string $output)
+    public function testCommandFailedSomethingIsWrong(array $options, string $output): void
     {
         // Verify that with incorrect configurations we are getting the command always failed.
         $commandTester = $this->executeCommand($this->pluginDir, $options);

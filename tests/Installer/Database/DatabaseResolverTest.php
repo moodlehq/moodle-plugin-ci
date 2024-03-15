@@ -13,35 +13,38 @@
 namespace MoodlePluginCI\Tests\Installer\Database;
 
 use MoodlePluginCI\Installer\Database\DatabaseResolver;
+use MoodlePluginCI\Installer\Database\MariaDBDatabase;
+use MoodlePluginCI\Installer\Database\MySQLDatabase;
+use MoodlePluginCI\Installer\Database\PostgresDatabase;
 
 class DatabaseResolverTest extends \PHPUnit\Framework\TestCase
 {
-    public function testType()
+    public function testType(): void
     {
         $resolver = new DatabaseResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\Installer\Database\MySQLDatabase',
+            MySQLDatabase::class,
             $resolver->resolveDatabase('mysqli')
         );
         $this->assertInstanceOf(
-            'MoodlePluginCI\Installer\Database\PostgresDatabase',
+            PostgresDatabase::class,
             $resolver->resolveDatabase('pgsql')
         );
         $this->assertInstanceOf(
-            'MoodlePluginCI\Installer\Database\MariaDBDatabase',
+            MariaDBDatabase::class,
             $resolver->resolveDatabase('mariadb')
         );
     }
 
-    public function testTypeError()
+    public function testTypeError(): void
     {
         $this->expectException(\DomainException::class);
         $resolver = new DatabaseResolver();
         $resolver->resolveDatabase('foo');
     }
 
-    public function testOptions()
+    public function testOptions(): void
     {
         $resolver = new DatabaseResolver();
 
@@ -54,7 +57,7 @@ class DatabaseResolverTest extends \PHPUnit\Framework\TestCase
         $database = $resolver->resolveDatabase('mysqli', $name, $user, $pass, $host, $port);
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\Installer\Database\MySQLDatabase',
+            MySQLDatabase::class,
             $database
         );
 

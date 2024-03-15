@@ -10,14 +10,16 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
 use MoodlePluginCI\PluginValidate\Plugin;
+use MoodlePluginCI\PluginValidate\Requirements\BlockRequirements;
+use MoodlePluginCI\PluginValidate\Requirements\GenericRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class RequirementsResolverTest extends \PHPUnit\Framework\TestCase
 {
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
@@ -25,12 +27,12 @@ class RequirementsResolverTest extends \PHPUnit\Framework\TestCase
         // in the WhateverRequirementsTest.php file.  That way each can make sure it can be resolved.
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\BlockRequirements',
+            BlockRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'block', '', ''), 29)
         );
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\GenericRequirements',
+            GenericRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'gibberish', '', ''), 29)
         );
     }

@@ -23,7 +23,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class PluginInstallerTest extends FilesystemTestCase
 {
-    public function testInstall()
+    public function testInstall(): void
     {
         $fixture   = __DIR__ . '/../Fixture/moodle-local_ci';
         $plugin    = new MoodlePlugin($fixture);
@@ -38,7 +38,7 @@ class PluginInstallerTest extends FilesystemTestCase
         $this->assertSame(['PLUGIN_DIR' => $installDir], $installer->getEnv());
     }
 
-    public function testInstallPluginIntoMoodle()
+    public function testInstallPluginIntoMoodle(): void
     {
         $fixture    = realpath(__DIR__ . '/../Fixture/moodle-local_ci');
         $plugin     = new MoodlePlugin($fixture);
@@ -59,7 +59,7 @@ class PluginInstallerTest extends FilesystemTestCase
         }
     }
 
-    public function testInstallPluginIntoMoodleAlreadyExists()
+    public function testInstallPluginIntoMoodleAlreadyExists(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -71,7 +71,7 @@ class PluginInstallerTest extends FilesystemTestCase
         $installer->installPluginIntoMoodle($plugin);
     }
 
-    public function testCreateIgnoreFile()
+    public function testCreateIgnoreFile(): void
     {
         $filename = $this->tempDir . '/.moodle-plugin-ci.yml';
         $expected = ['filter' => [
@@ -90,7 +90,7 @@ class PluginInstallerTest extends FilesystemTestCase
         $this->assertSame($expected, Yaml::parse(file_get_contents($filename)));
     }
 
-    public function testScanForPlugins()
+    public function testScanForPlugins(): void
     {
         $fixture = __DIR__ . '/../Fixture/moodle-local_ci';
 

@@ -34,7 +34,7 @@ class FilesystemTestCase extends \PHPUnit\Framework\TestCase
         $this->fs->remove($this->tempDir);
     }
 
-    protected function dumpFile($relativePath, $content): string
+    protected function dumpFile(string $relativePath, string $content): string
     {
         $path = $this->tempDir . '/' . $relativePath;
         $this->fs->dumpFile($path, $content);

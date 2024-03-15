@@ -17,7 +17,7 @@ use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 
 class ClassFinderTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFindTokens()
+    public function testFindTokens(): void
     {
         $file       = __DIR__ . '/../../Fixture/moodle-local_ci/lib.php';
         $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci_math');
@@ -28,7 +28,7 @@ class ClassFinderTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($fileTokens->hasFoundAllTokens());
     }
 
-    public function testFindTokensNameSpaceClass()
+    public function testFindTokensNameSpaceClass(): void
     {
         $file       = __DIR__ . '/../../Fixture/moodle-local_ci/classes/math.php';
         $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci\math');

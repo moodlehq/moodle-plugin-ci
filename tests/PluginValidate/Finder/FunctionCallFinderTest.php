@@ -17,7 +17,7 @@ use MoodlePluginCI\PluginValidate\Finder\FunctionCallFinder;
 
 class FunctionCallFinderTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFindTokens()
+    public function testFindTokens(): void
     {
         $file       = __DIR__ . '/../../Fixture/moodle-local_ci/lib.php';
         $fileTokens = FileTokens::create('lib.php')->mustHave('local_ci_subtract');
@@ -29,7 +29,7 @@ class FunctionCallFinderTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($fileTokens->hasHint());
     }
 
-    public function testFindTokensNotFound()
+    public function testFindTokensNotFound(): void
     {
         $file       = __DIR__ . '/../../Fixture/moodle-local_ci/lib.php';
         $fileTokens = FileTokens::create('lib.php')->mustHave('exit')->notFoundHint('Exit not found');

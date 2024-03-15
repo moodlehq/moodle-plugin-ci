@@ -26,7 +26,7 @@ class MoodleConfigTest extends FilesystemTestCase
         putenv('MOODLE_BEHAT_FIREFOX_CAPABILITIES=');
     }
 
-    public function testCreateContents()
+    public function testCreateContents(): void
     {
         $config   = new MoodleConfig();
         $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
@@ -34,16 +34,30 @@ class MoodleConfigTest extends FilesystemTestCase
         $this->assertSame(file_get_contents(__DIR__ . '/../Fixture/example-config.php'), $contents);
     }
 
-    public function testConfigureChromeBrowserCapabilities()
+    public function testConfigureChromeBrowserCapabilities(): void
     {
-        putenv("MOODLE_BEHAT_CHROME_CAPABILITIES=['extra_capabilities'=>['chromeOptions'=>['args'=>['--ignore-certificate-errors','--allow-running-insecure-content']]]]");
+        $capabilities = <<<'END'
+            MOODLE_BEHAT_CHROME_CAPABILITIES = [
+                'extra_capabilities' => [
+                    'chromeOptions' => [
+                        'args' => [
+                            '--ignore-certificate-errors',
+                            '--allow-running-insecure-content'
+                        ]
+                    ]
+                ]
+            ]
+            END;
+        $capabilities = preg_replace('/\s+/', '', $capabilities); // Remove all spacing.
+        putenv($capabilities);
+
         $config   = new MoodleConfig();
         $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');
 
         $this->assertSame(file_get_contents(__DIR__ . '/../Fixture/example-config-with-chrome-capabilities.php'), $contents);
     }
 
-    public function testConfigureFirefoxBrowserCapabilities()
+    public function testConfigureFirefoxBrowserCapabilities(): void
     {
         putenv("MOODLE_BEHAT_FIREFOX_CAPABILITIES=['extra_capabilities'=>['firefoxOptions'=>['args'=>['-headless']]]]");
         $config   = new MoodleConfig();
@@ -52,7 +66,7 @@ class MoodleConfigTest extends FilesystemTestCase
         $this->assertSame(file_get_contents(__DIR__ . '/../Fixture/example-config-with-firefox-capabilities.php'), $contents);
     }
 
-    public function testInjectLineIntoConfig()
+    public function testInjectLineIntoConfig(): void
     {
         $before = <<<'EOT'
 // Random lines 1
@@ -74,14 +88,14 @@ EOT;
         $this->assertSame($expected, $contents);
     }
 
-    public function testInjectLineIntoConfigMissingPlaceholder()
+    public function testInjectLineIntoConfigMissingPlaceholder(): void
     {
         $this->expectException(\RuntimeException::class);
         $config = new MoodleConfig();
         $config->injectLine('Bad param', 'New Line');
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $this->dumpFile('test.txt', 'Test');
 
@@ -91,14 +105,14 @@ EOT;
         $this->assertSame('Test', $contents);
     }
 
-    public function testReadFileNotFound()
+    public function testReadFileNotFound(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $config = new MoodleConfig();
         $config->read($this->tempDir . '/test.txt');
     }
 
-    public function testReadFail()
+    public function testReadFail(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -109,7 +123,7 @@ EOT;
         $config->read($tempFile);
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         $config   = new MoodleConfig();
         $contents = $config->createContents(new MySQLDatabase(), '/path/to/moodledata');

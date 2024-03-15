@@ -10,43 +10,30 @@
  * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
+use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\DataformatRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class DataformatRequirementsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var DataformatRequirements
-     */
-    private $requirements;
-
-    protected function setUp(): void
-    {
-        $this->requirements = new DataformatRequirements(new Plugin('dataformat_csv', 'dataformat', 'csv', ''), 29);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->requirements = null;
-    }
-
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\DataformatRequirements',
+            DataformatRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'dataformat', '', ''), 29)
         );
     }
 
-    public function testGetRequiredStrings()
+    public function testGetRequiredStrings(): void
     {
-        $fileToken = $this->requirements->getRequiredStrings();
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+        $requirements = new DataformatRequirements(new Plugin('dataformat_csv', 'dataformat', 'csv', ''), 29);
+        $fileToken    = $requirements->getRequiredStrings();
+        $this->assertInstanceOf(FileTokens::class, $fileToken);
         $this->assertSame('lang/en/dataformat_csv.php', $fileToken->file);
     }
 }

@@ -10,42 +10,29 @@
  * License http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace MoodlePluginCI\Tests\PluginValidate;
+namespace MoodlePluginCI\Tests\PluginValidate\Requirements;
 
+use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Plugin;
 use MoodlePluginCI\PluginValidate\Requirements\ModuleRequirements;
 use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class ModuleRequirementsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var ModuleRequirements
-     */
-    private $requirements;
-
-    protected function setUp(): void
-    {
-        $this->requirements = new ModuleRequirements(new Plugin('mod_forum', 'mod', 'forum', ''), 29);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->requirements = null;
-    }
-
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
         $this->assertInstanceOf(
-            'MoodlePluginCI\PluginValidate\Requirements\ModuleRequirements',
+            ModuleRequirements::class,
             $resolver->resolveRequirements(new Plugin('', 'mod', '', ''), 29)
         );
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
-        $files = $this->requirements->getRequiredFiles();
+        $requirements = new ModuleRequirements(new Plugin('mod_forum', 'mod', 'forum', ''), 29);
+        $files        = $requirements->getRequiredFiles();
 
         $this->assertNotEmpty($files);
         foreach ($files as $file) {
@@ -53,27 +40,30 @@ class ModuleRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredFunctions()
+    public function testGetRequiredFunctions(): void
     {
-        $functions = $this->requirements->getRequiredFunctions();
+        $requirements = new ModuleRequirements(new Plugin('mod_forum', 'mod', 'forum', ''), 29);
+        $functions    = $requirements->getRequiredFunctions();
 
         $this->assertNotEmpty($functions);
         foreach ($functions as $function) {
-            $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $function);
+            $this->assertInstanceOf(FileTokens::class, $function);
         }
     }
 
-    public function testGetRequiredStrings()
+    public function testGetRequiredStrings(): void
     {
-        $fileToken = $this->requirements->getRequiredStrings();
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+        $requirements = new ModuleRequirements(new Plugin('mod_forum', 'mod', 'forum', ''), 29);
+        $fileToken    = $requirements->getRequiredStrings();
+        $this->assertInstanceOf(FileTokens::class, $fileToken);
         $this->assertSame('lang/en/forum.php', $fileToken->file);
     }
 
-    public function testGetRequiredCapabilities()
+    public function testGetRequiredCapabilities(): void
     {
-        $fileToken = $this->requirements->getRequiredCapabilities();
-        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
+        $requirements = new ModuleRequirements(new Plugin('mod_forum', 'mod', 'forum', ''), 29);
+        $fileToken    = $requirements->getRequiredCapabilities();
+        $this->assertInstanceOf(FileTokens::class, $fileToken);
         $this->assertSame('db/access.php', $fileToken->file);
     }
 }

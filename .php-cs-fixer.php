@@ -18,6 +18,12 @@ return (new PhpCsFixer\Config())
         # Couple of changes from Symfony defaults
         'modernize_strpos'                      => false, # TODO: Enable this once PHP8.0 is the min. req.
         'nullable_type_declaration_for_default_null_value' => true, # We prefer explicit typing, no matter the defaults.
+        // Psalm only supports phpdoc blocks, not other comments (1-star, slashes, etc.)
+        'phpdoc_to_comment' => [
+            'ignored_tags' => [
+                'psalm-suppress',
+            ],
+        ],
         # We continue here.
         'array_syntax'                          => ['syntax' => 'short'],
         'combine_consecutive_unsets'            => true,
@@ -49,7 +55,7 @@ return (new PhpCsFixer\Config())
         'concat_space'                          => ['spacing' => 'one'],
         'align_multiline_comment'               => true,
         'yoda_style'                            => false,
-        'compact_nullable_typehint'             => true,
+        'compact_nullable_type_declaration'     => true,
         'native_function_invocation'            => false,
         'native_constant_invocation'            => false,
     ])
