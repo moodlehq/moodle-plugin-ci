@@ -63,7 +63,7 @@ class MoodleProcess extends Process
         return $isSuccessful;
     }
 
-    public function mustRun(?callable $callback = null, array $env = []): Process
+    public function mustRun(?callable $callback = null, array $env = []): static
     {
         parent::mustRun($callback, $env);
 

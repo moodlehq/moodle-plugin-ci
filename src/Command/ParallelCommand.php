@@ -55,7 +55,7 @@ class ParallelCommand extends AbstractMoodleCommand
     }
 
     /**
-     * @return Process[][]
+     * @return array an array of arrays of processes, so that we can run them in parallel
      */
     public function initializeProcesses(): array
     {
@@ -98,7 +98,7 @@ class ParallelCommand extends AbstractMoodleCommand
 
         // Start all the processes, in groups of parallel-safe processes.
         foreach ($this->processes as $processGroup) {
-            foreach ($processGroup as $name => $process) {
+            foreach ($processGroup as $process) {
                 $process->start();
                 $progress->advance();
             }
