@@ -103,7 +103,6 @@ class Moodle
         // Must use reflection to avoid using static cache.
         /* @noinspection PhpUndefinedClassInspection */
         $method = new \ReflectionMethod(\core_component::class, 'fetch_plugintypes');
-        $method->setAccessible(true);
         $result = $method->invoke(null);
 
         if (!array_key_exists($type, $result[0])) {
@@ -114,7 +113,7 @@ class Moodle
     }
 
     /**
-     * Get the branch number, EG: 29, 30, etc.
+     * Get the branch number, EG: 38, 39, 310, 311, 400, ...
      *
      * @return int
      */
