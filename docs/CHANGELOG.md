@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+- Added GHA step to store Behat faildump as workflow artefact, so it can be
+  [inspected](https://docs.github.com/en/actions/managing-workflow-runs/downloading-workflow-artifacts). Documentation has been updated as well to reflect the purpose of the step.
+
 ## [4.4.1] - 2024-03-08
 ### Added
 - New `--no-plugin-node` option added to the `install` command, to be able to skip the installation of any NodeJS stuff that the plugin may include. The previous default has not changed and both Moodle's and plugin's NodeJS installation continues happening normally.
