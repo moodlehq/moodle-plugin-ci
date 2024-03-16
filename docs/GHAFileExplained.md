@@ -181,8 +181,21 @@ jobs:
         run: moodle-plugin-ci phpunit
 
       - name: Behat features
+        id: behat
         if: ${{ !cancelled() }}
         run: moodle-plugin-ci behat --profile chrome
+
+      # This step allows to upload Behat faildump (screenshots) as workflow artifact
+      # so it can be downloaded and inspected. You don't need this step if you
+      # are not running Behat test. Artifact will be retained for 7 days.
+      - name: Upload Behat Faildump
+        if: ${{ failure() && steps.behat.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Behat Faildump (${{ join(matrix.*, ', ') }})
+          path: ${{ github.workspace }}/moodledata/behat_dump
+          retention-days: 7
+          if-no-files-found: ignore
 
       - name: Mark cancelled jobs as failed.
         if: ${{ cancelled() }}
