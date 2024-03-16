@@ -170,6 +170,7 @@ class GruntCommand extends AbstractMoodleCommand
             $workingDirectory = $this->plugin->directory;
         }
         $defaultTask = new GruntTaskModel($task, $workingDirectory);
+        $defaultTaskPluginWorkingDirectory = new GruntTaskModel($task, $this->plugin->directory);
 
         switch ($task) {
             case 'amd':
@@ -194,11 +195,11 @@ class GruntCommand extends AbstractMoodleCommand
 
                 return new GruntTaskModel($task, $this->moodle->directory);
             case 'stylelint:css':
-                return $this->plugin->hasFilesWithName('*.css') ? $defaultTask : null;
+                return $this->plugin->hasFilesWithName('*.css') ? $defaultTaskPluginWorkingDirectory : null;
             case 'stylelint:less':
-                return $this->plugin->hasFilesWithName('*.less') ? $defaultTask : null;
+                return $this->plugin->hasFilesWithName('*.less') ? $defaultTaskPluginWorkingDirectory : null;
             case 'stylelint:scss':
-                return $this->plugin->hasFilesWithName('*.scss') ? $defaultTask : null;
+                return $this->plugin->hasFilesWithName('*.scss') ? $defaultTaskPluginWorkingDirectory : null;
             default:
                 return $defaultTask;
         }
