@@ -30,6 +30,14 @@
         <RedundantPropertyInitializationCheck errorLevel="suppress"/>
         <MissingConstructor errorLevel="info"/>
 
+        <!-- There are some include statements in tests that psalm cannot resolve,
+        but they are correct, part of the mocked Moodle environment. -->
+        <UnresolvableInclude>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </UnresolvableInclude>
+
         <!-- Test classes are, apparently, not used but, for sure, they are used by PHPUnit. -->
         <UnusedClass>
             <errorLevel type="suppress">
