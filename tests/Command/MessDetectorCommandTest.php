@@ -52,6 +52,16 @@ class MessDetectorCommandTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
+    public function testExecuteWithProblems(): void
+    {
+        $commandTester = $this->executeCommand(__DIR__ . '/../Fixture/phpmd');
+
+        $this->assertSame(0, $commandTester->getStatusCode()); // PHPMD always return 0, no matter the violations/errors.
+        $this->assertStringContainsString('Constant testConst should be defined in uppercase', $commandTester->getDisplay());
+        $this->assertStringContainsString('long variable names like $reallyVeryLongVariableName', $commandTester->getDisplay());
+        $this->assertStringContainsString('Unexpected end of token stream in file', $commandTester->getDisplay());
+    }
+
     public function testExecuteNoFiles(): void
     {
         // Just random directory with no PHP files.
