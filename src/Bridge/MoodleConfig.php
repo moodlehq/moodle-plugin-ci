@@ -32,10 +32,14 @@ class MoodleConfig
      */
     public function createContents(AbstractDatabase $database, string $dataDir): string
     {
+        $chromeinsecureargs         = "['--ignore-certificate-errors', '--allow-running-insecure-content']";
+        $chromeinsecurecapabilities = "['extra_capabilities' => ['chromeOptions' => ['args' => $chromeinsecureargs]]]";
+
         $template                 = file_get_contents(__DIR__ . '/../../res/template/config.php.txt');
         $behatdefaultbrowser      = getenv('MOODLE_BEHAT_DEFAULT_BROWSER') ?: (getenv('MOODLE_APP') ? 'chrome' : 'firefox');
-        $behatchromecapabilities  = getenv('MOODLE_BEHAT_CHROME_CAPABILITIES') ?: '[]';
+        $behatchromecapabilities  = getenv('MOODLE_BEHAT_CHROME_CAPABILITIES') ?: (getenv('MOODLE_APP') ? $chromeinsecurecapabilities : '[]');
         $behatfirefoxcapabilities = getenv('MOODLE_BEHAT_FIREFOX_CAPABILITIES') ?: '[]';
+        $appprotocol              = getenv('MOODLE_APP_PROTOCOL') ?: 'https';
         $variables                = [
             '{{DBTYPE}}'                   => $database->type,
             '{{DBLIBRARY}}'                => $database->library,
@@ -52,7 +56,7 @@ class MoodleConfig
             '{{BEHATWWWROOT}}'             => getenv('MOODLE_BEHAT_WWWROOT') ?: 'http://localhost:8000',
             '{{BEHATWDHOST}}'              => getenv('MOODLE_BEHAT_WDHOST') ?: 'http://localhost:4444/wd/hub',
             '{{BEHATDEFAULTBROWSER}}'      => $behatdefaultbrowser,
-            '{{BEHATIONICWWWROOT}}'        => getenv('MOODLE_APP') ? 'http://localhost:8100' : (getenv('MOODLE_BEHAT_IONIC_WWWROOT') ?: ''),
+            '{{BEHATIONICWWWROOT}}'        => getenv('MOODLE_APP') ? "$appprotocol://localhost:8100" : (getenv('MOODLE_BEHAT_IONIC_WWWROOT') ?: ''),
             '{{BEHATDEFAULTCAPABILITIES}}' => $behatdefaultbrowser === 'chrome' ? $behatchromecapabilities : $behatfirefoxcapabilities,
             '{{BEHATCHROMECAPABILITIES}}'  => $behatchromecapabilities,
             '{{BEHATFIREFOXCAPABILITIES}}' => $behatfirefoxcapabilities,
