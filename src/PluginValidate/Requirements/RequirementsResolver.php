@@ -32,6 +32,7 @@ class RequirementsResolver
         $map = [
             'auth'       => new AuthRequirements($plugin, $moodleVersion),
             'block'      => new BlockRequirements($plugin, $moodleVersion),
+            'dataformat' => new DataformatRequirements($plugin, $moodleVersion),
             'filter'     => new FilterRequirements($plugin, $moodleVersion),
             'format'     => new FormatRequirements($plugin, $moodleVersion),
             'mod'        => new ModuleRequirements($plugin, $moodleVersion),
