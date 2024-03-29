@@ -56,16 +56,16 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
     public function testDetectDebuggingMessages()
     {
         $process = new MoodleProcess([
-                    '-r',
-                    'echo "' . $this->outputWithoutDebugging . '";',
-                ]);
+            '-r',
+            'echo "' . $this->outputWithoutDebugging . '";',
+        ]);
         $process->run();
         $this->assertFalse($process->hasDebuggingMessages($process->getOutput()));
 
         $process = new MoodleProcess([
-                    '-r',
-                    'echo "' . $this->outputWithDebugging . '";',
-                ]);
+            '-r',
+            'echo "' . $this->outputWithDebugging . '";',
+        ]);
         $process->run();
         $this->assertTrue($process->hasDebuggingMessages($process->getOutput()));
     }
@@ -73,16 +73,16 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
     public function testHasPhpErrorMessages()
     {
         $process = new MoodleProcess([
-                    '-r',
-                    'echo $foo[\'bar\'];',
-                ]);
+            '-r',
+            'echo $foo[\'bar\'];',
+        ]);
         $process->run();
         $this->assertTrue($process->hasPhpErrorMessages($process->getErrorOutput()));
 
         $process = new MoodleProcess([
-                    '-r',
-                    'echo 42;',
-                ]);
+            '-r',
+            'echo 42;',
+        ]);
         $process->run();
         $this->assertFalse($process->hasPhpErrorMessages($process->getErrorOutput()));
     }
@@ -90,16 +90,16 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
     public function testIsSuccessful()
     {
         $process = new MoodleProcess([
-                    '-r',
-                    'echo 42;',
-                ]);
+            '-r',
+            'echo 42;',
+        ]);
         $process->run();
         $this->assertTrue($process->isSuccessful());
 
         $process = new MoodleProcess([
-                    '-r',
-                    'echo $foo[\'bar\'];',
-                ]);
+            '-r',
+            'echo $foo[\'bar\'];',
+        ]);
         $process->run();
         $this->assertFalse($process->isSuccessful());
     }
@@ -107,9 +107,9 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
     public function testMustRun()
     {
         $process = new MoodleProcess([
-                    '-r',
-                    'echo 42;',
-                ]);
+            '-r',
+            'echo 42;',
+        ]);
         $process->mustRun();
         $this->assertTrue($process->isSuccessful());
     }
