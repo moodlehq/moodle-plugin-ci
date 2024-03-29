@@ -19,7 +19,7 @@
  *
  * @package   local_ci
  * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   http://some.invented.license.com Not checked License v5 or later
  */
 
 // TODO: This todo comment without any MDL link is good for moodle-plugin-ci

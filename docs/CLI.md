@@ -1592,7 +1592,7 @@ Run Moodle CodeSniffer standard on a plugin
 
 ### Usage
 
-* `phpcs [-s|--standard STANDARD] [-x|--exclude EXCLUDE] [--max-warnings MAX-WARNINGS] [--test-version TEST-VERSION] [--todo-comment-regex TODO-COMMENT-REGEX] [--] <plugin>`
+* `phpcs [-s|--standard STANDARD] [-x|--exclude EXCLUDE] [--max-warnings MAX-WARNINGS] [--test-version TEST-VERSION] [--todo-comment-regex TODO-COMMENT-REGEX] [--license-regex LICENSE-REGEX] [--] <plugin>`
 * `codechecker`
 
 Run Moodle CodeSniffer standard on a plugin
@@ -1652,6 +1652,16 @@ Version or range of version to test with PHPCompatibility
 #### `--todo-comment-regex`
 
 Regex to use to match TODO/@todo comments
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `''`
+
+#### `--license-regex`
+
+Regex to use to match @license tags
 
 * Accept value: yes
 * Is value required: yes

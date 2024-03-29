@@ -96,13 +96,19 @@ EOT;
         $output = $commandTester->getDisplay();
         $this->assertMatchesRegularExpression('/E\.* 10\.* \/ 10 \(100%\)/', $output);                // Progress.
         $this->assertMatchesRegularExpression('/\/fixable.php/', $output);                            // File.
-        $this->assertMatchesRegularExpression('/ 8 ERRORS AND 1 WARNING AFFECTING 8 /', $output);     // Summary.
+        $this->assertMatchesRegularExpression('/ 11 ERRORS AND 1 WARNING AFFECTING 8 /', $output);    // Summary.
         $this->assertMatchesRegularExpression('/moodle\.Files\.BoilerplateComment\.Wrong/', $output); // Moodle sniff.
+        $this->assertMatchesRegularExpression('/Expected MOODLE_INTERNAL check/', $output);           // Moodle sniff.
         $this->assertMatchesRegularExpression('/print_error\(\) has been deprecated/', $output);      // Moodle sniff.
+        $this->assertMatchesRegularExpression('/Usage of ELSEIF not allowed; use ELSE IF/', $output); // Squiz sniff.
         $this->assertMatchesRegularExpression('/print_object\(\) is forbidden/', $output);            // Moodle sniff.
-        $this->assertMatchesRegularExpression('/Missing doc comment for class test/', $output);       // Moodle sniff.
+        $this->assertMatchesRegularExpression('/Missing docblock for class test/', $output);          // Moodle sniff.
+        $this->assertMatchesRegularExpression('/Missing @copyright tag/', $output);                   // Moodle sniff.
+        $this->assertMatchesRegularExpression('/Missing @license tag/', $output);                     // Moodle sniff.
+        $this->assertMatchesRegularExpression('/Missing docblock for function somefunc/', $output);   // Moodle sniff.
         $this->assertMatchesRegularExpression('/AbstractPrivateMethods\.Found/', $output);    // PHPCompatibility sniff.
-        $this->assertMatchesRegularExpression('/Files\.EndFileNewline\.NotFound/', $output);          // End of file.
+        $this->assertMatchesRegularExpression('/Opening brace must be the last content/', $output);   // Generic sniff.
+        $this->assertMatchesRegularExpression('/Files\.EndFileNewline\.NotFound/', $output);          // Generic of file.
         $this->assertMatchesRegularExpression('/PHPCBF CAN FIX THE 3 MARKED SNIFF/', $output);        // PHPCBF note.
         $this->assertMatchesRegularExpression('/Time:.*Memory:/', $output);                           // Time.
 
@@ -214,27 +220,38 @@ EOT;
         $commandTester = $this->executeCommand($this->pluginDir);
         $output        = $commandTester->getDisplay();
         $this->assertSame(1, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/FOUND 9 ERRORS AND 1 WARNING AFFECTING 1 LINE/', $output);
+        $this->assertMatchesRegularExpression('/FOUND \d+ ERRORS? AND \d+ WARNINGS? AFFECTING 1 LINE/', $output);
 
         // With exclusions.
-        $commandTester = $this->executeCommand($this->pluginDir, ['--exclude' => 'moodle.Files.RequireLogin,moodle.Files.BoilerplateComment']);
+        $commandTester = $this->executeCommand(
+            $this->pluginDir,
+            ['--exclude' => 'moodle.Files.RequireLogin,' .
+                'moodle.Files.BoilerplateComment,' .
+                'moodle.Commenting.MissingDocblock,' .
+                'moodle.Commenting.FileExpectedTags']
+        );
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
     public function testExecuteWithTodoCommentRegex()
     {
-        // Let's add a file with some comments having links and some without
+        // Let's add a file with some comments having links and some without.
         $content = <<<'EOT'
             <?php
             // phpcs:disable moodle.Files.BoilerplateComment
-            // Without any CUSTOM-[0-9]+ reference.
+
+            /**
+             * This is a nice fixture file with some todo tags.
+             *
+             * @copyright 2024 onwards Eloy Lafuente (stronk7) {@link https://stronk7.com}
+             * @license https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+             * @todo This is also the simplest, but within a phpdoc block
+             * @todo This is also the simplest, but within a phpdoc block. CUSTOM-123
+             */
 
             // TODO: This is the simplest TODO comment.
-            /** @todo This is also the simplest, but within a phpdoc block */
-            // With a CUSTOM-[0-9]+ reference.
 
             // TODO: This is the simplest TODO comment. CUSTOM-123.
-            /** @todo This is also the simplest, but within a phpdoc block. CUSTOM-123 */
 
             EOT;
 
@@ -247,11 +264,51 @@ EOT;
         $this->assertSame(0, $commandTester->getStatusCode());
 
         // With a "CUSTOM-[0-9]+" regex configured.
+        // TODO: This will start requiring complete regexp soon, see https://github.com/moodlehq/moodle-cs/issues/141
+        // (with "complete regex" meaning, with delimiters, basically).
         $commandTester = $this->executeCommand($this->pluginDir, ['--todo-comment-regex' => 'CUSTOM-[0-9]+']);
         $output        = $commandTester->getDisplay();
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 2 WARNINGS AFFECTING 2 LINES/', $output);
         $this->assertMatchesRegularExpression('/Missing required "CUSTOM-\[0-9\]\+"/', $output);
+    }
+
+    public function testExecuteWithLicenseRegex()
+    {
+        // Let's add a file with some comments having various licenses.
+        $content = <<<'EOT'
+            <?php
+            // phpcs:disable moodle.Files.BoilerplateComment
+
+            /**
+             * This is a nice fixture file with some licenses.
+             *
+             * @copyright 2024 onwards Eloy Lafuente (stronk7) {@link https://stronk7.com}
+             * @license https://example.org/invented-license IL v3 or later
+             */
+
+            EOT;
+
+        $this->fs->dumpFile($this->pluginDir . '/test_comment_licenses.php', $content);
+
+        // Without any regex configured.
+        $commandTester = $this->executeCommand($this->pluginDir);
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/\.{10} 10 \/ 10 \(100%\)/', $output);
+
+        // With a "~v[345]] or later~" regex configured.
+        $commandTester = $this->executeCommand($this->pluginDir, ['--license-regex' => '~v[345] or later~']);
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/\.{10} 10 \/ 10 \(100%\)/', $output);
+
+        // With a "GNU GPL" regex configured.
+        $commandTester = $this->executeCommand($this->pluginDir, ['--license-regex' => '~GNU GPL~']);
+        $output        = $commandTester->getDisplay();
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE/', $output);
+        $this->assertMatchesRegularExpression('/Value ".+invented-license IL v3 or later" does not match/', $output);
     }
 
     public function testExecuteNoFiles()

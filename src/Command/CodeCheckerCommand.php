@@ -38,14 +38,43 @@ class CodeCheckerCommand extends AbstractPluginCommand
         $this->setName('phpcs')
             ->setAliases(['codechecker'])
             ->setDescription('Run Moodle CodeSniffer standard on a plugin')
-            ->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The name or path of the coding standard to use', 'moodle')
-            ->addOption('exclude', 'x', InputOption::VALUE_REQUIRED, 'Comma separated list of sniff codes to exclude from checking', '')
-            ->addOption('max-warnings', null, InputOption::VALUE_REQUIRED,
-                'Number of warnings to trigger nonzero exit code - default: -1', -1)
-            ->addOption('test-version', null, InputOption::VALUE_REQUIRED,
-                'Version or range of version to test with PHPCompatibility', 0)
-            ->addOption('todo-comment-regex', null, InputOption::VALUE_REQUIRED,
-                'Regex to use to match TODO/@todo comments', '');
+            ->addOption(
+                'standard',
+                's',
+                InputOption::VALUE_REQUIRED,
+                'The name or path of the coding standard to use',
+                'moodle'
+            )->addOption(
+                'exclude',
+                'x',
+                InputOption::VALUE_REQUIRED,
+                'Comma separated list of sniff codes to exclude from checking',
+                ''
+            )->addOption(
+                'max-warnings',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Number of warnings to trigger nonzero exit code - default: -1',
+                -1
+            )->addOption(
+                'test-version',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Version or range of version to test with PHPCompatibility',
+                0
+            )->addOption(
+                'todo-comment-regex',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Regex to use to match TODO/@todo comments',
+                ''
+            )->addOption(
+                'license-regex',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Regex to use to match @license tags',
+                ''
+            );
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -118,6 +147,13 @@ class CodeCheckerCommand extends AbstractPluginCommand
         // to a valid regex ('MDL-[0-9]+', 'https:', ...) to enable the checks.
         $todoCommentRegex = $input->getOption('todo-comment-regex');
         array_push($cmd, '--runtime-set', 'moodleTodoCommentRegex', $todoCommentRegex);
+
+        // Set the regex to use to match @license tags.
+        // Note that the option defaults to an empty string,
+        // meaning that no checks will be performed. Configure it
+        // to a valid regex ('GPL-3.0', 'https:', ...) to enable the checks.
+        $licenseRegex = $input->getOption('license-regex');
+        array_push($cmd, '--runtime-set', 'moodleLicenseRegex', $licenseRegex);
 
         // Add the files to process.
         foreach ($files as $file) {
