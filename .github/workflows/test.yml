@@ -264,6 +264,7 @@ jobs:
 
   selfupdatetest:
     name: SelfUpdate tests (PHAR)
+    needs: buildphar
     runs-on: ubuntu-22.04
     env:
       lowest_release: '4.1.8'
