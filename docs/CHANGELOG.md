@@ -9,9 +9,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
-
-- Added GHA step to store Behat faildump as workflow artefact, so it can be
+## [4.4.2] - 2024-03-30
+### Added
+- Added GHA step to store Behat fail-dumps as workflow artefacts, so it can be
   [inspected](https://docs.github.com/en/actions/managing-workflow-runs/downloading-workflow-artifacts). Documentation has been updated as well to reflect the purpose of the step.
+- Added support for the `--license-regex` option to the `phpcs` command. When specified, all the PHPDoc license tags (`@license`) are inspected to ensure that they contain some text matching the regular expression (a license type: `/GNU GPL v3 or later/`, ... or any other valid alternative).
+
+### Changed
+- Updated project dependencies to current [moodle-cs v3.4.4](https://github.com/moodlehq/moodle-cs), [moodle-local_moodlecheck v1.3.2](https://github.com/moodlehq/moodle-local_moodlecheck) and [moodle-local_ci v1.0.29](https://github.com/moodlehq/moodle-local_ci) releases.
+- Updated self CI dependencies to current PHP and Moodle versions.
+- For pull requests, set the Assignee automatically (to the author of the PR).
+
+### Removed
+- The documentation about the `phpcpd` command (deprecated and to be removed in 5.0.0) has been deleted from all the templates and docs.
 
 ## [4.4.1] - 2024-03-08
 ### Added
@@ -672,7 +682,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.1...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.2...main
+[4.4.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.1...4.4.2
 [4.4.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.0...4.4.1
 [4.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.2...4.4.0
 [4.3.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.1...4.3.2
