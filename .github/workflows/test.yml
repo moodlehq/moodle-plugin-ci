@@ -133,7 +133,7 @@ jobs:
         moodle-plugin-ci phplint
         moodle-plugin-ci phpcpd
         moodle-plugin-ci phpmd
-        moodle-plugin-ci phpcs
+        moodle-plugin-ci phpcs --max-warnings 0
         moodle-plugin-ci phpcbf
         moodle-plugin-ci validate
         moodle-plugin-ci savepoints
@@ -250,7 +250,7 @@ jobs:
         php build/moodle-plugin-ci.phar phplint
         php build/moodle-plugin-ci.phar phpcpd
         php build/moodle-plugin-ci.phar phpmd
-        php build/moodle-plugin-ci.phar phpcs
+        php build/moodle-plugin-ci.phar phpcs --max-warnings 0
         php build/moodle-plugin-ci.phar phpcbf
         php build/moodle-plugin-ci.phar validate
         php build/moodle-plugin-ci.phar savepoints
