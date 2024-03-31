@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+## [4.4.3] - 2024-03-31
 ### Changed
 - Updated project dependencies to current [moodle-cs v3.4.5](https://github.com/moodlehq/moodle-cs) release.
 
@@ -685,7 +686,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.2...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.3...main
+[4.4.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.2...4.4.3
 [4.4.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.1...4.4.2
 [4.4.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.4.0...4.4.1
 [4.4.0]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.3.2...4.4.0
