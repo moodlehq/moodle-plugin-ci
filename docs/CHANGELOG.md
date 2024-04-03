@@ -9,6 +9,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+
+## [4.4.4] - 2024-04-03
+### Changed
+- Updated project dependencies to current [moodle-cs v3.4.6](https://github.com/moodlehq/moodle-cs) release.
+
 ## [4.4.3] - 2024-03-31
 ### Changed
 - Updated project dependencies to current [moodle-cs v3.4.5](https://github.com/moodlehq/moodle-cs) release.
