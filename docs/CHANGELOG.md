@@ -10,6 +10,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 
+## [4.4.5] - 2024-04-03
+### Changed
+- Additional release for error in release process
+
 ## [4.4.4] - 2024-04-03
 ### Changed
 - Updated project dependencies to current [moodle-cs v3.4.6](https://github.com/moodlehq/moodle-cs) release.
