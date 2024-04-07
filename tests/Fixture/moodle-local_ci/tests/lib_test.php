@@ -37,13 +37,13 @@ require_once(__DIR__.'/../lib.php');
  * @copyright Copyright (c) 2015 Blackboard Inc. (http://www.blackboard.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class lib_test extends \basic_testcase {
+final class lib_test extends \basic_testcase {
     /**
      * Test addition.
      *
      * @covers ::local_ci_add
      */
-    public function test_local_ci_add() {
+    public function test_local_ci_add(): void {
         $this->assertEquals(4, local_ci_add(2, 2));
         $this->assertEquals(2, local_ci_add(4, -2));
         $this->assertEquals(0, local_ci_add(-4, 4));
@@ -54,7 +54,7 @@ class lib_test extends \basic_testcase {
      *
      * @covers ::local_ci_subtract
      */
-    public function test_local_ci_subtract() {
+    public function test_local_ci_subtract(): void {
         $this->assertEquals(0, local_ci_subtract(2, 2));
         $this->assertEquals(6, local_ci_subtract(4, -2));
         $this->assertEquals(-8, local_ci_subtract(-4, 4));
@@ -65,7 +65,7 @@ class lib_test extends \basic_testcase {
      *
      * @covers \local_ci\math::add
      */
-    public function test_local_ci_math() {
+    public function test_local_ci_math(): void {
         $math = new \local_ci_math();
         $this->assertEquals(4, $math->add(2, 2));
         $this->assertEquals(2, $math->add(4, -2));
@@ -77,7 +77,7 @@ class lib_test extends \basic_testcase {
      *
      * @covers \local_ci\math::add
      */
-    public function test_local_ci_math_class() {
+    public function test_local_ci_math_class(): void {
         $math = new math();
         $this->assertEquals(4, $math->add(2, 2));
         $this->assertEquals(2, $math->add(4, -2));
