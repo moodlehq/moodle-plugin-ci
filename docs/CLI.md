@@ -2133,7 +2133,7 @@ Use the xdebug extension to calculate code coverage
 
 #### `--coverage-phpdbg`
 
-Use the phpdbg binary to calculate code coverage
+(**DEPRECATED**) Use the phpdbg binary to calculate code coverage
 
 * Accept value: no
 * Is value required: no

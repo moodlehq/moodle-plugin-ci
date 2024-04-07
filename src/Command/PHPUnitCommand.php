@@ -47,7 +47,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
             ->addOption('coverage-clover', null, InputOption::VALUE_NONE, 'Generate code coverage report in Clover XML format')
             ->addOption('coverage-pcov', null, InputOption::VALUE_NONE, 'Use the pcov extension to calculate code coverage')
             ->addOption('coverage-xdebug', null, InputOption::VALUE_NONE, 'Use the xdebug extension to calculate code coverage')
-            ->addOption('coverage-phpdbg', null, InputOption::VALUE_NONE, 'Use the phpdbg binary to calculate code coverage')
+            ->addOption('coverage-phpdbg', null, InputOption::VALUE_NONE, '(**DEPRECATED**) Use the phpdbg binary to calculate code coverage')
             ->addOption('fail-on-incomplete', null, InputOption::VALUE_NONE, 'Treat incomplete tests as failures')
             ->addOption('fail-on-risky', null, InputOption::VALUE_NONE, 'Treat risky tests as failures')
             ->addOption('fail-on-skipped', null, InputOption::VALUE_NONE, 'Treat skipped tests as failures')
@@ -195,6 +195,15 @@ class PHPUnitCommand extends AbstractMoodleCommand
                     '-dxdebug.mode=coverage',
                 ];
             case 'phpdbg':
+                // @codeCoverageIgnoreStart
+                if (!defined('PHPUNIT_TEST')) { // Only show deprecation warnings in non-test environments.
+                    if (getenv('GITHUB_ACTIONS')) { // Only show deprecation annotations in GitHub Actions.
+                        echo '::warning title=Deprecated phpdbg option::The use of phpdbg for phpunit code coverage ' .
+                            'is deprecated and will be removed in 5.0.0. Please, switch to pcov or xdebug instead.' . PHP_EOL;
+                    }
+                }
+                // @codeCoverageIgnoreEnd
+
                 return [
                     'phpdbg',
                     '-d',
