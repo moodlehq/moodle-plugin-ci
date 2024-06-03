@@ -294,7 +294,7 @@ jobs:
         coverage: none
 
     - name: Download base ${{ env.lowest_release }} PHAR artifact
-      uses: robinraju/release-downloader@v1.8
+      uses: robinraju/release-downloader@v1.10
       with:
         repository: moodlehq/moodle-plugin-ci
         tag: ${{ env.lowest_release }}

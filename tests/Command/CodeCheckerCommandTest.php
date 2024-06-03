@@ -324,4 +324,43 @@ EOT;
         $this->expectException(\InvalidArgumentException::class);
         $this->executeCommand('/path/to/no/plugin');
     }
+
+    /**
+     * Data provider for testCommandFailedSomethingIsWrong.
+     *
+     * @return array of options to use for the command, all them known to fail
+     */
+    public function commandFailedSomethingIsWrongProvider()
+    {
+        return [
+            'default' => [
+                ['--standard' => 'chocolate', '--max-warnings' => -1],
+                'ERROR: the "chocolate" coding standard is not installed',
+            ],
+            'zero' => [
+                ['--standard' => 'chocolate', '--max-warnings' => 0],
+                'ERROR: the "chocolate" coding standard is not installed',
+            ],
+            'positive' => [
+                ['--standard' => 'chocolate', '--max-warnings' => 1],
+                'ERROR: the "chocolate" coding standard is not installed',
+            ],
+        ];
+    }
+
+    /**
+     * Verify that if anything goes wrong, the command fails, no matter the max-warnings.
+     *
+     * @param array  $options configuration to use for the command
+     * @param string $output  Expected output (substring matching is enough)
+     *
+     * @dataProvider commandFailedSomethingIsWrongProvider
+     */
+    public function testCommandFailedSomethingIsWrong(array $options, string $output)
+    {
+        // Verify that with incorrect configurations we are getting the command always failed.
+        $commandTester = $this->executeCommand($this->pluginDir, $options);
+        $this->assertSame(1, $commandTester->getStatusCode());
+        $this->assertStringContainsString($output, $commandTester->getDisplay());
+    }
 }

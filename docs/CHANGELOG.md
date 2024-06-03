@@ -15,6 +15,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Fixed
 - Solved a problem with the validation of `dataformat` plugin lang strings.
+- Fixed a problem with the `phpcs` command returning with success when some (configuration, installation, ...) problem was causing it not to be executed at all.
 
 ## [4.4.5] - 2024-04-03
 ### Changed
