@@ -178,6 +178,13 @@ class CodeCheckerCommand extends AbstractPluginCommand
 
         // Arrived here, we are playing with max-warnings, so we have to decide the exit code
         // based on the existence of errors and the number of warnings compared with the threshold.
+
+        // Verify that the summary file was created. If not, something went wrong with the execution.
+        if (!file_exists($this->tempFile)) {
+            return 1;
+        }
+
+        // Let's inspect the summary file to get the total number of errors and warnings.
         $totalErrors   = 0;
         $totalWarnings = 0;
         $jsonFile      = trim(file_get_contents($this->tempFile));
