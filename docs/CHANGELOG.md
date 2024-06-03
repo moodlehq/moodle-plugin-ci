@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to current [moodle-cs v3.4.7](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci v1.0.30](https://github.com/moodlehq/moodle-local_ci) releases.
+
 ### Deprecated
 - The use of `phpdbg` to calculate PHPUnit's code-coverage has been deprecated in this `moodle-plugin-ci` release (4.5.0) and will be removed in 5.0.0. This includes both the implicit (default) option when no alternative (`pcov` or `xdebug`) is available and the explicit `--coverage-phpdbg` option.
 - ACTION SUGGESTED: In order to avoid deprecation warnings or annotations, proceed to ensure that either `pcov` (Moodle 3.10 and up) or `xdebug` are available and they will be used automatically. Note that any use of `phpdbg` will throw an error in the next major release (5.0.0).
