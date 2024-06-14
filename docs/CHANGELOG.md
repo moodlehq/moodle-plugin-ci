@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to current [moodle-cs v3.4.8](https://github.com/moodlehq/moodle-cs) release.
+
 ### Fixed
 - Fixed a problem with the `grunt` command running the `stylelint` tasks against the whole Moodle directory (including both core and other optional plugins installed). Now only the plugin being checked is effectively analysed.
 
