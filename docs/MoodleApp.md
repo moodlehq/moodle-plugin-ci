@@ -11,7 +11,9 @@ In practice, you only need to set the `MOODLE_APP` env variable to `true`, and a
 - `MOODLE_APP_BEHAT_PLUGIN_PROJECT`: Project in github to use for installing the plugin with Behat steps specific to the Moodle App. The default value is `moodlehq/moodle-local_moodleappbehat`. This variable will be ignored if `MOODLE_APP_BEHAT_PLUGIN_REPOSITORY` is set.
 - `MOODLE_APP_BEHAT_PLUGIN_REPOSITORY`: Repository url to use for installing the plugin with Behat steps specific to the Moodle App. By default, the github repository defined in `MOODLE_APP_BEHAT_PLUGIN_PROJECT` will be used.
 - `MOODLE_APP_BEHAT_PLUGIN_BRANCH`: Branch of the repository to use for installing the plugin with Behat steps specific to the Moodle App. The default value is `latest`.
-- `MOODLE_BEHAT_IONIC_WWWROOT`: Value to use in `$CFG->behat_ionic_wwwroot`. The default value is `http://localhost:8100`. This value should only be used if `MOODLE_APP` is not set, and the Moodle App dependencies are configured manually.
+- `MOODLE_APP_PORT`: Port to listen in the Docker image. The default value is `443`, but you may need to set it to `80` for older versions of the app.
+- `MOODLE_APP_PROTOCOL`: Protocol to use when interaction with the app. The default value is `https`, but you may need to set it to `http` for older versions of the app.
+- `MOODLE_BEHAT_IONIC_WWWROOT`: Value to use in `$CFG->behat_ionic_wwwroot`. The default value is `https://localhost:8100` (or `http://localhost:8100` if `MOODLE_APP_PROTOCOL` is set to `http`). This value should only be used if `MOODLE_APP` is not set, and the Moodle App dependencies are configured manually.
 
 Finally, keep in mind that mobile tests only run on Chrome, so make sure that you're using the correct browser. If you're setting the `MOODLE_APP` variable, the default browser should already be Chrome; but you can set it explicitly using the `--profile` flag otherwise.
 
