@@ -66,6 +66,7 @@ class MoodleInstaller extends AbstractInstaller
             $this->moodle->directory,
         ];
 
+        // Only run git clone if it does not already exist
         if (!is_dir($this->moodle->directory)) {
             $this->execute->mustRun(new Process($cmd, null, null, null, null));
         }
