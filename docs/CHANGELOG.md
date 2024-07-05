@@ -9,6 +9,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- Support for version 4.4 of the app, that uses new defaults and Chrome (Selenium 4) version.
+
+### Changed
+- Updated project dependencies to current [moodle-cs v3.4.10](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci v1.0.31](https://github.com/moodlehq/moodle-local_ci) releases.
+
+
 ## [4.5.2] - 2024-06-19
 ### Changed
 - Updated project dependencies to current [moodle-cs v3.4.9](https://github.com/moodlehq/moodle-cs) release.
