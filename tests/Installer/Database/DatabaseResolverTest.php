@@ -32,6 +32,11 @@ class DatabaseResolverTest extends \PHPUnit\Framework\TestCase
             'MoodlePluginCI\Installer\Database\MariaDBDatabase',
             $resolver->resolveDatabase('mariadb')
         );
+
+        $this->assertInstanceOf(
+            'MoodlePluginCI\Installer\Database\MSSQLDatabase',
+            $resolver->resolveDatabase('sqlsrv')
+        );
     }
 
     public function testTypeError()
