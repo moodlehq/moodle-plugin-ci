@@ -9,6 +9,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- In order to prevent issue when GH running-image supplied nvm may not work (it is also not included in ubuntu-24.04), we
+  install last working version explicitly in initialise step.
+- ACTION REQUIRED: Update your workflows and add explicit nvm installaton of
+  version v0.39.7.
+
 ## [4.5.3] - 2024-07-05
 ### Added
 - Support for version 4.4 of the app, that uses new defaults and Chrome (Selenium 4) version.

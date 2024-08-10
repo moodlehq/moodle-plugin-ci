@@ -120,8 +120,8 @@ jobs:
         echo "CI_BUILD_DIR="$(cd ../moodle-local_ci; pwd) >> $GITHUB_ENV
         # PHPUnit depends on en_AU.UTF-8 locale
         sudo locale-gen en_AU.UTF-8
-        # Define NVM_DIR pointing to nvm installation.
-        echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
+        # Install nvm.
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
     - name: Install moodle-plugin-ci
       run: moodle-plugin-ci install -vvv
@@ -238,8 +238,8 @@ jobs:
         echo "CI_BUILD_DIR="$(cd ../moodle-local_ci; pwd) >> $GITHUB_ENV
         # PHPUnit depends on en_AU.UTF-8 locale
         sudo locale-gen en_AU.UTF-8
-        # Define NVM_DIR pointing to nvm installation.
-        echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
+        # Install nvm.
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
     - name: Download PHAR artifact
       uses: actions/download-artifact@v4
