@@ -102,6 +102,7 @@ class InstallCommand extends Command
             ->addOption('not-names', null, InputOption::VALUE_REQUIRED, 'CSV of file names to exclude', $names)
             ->addOption('extra-plugins', null, InputOption::VALUE_REQUIRED, 'Directory of extra plugins to install', $extra)
             ->addOption('no-init', null, InputOption::VALUE_NONE, 'Prevent PHPUnit and Behat initialization')
+            ->addOption('no-nvm', null, InputOption::VALUE_NONE, 'Prevent nvm installation')
             ->addOption('no-plugin-node', null, InputOption::VALUE_NONE, 'Prevent Node.js plugin dependencies installation')
             ->addOption('node-version', null, InputOption::VALUE_REQUIRED, 'Node.js version to use for nvm install (this will override one defined in .nvmrc)', $node);
     }
@@ -175,6 +176,7 @@ class InstallCommand extends Command
         $factory->dumper       = $this->initializePluginConfigDumper($input);
         $factory->pluginsDir   = $pluginsDir;
         $factory->noInit       = $input->getOption('no-init');
+        $factory->noNvm        = $input->getOption('no-nvm');
         $factory->noPluginNode = $input->getOption('no-plugin-node');
         $factory->nodeVer      = $input->getOption('node-version');
         $factory->database     = $resolver->resolveDatabase(
