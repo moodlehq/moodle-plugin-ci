@@ -27,10 +27,15 @@ class VendorInstallerTest extends MoodleTestCase
             new MoodlePlugin($this->pluginDir),
             new DummyExecute(),
             false,
-            null
+            null,
+            false,
         );
+        // Unset NVM_DIR.
+        putenv('NVM_DIR');
+
         $installer->install();
 
+        $this->assertNotEmpty(getenv('NVM_DIR'));
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
     }
 
@@ -41,7 +46,8 @@ class VendorInstallerTest extends MoodleTestCase
             new MoodlePlugin($this->pluginDir),
             new DummyExecute(),
             false,
-            null
+            null,
+            false,
         );
 
         // Remove .nvmrc
@@ -53,6 +59,25 @@ class VendorInstallerTest extends MoodleTestCase
         $this->assertSame('lts/carbon', file_get_contents($this->moodleDir . '/.nvmrc'));
     }
 
+    public function testInstallNoNvm()
+    {
+        $installer = new VendorInstaller(
+            new DummyMoodle($this->moodleDir),
+            new MoodlePlugin($this->pluginDir),
+            new DummyExecute(),
+            false,
+            null,
+            true,
+        );
+        // Unset NVM_DIR.
+        putenv('NVM_DIR');
+
+        $installer->install();
+
+        $this->assertFalse(getenv('NVM_DIR'));
+        $this->assertSame(2, $installer->getOutput()->getStepCount());
+    }
+
     public function testInstallNodeUserVersion()
     {
         $userVersion = '8.9';
@@ -61,8 +86,10 @@ class VendorInstallerTest extends MoodleTestCase
             new MoodlePlugin($this->pluginDir),
             new DummyExecute(),
             false,
-            $userVersion
+            $userVersion,
+            false,
         );
+
         $installer->installNode();
 
         // Expect .nvmrc containing user specified version.
@@ -77,14 +104,15 @@ class VendorInstallerTest extends MoodleTestCase
             new MoodlePlugin($this->pluginDir),
             new DummyExecute(),
             false,
-            null
+            null,
+            false,
         );
 
         $this->fs->copy(__DIR__ . '/../Fixture/plugin/package.json', $this->pluginDir . '/package.json');
 
         $installer->install();
 
-        $this->assertSame(4, $installer->getOutput()->getStepCount());
+        $this->assertSame(5, $installer->getOutput()->getStepCount());
     }
 
     public function testSkipNodePluginDependencies()
@@ -94,13 +122,14 @@ class VendorInstallerTest extends MoodleTestCase
             new MoodlePlugin($this->pluginDir),
             new DummyExecute(),
             true,
-            null
+            null,
+            false,
         );
 
         $this->fs->copy(__DIR__ . '/../Fixture/plugin/package.json', $this->pluginDir . '/package.json');
 
         $installer->install();
 
-        $this->assertSame(3, $installer->getOutput()->getStepCount());
+        $this->assertSame(4, $installer->getOutput()->getStepCount());
     }
 }

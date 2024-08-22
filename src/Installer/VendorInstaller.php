@@ -27,6 +27,8 @@ class VendorInstaller extends AbstractInstaller
     private Execute $execute;
     private bool $noPluginNode;
     public ?string $nodeVer;
+    private bool $noNvm;
+
     /**
      * Define legacy Node version to use when .nvmrc is absent (Moodle < 3.5).
      */
@@ -38,17 +40,22 @@ class VendorInstaller extends AbstractInstaller
      * @param Execute      $execute
      * @param string|null  $nodeVer
      */
-    public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute, bool $noPluginNode, ?string $nodeVer)
+    public function __construct(Moodle $moodle, MoodlePlugin $plugin, Execute $execute, bool $noPluginNode, ?string $nodeVer, bool $noNvm)
     {
         $this->moodle       = $moodle;
         $this->plugin       = $plugin;
         $this->execute      = $execute;
         $this->nodeVer      = $nodeVer;
         $this->noPluginNode = $noPluginNode;
+        $this->noNvm        = $noNvm;
     }
 
     public function install(): void
     {
+        if ($this->canInstallNvm()) {
+            $this->getOutput()->step('Installing nvm');
+            $this->installNvm();
+        }
         if ($this->canInstallNode()) {
             $this->getOutput()->step('Installing Node.js');
             $this->installNode();
@@ -85,8 +92,35 @@ class VendorInstaller extends AbstractInstaller
     public function stepCount(): int
     {
         return 2 + // Normally 2 steps: global dependencies and Moodle npm dependencies.
+            ($this->canInstallNvm() ? 1 : 0) + // Plus nvm installation.
             ($this->canInstallNode() ? 1 : 0) + // Plus Node.js installation.
             ((!$this->noPluginNode && $this->plugin->hasNodeDependencies()) ? 1 : 0); // Plus plugin npm dependencies step.
+    }
+
+    /**
+     * Check if we have to install nvm.
+     *
+     * @return bool
+     */
+    public function canInstallNvm(): bool
+    {
+        return !$this->noNvm;
+    }
+
+    /**
+     * Install nvm.
+     */
+    public function installNvm(): void
+    {
+        $cmd     = 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash';
+        $process = $this->execute->passThroughProcess(
+            Process::fromShellCommandline($cmd, $this->moodle->directory, null, null, null)
+        );
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException('nvm installation failed.');
+        }
+        $home = getenv('HOME');
+        putenv("NVM_DIR={$home}/.nvm");
     }
 
     /**

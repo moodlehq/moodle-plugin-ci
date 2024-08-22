@@ -97,14 +97,13 @@ jobs:
           coverage: none
 
       # Install this project into a directory called "ci", updating PATH and
-      # locale, define nvm location.
+      # locale.
       - name: Initialise moodle-plugin-ci
         run: |
           composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^4
           echo $(cd ci/bin; pwd) >> $GITHUB_PATH
           echo $(cd ci/vendor/bin; pwd) >> $GITHUB_PATH
           sudo locale-gen en_AU.UTF-8
-          echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
 
       # Run the default install.
       # Optionally, it is possible to specify a different Moodle repo to use
