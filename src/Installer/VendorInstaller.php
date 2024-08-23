@@ -120,7 +120,7 @@ class VendorInstaller extends AbstractInstaller
         }
 
         $nvmDir  = getenv('NVM_DIR');
-        $cmd     = ". $nvmDir/nvm.sh && nvm install && nvm use && echo \"NVM_BIN=\$NVM_BIN\"";
+        $cmd     = ". $nvmDir/nvm.sh; nvm install && nvm use && echo \"NVM_BIN=\$NVM_BIN\"";
 
         $process = $this->execute->passThroughProcess(
             Process::fromShellCommandline($cmd, $this->moodle->directory, null, null, null)

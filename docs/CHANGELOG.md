@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Fixed nvm loading issue caused by upstream regression.
+
 ## [4.5.3] - 2024-07-05
 ### Added
 - Support for version 4.4 of the app, that uses new defaults and Chrome (Selenium 4) version.
