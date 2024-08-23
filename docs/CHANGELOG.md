@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+## [4.5.4] - 2024-08-23
 ### Changed
 - Fixed nvm loading issue caused by upstream regression.
 
@@ -728,7 +729,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.3...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.4...main
+[4.5.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.3...4.5.4
 [4.5.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.2...4.5.3
 [4.5.2]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.1...4.5.2
 [4.5.1]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.0...4.5.1
