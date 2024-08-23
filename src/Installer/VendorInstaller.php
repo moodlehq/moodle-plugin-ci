@@ -129,7 +129,7 @@ class VendorInstaller extends AbstractInstaller
         }
 
         $nvmDir  = getenv('NVM_DIR');
-        $cmd     = ". $nvmDir/nvm.sh && nvm install && nvm use && echo \"NVM_BIN=\$NVM_BIN\"";
+        $cmd     = ". $nvmDir/nvm.sh; nvm install && nvm use && echo \"NVM_BIN=\$NVM_BIN\"";
         $process = $this->execute->passThrough($cmd, $this->moodle->directory);
         if (!$process->isSuccessful()) {
             throw new \RuntimeException('Node.js installation failed.');

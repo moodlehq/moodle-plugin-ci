@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](http://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Fixed nvm loading issue caused by upstream regression.
 
 ## [3.4.13] - 2023-09-02
 ### Changed
