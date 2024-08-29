@@ -46,8 +46,6 @@ jobs:
       matrix:
         include:
           - php: '8.0'
-            moodle-branch: 'master'
-          - php: '8.0'
             moodle-branch: 'MOODLE_402_STABLE'
           - php: '7.4'
             moodle-branch: 'MOODLE_401_STABLE'
