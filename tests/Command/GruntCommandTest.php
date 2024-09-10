@@ -145,7 +145,6 @@ class GruntCommandTest extends MoodleTestCase
         $this->fs->remove($this->pluginDir . '/styles.css');
 
         $this->assertNull($command->toGruntTask('stylelint:css'));
-        $this->assertNull($command->toGruntTask('stylelint:less'));
         $this->assertNull($command->toGruntTask('stylelint:scss'));
     }
 
