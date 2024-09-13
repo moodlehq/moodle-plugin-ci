@@ -9,6 +9,13 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Fixed
+- Fixed stylelinting error in non-theme plugins containing scss.
+
+### Removed
+- Stylelint less component task (`grunt stylelint:less`) has been deprecated in
+  Moodle 3.7.
+
 ## [4.5.4] - 2024-08-23
 ### Changed
 - Fixed nvm loading issue caused by upstream regression.
