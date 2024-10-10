@@ -114,4 +114,37 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('lang/en/filter_activitynames.php', $fileToken->file);
     }
+
+    public function testGetRequiredFunctionCalls404()
+    {
+        $requirements = $this->getMockBuilder('MoodlePluginCI\PluginValidate\Requirements\FilterRequirements')
+            ->setConstructorArgs([new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 404])
+            ->onlyMethods(['fileExists'])
+            ->getMock();
+        // On first call fileExists return false, on second call return true.
+        $requirements->method('fileExists')
+            ->with($this->identicalTo('classes/text_filter.php'))
+            ->willReturn(false, true);
+
+        // If classes/text_filter.php does not exist, expect class alias is not needed in filter.php.
+        $calls = $requirements->getRequiredFunctionCalls();
+        $this->assertCount(0, $calls);
+
+        // If classes/text_filter.php exists, expect class alias in filter.php (4.5 plugin backward compatibility).
+        $calls = $requirements->getRequiredFunctionCalls();
+        $this->assertCount(1, $calls);
+        $call = reset($calls);
+        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $call);
+        $this->assertSame('filter.php', $call->file);
+    }
+
+    public function testGetRequiredFunctionCalls()
+    {
+        $calls = $this->requirements->getRequiredFunctionCalls();
+
+        $this->assertCount(1, $calls);
+        $call = reset($calls);
+        $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $call);
+        $this->assertSame('filter.php', $call->file);
+    }
 }

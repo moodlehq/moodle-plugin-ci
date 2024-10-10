@@ -50,4 +50,15 @@ class FilterRequirements extends GenericRequirements
     {
         return FileTokens::create($this->getLangFile())->mustHave('filtername');
     }
+
+    public function getRequiredFunctionCalls(): array
+    {
+        if ($this->moodleVersion <= 404 && !$this->fileExists('classes/text_filter.php')) {
+            return [];
+        }
+
+        return [
+            FileTokens::create('filter.php')->mustHave('class_alias')->notFoundHint('https://moodledev.io/docs/4.5/devupdate#filter-plugins'),
+        ];
+    }
 }

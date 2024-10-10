@@ -77,6 +77,13 @@ abstract class AbstractRequirements
     }
 
     /**
+     * Required function calls.
+     *
+     * @return FileTokens[]
+     */
+    abstract public function getRequiredFunctionCalls(): array;
+
+    /**
      * An array of required files, paths are relative to the plugin directory.
      *
      * @return array

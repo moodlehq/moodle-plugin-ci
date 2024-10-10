@@ -28,6 +28,8 @@
 // set then can check for anything, like CUSTOM-123 or https://github.com
 // or whatever.
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Add
  *
@@ -72,3 +74,6 @@ class local_ci_math {
         return $a + $b;
     }
 }
+
+// Call function.
+local_ci_subtract(1, 2);

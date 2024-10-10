@@ -30,6 +30,13 @@ class FileTokens
     public string $file;
 
     /**
+     * Not found error hint.
+     *
+     * @var string
+     */
+    public string $hint = '';
+
+    /**
      * @param string $file
      */
     public function __construct(string $file)
@@ -57,6 +64,16 @@ class FileTokens
     public function hasTokens(): bool
     {
         return !empty($this->tokens);
+    }
+
+    /**
+     * Do we have any hint?
+     *
+     * @return bool
+     */
+    public function hasHint(): bool
+    {
+        return !empty($this->hint);
     }
 
     /**
@@ -165,5 +182,19 @@ class FileTokens
         foreach ($this->tokens as $token) {
             $token->reset();
         }
+    }
+
+    /**
+     * Not found error additional information guiding user how to fix it (optional).
+     *
+     * @param string $hint
+     *
+     * @return self
+     */
+    public function notFoundHint(string $hint): self
+    {
+        $this->hint = $hint;
+
+        return $this;
     }
 }
