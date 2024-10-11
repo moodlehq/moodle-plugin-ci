@@ -21,15 +21,28 @@ class FilterRequirements extends GenericRequirements
 {
     public function getRequiredFiles(): array
     {
-        return array_merge(parent::getRequiredFiles(), [
-            'filter.php',
-        ]);
+        $files = [];
+        if ($this->moodleVersion >= 405) {
+            $files[] = 'classes/text_filter.php';
+        } else {
+            // This must exist in 4.5 if plugin supports older version, but we don't identify support range to validate it.
+            $files[] = 'filter.php';
+        }
+
+        return array_merge(parent::getRequiredFiles(), $files);
     }
 
     public function getRequiredClasses(): array
     {
+        if ($this->moodleVersion <= 404 && !$this->fileExists('classes/text_filter.php')) {
+            // Plugin does not support 4.5, check class presence in filter.php
+            return [
+                FileTokens::create('filter.php')->mustHave('filter_' . $this->plugin->name),
+            ];
+        }
+
         return [
-            FileTokens::create('filter.php')->mustHave('filter_' . $this->plugin->name),
+            FileTokens::create('classes/text_filter.php')->mustHave("filter_{$this->plugin->name}\\text_filter"),
         ];
     }
 
