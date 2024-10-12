@@ -97,7 +97,7 @@ jobs:
     # Last stable with highest supported PHP version.
     - php: 8.3
       env:
-        - MOODLE_BRANCH=MOODLE_404_STABLE
+        - MOODLE_BRANCH=MOODLE_405_STABLE
         - MOODLE_APP=true
     # And older stable supported (with lowest supported PHP version).
     - php: 7.4
