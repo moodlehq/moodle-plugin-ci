@@ -28,6 +28,7 @@ class ModuleRequirements extends GenericRequirements
     {
         return array_merge(parent::getRequiredFiles(), [
             'lib.php',
+            'mod_form.php',
             'view.php',
             'index.php',
             'db/install.xml',
