@@ -132,9 +132,15 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertNull($command->toGruntTask('gherkinlint'));
     }
 
-    public function testToGruntTaskWithStyles()
+    public function testToGruntTaskWithStylesCss()
     {
         $command = $this->newCommand();
+
+        $task = $command->toGruntTask('stylelint');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('stylelint', $task->taskName);
+        $this->assertSame('', $task->buildDirectory);
+        $this->assertSame($this->pluginDir, $task->workingDirectory);
 
         $task = $command->toGruntTask('stylelint:css');
         $this->assertInstanceOf(GruntTaskModel::class, $task);
@@ -144,8 +150,31 @@ class GruntCommandTest extends MoodleTestCase
 
         $this->fs->remove($this->pluginDir . '/styles.css');
 
+        $this->assertNull($command->toGruntTask('stylelint'));
         $this->assertNull($command->toGruntTask('stylelint:css'));
-        $this->assertNull($command->toGruntTask('stylelint:less'));
+    }
+
+    public function testToGruntTaskWithStylesScss()
+    {
+        $command = $this->newCommand();
+        $this->fs->mkdir($this->pluginDir . '/scss');
+        $this->fs->rename($this->pluginDir . '/styles.css', $this->pluginDir . '/scss/styles.scss');
+
+        $task = $command->toGruntTask('stylelint');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('stylelint', $task->taskName);
+        $this->assertSame('', $task->buildDirectory);
+        $this->assertSame($this->pluginDir, $task->workingDirectory);
+
+        $task = $command->toGruntTask('stylelint:scss');
+        $this->assertInstanceOf(GruntTaskModel::class, $task);
+        $this->assertSame('stylelint:scss', $task->taskName);
+        $this->assertSame('', $task->buildDirectory);
+        $this->assertSame($this->pluginDir, $task->workingDirectory);
+
+        $this->fs->remove($this->pluginDir . '/scss');
+
+        $this->assertNull($command->toGruntTask('stylelint'));
         $this->assertNull($command->toGruntTask('stylelint:scss'));
     }
 
