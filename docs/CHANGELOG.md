@@ -9,8 +9,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- Improvments to plugin validation implementation:
+    `getRequiredFunctionCalls` in plugin type specific `Requirements` class can be used to validate that file contains function call.
+    `FileTokens::notFoundHint` can be used to give some context for validation error to improve DX.
+
 ### Fixed
 - Fixed stylelinting error in non-theme plugins containing scss.
+- Updated filter plugin validation requirements to comply with Moodle 4.5
 
 ### Removed
 - Stylelint less component task (`grunt stylelint:less`) has been deprecated in

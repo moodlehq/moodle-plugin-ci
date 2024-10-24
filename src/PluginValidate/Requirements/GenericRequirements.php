@@ -46,6 +46,11 @@ class GenericRequirements extends AbstractRequirements
         return [];
     }
 
+    public function getRequiredFunctionCalls(): array
+    {
+        return [];
+    }
+
     public function getRequiredStrings(): FileTokens
     {
         return FileTokens::create($this->getLangFile())->mustHave('pluginname');

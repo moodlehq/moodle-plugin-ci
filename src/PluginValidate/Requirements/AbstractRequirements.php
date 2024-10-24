@@ -65,6 +65,25 @@ abstract class AbstractRequirements
     }
 
     /**
+     * Helper method to check file existence.
+     *
+     * @param string $file
+     *
+     * @return bool
+     */
+    protected function fileExists(string $file): bool
+    {
+        return file_exists($this->plugin->directory . '/' . $file);
+    }
+
+    /**
+     * Required function calls.
+     *
+     * @return FileTokens[]
+     */
+    abstract public function getRequiredFunctionCalls(): array;
+
+    /**
      * An array of required files, paths are relative to the plugin directory.
      *
      * @return array
