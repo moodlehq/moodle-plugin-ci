@@ -14,9 +14,11 @@ namespace MoodlePluginCI\Parser;
 
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\Assign;
+use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
@@ -114,6 +116,26 @@ class StatementFilter
         }
 
         return $assigns;
+    }
+
+    /**
+     * Extract all the function call expressions from the statements.
+     *
+     * @param Stmt[] $statements
+     *
+     * @return FuncCall[]
+     */
+    public function filterFunctionCalls(array $statements): array
+    {
+        $calls = [];
+        foreach ($statements as $statement) {
+            // Only expressions that are function calls.
+            if ($statement instanceof Expression && $statement->expr instanceof FuncCall) {
+                $calls[] = $statement->expr;
+            }
+        }
+
+        return $calls;
     }
 
     /**

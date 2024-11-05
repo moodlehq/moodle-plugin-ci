@@ -17,6 +17,7 @@ use MoodlePluginCI\PluginValidate\Finder\CapabilityFinder;
 use MoodlePluginCI\PluginValidate\Finder\ClassFinder;
 use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 use MoodlePluginCI\PluginValidate\Finder\FinderInterface;
+use MoodlePluginCI\PluginValidate\Finder\FunctionCallFinder;
 use MoodlePluginCI\PluginValidate\Finder\FunctionFinder;
 use MoodlePluginCI\PluginValidate\Finder\LangFinder;
 use MoodlePluginCI\PluginValidate\Finder\TableFinder;
@@ -98,6 +99,9 @@ class PluginValidate
                 $this->addSuccess(sprintf('In %s, found %s %s', $fileTokens->file, $type, implode(' OR ', $token->tokens)));
             } else {
                 $this->addError(sprintf('In %s, failed to find %s %s', $fileTokens->file, $type, implode(' OR ', $token->tokens)));
+                if ($fileTokens->hasHint()) {
+                    $this->addError(sprintf('Hint: %s', $fileTokens->hint));
+                }
             }
         }
     }
@@ -115,6 +119,7 @@ class PluginValidate
         $this->findRequiredTokens(new TableFinder(), [$this->requirements->getRequiredTables()]);
         $this->findRequiredTokens(new TablePrefixFinder(), [$this->requirements->getRequiredTablePrefix()]);
         $this->findRequiredTokens(new BehatTagFinder(), $this->requirements->getRequiredBehatTags());
+        $this->findRequiredTokens(new FunctionCallFinder(), $this->requirements->getRequiredFunctionCalls());
     }
 
     /**
