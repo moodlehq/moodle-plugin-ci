@@ -8,6 +8,8 @@ to use, that this project follows [Semantic Versioning](http://semver.org/), so 
 
 Prior to tagging a release, ensure the following have been updated:
 
+* Check that dependencies (including `moodlehq/moodle-*`) are up to date, if necessary bump
+  dependencies in the separate commit.
 * The `CHANGELOG.md` needs to be up-to-date.  In addition, the _Unreleased_ section needs to be updated
   with the version being released.  Also update the _Unreleased_ link at the bottom with the new version number.
 * The `bin/moodle-plugin-ci` also needs to be updated accordingly, setting the `MOODLE_PLUGIN_CI_VERSION` constant
