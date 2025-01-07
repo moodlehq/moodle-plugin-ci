@@ -53,7 +53,7 @@ class FilterRequirements extends GenericRequirements
 
     public function getRequiredFunctionCalls(): array
     {
-        if ($this->moodleVersion <= 404 && !$this->fileExists('classes/text_filter.php')) {
+        if ($this->moodleVersion >= 405 || ($this->moodleVersion <= 404 && !$this->fileExists('classes/text_filter.php'))) {
             return [];
         }
 

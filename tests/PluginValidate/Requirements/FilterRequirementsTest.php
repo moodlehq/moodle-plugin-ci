@@ -141,7 +141,9 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
     public function testGetRequiredFunctionCalls()
     {
         $calls = $this->requirements->getRequiredFunctionCalls();
+        $this->assertCount(0, $calls);
 
+        $calls = $this->requirements404->getRequiredFunctionCalls();
         $this->assertCount(1, $calls);
         $call = reset($calls);
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $call);
