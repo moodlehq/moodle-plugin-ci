@@ -659,7 +659,7 @@ The Grunt tasks to run
 * Is value required: yes
 * Is multiple: yes
 * Is negatable: no
-* Default: `array (  0 => 'amd',  1 => 'yui',  2 => 'gherkinlint',  3 => 'stylelint:css',  4 => 'stylelint:less',  5 => 'stylelint:scss',)`
+* Default: `array (  0 => 'amd',  1 => 'yui',  2 => 'gherkinlint',  3 => 'stylelint',)`
 
 #### `--show-lint-warnings`
 
