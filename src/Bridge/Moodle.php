@@ -106,11 +106,13 @@ class Moodle
         $method->setAccessible(true);
         $result = $method->invoke(null);
 
-        if (!array_key_exists($type, $result[0])) {
+        $plugintypes = $this->getBranch() >= 500 ? $result['plugintypes'] : $result[0];
+
+        if (!array_key_exists($type, $plugintypes)) {
             throw new \InvalidArgumentException(sprintf('The component %s has an unknown plugin type of %s', $component, $type));
         }
 
-        return $result[0][$type] . '/' . $name;
+        return $plugintypes[$type] . '/' . $name;
     }
 
     /**

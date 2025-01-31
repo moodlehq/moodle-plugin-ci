@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Fixed
+- Fix getComponentInstallDirectory plugintypes retrieval issue to comply with 5.0
+
 ## [4.5.5] - 2024-11-06
 ### Added
 - Improvements to plugin validation implementation:
