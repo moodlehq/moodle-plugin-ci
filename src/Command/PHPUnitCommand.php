@@ -127,9 +127,20 @@ class PHPUnitCommand extends AbstractMoodleCommand
             ];
         }
         if ($input->getOption('verbose')) {
-            $options[] = [
-                '--verbose',
-            ];
+            if ($this->moodle->getBranch() <= 405) { // Only available with PHPUnit <= 9.x (Moodle <= 4.5).
+                $options[] = [
+                    '--verbose',
+                ];
+            } else {
+                // @codeCoverageIgnoreStart
+                if (!defined('PHPUNIT_TEST')) { // Only show deprecation warnings in non-test environments.
+                    if (getenv('GITHUB_ACTIONS')) { // Only show deprecation annotations in GitHub Actions.
+                        echo '::warning title=Deprecated PHPUnit --verbose option::The --verbose option was removed for ' .
+                            ' PHPUnit 10, so it will be ignored by this run (Moodle >= 5.0)' . PHP_EOL;
+                    }
+                }
+                // @codeCoverageIgnoreEnd
+            }
         }
         foreach (['fail-on-incomplete', 'fail-on-risky', 'fail-on-skipped', 'fail-on-warning', 'testdox'] as $option) {
             if ($input->getOption($option)) {
