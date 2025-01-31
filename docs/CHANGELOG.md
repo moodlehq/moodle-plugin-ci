@@ -8,9 +8,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
-## [Unreleased]
+## [4.5.6] - 2025-01-31
 ### Fixed
+- Removed the PHPUnit --verbose option to comply with Moodle 5.0
 - Fix getComponentInstallDirectory plugintypes retrieval issue to comply with 5.0
+
+### Changed
+- Updated project dependencies to current PHP and Moodle versions.
+- ACTION SUGGESTED: bump workflows to postgres 14, which is a requirement for Moodle 5.0
 
 ## [4.5.5] - 2024-11-06
 ### Added
@@ -746,7 +751,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.5...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.6...main
+[4.5.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.5...4.5.6
 [4.5.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.4...4.5.5
 [4.5.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.3...4.5.4
 [4.5.3]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.2...4.5.3
