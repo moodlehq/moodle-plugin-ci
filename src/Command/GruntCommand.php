@@ -112,7 +112,9 @@ class GruntCommand extends AbstractMoodleCommand
      */
     public function restorePlugin(): void
     {
-        (new Filesystem())->mirror($this->backupDir, $this->plugin->directory, null, ['delete' => true, 'override' => true]);
+       $flags = \FilesystemIterator::SKIP_DOTS;
+       $iterator = new \RecursiveDirectoryIterator($this->backupDir, $flags);
+       (new Filesystem())->mirror($this->backupDir, $this->plugin->directory, $iterator, ['delete' => true, 'override' => true]);    
     }
 
     /**
