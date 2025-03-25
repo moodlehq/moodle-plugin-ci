@@ -152,7 +152,7 @@ jobs:
         moodle-plugin-ci phpdoc
         moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
         moodle-plugin-ci behat --profile default
-        moodle-plugin-ci behat --profile chrome
+        moodle-plugin-ci behat --profile chrome --scss-deprecations
         moodle-plugin-ci behat --profile firefox --tags="@local_ci&&~@app"
 
   buildphar:
@@ -279,7 +279,7 @@ jobs:
         php build/moodle-plugin-ci.phar phpdoc
         php build/moodle-plugin-ci.phar phpunit --verbose --coverage-text --fail-on-warning
         php build/moodle-plugin-ci.phar behat --profile default
-        php build/moodle-plugin-ci.phar behat --profile chrome
+        php build/moodle-plugin-ci.phar behat --profile chrome --scss-deprecations
         php build/moodle-plugin-ci.phar behat --profile firefox --tags="@local_ci&&~@app"
 
   selfupdatetest:
