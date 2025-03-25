@@ -22,7 +22,7 @@ $CFG->admin    = 'admin';
 $CFG->directorypermissions = 02777;
 
 // Show debugging messages.
-$CFG->debug        = (E_ALL | E_STRICT);
+$CFG->debug        = PHP_VERSION_ID >= 80000 ? E_ALL : E_ALL | E_STRICT;
 $CFG->debugdisplay = 1;
 
 // No emails.
