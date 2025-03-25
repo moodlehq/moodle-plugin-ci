@@ -16,11 +16,11 @@ dist: focal
 
 # Installs the updated version of PostgreSQL and extra APT packages.
 addons:
-  postgresql: "13"
+  postgresql: "14"
   apt:
     packages:
-      - postgresql-13
-      - postgresql-client-13
+      - postgresql-14
+      - postgresql-client-14
       - libonig5
 
 # Ensure DB and docker services are running.
@@ -40,7 +40,7 @@ cache:
 php:
  - 7.4
  - 8.0
- - 8.1
+ - 8.3
 
 # This section sets up the environment variables for the build.
 env:
@@ -49,9 +49,9 @@ env:
 # used, because, for PG 11 and up, both the user and the port were
 # changed by Travis. With that variable, the tool will switch to
 # socketed connections instead of localhost ones.
-  - PGVER=13
+  - PGVER=14
 # This line determines which version branch of Moodle to test against.
-  - MOODLE_BRANCH=MOODLE_402_STABLE
+  - MOODLE_BRANCH=MOODLE_405_STABLE
 # Uncomment this to run Behat tests using the Moodle App.
 #   - MOODLE_APP=true
 
@@ -78,9 +78,9 @@ env:
 #
 # jobs:
 #   include:
-#     - php: 8.0
-#       env: MOODLE_BRANCH=MOODLE_401_STABLE    DB=pgsql
-#     - php: 8.0
+#     - php: 8.3
+#       env: MOODLE_BRANCH=MOODLE_405_STABLE    DB=pgsql
+#     - php: 8.1
 #       env: MOODLE_BRANCH=MOODLE_400_STABLE    DB=pgsql
 #     - php: 7.4
 #       env: MOODLE_BRANCH=MOODLE_311_STABLE    DB=mysqli

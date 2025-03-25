@@ -12,6 +12,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Added
 - Allow to run with PHP 8.4 (supported in Moodle 5.0)
 - New `--scss-deprecations` option added to the `behat` command
+- Updated travis.yml and the recommendations to run travis with Postgres 14
 
 ## [4.5.6] - 2025-01-31
 ### Fixed

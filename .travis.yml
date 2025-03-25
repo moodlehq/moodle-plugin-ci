@@ -3,11 +3,11 @@ language: php
 dist: focal
 
 addons:
-  postgresql: "13"
+  postgresql: "14"
   apt:
     packages:
-      - postgresql-13
-      - postgresql-client-13
+      - postgresql-14
+      - postgresql-client-14
       - libonig5
 
 services:
@@ -21,7 +21,7 @@ cache:
 
 env:
   global:
-    - PGVER=13
+    - PGVER=14
     - IGNORE_PATHS=ignore
     - IGNORE_NAMES=ignore_name.php
     - MUSTACHE_IGNORE_NAMES=broken.mustache
