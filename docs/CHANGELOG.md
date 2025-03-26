@@ -9,10 +9,13 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
-### Added
+## [4.5.7] - 2025-03-26
+### Changed
 - Allow to run with PHP 8.4 (supported in Moodle 5.0)
-- New `--scss-deprecations` option added to the `behat` command
 - Updated travis.yml and the recommendations to run travis with Postgres 14
+
+### Added
+- New `--scss-deprecations` option added to the `behat` command
 
 ## [4.5.6] - 2025-01-31
 ### Fixed
@@ -757,7 +760,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.6...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.7...main
+[4.5.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.6...4.5.7
 [4.5.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.5...4.5.6
 [4.5.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.4...4.5.5
 [4.5.4]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.3...4.5.4
