@@ -3,11 +3,11 @@ language: php
 dist: focal
 
 addons:
-  postgresql: "13"
+  postgresql: "14"
   apt:
     packages:
-      - postgresql-13
-      - postgresql-client-13
+      - postgresql-14
+      - postgresql-client-14
       - libonig5
 
 services:
@@ -21,13 +21,13 @@ cache:
 
 php:
  - 7.4
- - 8.0
  - 8.1
+ - 8.3
 
 env:
  global:
-  - PGVER=13
-  - MOODLE_BRANCH=MOODLE_402_STABLE
+  - PGVER=14
+  - MOODLE_BRANCH=MOODLE_405_STABLE
   # Uncomment this to run Behat tests using the Moodle App.
   # - MOODLE_APP=true
  matrix:

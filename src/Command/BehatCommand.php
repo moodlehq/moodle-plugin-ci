@@ -48,6 +48,7 @@ class BehatCommand extends AbstractMoodleCommand
             ->addOption('auto-rerun', null, InputOption::VALUE_REQUIRED, 'Number of times to rerun failures', 2)
             ->addOption('selenium', null, InputOption::VALUE_REQUIRED, 'Selenium Docker image')
             ->addOption('dump', null, InputOption::VALUE_NONE, 'Print contents of Behat failure HTML files')
+            ->addOption('scss-deprecations', null, InputOption::VALUE_NONE, 'Enable SCSS deprecation checks')
             ->setDescription('Run Behat on a plugin');
     }
 
@@ -71,6 +72,16 @@ class BehatCommand extends AbstractMoodleCommand
         }
 
         $servers && $this->startServerProcesses($input);
+
+        if ($input->getOption('scss-deprecations')) {
+            $enableprocess = new Process([
+                'php', 'admin/tool/behat/cli/util_single_run.php',
+                '--enable',
+                '--add-core-features-to-theme',
+                '--scss-deprecations',
+            ], $this->moodle->directory, null, null, null);
+            $this->execute->passThroughProcess($enableprocess);
+        }
 
         $cmd = [
             'php', 'admin/tool/behat/cli/run.php',

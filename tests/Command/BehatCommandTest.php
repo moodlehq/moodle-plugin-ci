@@ -127,6 +127,13 @@ class BehatCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression("/{$expectedName}/", $this->lastCmd);
     }
 
+    public function testExecuteWithScssDeprecations()
+    {
+        $commandTester = $this->executeCommand(null, null, ['--scss-deprecations' => true]);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/--scss-deprecations/', $this->allCmds[0]);
+    }
+
     public function testExecuteNoFeatures()
     {
         $this->fs->remove($this->pluginDir . '/tests/behat');

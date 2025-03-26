@@ -75,7 +75,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - php: '8.3'
+          - php: '8.4'
             moodle-branch: 'main'
             moodle-app: 'true'
           - php: '8.3'
@@ -152,7 +152,7 @@ jobs:
         moodle-plugin-ci phpdoc
         moodle-plugin-ci phpunit --verbose --coverage-text --fail-on-warning
         moodle-plugin-ci behat --profile default
-        moodle-plugin-ci behat --profile chrome
+        moodle-plugin-ci behat --profile chrome --scss-deprecations
         moodle-plugin-ci behat --profile firefox --tags="@local_ci&&~@app"
 
   buildphar:
@@ -202,7 +202,7 @@ jobs:
       matrix:
         include:
           # Each supported PHP version once. That's enough.
-          - php: '8.3'
+          - php: '8.4'
             moodle-branch: 'main'
             moodle-app: 'true'
           - php: '8.3'
@@ -279,7 +279,7 @@ jobs:
         php build/moodle-plugin-ci.phar phpdoc
         php build/moodle-plugin-ci.phar phpunit --verbose --coverage-text --fail-on-warning
         php build/moodle-plugin-ci.phar behat --profile default
-        php build/moodle-plugin-ci.phar behat --profile chrome
+        php build/moodle-plugin-ci.phar behat --profile chrome --scss-deprecations
         php build/moodle-plugin-ci.phar behat --profile firefox --tags="@local_ci&&~@app"
 
   selfupdatetest:
@@ -294,6 +294,7 @@ jobs:
       matrix:
         include:
           # Each supported PHP version once. That's enough.
+          - php: '8.4'
           - php: '8.3'
           - php: '8.2'
           - php: '8.1'
