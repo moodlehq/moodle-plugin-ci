@@ -223,13 +223,13 @@ class BehatCommand extends AbstractMoodleCommand
         }
 
         if ($profile === 'chrome') {
-            return getenv('MOODLE_APP') ? 'selenium/standalone-chrome:120.0' : 'selenium/standalone-chrome:3';
+            return 'selenium/standalone-chrome:4';
         }
 
         if ($this->usesLegacyPhpWebdriver()) {
             return 'selenium/standalone-firefox:2.53.1';
         }
 
-        return 'selenium/standalone-firefox:3';
+        return 'selenium/standalone-firefox:4';
     }
 }

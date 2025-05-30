@@ -94,7 +94,7 @@ class BehatCommandTest extends MoodleTestCase
 
         $commandTester = $this->executeCommand(null, null, ['--start-servers' => true, '--profile' => 'chrome']);
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/selenium\/standalone-chrome:3/', $this->allCmds[1]);
+        $this->assertMatchesRegularExpression('/selenium\/standalone-chrome:4/', $this->allCmds[1]);
     }
 
     public function testExecuteWithFirefoxProfile()
@@ -104,7 +104,7 @@ class BehatCommandTest extends MoodleTestCase
 
         $commandTester = $this->executeCommand(null, null, ['--start-servers' => true, '--profile' => 'firefox']);
         $this->assertSame(0, $commandTester->getStatusCode());
-        $this->assertMatchesRegularExpression('/selenium\/standalone-firefox:3/', $this->allCmds[1]);
+        $this->assertMatchesRegularExpression('/selenium\/standalone-firefox:4/', $this->allCmds[1]);
     }
 
     public function testExecuteWithLegacyFirefoxProfile()

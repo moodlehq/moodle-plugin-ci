@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Bump default Selenium version to 4.
+
 ## [4.5.7] - 2025-03-26
 ### Changed
 - Allow to run with PHP 8.4 (supported in Moodle 5.0)
