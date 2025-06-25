@@ -38,6 +38,18 @@ class StringExtractor
     private ?FileDiscovery $fileDiscovery = null;
 
     /**
+     * String processing metrics.
+     *
+     * @var array
+     */
+    private $metrics = [
+        'extraction_time'     => 0.0,
+        'files_processed'     => 0,
+        'strings_extracted'   => 0,
+        'string_usages_found' => 0,
+    ];
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -72,6 +84,16 @@ class StringExtractor
             throw new \RuntimeException('File discovery service not set');
         }
 
+        $startTime = microtime(true);
+
+        // Reset metrics for this extraction
+        $this->metrics = [
+            'extraction_time'     => 0.0,
+            'files_processed'     => 0,
+            'strings_extracted'   => 0,
+            'string_usages_found' => 0,
+        ];
+
         $allStrings      = [];
         $filesByCategory = $this->fileDiscovery->getAllFiles();
 
@@ -97,9 +119,20 @@ class StringExtractor
                 continue;
             }
 
-            $strings    = $extractor->extract($content, $plugin->component, $file);
+            ++$this->metrics['files_processed'];
+
+            $strings = $extractor->extract($content, $plugin->component, $file);
+
+            // Track string extraction metrics
+            $this->metrics['strings_extracted'] += count($strings);
+            foreach ($strings as $stringUsages) {
+                $this->metrics['string_usages_found'] += count($stringUsages);
+            }
+
             $allStrings = $this->mergeStringUsages($allStrings, $strings);
         }
+
+        $this->metrics['extraction_time'] = microtime(true) - $startTime;
 
         return $allStrings;
     }
@@ -170,5 +203,15 @@ class StringExtractor
     public function getExtractors(): array
     {
         return $this->extractors;
+    }
+
+    /**
+     * Get string processing performance metrics.
+     *
+     * @return array performance metrics for string extraction
+     */
+    public function getPerformanceMetrics(): array
+    {
+        return $this->metrics;
     }
 }

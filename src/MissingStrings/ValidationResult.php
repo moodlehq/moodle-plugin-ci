@@ -60,6 +60,20 @@ class ValidationResult
      */
     private $strict;
 
+    /**
+     * Debug performance data.
+     *
+     * @var array
+     */
+    private $debugData = [
+        'processing_time' => 0.0,
+        'file_counts'     => [],
+        'string_counts'   => [],
+        'phase_timings'   => [],
+        'plugin_count'    => 0,
+        'subplugin_count' => 0,
+    ];
+
     public function __construct(bool $strict = false)
     {
         $this->strict = $strict;
@@ -313,5 +327,109 @@ class ValidationResult
 
         // Add success count
         $this->successCount += $other->getSuccessCount();
+
+        // Merge debug data
+        $otherDebug = $other->getDebugData();
+        $this->debugData['processing_time'] += $otherDebug['processing_time'];
+        $this->debugData['plugin_count'] += $otherDebug['plugin_count'];
+        $this->debugData['subplugin_count'] += $otherDebug['subplugin_count'];
+
+        // Merge file counts
+        foreach ($otherDebug['file_counts'] as $type => $count) {
+            $this->debugData['file_counts'][$type] = ($this->debugData['file_counts'][$type] ?? 0) + $count;
+        }
+
+        // Merge string counts
+        foreach ($otherDebug['string_counts'] as $type => $count) {
+            $this->debugData['string_counts'][$type] = ($this->debugData['string_counts'][$type] ?? 0) + $count;
+        }
+
+        // Merge phase timings
+        foreach ($otherDebug['phase_timings'] as $phase => $timing) {
+            $this->debugData['phase_timings'][$phase] = ($this->debugData['phase_timings'][$phase] ?? 0) + $timing;
+        }
+    }
+
+    // === Debug Data Methods ===
+
+    /**
+     * Set debug data for performance tracking.
+     *
+     * @param array $data debug data to set
+     */
+    public function setDebugData(array $data): void
+    {
+        $this->debugData = array_merge($this->debugData, $data);
+    }
+
+    /**
+     * Add debug timing for a specific phase.
+     *
+     * @param string $phase phase name
+     * @param float  $time  time in seconds
+     */
+    public function addPhaseTime(string $phase, float $time): void
+    {
+        $this->debugData['phase_timings'][$phase] = ($this->debugData['phase_timings'][$phase] ?? 0) + $time;
+    }
+
+    /**
+     * Add file count data.
+     *
+     * @param array $fileCounts array of file type => count pairs
+     */
+    public function addFileCounts(array $fileCounts): void
+    {
+        foreach ($fileCounts as $type => $count) {
+            $this->debugData['file_counts'][$type] = ($this->debugData['file_counts'][$type] ?? 0) + $count;
+        }
+    }
+
+    /**
+     * Add string count data.
+     *
+     * @param array $stringCounts array of string type => count pairs
+     */
+    public function addStringCounts(array $stringCounts): void
+    {
+        foreach ($stringCounts as $type => $count) {
+            $this->debugData['string_counts'][$type] = ($this->debugData['string_counts'][$type] ?? 0) + $count;
+        }
+    }
+
+    /**
+     * Increment plugin count.
+     */
+    public function incrementPluginCount(): void
+    {
+        ++$this->debugData['plugin_count'];
+    }
+
+    /**
+     * Increment subplugin count.
+     */
+    public function incrementSubpluginCount(): void
+    {
+        ++$this->debugData['subplugin_count'];
+    }
+
+    /**
+     * Set total processing time.
+     *
+     * @param float $time time in seconds
+     */
+    public function setProcessingTime(float $time): void
+    {
+        $this->debugData['processing_time'] = $time;
+    }
+
+    /**
+     * Get debug data.
+     *
+     * @return array debug performance data
+     */
+    public function getDebugData(): array
+    {
+        return $this->debugData;
     }
 }

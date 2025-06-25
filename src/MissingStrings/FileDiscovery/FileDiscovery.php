@@ -43,6 +43,17 @@ class FileDiscovery
      */
     private $plugin;
 
+    /**
+     * Performance metrics.
+     *
+     * @var array{discovery_time: float, directories_scanned: int, files_processed: int}
+     */
+    private $metrics = [
+        'discovery_time'      => 0.0,
+        'directories_scanned' => 0,
+        'files_processed'     => 0,
+    ];
+
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
@@ -66,6 +77,8 @@ class FileDiscovery
      */
     private function discoverFiles(): void
     {
+        $startTime = microtime(true);
+
         $this->files = [
             'php'        => [],
             'mustache'   => [],
@@ -77,6 +90,8 @@ class FileDiscovery
         ];
 
         $this->scanDirectory($this->plugin->directory);
+
+        $this->metrics['discovery_time'] = microtime(true) - $startTime;
     }
 
     /**
@@ -91,6 +106,7 @@ class FileDiscovery
             return;
         }
 
+        ++$this->metrics['directories_scanned'];
         $iterator = new \DirectoryIterator($directory);
 
         foreach ($iterator as $item) {
@@ -104,6 +120,7 @@ class FileDiscovery
             if ($item->isDir()) {
                 $this->scanDirectory($itemPath, $itemRelativePath);
             } elseif ($item->isFile()) {
+                ++$this->metrics['files_processed'];
                 $this->categorizeFile($itemPath, $itemRelativePath);
             }
         }
@@ -322,5 +339,19 @@ class FileDiscovery
             'template_files'   => count($this->files['templates']),
             'amd_files'        => count($this->files['amd']),
         ];
+    }
+
+    /**
+     * Get performance metrics.
+     *
+     * @return array performance metrics including timing and file counts
+     */
+    public function getPerformanceMetrics(): array
+    {
+        $this->ensureDiscovered();
+
+        return array_merge($this->metrics, [
+            'file_types' => $this->getStatistics(),
+        ]);
     }
 }

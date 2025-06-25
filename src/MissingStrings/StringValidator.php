@@ -147,8 +147,13 @@ class StringValidator
      */
     public function validate(): ValidationResult
     {
+        $startTime = microtime(true);
+
         $result             = new ValidationResult($this->config->isStrict());
         $this->errorHandler = new ErrorHandler($result, $this->config->isDebugEnabled());
+
+        // Count main plugin
+        $result->incrementPluginCount();
 
         // Validate the main plugin
         $this->validateSinglePlugin($this->plugin);
@@ -158,6 +163,12 @@ class StringValidator
             fn () => $this->validateSubplugins(),
             'Validating subplugins'
         );
+
+        // Record total processing time if debug enabled
+        if ($this->config->isDebugEnabled()) {
+            $totalTime = microtime(true) - $startTime;
+            $result->setProcessingTime($totalTime);
+        }
 
         return $result;
     }
@@ -181,11 +192,24 @@ class StringValidator
             $this->extractor     = new StringExtractor();
             $this->extractor->setFileDiscovery($this->fileDiscovery);
 
+            // Track debug information if enabled
+            if ($this->config->isDebugEnabled()) {
+                // Collect file discovery metrics
+                $fileMetrics = $this->fileDiscovery->getPerformanceMetrics();
+                $this->errorHandler->getResult()->addFileCounts($fileMetrics['file_types']);
+                $this->errorHandler->getResult()->addPhaseTime('file_discovery_' . $plugin->component, $fileMetrics['discovery_time']);
+            }
+
             // Get defined strings from language file
+            $phaseStart     = microtime(true);
             $definedStrings = $this->errorHandler->safeExecute(
                 fn () => $this->getDefinedStrings(),
                 "Loading language file for {$plugin->component}"
             );
+            if ($this->config->isDebugEnabled()) {
+                $this->errorHandler->getResult()->addPhaseTime('lang_loading_' . $plugin->component, microtime(true) - $phaseStart);
+                $this->errorHandler->getResult()->addStringCounts(['defined_strings' => count($definedStrings)]);
+            }
 
             // Basic validation - check if language file exists
             if (empty($definedStrings)) {
@@ -203,37 +227,66 @@ class StringValidator
             }
 
             // Get plugin-specific requirements
+            $phaseStart   = microtime(true);
             $requirements = $this->errorHandler->safeExecute(
                 fn () => $this->requirementsResolver->resolve($plugin, $this->moodle->getBranch()),
                 "Resolving plugin requirements for {$plugin->component}"
             );
+            if ($this->config->isDebugEnabled()) {
+                $this->errorHandler->getResult()->addPhaseTime('requirements_resolve_' . $plugin->component, microtime(true) - $phaseStart);
+            }
 
             if ($requirements) {
                 // Validate required strings from requirements based on the plugin type.
+                $phaseStart = microtime(true);
                 $this->errorHandler->safeExecute(
                     fn () => $this->validateRequiredStrings($requirements->getRequiredStrings(), $definedStrings),
                     "Validating required strings for {$plugin->component}"
                 );
+                if ($this->config->isDebugEnabled()) {
+                    $this->errorHandler->getResult()->addPhaseTime('required_validation_' . $plugin->component, microtime(true) - $phaseStart);
+                    $this->errorHandler->getResult()->addStringCounts(['required_strings' => count($requirements->getRequiredStrings())]);
+                }
             }
 
             // Run string checkers for database files and other sources.
+            $phaseStart = microtime(true);
             $this->errorHandler->safeExecute(
                 fn () => $this->runStringCheckers($definedStrings),
                 "Running string checkers for {$plugin->component}"
             );
+            if ($this->config->isDebugEnabled()) {
+                $this->errorHandler->getResult()->addPhaseTime('checkers_' . $plugin->component, microtime(true) - $phaseStart);
+            }
 
             // Find and validate used strings in the plugin code.
+            $phaseStart = microtime(true);
             $this->errorHandler->safeExecute(
                 fn () => $this->validateUsedStrings($definedStrings),
                 "Validating used strings for {$plugin->component}"
             );
+            if ($this->config->isDebugEnabled()) {
+                $this->errorHandler->getResult()->addPhaseTime('used_validation_' . $plugin->component, microtime(true) - $phaseStart);
+
+                // Collect string extraction metrics
+                $extractorMetrics = $this->extractor->getPerformanceMetrics();
+                $this->errorHandler->getResult()->addStringCounts([
+                    'strings_extracted'   => $extractorMetrics['strings_extracted'],
+                    'string_usages_found' => $extractorMetrics['string_usages_found'],
+                ]);
+                $this->errorHandler->getResult()->addPhaseTime('string_extraction_' . $plugin->component, $extractorMetrics['extraction_time']);
+            }
 
             // Check for unused strings if requested.
             if ($this->config->shouldCheckUnused()) {
+                $phaseStart = microtime(true);
                 $this->errorHandler->safeExecute(
                     fn () => $this->validateUnusedStrings($definedStrings, $requirements),
                     "Checking for unused strings in {$plugin->component}"
                 );
+                if ($this->config->isDebugEnabled()) {
+                    $this->errorHandler->getResult()->addPhaseTime('unused_validation_' . $plugin->component, microtime(true) - $phaseStart);
+                }
             }
         } finally {
             // Restore original plugin and file discovery
@@ -255,6 +308,9 @@ class StringValidator
         }
 
         foreach ($subplugins as $subplugin) {
+            // Count each subplugin
+            $this->errorHandler->getResult()->incrementSubpluginCount();
+
             $this->errorHandler->safeExecute(
                 fn () => $this->validateSinglePlugin($subplugin),
                 "Validating subplugin {$subplugin->component}",

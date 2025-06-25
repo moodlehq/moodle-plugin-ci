@@ -112,6 +112,11 @@ class MissingStringsCommand extends AbstractMoodleCommand
         // Show summary statistics
         $this->outputSummary($output, $result);
 
+        // Show debug information if debug mode is enabled
+        if ($config->isDebugEnabled()) {
+            $this->outputDebugInformation($output, $result);
+        }
+
         return $result->isValid() ? 0 : 1;
     }
 
@@ -149,5 +154,53 @@ class MissingStringsCommand extends AbstractMoodleCommand
         } else {
             $output->writeln('<error>✗ Language string validation failed</error>');
         }
+    }
+
+    /**
+     * Output debug performance information.
+     *
+     * @param OutputInterface  $output the output interface
+     * @param ValidationResult $result the validation result
+     */
+    private function outputDebugInformation(OutputInterface $output, ValidationResult $result): void
+    {
+        $debugData = $result->getDebugData();
+
+        $output->writeln('');
+        $output->writeln('<comment>Debug Performance Information:</comment>');
+
+        // Overall timing
+        if ($debugData['processing_time'] > 0) {
+            $output->writeln(sprintf('- <info>Total processing time: %.3f seconds</info>', $debugData['processing_time']));
+        }
+
+        // Plugin counts
+        $totalPlugins = $debugData['plugin_count'] + $debugData['subplugin_count'];
+        $output->writeln(sprintf('- <info>Plugins processed: %d</info>', $totalPlugins));
+        if ($debugData['subplugin_count'] > 0) {
+            $output->writeln(sprintf('  - Main: %d, Subplugins: %d', $debugData['plugin_count'], $debugData['subplugin_count']));
+        }
+
+        // Total files count
+        if (!empty($debugData['file_counts'])) {
+            $totalFiles = $debugData['file_counts']['total_files'] ?? 0;
+            if ($totalFiles > 0) {
+                $output->writeln(sprintf('- <info>Files processed: %d</info>', $totalFiles));
+            }
+        }
+
+        // String processing metrics
+        if (!empty($debugData['string_counts'])) {
+            $output->writeln('- <info>String processing metrics:</info>');
+            foreach ($debugData['string_counts'] as $type => $count) {
+                if ($count > 0) {
+                    /** @var string $type */
+                    $displayName = str_replace('_', ' ', $type);
+                    $output->writeln(sprintf('  - %s: %d', ucfirst($displayName), $count));
+                }
+            }
+        }
+
+        $output->writeln('');
     }
 }
