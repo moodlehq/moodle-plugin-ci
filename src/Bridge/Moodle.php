@@ -40,6 +40,17 @@ class Moodle
     }
 
     /**
+     * Get the absolute path to the public directory.
+     *
+     * @return string
+     */
+    public function getPublicDirectory(): string
+    {
+        // Moodle 5.1+ is using 'public' directory structure.
+        return file_exists($this->directory . '/public/version.php') ? $this->directory . '/public' : $this->directory;
+    }
+
+    /**
      * Load Moodle config so we can use Moodle APIs.
      */
     public function requireConfig(): void
@@ -125,7 +136,7 @@ class Moodle
         $filter = new StatementFilter();
         $parser = new CodeParser();
 
-        $statements = $parser->parseFile($this->directory . '/version.php');
+        $statements = $parser->parseFile($this->getPublicDirectory() . '/version.php');
         $assign     = $filter->findFirstVariableAssignment($statements, 'branch', 'Failed to find $branch in Moodle version.php');
 
         if ($assign->expr instanceof String_) {

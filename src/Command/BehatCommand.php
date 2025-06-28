@@ -79,7 +79,7 @@ class BehatCommand extends AbstractMoodleCommand
                 '--enable',
                 '--add-core-features-to-theme',
                 '--scss-deprecations',
-            ], $this->moodle->directory, null, null, null);
+            ], $this->moodle->getPublicDirectory(), null, null, null);
             $this->execute->passThroughProcess($enableprocess);
         }
 
@@ -102,7 +102,7 @@ class BehatCommand extends AbstractMoodleCommand
             $cmd[] = '--colors';
         }
 
-        $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->directory, null, null, null));
+        $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->getPublicDirectory(), null, null, null));
 
         $servers && $this->stopServerProcesses();
 
@@ -167,7 +167,10 @@ class BehatCommand extends AbstractMoodleCommand
             'php',
             '-S',
             $phpWebserverHost,
+            '-t',
+            $this->moodle->getPublicDirectory(),
         ];
+
         $web = new Process($cmd, $this->moodle->directory);
         $web->setTimeout(0);
         $web->disableOutput();

@@ -73,7 +73,7 @@ class MustacheCommand extends AbstractMoodleCommand
                 $wrapper,
                 '--filename=' . $file,
                 '--validator=' . $jarTmpFile,
-                '--basename=' . $this->moodle->directory,
+                '--basename=' . $this->moodle->getPublicDirectory(),
             ];
             // _JAVA_OPTIONS is something Travis CI started to set in Trusty.  This breaks Mustache because
             // the output from vnu.jar needs to be captured and JSON decoded.  When _JAVA_OPTIONS is present,

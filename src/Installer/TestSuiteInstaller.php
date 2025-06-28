@@ -43,7 +43,7 @@ class TestSuiteInstaller extends AbstractInstaller
      */
     private function getBehatUtility(): string
     {
-        return $this->moodle->directory . '/admin/tool/behat/cli/util_single_run.php';
+        return $this->moodle->getPublicDirectory() . '/admin/tool/behat/cli/util_single_run.php';
     }
 
     public function install(): void
@@ -104,7 +104,7 @@ class TestSuiteInstaller extends AbstractInstaller
 
         return [
             new MoodleProcess([
-                $this->moodle->directory . '/admin/tool/phpunit/cli/util.php',
+                $this->moodle->getPublicDirectory() . '/admin/tool/phpunit/cli/util.php',
                 '--install',
             ]),
         ];
@@ -130,7 +130,7 @@ class TestSuiteInstaller extends AbstractInstaller
         if ($this->plugin->hasUnitTests()) {
             $this->getOutput()->debug('Build PHPUnit config');
             $processes[] = new MoodleProcess([
-                $this->moodle->directory . '/admin/tool/phpunit/cli/util.php',
+                $this->moodle->getPublicDirectory() . '/admin/tool/phpunit/cli/util.php',
                 '--buildconfig',
             ]);
             // Only create the PHPUnit config file (phpunit.xml) if it does not exist.
@@ -138,7 +138,7 @@ class TestSuiteInstaller extends AbstractInstaller
             if (!$this->plugin->hasPHPUnitConfig()) {
                 $this->getOutput()->debug('Build PHPUnit component config');
                 $processes[] = new MoodleProcess([
-                    $this->moodle->directory . '/admin/tool/phpunit/cli/util.php',
+                    $this->moodle->getPublicDirectory() . '/admin/tool/phpunit/cli/util.php',
                     '--buildcomponentconfigs',
                 ]);
             }
