@@ -11,6 +11,9 @@ Actions](https://docs.github.com/en/actions) or [Travis
 CI](https://travis-ci.com).  All of these tests and tools
 are run everytime a change is pushed to a GitHub branch or pull request.
 
+> [!WARNING]
+> Travis CI support has been deprecated in 4.5.8 and will be removed in 5.0.0.
+
 * [Getting started](https://moodlehq.github.io/moodle-plugin-ci/)
 * [Help topics](https://moodlehq.github.io/moodle-plugin-ci/Help.html)
 * [Changelog](https://moodlehq.github.io/moodle-plugin-ci/CHANGELOG.html)

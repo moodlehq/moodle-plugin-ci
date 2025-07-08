@@ -14,6 +14,9 @@ CI](https://travis-ci.com), if you are using
 `moodle-plugin-ci` with other CI services please do share your setup examples
 by creating a ticket.
 
+> [!WARNING]
+> Travis CI support has been deprecated in 4.5.8 and will be removed in 5.0.0.
+
 Why would you want to do this?  It saves you from having to remember to setup and run PHPUnit, Behat, code checker, etc
 every single time you make a change.  If you have enough test coverage, it also makes accepting pull requests painless
 because you can be more confident that the change wont break anything.  There are many more advantages to use CI
