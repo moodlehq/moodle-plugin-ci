@@ -69,7 +69,7 @@ class PHPDocCommand extends AbstractMoodleCommand
             '-f=text',
         ];
 
-        $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->directory, null, null, null));
+        $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->getPublicDirectory(), null, null, null));
 
         if (isset($filesystem)) {
             // Remove plugin if we added it, so we leave things clean.

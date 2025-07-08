@@ -12,6 +12,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Changed
 - Bump default Selenium version to 4.
 
+### Fixed
+- Add support for public directory structure in 5.1 (MDL-83424).
+
 ## [4.5.7] - 2025-03-26
 ### Changed
 - Allow to run with PHP 8.4 (supported in Moodle 5.0)
