@@ -1,3 +1,4 @@
+# Travis CI support has been deprecated in 4.5.8 and will be removed in 5.0.0. Please use GitHub Actions instead.
 language: php
 
 dist: focal

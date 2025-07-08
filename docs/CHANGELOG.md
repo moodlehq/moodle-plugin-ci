@@ -9,11 +9,16 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+## [4.5.8] - 2025-07-08
 ### Changed
 - Bump default Selenium version to 4.
 
 ### Fixed
 - Add support for public directory structure in 5.1 (MDL-83424).
+
+### Deprecated
+- Using Travis CI has been deprecated in 4.5.8 and will be removed in 5.0.0. This includes removing configuration template and relevant documentation.
+- ACTION SUGGESTED: Consider using GitHub Actions for plugin CI testing.
 
 ## [4.5.7] - 2025-03-26
 ### Changed
@@ -766,7 +771,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.7...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.8...main
+[4.5.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.7...4.5.8
 [4.5.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.6...4.5.7
 [4.5.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.5...4.5.6
 [4.5.5]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.4...4.5.5
