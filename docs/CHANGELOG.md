@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Bump workflows to Postgres 15, which is a requirement for Moodle 5.1
+
 ## [4.5.8] - 2025-07-08
 ### Changed
 - Bump default Selenium version to 4.
