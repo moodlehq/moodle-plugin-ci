@@ -28,7 +28,8 @@
         "*.php",
         "*.xml",
         "*.sh",
-        "*.jar"
+        "*.jar",
+        "*.json"
       ],
       "exclude": [
         "Tests",
