@@ -78,7 +78,7 @@ EOT;
         $output = $commandTester->getDisplay();
         $this->assertMatchesRegularExpression('/F\.* 10\.* \/ 10 \(100%\)/', $output);                // Progress.
         $this->assertMatchesRegularExpression('/\/fixable.php/', $output);                            // File.
-        $this->assertMatchesRegularExpression('/A TOTAL OF 2 ERRORS WERE FIXED IN 1 FILE/', $output); // Summary.
+        $this->assertMatchesRegularExpression('/A TOTAL OF 4 ERRORS WERE FIXED IN 1 FILE/', $output); // Summary.
         $this->assertMatchesRegularExpression('/Time:.*Memory:/', $output);                           // Time.
 
         // Also verify display info is correct.
@@ -102,9 +102,7 @@ EOT;
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 if (true) {
-
 } else if (false) {
-
 }
 
 EOT;
