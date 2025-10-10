@@ -96,7 +96,7 @@ EOT;
         $output = $commandTester->getDisplay();
         $this->assertMatchesRegularExpression('/E\.* 10\.* \/ 10 \(100%\)/', $output);                // Progress.
         $this->assertMatchesRegularExpression('/\/fixable.php/', $output);                            // File.
-        $this->assertMatchesRegularExpression('/ 11 ERRORS AND 1 WARNING AFFECTING 8 /', $output);    // Summary.
+        $this->assertMatchesRegularExpression('/ 13 ERRORS AND 1 WARNING AFFECTING 8 /', $output);    // Summary.
         $this->assertMatchesRegularExpression('/BoilerplateComment\.NoBoilerplateComment/', $output); // Moodle sniff.
         $this->assertMatchesRegularExpression('/Expected MOODLE_INTERNAL check/', $output);           // Moodle sniff.
         $this->assertMatchesRegularExpression('/print_error\(\) has been deprecated/', $output);      // Moodle sniff.
@@ -108,8 +108,9 @@ EOT;
         $this->assertMatchesRegularExpression('/Missing docblock for function somefunc/', $output);   // Moodle sniff.
         $this->assertMatchesRegularExpression('/AbstractPrivateMethods\.Found/', $output);    // PHPCompatibility sniff.
         $this->assertMatchesRegularExpression('/Opening brace must be the last content/', $output);   // Generic sniff.
-        $this->assertMatchesRegularExpression('/Files\.EndFileNewline\.NotFound/', $output);          // Generic of file.
-        $this->assertMatchesRegularExpression('/PHPCBF CAN FIX THE 4 MARKED SNIFF/', $output);        // PHPCBF note.
+        $this->assertMatchesRegularExpression('/Closing brace must not be followed by/', $output);    // PSR12 sniff.
+        $this->assertMatchesRegularExpression('/Files\.EndFileNewline\.NoneFound/', $output);         // Generic of file.
+        $this->assertMatchesRegularExpression('/PHPCBF CAN FIX THE 5 MARKED SNIFF/', $output);        // PHPCBF note.
         $this->assertMatchesRegularExpression('/Time:.*Memory:/', $output);                           // Time.
 
         // Also verify display info is correct.
@@ -228,7 +229,9 @@ EOT;
             ['--exclude' => 'moodle.Files.RequireLogin,' .
                 'moodle.Files.BoilerplateComment,' .
                 'moodle.Commenting.MissingDocblock,' .
-                'moodle.Commenting.FileExpectedTags']
+                'moodle.Commenting.FileExpectedTags,' .
+                'PSR12.Files.OpenTag,' .
+                'PSR12.Operators.OperatorSpacing']
         );
         $this->assertSame(0, $commandTester->getStatusCode());
     }
