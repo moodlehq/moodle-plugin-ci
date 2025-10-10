@@ -9,8 +9,13 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+## [4.5.9] - 2025-10-10
 ### Changed
+- Updated project dependencies to current [moodle-cs v3.6.0](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci v1.1.3](https://github.com/moodlehq/moodle-local_ci) releases.
 - Bump workflows to Postgres 15, which is a requirement for Moodle 5.1
+
+### Fixed
+- Fix json file missing error in moodle-plugin-ci.phar
 
 ## [4.5.8] - 2025-07-08
 ### Changed
@@ -774,7 +779,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.8...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.9...main
+[4.5.9]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.8...4.5.9
 [4.5.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.7...4.5.8
 [4.5.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.6...4.5.7
 [4.5.6]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.5...4.5.6
