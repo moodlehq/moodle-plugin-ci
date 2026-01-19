@@ -246,8 +246,9 @@ abstract class AbstractClassChecker implements StringCheckerInterface
                         $mode = 'implements';
                         break;
                 }
-            } elseif (',' === $token && 'implements' === $mode && $currentParent) {
-                // Handle multiple interfaces
+            } elseif (',' === $token && 'implements' === $mode) {
+                // Handle multiple interfaces - move to next token to avoid infinite loop.
+                ++$i;
                 continue;
             }
 
