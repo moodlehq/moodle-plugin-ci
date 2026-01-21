@@ -270,17 +270,18 @@ class ExceptionChecker extends AbstractClassChecker
             if (is_string($baseClassName)) {
                 $possibleStringKeys = [
                     strtolower($className),
-                    'error_' . strtolower($className),
                     strtolower($baseClassName),
                 ];
             } else {
                 $possibleStringKeys = [
                     strtolower($className),
-                    'error_' . strtolower($className),
                 ];
             }
 
             foreach ($possibleStringKeys as $stringKey) {
+                if (!$this->looksLikeStringKey($stringKey)) {
+                    continue;
+                }
                 $context = new StringContext($filePath, null, "Error message for custom exception class {$className}");
 
                 // Try to find the line where this string key might be used if we have a file path
