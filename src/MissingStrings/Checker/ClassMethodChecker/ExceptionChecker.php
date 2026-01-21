@@ -99,7 +99,7 @@ class ExceptionChecker extends AbstractClassChecker
                 // Also analyze class structure if it's a class file
                 if (false !== strpos($filePath, '/classes/')) {
                     $classInfo = $this->parseClassFile($filePath);
-                    $this->analyzeExceptionClass($classInfo, $result);
+                    $this->analyzeExceptionClass($classInfo, $result, $plugin->component);
                 }
             } catch (\Exception $e) {
                 $result->addRawError("Error analyzing file {$filePath}: " . $e->getMessage());
@@ -256,7 +256,7 @@ class ExceptionChecker extends AbstractClassChecker
      * @param array            $classInfo class information from parseClassFile()
      * @param ValidationResult $result    result object to add strings to
      */
-    private function analyzeExceptionClass(array $classInfo, ValidationResult $result): void
+    private function analyzeExceptionClass(array $classInfo, ValidationResult $result, string $pluginComponent): void
     {
         // Check if class extends any exception class
         if ($classInfo['parent']
@@ -265,34 +265,44 @@ class ExceptionChecker extends AbstractClassChecker
             $className = $classInfo['name'];
             $filePath  = $classInfo['file'] ?? null;
 
-            // Custom exception classes often need error message strings
-            $baseClassName = str_replace('Exception', '', $className);
-            if (is_string($baseClassName)) {
-                $possibleStringKeys = [
-                    strtolower($className),
-                    strtolower($baseClassName),
-                ];
-            } else {
-                $possibleStringKeys = [
-                    strtolower($className),
-                ];
+            if (!$filePath) {
+                return;
             }
 
-            foreach ($possibleStringKeys as $stringKey) {
-                if (!$this->looksLikeStringKey($stringKey)) {
-                    continue;
-                }
-                $context = new StringContext($filePath, null, "Error message for custom exception class {$className}");
+            $content = file_get_contents($filePath);
+            if (false === $content) {
+                return;
+            }
 
-                // Try to find the line where this string key might be used if we have a file path
-                if ($filePath) {
+            // Only require strings explicitly used in the custom exception constructor.
+            $pattern = '/parent::__construct\s*\(\s*[\'"]([^\'"]+)[\'"]\s*(?:,\s*[\'"]([^\'"]*)[\'"])?/';
+            if (preg_match_all($pattern, $content, $matches, PREG_SET_ORDER)) {
+                foreach ($matches as $match) {
+                    $stringKey = $match[1];
+                    $component = $match[2] ?? null;
+
+                    // Respect moodle_exception defaulting: empty/core/moodle -> "error" component (skip).
+                    if (null === $component || '' === $component || 'core' === $component || 'moodle' === $component) {
+                        continue;
+                    }
+
+                    $expectedComponent = $this->getLanguageComponent($pluginComponent);
+                    if ($component !== $expectedComponent && $component !== $pluginComponent) {
+                        continue;
+                    }
+
+                    if (!$this->looksLikeStringKey($stringKey)) {
+                        continue;
+                    }
+                    $context = new StringContext($filePath, null, "Error message for custom exception class {$className}");
+
                     $lineNumber = $this->usageFinder->findStringLiteralLine($filePath, $stringKey);
                     if (null !== $lineNumber) {
                         $context->setLine($lineNumber);
                     }
-                }
 
-                $result->addRequiredString($stringKey, $context);
+                    $result->addRequiredString($stringKey, $context);
+                }
             }
         }
     }
