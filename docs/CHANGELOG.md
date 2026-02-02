@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to current PHP and Moodle versions
+- ACTION SUGGESTED: bump workflows to postgres 16, which is a requirement for Moodle 5.2
+
 ## [4.5.9] - 2025-10-10
 ### Changed
 - Updated project dependencies to current [moodle-cs v3.6.0](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci v1.1.3](https://github.com/moodlehq/moodle-local_ci) releases.
