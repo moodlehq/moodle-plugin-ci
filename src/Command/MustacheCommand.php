@@ -62,6 +62,13 @@ class MustacheCommand extends AbstractMoodleCommand
 
         $code = 0;
         foreach ($files as $file) {
+            if (str_contains($file, '/templates/mobileapp/')) {
+                // Skip app templates for now because they throw many warnings due to custom directives.
+                // To be improved in the future.
+                $this->outputSkip($output, 'Skipping mobile app template: ' . $file);
+                continue;
+            }
+
             $cmd = [
                 'env',
                 '-u',
