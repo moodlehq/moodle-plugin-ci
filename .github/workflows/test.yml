@@ -62,7 +62,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:15
+        image: postgres:16
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -77,6 +77,9 @@ jobs:
         include:
           - php: '8.4'
             moodle-branch: 'main'
+            moodle-app: 'true'
+          - php: '8.4'
+            moodle-branch: 'MOODLE_501_STABLE'
             moodle-app: 'true'
           - php: '8.4'
             moodle-branch: 'MOODLE_500_STABLE'
@@ -191,7 +194,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:15
+        image: postgres:16
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -207,6 +210,9 @@ jobs:
           # Each supported PHP version once. That's enough.
           - php: '8.4'
             moodle-branch: 'main'
+            moodle-app: 'true'
+          - php: '8.4'
+            moodle-branch: 'MOODLE_501_STABLE'
             moodle-app: 'true'
           - php: '8.4'
             moodle-branch: 'MOODLE_500_STABLE'
