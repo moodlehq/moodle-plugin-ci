@@ -128,15 +128,20 @@ class ValidateTest extends \PHPUnit\Framework\TestCase
         return [
             ['git@github.com:moodle/moodle.git'],
             ['https://github.com/moodle/moodle.git'],
+            ['file:///path/to/local/repo'],
+            ['file:///home/user/moodle.git'],
+            ['/foo/path'],
+            ['./relative/path'],
+            ['../parent/path'],
+            ['~/path'],
         ];
     }
 
     public function invalidUrlProvider()
     {
         return [
-            ['foo/bar'],
-            ['baz'],
-            ['http://google.com'],
+            ['http://google.com'], // Not .git
+            ['not-a-valid-url!@'], // Invalid characters
         ];
     }
 }
