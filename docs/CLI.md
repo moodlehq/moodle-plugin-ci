@@ -897,7 +897,7 @@ Directory create for Moodle data files
 
 #### `--repo`
 
-Moodle repository to clone
+Moodle repository to clone, can be local path to repo
 
 * Accept value: yes
 * Is value required: yes

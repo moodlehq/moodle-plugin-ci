@@ -78,7 +78,7 @@ class InstallCommand extends Command
             ->setDescription('Install everything required for CI testing')
             ->addOption('moodle', null, InputOption::VALUE_REQUIRED, 'Clone Moodle to this directory', 'moodle')
             ->addOption('data', null, InputOption::VALUE_REQUIRED, 'Directory create for Moodle data files', 'moodledata')
-            ->addOption('repo', null, InputOption::VALUE_REQUIRED, 'Moodle repository to clone', $repo)
+            ->addOption('repo', null, InputOption::VALUE_REQUIRED, 'Moodle repository to clone, can be local path to repo', $repo)
             ->addOption('branch', null, InputOption::VALUE_REQUIRED, 'Moodle git branch to clone, EG: MOODLE_29_STABLE', $branch)
             ->addOption('plugin', null, InputOption::VALUE_REQUIRED, 'Path to Moodle plugin', $plugin)
             ->addOption('db-type', null, InputOption::VALUE_REQUIRED, 'Database type, mysqli, pgsql or mariadb', $type)

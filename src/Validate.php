@@ -86,12 +86,28 @@ class Validate
     /**
      * Validate git URL.
      *
+     * Supports:
+     * - Standard git URLs (https, git, ssh)
+     * - file:// URLs
+     * - Absolute and relative directory paths (for local repositories)
+     *
      * @param string $url
      *
      * @return string
      */
     public function gitUrl($url)
     {
+        // file:// URL
+        if (preg_match('/^file:\/\//', $url)) {
+            return $url;
+        }
+
+        // Directory path
+        if (is_dir($url) || preg_match('/^[\.\/~]/', $url)) {
+            return $url;
+        }
+
+        // Standard git URL validation
         // Source/credit: https://github.com/jonschlinkert/is-git-url/blob/master/index.js
         $options = ['options' => ['regexp' => '/(?:git|ssh|https?|git@[\w\.]+):(?:\/\/)?[\w\.@:\/~_-]+\.git(?:\/?|\#[\d\w\.\-_]+?)$/']];
         if (filter_var($url, FILTER_VALIDATE_REGEXP, $options) === false) {
