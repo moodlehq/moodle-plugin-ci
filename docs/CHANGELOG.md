@@ -9,8 +9,10 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+
+## [4.5.10] - 2026-02-06
 ### Changed
-- Updated project dependencies to current PHP and Moodle versions
+- Updated project dependencies to current [moodle-cs v3.7.0](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci v1.1.4](https://github.com/moodlehq/moodle-local_ci) releases. The project now targets the current Moodle version.
 - ACTION SUGGESTED: bump workflows to postgres 16, which is a requirement for Moodle 5.2
 
 ### Added
@@ -786,7 +788,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.9...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.10...main
+[4.5.10]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.9...4.5.10
 [4.5.9]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.8...4.5.9
 [4.5.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.7...4.5.8
 [4.5.7]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.6...4.5.7

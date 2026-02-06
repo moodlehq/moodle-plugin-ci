@@ -82,7 +82,7 @@ class Vendors
     {
         $base = dirname($this->path) . '/';
 
-        return array_map(function ($path) use ($base) {
+        return array_map(static function ($path) use ($base) {
             return str_replace($base, '', $path);
         }, $this->getVendorPaths());
     }

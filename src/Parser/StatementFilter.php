@@ -38,7 +38,7 @@ class StatementFilter
      */
     public function filterFunctions(array $statements): array
     {
-        return array_filter($statements, function ($statement) {
+        return array_filter($statements, static function ($statement) {
             return $statement instanceof Function_;
         });
     }
@@ -52,7 +52,7 @@ class StatementFilter
      */
     public function filterClasses(array $statements): array
     {
-        return array_filter($statements, function ($statement) {
+        return array_filter($statements, static function ($statement) {
             return $statement instanceof Class_;
         });
     }
@@ -93,7 +93,7 @@ class StatementFilter
      */
     public function filterNamespaces(array $statements): array
     {
-        return array_filter($statements, function ($statement) {
+        return array_filter($statements, static function ($statement) {
             return $statement instanceof Namespace_;
         });
     }
