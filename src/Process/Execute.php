@@ -108,7 +108,7 @@ class Execute
      */
     public function run($cmd, ?string $error = null): Process
     {
-        if (!($cmd instanceof Process)) {
+        if (!$cmd instanceof Process) {
             $cmd = new Process($cmd);
         }
         $this->setNodeEnv($cmd);
@@ -124,7 +124,7 @@ class Execute
      */
     public function mustRun($cmd, ?string $error = null): Process
     {
-        if (!($cmd instanceof Process)) {
+        if (!$cmd instanceof Process) {
             $cmd = new Process($cmd);
         }
         $this->setNodeEnv($cmd);

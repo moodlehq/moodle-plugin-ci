@@ -10,7 +10,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 ### Changed
-- Updated project dependencies to current PHP and Moodle versions
+- Updated project dependencies to current [moodle-cs v3.7.0](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci v1.1.4](https://github.com/moodlehq/moodle-local_ci) releases. The project now targets the current Moodle version.
 - ACTION SUGGESTED: bump workflows to postgres 16, which is a requirement for Moodle 5.2
 
 ### Added
