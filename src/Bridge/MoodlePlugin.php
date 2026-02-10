@@ -257,6 +257,60 @@ class MoodlePlugin
     }
 
     /**
+     * Get ignore file information from subdirectory config files.
+     *
+     * Discovers .moodle-plugin-ci.yml files in all subdirectories of the plugin
+     * and merges their filter rules. notPaths entries are prefixed with the
+     * relative subdirectory path so they apply correctly when Finder is rooted
+     * at the main plugin directory.
+     *
+     * @return array{notPaths?: string[], notNames?: string[]}
+     */
+    private function getSubdirectoryIgnores(): array
+    {
+        $merged = [];
+
+        $configFiles = Finder::create()
+            ->files()
+            ->ignoreDotFiles(false)
+            ->in($this->directory)
+            ->name('.moodle-plugin-ci.yml')
+            ->depth('> 0')
+            ->ignoreUnreadableDirs();
+
+        foreach ($configFiles as $file) {
+            $config = Yaml::parse(file_get_contents($file->getRealPath()));
+
+            // Determine filter section: context-specific or generic (same logic as getIgnores).
+            $ignores = [];
+            if (!empty($this->context) && array_key_exists('filter-' . $this->context, $config)) {
+                $ignores = $config['filter-' . $this->context];
+            } elseif (array_key_exists('filter', $config)) {
+                $ignores = $config['filter'];
+            }
+
+            // Relative directory from the plugin root to this config file's directory.
+            $relativeDir = $file->getRelativePath();
+
+            // Prefix notPaths with the relative subdirectory path.
+            if (!empty($ignores['notPaths'])) {
+                foreach ($ignores['notPaths'] as $notPath) {
+                    $merged['notPaths'][] = $relativeDir . '/' . $notPath;
+                }
+            }
+
+            // notNames are filename patterns, applied globally.
+            if (!empty($ignores['notNames'])) {
+                foreach ($ignores['notNames'] as $notName) {
+                    $merged['notNames'][] = $notName;
+                }
+            }
+        }
+
+        return $merged;
+    }
+
+    /**
      * Get a list of plugin files.
      *
      * @param Finder $finder The finder to use, can be pre-configured
@@ -282,6 +336,20 @@ class MoodlePlugin
         }
         if (!empty($ignores['notNames'])) {
             foreach ($ignores['notNames'] as $notName) {
+                $finder->notName($notName);
+            }
+        }
+
+        // Merge ignores from subdirectory config files (e.g., subplugins).
+        $subIgnores = $this->getSubdirectoryIgnores();
+
+        if (!empty($subIgnores['notPaths'])) {
+            foreach ($subIgnores['notPaths'] as $notPath) {
+                $finder->notPath($notPath);
+            }
+        }
+        if (!empty($subIgnores['notNames'])) {
+            foreach ($subIgnores['notNames'] as $notName) {
                 $finder->notName($notName);
             }
         }
