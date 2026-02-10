@@ -927,7 +927,7 @@ Path to Moodle plugin
 
 #### `--db-type`
 
-Database type, mysqli, pgsql or mariadb
+Database type, mysqli, pgsql, mariadb or sqrsrv
 
 * Accept value: yes
 * Is value required: yes

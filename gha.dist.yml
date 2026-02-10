@@ -27,12 +27,21 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 3
 
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2019-CU25-ubuntu-20.04
+        env:
+          ACCEPT_EULA: 'Y'
+          MSSQL_SA_PASSWORD: 'RequiredPassw0rd!'
+        ports:
+          - 1433:1433
+        options: --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P RequiredPassw0rd! -Q \"SELECT 1\" -b -o /dev/null" --health-interval 10s --health-timeout 5s --health-retries 10
+
     strategy:
       fail-fast: false
       matrix:
         php: ['7.4', '8.0', '8.1']
         moodle-branch: ['MOODLE_401_STABLE']
-        database: [pgsql, mariadb]
+        database: [pgsql, mariadb, sqlsrv]
 
     steps:
       - name: Check out repository code
@@ -44,7 +53,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: ${{ matrix.extensions }}
+          extensions: sqlsrv
           ini-values: max_input_vars=5000
           # If you are not using code coverage, keep "none". Otherwise, use "pcov" (Moodle 3.10 and up) or "xdebug".
           # If you try to use code coverage with "none", it will fallback to phpdbg (which has known problems).
@@ -59,7 +68,7 @@ jobs:
           echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
 
       - name: Install moodle-plugin-ci
-        run: moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
+        run: moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1 ${{ matrix.database == 'sqlsrv' && '--db-pass=RequiredPassw0rd!' || '' }}
         env:
           DB: ${{ matrix.database }}
           MOODLE_BRANCH: ${{ matrix.moodle-branch }}

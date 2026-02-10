@@ -81,7 +81,7 @@ class InstallCommand extends Command
             ->addOption('repo', null, InputOption::VALUE_REQUIRED, 'Moodle repository to clone, can be local path to repo', $repo)
             ->addOption('branch', null, InputOption::VALUE_REQUIRED, 'Moodle git branch to clone, EG: MOODLE_29_STABLE', $branch)
             ->addOption('plugin', null, InputOption::VALUE_REQUIRED, 'Path to Moodle plugin', $plugin)
-            ->addOption('db-type', null, InputOption::VALUE_REQUIRED, 'Database type, mysqli, pgsql or mariadb', $type)
+            ->addOption('db-type', null, InputOption::VALUE_REQUIRED, 'Database type, mysqli, pgsql, mariadb or sqlsrv', $type)
             ->addOption('db-user', null, InputOption::VALUE_REQUIRED, 'Database user', $dbUser)
             ->addOption('db-pass', null, InputOption::VALUE_REQUIRED, 'Database pass', $dbPass)
             ->addOption('db-name', null, InputOption::VALUE_REQUIRED, 'Database name', $dbName)
