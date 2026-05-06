@@ -9,7 +9,8 @@ and tools are run everytime a change is pushed to a GitHub branch or pull
 request.
 
 We currently provide user manual how to use it with [GitHub
-Actions](https://docs.github.com/en/actions) and [Travis
+Actions](https://docs.github.com/en/actions), [GitLab
+CI/CD](https://docs.gitlab.com/ee/ci/) and [Travis
 CI](https://travis-ci.com), if you are using
 `moodle-plugin-ci` with other CI services please do share your setup examples
 by creating a ticket.
@@ -67,6 +68,13 @@ name, click Actions tab and see your build status.  You may find this [Quick
 Start manual](https://docs.github.com/en/actions/quickstart#viewing-your-workflow-results)
 useful. Now whenever you push commits to your plugin repo or it gets a new
 pull request, GitHub will run a build to make sure nothing broke.
+
+### GitLab CI/CD
+
+Copy the example `.gitlab-ci.yml` from the [GitLab CI example](GitLabCI.md)
+page into the root of your plugin repository. Review the Moodle branch, PHP
+versions and database jobs, then commit and push the file to GitLab to trigger a
+pipeline.
 
 ### Travis CI
 
