@@ -35,6 +35,8 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class PHPDocCommandTest extends MoodleTestCase
 {
+    protected DummyExecute $lastExecute;
+
     protected function executeCommand($pluginDir = null, $maxWarnings = -1, $mockOutput = ''): CommandTester
     {
         if ($pluginDir === null) {
@@ -46,6 +48,7 @@ class PHPDocCommandTest extends MoodleTestCase
         $command->plugin                = new DummyMoodlePlugin($pluginDir);
         $command->execute               = new DummyExecute(); // Mocked execution.
         $command->execute->returnOutput = $mockOutput;          // Mocked output.
+        $this->lastExecute              = $command->execute;    // Keep it available for assertions.
 
         // Note: we leave this here as reference for any other command test needing a config.php file,
         // but it's not needed for this unit tess that is using a mocked execute() method.
@@ -132,6 +135,31 @@ EOT;
         $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');
         $this->assertSame(0, $commandTester->getStatusCode());
         $this->assertMatchesRegularExpression('/No relevant files found to process, free pass!/', $commandTester->getDisplay());
+    }
+
+    public function testExecuteManyFilesRunsChunked()
+    {
+        // Create enough files with long names to make the joined file list exceed
+        // the chunk limit, so the checker has to be run more than once.
+        for ($i = 0; $i < 300; ++$i) {
+            $name = str_pad("file_{$i}_", 250, 'x') . '.php';
+            $this->fs->dumpFile($this->pluginDir . '/chunky/' . $name, "<?php\n");
+        }
+
+        $commandTester = $this->executeCommand();
+        $this->assertSame(0, $commandTester->getStatusCode());
+
+        // The file list must have been split into various runs, each of them
+        // with a command line comfortably below OS limits (128 KiB on Linux).
+        $cmds = $this->lastExecute->allCmds;
+        $this->assertGreaterThanOrEqual(2, count($cmds));
+        foreach ($cmds as $cmd) {
+            $this->assertLessThan(70000, strlen($cmd));
+            $this->assertStringContainsString('local/moodlecheck/cli/moodlecheck.php', $cmd);
+        }
+
+        // All the files must have been processed exactly once overall.
+        $this->assertSame(300, substr_count(implode(' ', $cmds), '/chunky/'));
     }
 
     public function testExecuteNoPlugin()
