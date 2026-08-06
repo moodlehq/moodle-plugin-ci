@@ -20,7 +20,7 @@ use MoodlePluginCI\Tests\MoodleTestCase;
 
 class VendorInstallerTest extends MoodleTestCase
 {
-    public function testInstall()
+    public function testInstall(): void
     {
         $installer = new VendorInstaller(
             new DummyMoodle($this->moodleDir),
@@ -34,7 +34,7 @@ class VendorInstallerTest extends MoodleTestCase
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
     }
 
-    public function testInstallNodeNoNvmrc()
+    public function testInstallNodeNoNvmrc(): void
     {
         $installer = new VendorInstaller(
             new DummyMoodle($this->moodleDir),
@@ -53,7 +53,7 @@ class VendorInstallerTest extends MoodleTestCase
         $this->assertSame('lts/carbon', file_get_contents($this->moodleDir . '/.nvmrc'));
     }
 
-    public function testInstallNodeUserVersion()
+    public function testInstallNodeUserVersion(): void
     {
         $userVersion = '8.9';
         $installer   = new VendorInstaller(
@@ -70,7 +70,7 @@ class VendorInstallerTest extends MoodleTestCase
         $this->assertSame($userVersion, file_get_contents($this->moodleDir . '/.nvmrc'));
     }
 
-    public function testInstallNodePluginDependencies()
+    public function testInstallNodePluginDependencies(): void
     {
         $installer = new VendorInstaller(
             new DummyMoodle($this->moodleDir),
@@ -87,7 +87,7 @@ class VendorInstallerTest extends MoodleTestCase
         $this->assertSame(4, $installer->getOutput()->getStepCount());
     }
 
-    public function testSkipNodePluginDependencies()
+    public function testSkipNodePluginDependencies(): void
     {
         $installer = new VendorInstaller(
             new DummyMoodle($this->moodleDir),

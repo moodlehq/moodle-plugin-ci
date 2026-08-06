@@ -33,7 +33,7 @@ class QuestionRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->requirements = null;
     }
 
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
@@ -43,7 +43,7 @@ class QuestionRequirementsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetRequiredPrefixes()
+    public function testGetRequiredPrefixes(): void
     {
         $fileTokens = $this->requirements->getRequiredTablePrefix();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileTokens);

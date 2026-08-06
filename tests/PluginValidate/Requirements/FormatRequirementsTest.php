@@ -33,7 +33,7 @@ class FormatRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->requirements = null;
     }
 
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
@@ -43,7 +43,7 @@ class FormatRequirementsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
         $files = $this->requirements->getRequiredFiles();
 
@@ -54,7 +54,7 @@ class FormatRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredClasses()
+    public function testGetRequiredClasses(): void
     {
         $classes = $this->requirements->getRequiredClasses();
 

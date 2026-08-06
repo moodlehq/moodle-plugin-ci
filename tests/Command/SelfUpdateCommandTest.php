@@ -26,7 +26,7 @@ class SelfUpdateCommandTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers \MoodlePluginCI\Command\SelfUpdateCommand::getBackupPath
      */
-    public function testGetBackupPathNotExists()
+    public function testGetBackupPathNotExists(): void
     {
         $command = new SelfUpdateCommand();
 
@@ -45,7 +45,7 @@ class SelfUpdateCommandTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers \MoodlePluginCI\Command\SelfUpdateCommand::getBackupPath
      */
-    public function testGetBackupPathExists()
+    public function testGetBackupPathExists(): void
     {
         $command = new SelfUpdateCommand();
 

@@ -33,7 +33,7 @@ class ThemeRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->requirements = null;
     }
 
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
@@ -43,7 +43,7 @@ class ThemeRequirementsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
         $files = $this->requirements->getRequiredFiles();
 

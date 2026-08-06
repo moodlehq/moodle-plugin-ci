@@ -39,7 +39,7 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand([
             [
@@ -50,7 +50,7 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
-    public function testExecuteFailedProcess()
+    public function testExecuteFailedProcess(): void
     {
         $commandTester = $this->executeCommand([
             [
@@ -64,7 +64,7 @@ class ParallelCommandTest extends \PHPUnit\Framework\TestCase
         $this->assertMatchesRegularExpression('/Write to error/', $commandTester->getDisplay());
     }
 
-    public function testInitializeProcesses()
+    public function testInitializeProcesses(): void
     {
         $command         = new ParallelCommand();
         $command->moodle = new DummyMoodle(__DIR__);

@@ -17,7 +17,7 @@ use MoodlePluginCI\PluginValidate\Finder\FileTokens;
 
 class CapabilityFinderTest extends \PHPUnit\Framework\TestCase
 {
-    public function testFindTokens()
+    public function testFindTokens(): void
     {
         $file       = __DIR__ . '/../../Fixture/moodle-local_ci/db/access.php';
         $fileTokens = FileTokens::create('db/access.php')->mustHave('local/travis:view');

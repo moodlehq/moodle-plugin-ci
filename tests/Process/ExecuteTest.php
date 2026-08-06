@@ -28,7 +28,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         putenv('RUNTIME_NVM_BIN=/test/bin');
     }
 
-    public function testSetNodeEnv()
+    public function testSetNodeEnv(): void
     {
         $execute = new Execute();
         $pathenv = getenv('PATH');
@@ -60,7 +60,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $this->assertMatchesRegularExpression('/^HOME=/m', $process->getOutput());
     }
 
-    public function testRun()
+    public function testRun(): void
     {
         $execute = new Execute();
         $process = $execute->run(['env']);
@@ -71,7 +71,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $this->assertMatchesRegularExpression('/^PATH=\/test\/bin:/m', $process->getOutput());
     }
 
-    public function testMustRun()
+    public function testMustRun(): void
     {
         $execute = new Execute();
         $process = $execute->mustRun(['env']);
@@ -82,7 +82,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $this->assertMatchesRegularExpression('/^PATH=\/test\/bin:/m', $process->getOutput());
     }
 
-    public function testRunAllVerbose()
+    public function testRunAllVerbose(): void
     {
         /** @var Process[] $processes */
         $processes = [
@@ -102,7 +102,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($output->fetch());
     }
 
-    public function testMustRunAll()
+    public function testMustRunAll(): void
     {
         /** @var Process[] $processes */
         $processes = [
@@ -126,7 +126,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testMustRunAllFail()
+    public function testMustRunAllFail(): void
     {
         $this->expectException(ProcessFailedException::class);
 
@@ -142,7 +142,7 @@ class ExecuteTest extends \PHPUnit\Framework\TestCase
         $execute->mustRunAll($processes);
     }
 
-    public function testPassThrough()
+    public function testPassThrough(): void
     {
         $output  = new BufferedOutput(BufferedOutput::VERBOSITY_VERY_VERBOSE);
         $execute = new Execute($output);

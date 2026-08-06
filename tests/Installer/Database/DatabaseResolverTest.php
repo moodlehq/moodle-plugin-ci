@@ -16,7 +16,7 @@ use MoodlePluginCI\Installer\Database\DatabaseResolver;
 
 class DatabaseResolverTest extends \PHPUnit\Framework\TestCase
 {
-    public function testType()
+    public function testType(): void
     {
         $resolver = new DatabaseResolver();
 
@@ -34,14 +34,14 @@ class DatabaseResolverTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testTypeError()
+    public function testTypeError(): void
     {
         $this->expectException(\DomainException::class);
         $resolver = new DatabaseResolver();
         $resolver->resolveDatabase('foo');
     }
 
-    public function testOptions()
+    public function testOptions(): void
     {
         $resolver = new DatabaseResolver();
 

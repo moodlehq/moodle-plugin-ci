@@ -17,7 +17,7 @@ use MoodlePluginCI\Tests\FilesystemTestCase;
 
 class EnvDumperTest extends FilesystemTestCase
 {
-    public function testDump()
+    public function testDump(): void
     {
         $toFile = $this->tempDir . '/.env';
         $dumper = new EnvDumper();
@@ -29,7 +29,7 @@ class EnvDumperTest extends FilesystemTestCase
         $this->assertSame($expected, file_get_contents($toFile));
     }
 
-    public function testNoDump()
+    public function testNoDump(): void
     {
         $toFile = $this->tempDir . '/.env';
         $dumper = new EnvDumper();

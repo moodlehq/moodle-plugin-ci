@@ -32,7 +32,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         return new CommandTester($application->find('add-plugin'));
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->getCommandTester();
         $commandTester->execute([
@@ -49,7 +49,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         );
     }
 
-    public function testExecuteWithClone()
+    public function testExecuteWithClone(): void
     {
         $commandTester = $this->getCommandTester();
         // Execute with verbosity, so process helper outputs command line.
@@ -69,7 +69,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         );
     }
 
-    public function testExecuteWithCloneAndBranch()
+    public function testExecuteWithCloneAndBranch(): void
     {
         $commandTester = $this->getCommandTester();
         // Execute with verbosity, so process helper outputs command line.
@@ -90,7 +90,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         );
     }
 
-    public function testExecuteBothProjectAndClone()
+    public function testExecuteBothProjectAndClone(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -102,7 +102,7 @@ class AddPluginCommandTest extends FilesystemTestCase
         ]);
     }
 
-    public function testExecuteMissingProjectAndClone()
+    public function testExecuteMissingProjectAndClone(): void
     {
         $this->expectException(\RuntimeException::class);
 

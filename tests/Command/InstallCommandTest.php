@@ -45,7 +45,7 @@ class InstallCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -57,13 +57,13 @@ class InstallCommandTest extends MoodleTestCase
      *
      * @dataProvider csvToArrayProvider
      */
-    public function testCsvToArray(?string $value, array $expected)
+    public function testCsvToArray(?string $value, array $expected): void
     {
         $command = new InstallCommand($this->tempDir . '/.env');
         $this->assertSame($expected, $command->csvToArray($value), "Converting this value: '$value'");
     }
 
-    public function testInitializePluginConfigDumper()
+    public function testInitializePluginConfigDumper(): void
     {
         putenv('PHPLINT_IGNORE_NAMES=foo.php,bar.php');
         putenv('PHPLINT_IGNORE_PATHS=bat,fiz/buz');

@@ -16,7 +16,7 @@ use MoodlePluginCI\Installer\Database\MySQLDatabase;
 
 class MySQLDatabaseTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetCreateDatabaseCommand()
+    public function testGetCreateDatabaseCommand(): void
     {
         $database       = new MySQLDatabase();
         $database->name = 'TestName';

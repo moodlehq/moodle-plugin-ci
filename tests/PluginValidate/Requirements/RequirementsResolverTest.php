@@ -17,7 +17,7 @@ use MoodlePluginCI\PluginValidate\Requirements\RequirementsResolver;
 
 class RequirementsResolverTest extends \PHPUnit\Framework\TestCase
 {
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
