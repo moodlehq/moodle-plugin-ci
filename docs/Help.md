@@ -10,6 +10,7 @@ Always a good idea to check the [change log](CHANGELOG.md) if something suddenly
 ## Help topics
 
 * [GitHub Actions workflow file explained](GHAFileExplained.md): every line of the `gha.dist.yml` file explained.
+* [GitLab CI example](GitLabCI.md): a GitLab CI/CD starting point using a prebuilt Docker image.
 * [Travis CI file explained](TravisFileExplained.md): every line of the `.travis.dist.yml` file explained.
 * [Add extra Moodle configs](AddExtraConfig.md): how to add extra configs to Moodle `config.php`.
 * [Add extra plugins](AddExtraPlugins.md): how to add plugin dependencies to Moodle.
