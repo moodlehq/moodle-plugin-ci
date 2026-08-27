@@ -16,7 +16,7 @@ use MoodlePluginCI\Installer\Database\MariaDBDatabase;
 
 class MariaDBDatabaseTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetCreateDatabaseCommand()
+    public function testGetCreateDatabaseCommand(): void
     {
         $database       = new MariaDBDatabase();
         $database->name = 'TestName';

@@ -19,19 +19,19 @@ use Symfony\Component\Yaml\Yaml;
 
 class MoodlePluginTest extends MoodleTestCase
 {
-    public function testGetComponent()
+    public function testGetComponent(): void
     {
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertSame('local_ci', $plugin->getComponent());
     }
 
-    public function testGetDependencies()
+    public function testGetDependencies(): void
     {
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertSame(['mod_forum'], $plugin->getDependencies());
     }
 
-    public function testGetSubpluginTypes()
+    public function testGetSubpluginTypes(): void
     {
         $plugintypes = ['subplugin' => 'some/plugin/dir'];
         file_put_contents($this->pluginDir . '/db/subplugins.json', json_encode(['plugintypes' => $plugintypes]));
@@ -39,13 +39,13 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertSame(array_keys($plugintypes), $plugin->getSubpluginTypes());
     }
 
-    public function testHasUnitTests()
+    public function testHasUnitTests(): void
     {
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertTrue($plugin->hasUnitTests());
     }
 
-    public function testHasPhpUnitConfig()
+    public function testHasPhpUnitConfig(): void
     {
         // Our plugins doesn't have a phpunit.xml file.
         $plugin = new MoodlePlugin($this->pluginDir);
@@ -56,7 +56,7 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertTrue($plugin->hasPhpUnitConfig());
     }
 
-    public function testNoUnitTests()
+    public function testNoUnitTests(): void
     {
         // Remove the only unit test file.
         $this->fs->remove($this->pluginDir . '/tests/lib_test.php');
@@ -65,13 +65,13 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertFalse($plugin->hasUnitTests());
     }
 
-    public function testHasBehatFeatures()
+    public function testHasBehatFeatures(): void
     {
         $plugin = new MoodlePlugin($this->pluginDir);
         $this->assertTrue($plugin->hasBehatFeatures());
     }
 
-    public function testNoBehatFeatures()
+    public function testNoBehatFeatures(): void
     {
         // Remove the only unit test file.
         $this->fs->remove($this->pluginDir . '/tests/behat/login.feature');
@@ -80,14 +80,14 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertFalse($plugin->hasBehatFeatures());
     }
 
-    public function testGetThirdPartyLibraryPaths()
+    public function testGetThirdPartyLibraryPaths(): void
     {
         $plugin   = new MoodlePlugin($this->pluginDir);
         $expected = ['vendor.php', 'vendor', 'vendor_glob1.php', 'vendor_glob2.php'];
         $this->assertSame($expected, $plugin->getThirdPartyLibraryPaths());
     }
 
-    public function testGetThirdPartyLibraryPathsError()
+    public function testGetThirdPartyLibraryPathsError(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -98,7 +98,7 @@ class MoodlePluginTest extends MoodleTestCase
         $plugin->getThirdPartyLibraryPaths();
     }
 
-    public function testGetIgnores()
+    public function testGetIgnores(): void
     {
         $expected = ['filter' => [
             'notPaths' => ['foo/bar', 'very/bad.php'],
@@ -111,7 +111,7 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertSame($expected['filter'], $plugin->getIgnores());
     }
 
-    public function testGetFiles()
+    public function testGetFiles(): void
     {
         // Ignore some files for better testing.
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
@@ -140,7 +140,97 @@ class MoodlePluginTest extends MoodleTestCase
         $this->assertSame($expected, $files);
     }
 
-    public function testGetRelativeFiles()
+    public function testGetFilesWithSubdirectoryNotPaths(): void
+    {
+        // Create a subplugin directory with its own config.
+        $subDir = $this->pluginDir . '/subtype/mysub';
+        $this->fs->mkdir($subDir . '/vendor');
+        $this->fs->dumpFile($subDir . '/lib.php', '<?php // Subplugin lib.');
+        $this->fs->dumpFile($subDir . '/vendor/dep.php', '<?php // Vendor file to exclude.');
+
+        // Subplugin config excludes 'vendor' path.
+        $subConfig = ['filter' => ['notPaths' => ['vendor']]];
+        $this->fs->dumpFile($subDir . '/.moodle-plugin-ci.yml', Yaml::dump($subConfig));
+
+        // Main plugin config excludes 'ignore' path and 'ignore_name.php' name.
+        $mainConfig = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
+        $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($mainConfig));
+
+        $finder = new Finder();
+        $finder->name('*.php');
+
+        $plugin = new MoodlePlugin($this->pluginDir);
+        $files  = $plugin->getFiles($finder);
+
+        // The subplugin's lib.php should be present.
+        $this->assertContains(realpath($subDir . '/lib.php'), $files);
+
+        // The subplugin's vendor/dep.php should be excluded by the subplugin config.
+        $this->assertNotContains(realpath($subDir . '/vendor/dep.php'), $files);
+    }
+
+    public function testGetFilesWithSubdirectoryContextFilter(): void
+    {
+        $subDir = $this->pluginDir . '/subtype/mysub';
+        $this->fs->mkdir($subDir);
+        $this->fs->dumpFile($subDir . '/excluded.php', '<?php // Should be excluded.');
+        $this->fs->dumpFile($subDir . '/included.php', '<?php // Should be included.');
+
+        // Context-specific filter for 'phpcs' command.
+        $subConfig = [
+            'filter'       => ['notPaths' => ['nonexistent']],
+            'filter-phpcs' => ['notNames' => ['excluded.php']],
+        ];
+        $this->fs->dumpFile($subDir . '/.moodle-plugin-ci.yml', Yaml::dump($subConfig));
+
+        // Main plugin config excludes 'ignore' path and 'ignore_name.php' name.
+        $mainConfig = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
+        $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($mainConfig));
+
+        $finder = new Finder();
+        $finder->name('*.php');
+
+        $plugin          = new MoodlePlugin($this->pluginDir);
+        $plugin->context = 'phpcs';
+        $files           = $plugin->getFiles($finder);
+
+        $this->assertNotContains(realpath($subDir . '/excluded.php'), $files);
+        $this->assertContains(realpath($subDir . '/included.php'), $files);
+    }
+
+    public function testGetFilesWithMultipleSubdirectoryConfigs(): void
+    {
+        $sub1Dir = $this->pluginDir . '/subtype1/sub1';
+        $sub2Dir = $this->pluginDir . '/subtype2/sub2';
+        $this->fs->mkdir($sub1Dir . '/generated');
+        $this->fs->mkdir($sub2Dir . '/tmp');
+        $this->fs->dumpFile($sub1Dir . '/lib.php', '<?php // Sub1 lib.');
+        $this->fs->dumpFile($sub1Dir . '/generated/out.php', '<?php // Generated.');
+        $this->fs->dumpFile($sub2Dir . '/lib.php', '<?php // Sub2 lib.');
+        $this->fs->dumpFile($sub2Dir . '/tmp/cache.php', '<?php // Cached.');
+
+        $this->fs->dumpFile($sub1Dir . '/.moodle-plugin-ci.yml',
+            Yaml::dump(['filter' => ['notPaths' => ['generated']]]));
+        $this->fs->dumpFile($sub2Dir . '/.moodle-plugin-ci.yml',
+            Yaml::dump(['filter' => ['notPaths' => ['tmp']]]));
+
+        // Main plugin config excludes 'ignore' path and 'ignore_name.php' name.
+        $mainConfig = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];
+        $this->fs->dumpFile($this->pluginDir . '/.moodle-plugin-ci.yml', Yaml::dump($mainConfig));
+
+        $finder = new Finder();
+        $finder->name('*.php');
+
+        $plugin = new MoodlePlugin($this->pluginDir);
+        $files  = $plugin->getFiles($finder);
+
+        $this->assertNotContains(realpath($sub1Dir . '/generated/out.php'), $files);
+        $this->assertNotContains(realpath($sub2Dir . '/tmp/cache.php'), $files);
+        $this->assertContains(realpath($sub1Dir . '/lib.php'), $files);
+        $this->assertContains(realpath($sub2Dir . '/lib.php'), $files);
+    }
+
+    public function testGetRelativeFiles(): void
     {
         // Ignore some files for better testing.
         $config = ['filter' => ['notNames' => ['ignore_name.php'], 'notPaths' => ['ignore']]];

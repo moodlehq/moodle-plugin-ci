@@ -33,7 +33,7 @@ class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->requirements = null;
     }
 
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
@@ -43,7 +43,7 @@ class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
         $files = $this->requirements->getRequiredFiles();
 
@@ -53,7 +53,7 @@ class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredClasses()
+    public function testGetRequiredClasses(): void
     {
         $classes = $this->requirements->getRequiredClasses();
 
@@ -63,14 +63,14 @@ class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredStrings()
+    public function testGetRequiredStrings(): void
     {
         $fileToken = $this->requirements->getRequiredStrings();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('lang/en/repository_upload.php', $fileToken->file);
     }
 
-    public function testGetRequiredCapabilities()
+    public function testGetRequiredCapabilities(): void
     {
         $fileToken = $this->requirements->getRequiredCapabilities();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);

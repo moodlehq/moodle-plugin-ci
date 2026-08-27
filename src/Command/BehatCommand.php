@@ -40,7 +40,8 @@ class BehatCommand extends AbstractMoodleCommand
 
         $this->setName('behat')
             ->addOption('profile', 'p', InputOption::VALUE_REQUIRED, 'Behat profile option to use', 'default')
-            ->addOption('suite', null, InputOption::VALUE_REQUIRED, 'Behat suite option to use (Moodle theme)', 'default')
+            ->addOption('suite', null, InputOption::VALUE_REQUIRED, 'Behat suite option to use (Moodle theme). ' .
+                'Defaults to the theme name when testing a theme plugin, or "default" otherwise', null)
             ->addOption('tags', null, InputOption::VALUE_REQUIRED, 'Behat tags option to use. ' .
                 'If not set, defaults to the component name', '')
             ->addOption('name', null, InputOption::VALUE_REQUIRED, 'Behat name option to use', '')
@@ -86,7 +87,7 @@ class BehatCommand extends AbstractMoodleCommand
         $cmd = [
             'php', 'admin/tool/behat/cli/run.php',
             '--profile=' . $input->getOption('profile'),
-            '--suite=' . $input->getOption('suite'),
+            '--suite=' . ($input->getOption('suite') ?: $this->getDefaultSuite()),
             '--tags=' . ($input->getOption('tags') ?: '@' . $this->plugin->getComponent()),
             '--auto-rerun=' . $input->getOption('auto-rerun'),
             '--verbose',
@@ -111,6 +112,26 @@ class BehatCommand extends AbstractMoodleCommand
         }
 
         return $process->isSuccessful() ? 0 : 1;
+    }
+
+    /**
+     * Determine the Behat suite to use when none was given on the command line.
+     *
+     * Moodle's Behat config generator only puts a theme's own features into the
+     * "default" suite when that theme is the site's default theme; otherwise
+     * they live in a suite named after the theme. So a theme plugin's own
+     * feature files won't be picked up by "--suite=default".
+     *
+     * @return string
+     */
+    private function getDefaultSuite(): string
+    {
+        $component = $this->plugin->getComponent();
+        if (strpos($component, 'theme_') === 0) {
+            return substr($component, \strlen('theme_'));
+        }
+
+        return 'default';
     }
 
     /**

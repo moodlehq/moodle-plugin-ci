@@ -4,16 +4,21 @@ on:
   push:
     tags: [ '*' ]
 
+permissions:
+  contents: write
+
 jobs:
   release:
     # Avoid forks to perform this job.
     if: github.repository_owner == 'moodlehq'
     name: Create Release
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup PHP 8.1
         uses: shivammathur/setup-php@v2

@@ -2,14 +2,19 @@ name: Moodle Plugin CI
 
 on: [push, pull_request, workflow_dispatch]
 
+permissions:
+  contents: read
+
 jobs:
   selftest:
     name: CI test (make validate)
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup PHP 7.4
       uses: shivammathur/setup-php@v2
@@ -28,11 +33,13 @@ jobs:
   coverage:
     if: github.repository == 'moodlehq/moodle-plugin-ci'
     name: Code coverage (codecov)
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup PHP 7.4
       uses: shivammathur/setup-php@v2
@@ -58,11 +65,11 @@ jobs:
   citest:
     name: Integration tests
     needs: selftest
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     services:
       postgres:
-        image: postgres:16
+        image: postgres:17
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -98,7 +105,6 @@ jobs:
             moodle-app: 'true'
           - php: '8.1'
             moodle-branch: 'MOODLE_401_STABLE'
-            moodle-app: 'true'
           - php: '8.0'
             moodle-branch: 'MOODLE_400_STABLE'
           - php: '8.0'
@@ -108,14 +114,16 @@ jobs:
 
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup PHP ${{ matrix.php }}
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
         extensions: pgsql, zip, gd, xmlrpc, soap
-        ini-values: max_input_vars=5000
+        ini-values: max_input_vars=5000, opcache.enable_cli=1, opcache.jit = disable
         # We want to verify that xdebug works for coverage. Once we only support
         # Moodle 3.10/PHPUnit 8 and up, we can switch our tests to pcov too.
         coverage: xdebug
@@ -164,11 +172,13 @@ jobs:
   buildphar:
     name: Build moodle-plugin-ci.phar
     needs: selftest
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup PHP 8.1
       uses: shivammathur/setup-php@v2
@@ -182,7 +192,7 @@ jobs:
         php build/moodle-plugin-ci.phar list
 
     - name: Upload PHAR artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: moodle-plugin-ci.phar
         path: build/moodle-plugin-ci.phar
@@ -190,11 +200,11 @@ jobs:
   phartest:
     name: Integration tests (PHAR)
     needs: buildphar
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     services:
       postgres:
-        image: postgres:16
+        image: postgres:17
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -231,20 +241,21 @@ jobs:
             moodle-app: 'true'
           - php: '8.0'
             moodle-branch: 'MOODLE_401_STABLE'
-            moodle-app: 'true'
           - php: '7.4'
             moodle-branch: 'MOODLE_400_STABLE'
 
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup PHP ${{ matrix.php }}
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
         extensions: pgsql, zip, gd, xmlrpc, soap
-        ini-values: max_input_vars=5000
+        ini-values: max_input_vars=5000, opcache.enable_cli=1, opcache.jit = disable
         coverage: pcov
 
     - name: Initialise moodle-plugin-ci
@@ -260,7 +271,7 @@ jobs:
         echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
 
     - name: Download PHAR artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v7
       with:
         name: moodle-plugin-ci.phar
         path: build
@@ -297,7 +308,7 @@ jobs:
   selfupdatetest:
     name: SelfUpdate tests (PHAR)
     needs: buildphar
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       lowest_release: '4.1.8'
 
@@ -319,11 +330,11 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: pgsql, zip, gd, xmlrpc, soap
-        ini-values: max_input_vars=5000
+        ini-values: max_input_vars=5000, opcache.enable_cli=1
         coverage: none
 
     - name: Download base ${{ env.lowest_release }} PHAR artifact
-      uses: robinraju/release-downloader@v1.10
+      uses: robinraju/release-downloader@v1.13
       with:
         repository: moodlehq/moodle-plugin-ci
         tag: ${{ env.lowest_release }}

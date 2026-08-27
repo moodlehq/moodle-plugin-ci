@@ -53,7 +53,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
             '-->availability_group\n';
     }
 
-    public function testDetectDebuggingMessages()
+    public function testDetectDebuggingMessages(): void
     {
         $process = new MoodleProcess([
             '-r',
@@ -70,7 +70,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($process->hasDebuggingMessages($process->getOutput()));
     }
 
-    public function testHasPhpErrorMessages()
+    public function testHasPhpErrorMessages(): void
     {
         $process = new MoodleProcess([
             '-r',
@@ -87,7 +87,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($process->hasPhpErrorMessages($process->getErrorOutput()));
     }
 
-    public function testIsSuccessful()
+    public function testIsSuccessful(): void
     {
         $process = new MoodleProcess([
             '-r',
@@ -104,7 +104,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($process->isSuccessful());
     }
 
-    public function testMustRun()
+    public function testMustRun(): void
     {
         $process = new MoodleProcess([
             '-r',
@@ -114,7 +114,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($process->isSuccessful());
     }
 
-    public function testMustRunError()
+    public function testMustRunError(): void
     {
         $this->expectException(MoodlePhpException::class);
         $process = new MoodleProcess([
@@ -124,7 +124,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
         $process->mustRun();
     }
 
-    public function testCheckOutputForProblemsNotStarted()
+    public function testCheckOutputForProblemsNotStarted(): void
     {
         $process = new MoodleProcess([
             '-r',
@@ -139,7 +139,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testCheckOutputForProblemsOutputDisabled()
+    public function testCheckOutputForProblemsOutputDisabled(): void
     {
         $process = new MoodleProcess([
             '-r',
@@ -156,7 +156,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testCheckOutputForProblemsPhpError()
+    public function testCheckOutputForProblemsPhpError(): void
     {
         $this->expectException(MoodlePhpException::class);
         $process = new MoodleProcess([
@@ -167,7 +167,7 @@ class MoodleProcessTest extends \PHPUnit\Framework\TestCase
         $process->checkOutputForProblems();
     }
 
-    public function testCheckOutputForProblemsDebuggingMessage()
+    public function testCheckOutputForProblemsDebuggingMessage(): void
     {
         $this->expectException(MoodleDebugException::class);
         $process = new MoodleProcess([

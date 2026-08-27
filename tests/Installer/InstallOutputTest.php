@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InstallOutputTest extends \PHPUnit\Framework\TestCase
 {
-    public function testProgressBar()
+    public function testProgressBar(): void
     {
         $progressBar = new ProgressBar(new NullOutput());
         $output      = new InstallOutput(null, $progressBar);
@@ -39,7 +39,7 @@ class InstallOutputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('End', $progressBar->getMessage('message'));
     }
 
-    public function testLogInfo()
+    public function testLogInfo(): void
     {
         $bufferedOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERY_VERBOSE);
         $installOutput  = new InstallOutput(new ConsoleLogger($bufferedOutput));
@@ -48,7 +48,7 @@ class InstallOutputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('[info] Testing log' . PHP_EOL, $bufferedOutput->fetch());
     }
 
-    public function testQuietLogInfo()
+    public function testQuietLogInfo(): void
     {
         $bufferedOutput = new BufferedOutput(OutputInterface::VERBOSITY_NORMAL);
         $installOutput  = new InstallOutput(new ConsoleLogger($bufferedOutput));
@@ -57,7 +57,7 @@ class InstallOutputTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($bufferedOutput->fetch());
     }
 
-    public function testLogDebug()
+    public function testLogDebug(): void
     {
         $bufferedOutput = new BufferedOutput(OutputInterface::VERBOSITY_DEBUG);
         $installOutput  = new InstallOutput(new ConsoleLogger($bufferedOutput));
@@ -66,7 +66,7 @@ class InstallOutputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('[debug] Testing log' . PHP_EOL, $bufferedOutput->fetch());
     }
 
-    public function testQuietLogDebug()
+    public function testQuietLogDebug(): void
     {
         $bufferedOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERY_VERBOSE);
         $installOutput  = new InstallOutput(new ConsoleLogger($bufferedOutput));

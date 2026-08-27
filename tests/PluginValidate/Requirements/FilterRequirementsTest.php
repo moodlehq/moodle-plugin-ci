@@ -40,7 +40,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->requirements    = null;
     }
 
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
@@ -50,7 +50,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetRequiredFiles404()
+    public function testGetRequiredFiles404(): void
     {
         $files = $this->requirements404->getRequiredFiles();
 
@@ -61,7 +61,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredFiles()
+    public function testGetRequiredFiles(): void
     {
         $files = $this->requirements->getRequiredFiles();
 
@@ -72,7 +72,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testGetRequiredClasses404()
+    public function testGetRequiredClasses404(): void
     {
         $requirements = $this->getMockBuilder('MoodlePluginCI\PluginValidate\Requirements\FilterRequirements')
             ->setConstructorArgs([new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 404])
@@ -98,7 +98,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('classes/text_filter.php', $class->file);
     }
 
-    public function testGetRequiredClasses()
+    public function testGetRequiredClasses(): void
     {
         $classes = $this->requirements->getRequiredClasses();
 
@@ -108,14 +108,14 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('classes/text_filter.php', $class->file);
     }
 
-    public function testGetRequiredStrings()
+    public function testGetRequiredStrings(): void
     {
         $fileToken = $this->requirements->getRequiredStrings();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('lang/en/filter_activitynames.php', $fileToken->file);
     }
 
-    public function testGetRequiredFunctionCalls404()
+    public function testGetRequiredFunctionCalls404(): void
     {
         $requirements = $this->getMockBuilder('MoodlePluginCI\PluginValidate\Requirements\FilterRequirements')
             ->setConstructorArgs([new Plugin('filter_activitynames', 'filter', 'activitynames', ''), 404])
@@ -138,7 +138,7 @@ class FilterRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('filter.php', $call->file);
     }
 
-    public function testGetRequiredFunctionCalls()
+    public function testGetRequiredFunctionCalls(): void
     {
         $calls = $this->requirements->getRequiredFunctionCalls();
 

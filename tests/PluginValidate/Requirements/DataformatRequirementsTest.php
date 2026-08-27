@@ -33,7 +33,7 @@ class DataformatRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->requirements = null;
     }
 
-    public function testResolveRequirements()
+    public function testResolveRequirements(): void
     {
         $resolver = new RequirementsResolver();
 
@@ -43,7 +43,7 @@ class DataformatRequirementsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetRequiredStrings()
+    public function testGetRequiredStrings(): void
     {
         $fileToken = $this->requirements->getRequiredStrings();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);

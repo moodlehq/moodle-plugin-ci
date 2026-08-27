@@ -21,7 +21,7 @@ use MoodlePluginCI\Tests\MoodleTestCase;
 
 class MoodleInstallerTest extends MoodleTestCase
 {
-    public function testInstall()
+    public function testInstall(): void
     {
         $dataDir   = $this->tempDir . '/moodledata';
         $moodle    = new DummyMoodle($this->moodleDir);

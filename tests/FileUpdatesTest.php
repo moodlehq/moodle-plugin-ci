@@ -14,7 +14,7 @@ namespace MoodlePluginCI\Tests;
 
 class FileUpdatesTest extends \PHPUnit\Framework\TestCase
 {
-    public function testLocalCIPackageJSON()
+    public function testLocalCIPackageJSON(): void
     {
         $this->assertSame(
             '4b37d67998dd06d21c89865641135ed435baf65d',

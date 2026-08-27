@@ -241,7 +241,7 @@ Run Behat on a plugin
 
 ### Usage
 
-* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--tags TAGS] [--name NAME] [--start-servers] [--auto-rerun AUTO-RERUN] [--selenium SELENIUM] [--dump] [--] <plugin>`
+* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--tags TAGS] [--name NAME] [--start-servers] [--auto-rerun AUTO-RERUN] [--selenium SELENIUM] [--dump] [--scss-deprecations] [--] <plugin>`
 
 Run Behat on a plugin
 
@@ -279,13 +279,13 @@ Behat profile option to use
 
 #### `--suite`
 
-Behat suite option to use (Moodle theme)
+Behat suite option to use (Moodle theme). Defaults to the theme name when testing a theme plugin, or "default" otherwise
 
 * Accept value: yes
 * Is value required: yes
 * Is multiple: no
 * Is negatable: no
-* Default: `'default'`
+* Default: `NULL`
 
 #### `--tags`
 

@@ -52,7 +52,7 @@ class CodeParser
     public function parseFile(string $path): array
     {
         $factory = new ParserFactory();
-        $parser  = $factory->create(ParserFactory::PREFER_PHP7);
+        $parser  = $factory->createForNewestSupportedVersion();
 
         try {
             $statements = $parser->parse($this->loadFile($path));

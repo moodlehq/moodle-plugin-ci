@@ -71,7 +71,7 @@ class PHPDocCommandTest extends MoodleTestCase
         return $commandTester;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $commandTester = $this->executeCommand();
         $this->assertSame(0, $commandTester->getStatusCode());
@@ -83,7 +83,7 @@ class PHPDocCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/RUN  Moodle PHPDoc Checker on local_ci/', $output);
     }
 
-    public function testExecuteFail()
+    public function testExecuteFail(): void
     {
         $mockOutput    = '  Line 12: Some error happened';
         $commandTester = $this->executeCommand($this->pluginDir, -1, $mockOutput);
@@ -100,7 +100,7 @@ class PHPDocCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/RUN  Moodle PHPDoc Checker/', $commandTester->getDisplay());
     }
 
-    public function testExecuteWithWarningsAndThreshold()
+    public function testExecuteWithWarningsAndThreshold(): void
     {
         // Let's add a file with 2 warnings, and verify how the max-warnings affects the outcome.
         $mockOutput = <<<'EOT'
@@ -129,7 +129,7 @@ EOT;
         $this->assertSame(0, $commandTester->getStatusCode());
     }
 
-    public function testExecuteNoFiles()
+    public function testExecuteNoFiles(): void
     {
         // Just random directory with no PHP files.
         $commandTester = $this->executeCommand($this->pluginDir . '/tests/behat');

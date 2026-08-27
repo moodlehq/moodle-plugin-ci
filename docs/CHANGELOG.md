@@ -12,6 +12,20 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Fixed
 - The `phpcs` (aka `codechecker`) and `phpdoc` commands no longer fail with `Unable to launch a new process` when a plugin has enough PHP files to make the command line exceed OS limits (Linux caps a single `execve()` argument at 128 KiB, easier to reach since the longer Moodle 5.1 `public/` paths). The file list is now passed to PHP_CodeSniffer via `--file-list` and to `moodlecheck.php` in chunks.
 
+## [4.5.11] - 2026-08-07
+### Changed
+- ACTION SUGGESTED: bump workflows to postgres 17, which is a requirement for Moodle 5.3
+- ACTION SUGGESTED: bump workflows to mariadb 11, which is a requirement for Moodle 5.3
+- CI workflows: pinned action versions and permissions, php performance improvements.
+- Split psalm out of the main composer dependencies to avoid conflicts.
+
+### Added
+- Default Behat suite to the theme name for theme plugins.
+- Respect `.moodle-plugin-ci.yml` config found in subdirectories (e.g. subplugins), merging their `notPaths`/`notNames` filters with the parent config.
+
+### Deprecated
+- Remove travis.yml due to postgres and php7.4 dependencies availability issue.
+
 ## [4.5.10] - 2026-02-09
 ### Changed
 - Updated project dependencies to current [moodle-cs v3.7.0](https://github.com/moodlehq/moodle-cs) and [moodle-local_ci v1.1.4](https://github.com/moodlehq/moodle-local_ci) releases. The project now targets the current Moodle version.
@@ -792,7 +806,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.10...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.11...main
+[4.5.11]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.10...4.5.11
 [4.5.10]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.9...4.5.10
 [4.5.9]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.8...4.5.9
 [4.5.8]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.7...4.5.8

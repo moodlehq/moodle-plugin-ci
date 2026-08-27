@@ -18,7 +18,7 @@ use MoodlePluginCI\Tests\MoodleTestCase;
 
 class MoodleAppInstallerTest extends MoodleTestCase
 {
-    public function testInstall()
+    public function testInstall(): void
     {
         $execute   = new DummyExecute();
         $installer = new MoodleAppInstaller($execute, $this->tempDir);

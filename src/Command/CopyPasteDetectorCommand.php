@@ -36,11 +36,14 @@ class CopyPasteDetectorCommand extends AbstractPluginCommand
             ->setDescription('Run PHP Copy/Paste Detector on a plugin (**DEPRECATED**)');
     }
 
+    /**
+     * @psalm-suppress UndefinedFunction
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // @codeCoverageIgnoreStart
         if (!defined('PHPUNIT_TEST')) { // Only show deprecation warnings in non-test environments.
-            trigger_deprecation(
+            \trigger_deprecation(
                 'moodle-plugin-ci',
                 '4,4,0',
                 'The "%s" command is deprecated and will be removed in %s. No replacement is planned.',
