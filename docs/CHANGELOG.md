@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Fixed
+- The `phpcs` (aka `codechecker`) and `phpdoc` commands no longer fail with `Unable to launch a new process` when a plugin has enough PHP files to make the command line exceed OS limits (Linux caps a single `execve()` argument at 128 KiB, easier to reach since the longer Moodle 5.1 `public/` paths). The file list is now passed to PHP_CodeSniffer via `--file-list` and to `moodlecheck.php` in chunks.
 
 ## [4.5.11] - 2026-08-07
 ### Changed
