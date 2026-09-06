@@ -180,6 +180,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: moodle-plugin-ci behat --profile chrome
 
+      # Uncomment this to also run your accessibility scenarios in dark mode, for
+      # themes which support colour modes (Moodle 5.3 and up; on earlier versions
+      # the option is ignored and the suite runs in the theme default mode). A
+      # feature behaves the same in either colour mode, so it is the appearance,
+      # colour contrast above all, that is worth checking again. Note that --tags
+      # replaces the default filter on your plugin's component, so keep the
+      # component in the expression below.
+      # - name: Behat accessibility features (dark mode)
+      #   id: behat_dark
+      #   if: ${{ !cancelled() }}
+      #   run: moodle-plugin-ci behat --profile chrome --colourmode dark --tags="@your_component&&@accessibility"
+
       # This step allows to upload Behat faildump (screenshots) as workflow artifact
       # so it can be downloaded and inspected. You don't need this step if you
       # are not running Behat test. Artifact will be retained for 7 days.
