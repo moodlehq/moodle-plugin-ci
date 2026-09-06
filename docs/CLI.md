@@ -241,7 +241,7 @@ Run Behat on a plugin
 
 ### Usage
 
-* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--tags TAGS] [--name NAME] [--start-servers] [--auto-rerun AUTO-RERUN] [--selenium SELENIUM] [--dump] [--scss-deprecations] [--] <plugin>`
+* `behat [-m|--moodle MOODLE] [-p|--profile PROFILE] [--suite SUITE] [--tags TAGS] [--name NAME] [--start-servers] [--auto-rerun AUTO-RERUN] [--selenium SELENIUM] [--dump] [--scss-deprecations] [--colourmode COLOURMODE] [--] <plugin>`
 
 Run Behat on a plugin
 
@@ -356,6 +356,16 @@ Enable SCSS deprecation checks
 * Is multiple: no
 * Is negatable: no
 * Default: `false`
+
+#### `--colourmode`
+
+Colour mode to run the tests in, for themes which support colour modes, e.g. light or dark (Moodle 5.3 and up)
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Is negatable: no
+* Default: `''`
 
 #### `--help|-h`
 
