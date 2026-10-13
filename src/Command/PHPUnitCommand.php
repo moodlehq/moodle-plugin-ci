@@ -45,6 +45,8 @@ class PHPUnitCommand extends AbstractMoodleCommand
             ->addOption('testdox', null, InputOption::VALUE_NONE, 'Enable testdox formatter')
             ->addOption('coverage-text', null, InputOption::VALUE_NONE, 'Generate and print code coverage report in text format')
             ->addOption('coverage-clover', null, InputOption::VALUE_NONE, 'Generate code coverage report in Clover XML format')
+            ->addOption('coverage-cobertura', null, InputOption::VALUE_NONE, 'Generate code coverage report in Cobertura XML format')
+            ->addOption('log-junit', null, InputOption::VALUE_NONE, 'Log test execution in JUnit XML format (junit.xml in the current working directory)')
             ->addOption('coverage-pcov', null, InputOption::VALUE_NONE, 'Use the pcov extension to calculate code coverage')
             ->addOption('coverage-xdebug', null, InputOption::VALUE_NONE, 'Use the xdebug extension to calculate code coverage')
             ->addOption('coverage-phpdbg', null, InputOption::VALUE_NONE, '(**DEPRECATED**) Use the phpdbg binary to calculate code coverage')
@@ -71,7 +73,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
         $binary    = $this->resolveBinary($input, $output);
         $directory = [$this->moodle->directory . '/vendor/bin/phpunit'];
         $colors    = $output->isDecorated() ? ['--colors=always'] : [];
-        $options   = $this->resolveOptions($input);
+        $options   = $this->resolveOptions($input, $output);
         $cmd       = array_merge(
             $binary,
             $directory,
@@ -86,11 +88,12 @@ class PHPUnitCommand extends AbstractMoodleCommand
     /**
      * Resolve options for PHPUnit command.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      *
      * @return string[]
      */
-    private function resolveOptions(InputInterface $input): array
+    private function resolveOptions(InputInterface $input, OutputInterface $output): array
     {
         $options = [];
 
@@ -124,6 +127,22 @@ class PHPUnitCommand extends AbstractMoodleCommand
             $options[] = [
                 '--coverage-clover',
                 getcwd() . '/coverage.xml',
+            ];
+        }
+        if ($this->supportsCoverage() && $input->getOption('coverage-cobertura')) {
+            if ($this->supportsCobertura()) {
+                $options[] = [
+                    '--coverage-cobertura',
+                    getcwd() . '/cobertura.xml',
+                ];
+            } else {
+                $output->writeln('<error>PHPUnit Cobertura coverage only can be used with Moodle 3.11 and up.</error>');
+            }
+        }
+        if ($input->getOption('log-junit')) {
+            $options[] = [
+                '--log-junit',
+                getcwd() . '/junit.xml',
             ];
         }
         if ($input->getOption('verbose')) {
@@ -186,7 +205,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
         if (!$this->supportsCoverage()) {
             return [];
         }
-        if (!$input->getOption('coverage-text') && !$input->getOption('coverage-clover')) {
+        if (!$this->coverageRequested($input)) {
             return [];
         }
 
@@ -230,6 +249,40 @@ class PHPUnitCommand extends AbstractMoodleCommand
             '-dpcov.enabled=0',
             '-dxdebug.mode=off',
         ];
+    }
+
+    /**
+     * Whether any of the coverage report options (the ones needing a coverage driver) has been requested.
+     *
+     * @param InputInterface $input
+     *
+     * @return bool
+     */
+    private function coverageRequested(InputInterface $input): bool
+    {
+        foreach (['coverage-text', 'coverage-clover', 'coverage-cobertura'] as $option) {
+            if (!$input->getOption($option)) {
+                continue;
+            }
+            // Cobertura is not available in all PHPUnit versions, so it doesn't need a driver if unsupported.
+            if ($option === 'coverage-cobertura' && !$this->supportsCobertura()) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Cobertura reports are only available with PHPUnit 9.5 and up (Moodle 3.11 and up).
+     *
+     * @return bool
+     */
+    private function supportsCobertura(): bool
+    {
+        return $this->moodle->getBranch() >= 311;
     }
 
     /**
