@@ -2045,7 +2045,7 @@ Run PHPUnit on a plugin
 
 ### Usage
 
-* `phpunit [-m|--moodle MOODLE] [-c|--configuration CONFIGURATION] [--testsuite TESTSUITE] [--filter FILTER] [--testdox] [--coverage-text] [--coverage-clover] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
+* `phpunit [-m|--moodle MOODLE] [-c|--configuration CONFIGURATION] [--testsuite TESTSUITE] [--filter FILTER] [--testdox] [--coverage-text] [--coverage-clover] [--coverage-cobertura] [--log-junit] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
 
 Run PHPUnit on a plugin
 
@@ -2124,6 +2124,26 @@ Generate and print code coverage report in text format
 #### `--coverage-clover`
 
 Generate code coverage report in Clover XML format
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--coverage-cobertura`
+
+Generate code coverage report in Cobertura XML format
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Is negatable: no
+* Default: `false`
+
+#### `--log-junit`
+
+Log test execution in JUnit XML format (junit.xml in the current working directory)
 
 * Accept value: no
 * Is value required: no

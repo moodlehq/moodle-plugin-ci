@@ -9,7 +9,7 @@ is significantly faster and easier to produce in PHP7.
 Code coverage will now automatically fallback between `pcov` => `xdebug` => `phpdbg`, using the "best" one available in the system. Still, if needed to, any of them can be forced, given all their requirements are fulfilled, using the following new options of the 'phpunit' command: `--coverage-pcov`, `--coverage-xdebug` or `--coverage-phpdbg`.
 
 The way you generate code coverage is to use one of the coverage options on the `phpunit` command.  The currently
-available options are `--coverage-text` and `--coverage-clover`.  The easiest way to start generating code coverage
+available options are `--coverage-text`, `--coverage-clover` and `--coverage-cobertura`.  The easiest way to start generating code coverage
 is to use the text option as that gets printed in the CI logs.  Example:
 
 ```yaml
@@ -27,10 +27,30 @@ script:
   - cat coverage.xml
 ```
 
-You can of course use both options at the same time if you like.  Sometimes it is nice to exclude files from code
+You can use the `--coverage-cobertura` option to generate a `cobertura.xml` in the current working directory, which is
+the format expected by many CI tools (GitLab, Azure DevOps, Jenkins...).  It requires PHPUnit 9.5 or later (Moodle 3.11
+and up) and, like the other coverage options, a coverage driver.  Example:
+
+```yaml
+script:
+  - moodle-plugin-ci phpunit --coverage-cobertura
+```
+
+You can of course use several of these options at the same time if you like.  Sometimes it is nice to exclude files from code
 coverage stats, for example, CLI scripts that would never be executed by PHPUnit.  You can exclude files by using
 the environment variables described in this [help document](IgnoringFiles.md) in the section about
 command specific ignores.
+
+## JUnit test report
+
+Not related to code coverage (and not needing any coverage driver), the `--log-junit` option writes the test execution
+results in JUnit XML format to a `junit.xml` file in the current working directory, so CI tools can display test
+reports.  It can be combined with the coverage options:
+
+```yaml
+script:
+  - moodle-plugin-ci phpunit --log-junit --coverage-cobertura
+```
 
 ## Coveralls integration
 
