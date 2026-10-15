@@ -89,6 +89,11 @@ There are few important options that you may want to use:
   use `--profile chrome` or `--profile firefox`.
 - The tags option allows you to specify which scenarios to run filtered by tags,
   default is the tag with the plugin's component name, e.g. usage: `--tags="@local_myplugin~@ciskip"`
+- The colourmode option allows you to run the tests in a given colour mode, for themes
+  which support colour modes (Boost from Moodle 5.3 onwards), e.g. usage: `--colourmode dark`.
+  A feature behaves the same in either colour mode, so this is mostly worth doing for
+  accessibility scenarios, e.g. usage:
+  `--colourmode dark --tags="@local_myplugin&&@accessibility"`
 
 ## Upgrade guides
 

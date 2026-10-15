@@ -168,6 +168,8 @@ jobs:
         moodle-plugin-ci behat --profile default
         moodle-plugin-ci behat --profile chrome --scss-deprecations
         moodle-plugin-ci behat --profile firefox --tags="@local_ci&&~@app"
+        # Colour modes only exist in Moodle 5.3 and up, where they are only honoured by themes which support them.
+        [[ "$MOODLE_BRANCH" =~ ^MOODLE_(3[0-9]{1,2}|4[0-9]{2}|50[0-2])_STABLE$ ]] || moodle-plugin-ci behat --profile chrome --colourmode dark
 
   buildphar:
     name: Build moodle-plugin-ci.phar
