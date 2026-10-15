@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- `--coverage-cobertura` option to `phpunit` command to create a Cobertura code coverage XML file (`cobertura.xml`).
+- `--log-junit` option to `phpunit` command to create a JUnit XML test report (`junit.xml`).
 
 ## [4.5.11] - 2026-08-07
 ### Changed
