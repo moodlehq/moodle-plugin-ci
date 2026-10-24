@@ -30,17 +30,20 @@ class RepositoryRequirements extends GenericRequirements
     public function getRequiredClasses(): array
     {
         return [
-            FileTokens::create('lib.php')->mustHave($this->plugin->component),
+            FileTokens::create('lib.php')->mustHave($this->plugin->component)
+                ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/repository#libphp'),
         ];
     }
 
     public function getRequiredStrings(): FileTokens
     {
-        return parent::getRequiredStrings()->mustHave($this->plugin->name . ':view');
+        return parent::getRequiredStrings()->mustHave($this->plugin->name . ':view')
+            ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/repository#langenrepository_pluginnamephp');
     }
 
     public function getRequiredCapabilities(): FileTokens
     {
-        return FileTokens::create('db/access.php')->mustHave('repository/' . $this->plugin->name . ':view');
+        return FileTokens::create('db/access.php')->mustHave('repository/' . $this->plugin->name . ':view')
+            ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/repository#dbaccessphp');
     }
 }

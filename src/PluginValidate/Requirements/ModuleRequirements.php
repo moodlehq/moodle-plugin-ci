@@ -39,8 +39,10 @@ class ModuleRequirements extends GenericRequirements
     public function getRequiredFunctions(): array
     {
         return [
-            FileTokens::create('lib.php')->mustHave($this->plugin->name . '_add_instance')->mustHave($this->plugin->name . '_update_instance'),
-            FileTokens::create('db/upgrade.php')->mustHave('xmldb_' . $this->plugin->name . '_upgrade'),
+            FileTokens::create('lib.php')->mustHave($this->plugin->name . '_add_instance')->mustHave($this->plugin->name . '_update_instance')
+                ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/mod#libphp---library-functions'),
+            FileTokens::create('db/upgrade.php')->mustHave('xmldb_' . $this->plugin->name . '_upgrade')
+                ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/mod#upgradephp---upgrade-steps'),
         ];
     }
 
@@ -48,21 +50,25 @@ class ModuleRequirements extends GenericRequirements
     {
         return FileTokens::create($this->getLangFile())
             ->mustHaveAny(['modulename', 'pluginname'])
-            ->mustHave($this->plugin->name . ':addinstance');
+            ->mustHave($this->plugin->name . ':addinstance')
+            ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/mod#langenmodnamephp---language-string-definitions');
     }
 
     public function getRequiredCapabilities(): FileTokens
     {
-        return FileTokens::create('db/access.php')->mustHave('mod/' . $this->plugin->name . ':addinstance');
+        return FileTokens::create('db/access.php')->mustHave('mod/' . $this->plugin->name . ':addinstance')
+            ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/mod#accessphp---capability-defaults');
     }
 
     public function getRequiredTables(): FileTokens
     {
-        return FileTokens::create('db/install.xml')->mustHave($this->plugin->name);
+        return FileTokens::create('db/install.xml')->mustHave($this->plugin->name)
+            ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/mod#installxml---database-installation');
     }
 
     public function getRequiredTablePrefix(): FileTokens
     {
-        return FileTokens::create('db/install.xml')->mustHaveAny([$this->plugin->name, $this->plugin->component]);
+        return FileTokens::create('db/install.xml')->mustHaveAny([$this->plugin->name, $this->plugin->component])
+            ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/mod#installxml---database-installation');
     }
 }

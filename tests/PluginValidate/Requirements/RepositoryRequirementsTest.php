@@ -60,6 +60,7 @@ class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($classes);
         foreach ($classes as $class) {
             $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+            $this->assertTrue($class->hasHint());
         }
     }
 
@@ -68,6 +69,7 @@ class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
         $fileToken = $this->requirements->getRequiredStrings();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('lang/en/repository_upload.php', $fileToken->file);
+        $this->assertTrue($fileToken->hasHint());
     }
 
     public function testGetRequiredCapabilities(): void
@@ -75,5 +77,6 @@ class RepositoryRequirementsTest extends \PHPUnit\Framework\TestCase
         $fileToken = $this->requirements->getRequiredCapabilities();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('db/access.php', $fileToken->file);
+        $this->assertTrue($fileToken->hasHint());
     }
 }

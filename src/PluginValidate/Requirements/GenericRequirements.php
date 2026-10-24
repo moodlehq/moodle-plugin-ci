@@ -37,7 +37,8 @@ class GenericRequirements extends AbstractRequirements
     public function getRequiredFunctions(): array
     {
         return [
-            FileTokens::create('db/upgrade.php')->mustHave('xmldb_' . $this->plugin->component . '_upgrade'),
+            FileTokens::create('db/upgrade.php')->mustHave('xmldb_' . $this->plugin->component . '_upgrade')
+                ->notFoundHint('https://moodledev.io/docs/apis/commonfiles#dbupgradephp'),
         ];
     }
 
@@ -53,7 +54,8 @@ class GenericRequirements extends AbstractRequirements
 
     public function getRequiredStrings(): FileTokens
     {
-        return FileTokens::create($this->getLangFile())->mustHave('pluginname');
+        return FileTokens::create($this->getLangFile())->mustHave('pluginname')
+            ->notFoundHint('https://moodledev.io/docs/apis/commonfiles#langenplugintype_pluginnamephp');
     }
 
     public function getRequiredCapabilities(): FileTokens
