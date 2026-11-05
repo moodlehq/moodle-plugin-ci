@@ -74,6 +74,20 @@ class VersionValidatorTest extends \PHPUnit\Framework\TestCase
         $this->assertPasses($this->verifyBody($this->minimal()));
     }
 
+    // A release given as a string or an integer literal passes.
+    public function testStringAndIntegerReleasePass(): void
+    {
+        $this->assertPasses($this->verifyBody($this->minimal("\$plugin->release = '1.0';\n")));
+        $this->assertPasses($this->verifyBody($this->minimal("\$plugin->release = 2022060100;\n")));
+    }
+
+    // An empty or non-literal release fails.
+    public function testEmptyOrNonLiteralReleaseFails(): void
+    {
+        $this->assertFails($this->verifyBody($this->minimal("\$plugin->release = '';\n")));
+        $this->assertFails($this->verifyBody($this->minimal("\$plugin->release = 1.5;\n")));
+    }
+
     // A missing $plugin->component fails.
     public function testMissingComponentFails(): void
     {

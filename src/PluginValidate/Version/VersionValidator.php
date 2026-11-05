@@ -296,8 +296,10 @@ class VersionValidator
 
     private function checkRelease(array &$messages, Expr $expr): void
     {
-        if (!$expr instanceof String_ || trim($expr->value) === '') {
-            $this->addError($messages, '$plugin->release must be a non-empty string literal');
+        // Plugins commonly set the release to the version number, so an integer literal is as valid as a string.
+        $valid = ($expr instanceof String_ && trim($expr->value) !== '') || $expr instanceof Int_;
+        if (!$valid) {
+            $this->addError($messages, '$plugin->release must be a non-empty string or integer literal');
         }
     }
 
