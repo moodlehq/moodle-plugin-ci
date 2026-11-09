@@ -17,6 +17,7 @@ Always a good idea to check the [change log](CHANGELOG.md) if something suddenly
 * [Generating code coverage](CodeCoverage.md): how to generate code coverage of your plugin.
 * [CLI commands and options](CLI.md): the available `moodle-plugin-ci` commands and their options.
 * [Moodle App](MoodleApp.md): how to configure `moodle-plugin-ci` to test plugins with mobile support.
+* [Version checks](VersionCheck.md): how to check `version.php` and the version increase with the `version` command.
 
 ## Test steps quick start
 

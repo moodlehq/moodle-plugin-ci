@@ -2453,7 +2453,7 @@ Path to the plugin
 
 #### `--baseline-dir`
 
-Copy of the previous plugin; its version.php is the baseline the plugin version must increase from. Omit for a new plugin.
+Copy of the previous release or version of the plugin; its version.php is the baseline the plugin version must increase from. Omit for a new plugin.
 
 * Accept value: yes
 * Is value required: yes
@@ -2463,7 +2463,7 @@ Copy of the previous plugin; its version.php is the baseline the plugin version 
 
 #### `--version-policy`
 
-Either "latest" or "frozen"; required with --baseline-dir
+Either "latest" or "frozen"; required with --baseline-dir. This is used when multiple branches or versions of a plugin are maintained. The "latest" policy is used on the latest branch/version and enforces that the date must increase. The "frozen" policy is used on all other branches, and enforces that only minor version bumps occur. This stops the older "frozen" branches from overtaking the "latest" branch's version number which can cause issues when upgrading. 
 
 * Accept value: yes
 * Is value required: yes
