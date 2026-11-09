@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- New `version` command that statically checks `version.php` properties, and optionally checks the version increases from a baseline copy of the plugin using `--baseline-dir` and `--version-policy`.
 
 ## [4.5.11] - 2026-08-07
 ### Changed
