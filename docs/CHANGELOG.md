@@ -11,6 +11,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ## [Unreleased]
 ### Added
 - New `--colourmode` option added to the `behat` command, to run Behat in a given colour mode (e.g. `--colourmode=dark`) for themes which support colour modes, like Boost from Moodle 5.3 onwards.
+- New `--coverage-cobertura` option added to `phpunit` command to create a Cobertura code coverage XML file (`cobertura.xml`).
+- New `--log-junit` option added to `phpunit` command to create a JUnit XML test report (`junit.xml`).
 
 ## [4.5.11] - 2026-08-07
 ### Changed

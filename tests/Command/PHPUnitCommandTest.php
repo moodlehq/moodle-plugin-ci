@@ -103,6 +103,51 @@ class PHPUnitCommandTest extends MoodleTestCase
         $this->assertDoesNotMatchRegularExpression('/--configuration.*local\/ci/', $this->lastCmd);
     }
 
+    public function testExecuteWithCoverageCobertura(): void
+    {
+        $this->setMoodleBranch(311);
+        $commandTester = $this->executeCommand(null, null, ['--coverage-cobertura' => true]);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/--coverage-cobertura\' \'\S*\/cobertura\.xml/', $this->lastCmd);
+        // A coverage driver must be selected, so the command isn't run directly with phpunit.
+        $this->assertMatchesRegularExpression('/^\'(php|phpdbg)\' .*vendor.bin.phpunit/', $this->lastCmd);
+    }
+
+    public function testExecuteWithCoverageCoberturaUnsupported(): void
+    {
+        $this->setMoodleBranch(310);
+        $commandTester = $this->executeCommand(null, null, ['--coverage-cobertura' => true]);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/Cobertura coverage only can be used with Moodle 3.11 and up/', $commandTester->getDisplay());
+        $this->assertDoesNotMatchRegularExpression('/--coverage-cobertura/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/^\'\S*vendor.bin.phpunit/', $this->lastCmd);
+    }
+
+    public function testExecuteWithLogJunit(): void
+    {
+        $commandTester = $this->executeCommand(null, null, ['--log-junit' => true]);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/--log-junit\' \'\S*\/junit\.xml/', $this->lastCmd);
+        // No coverage requested, so no coverage driver is needed.
+        $this->assertMatchesRegularExpression('/^\'\S*vendor.bin.phpunit/', $this->lastCmd);
+    }
+
+    public function testExecuteWithLogJunitAndCoverage(): void
+    {
+        $this->setMoodleBranch(311);
+        $commandTester = $this->executeCommand(null, null, ['--log-junit' => true, '--coverage-clover' => true, '--coverage-cobertura' => true]);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/--coverage-clover\' \'\S*\/coverage\.xml/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--coverage-cobertura\' \'\S*\/cobertura\.xml/', $this->lastCmd);
+        $this->assertMatchesRegularExpression('/--log-junit\' \'\S*\/junit\.xml/', $this->lastCmd);
+    }
+
+    private function setMoodleBranch(int $branch): void
+    {
+        $file = $this->moodleDir . '/version.php';
+        file_put_contents($file, preg_replace('/\$branch\s*=\s*\'\d+\';/', "\$branch = '{$branch}';", file_get_contents($file)));
+    }
+
     public function testExecuteNoTests(): void
     {
         $fs = new Filesystem();
