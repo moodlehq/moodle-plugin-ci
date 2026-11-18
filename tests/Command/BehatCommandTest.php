@@ -159,6 +159,29 @@ class BehatCommandTest extends MoodleTestCase
         $this->assertMatchesRegularExpression('/--scss-deprecations/', $this->allCmds[0]);
     }
 
+    public function testExecuteWithColourMode(): void
+    {
+        $commandTester = $this->executeCommand(null, null, ['--colourmode' => 'dark']);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/--enable.*--colourmode=dark/', $this->allCmds[0]);
+        $this->assertDoesNotMatchRegularExpression('/--scss-deprecations/', $this->allCmds[0]);
+    }
+
+    public function testExecuteWithColourModeAndScssDeprecations(): void
+    {
+        $commandTester = $this->executeCommand(null, null, ['--colourmode' => 'dark', '--scss-deprecations' => true]);
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertMatchesRegularExpression('/--scss-deprecations.*--colourmode=dark/', $this->allCmds[0]);
+    }
+
+    public function testExecuteWithoutColourMode(): void
+    {
+        $commandTester = $this->executeCommand();
+        $this->assertSame(0, $commandTester->getStatusCode());
+        $this->assertDoesNotMatchRegularExpression('/--colourmode/', $this->lastCmd);
+        $this->assertCount(1, $this->allCmds);
+    }
+
     public function testExecuteNoFeatures(): void
     {
         $this->fs->remove($this->pluginDir . '/tests/behat');

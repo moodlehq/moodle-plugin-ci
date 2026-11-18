@@ -50,6 +50,8 @@ class BehatCommand extends AbstractMoodleCommand
             ->addOption('selenium', null, InputOption::VALUE_REQUIRED, 'Selenium Docker image')
             ->addOption('dump', null, InputOption::VALUE_NONE, 'Print contents of Behat failure HTML files')
             ->addOption('scss-deprecations', null, InputOption::VALUE_NONE, 'Enable SCSS deprecation checks')
+            ->addOption('colourmode', null, InputOption::VALUE_REQUIRED, 'Colour mode to run the tests in, for themes ' .
+                'which support colour modes, e.g. light or dark (Moodle 5.3 and up)', '')
             ->setDescription('Run Behat on a plugin');
     }
 
@@ -74,13 +76,21 @@ class BehatCommand extends AbstractMoodleCommand
 
         $servers && $this->startServerProcesses($input);
 
-        if ($input->getOption('scss-deprecations')) {
-            $enableprocess = new Process([
+        $colourmode = $input->getOption('colourmode');
+        if ($input->getOption('scss-deprecations') || !empty($colourmode)) {
+            // These options are applied when the Behat site is enabled, so re-enable it with them in place.
+            $enablecmd = [
                 'php', 'admin/tool/behat/cli/util_single_run.php',
                 '--enable',
                 '--add-core-features-to-theme',
-                '--scss-deprecations',
-            ], $this->moodle->getPublicDirectory(), null, null, null);
+            ];
+            if ($input->getOption('scss-deprecations')) {
+                $enablecmd[] = '--scss-deprecations';
+            }
+            if (!empty($colourmode)) {
+                $enablecmd[] = '--colourmode=' . $colourmode;
+            }
+            $enableprocess = new Process($enablecmd, $this->moodle->getPublicDirectory(), null, null, null);
             $this->execute->passThroughProcess($enableprocess);
         }
 

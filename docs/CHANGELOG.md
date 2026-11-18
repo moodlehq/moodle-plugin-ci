@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Added
+- New `--colourmode` option added to the `behat` command, to run Behat in a given colour mode (e.g. `--colourmode=dark`) for themes which support colour modes, like Boost from Moodle 5.3 onwards.
 
 ## [4.5.11] - 2026-08-07
 ### Changed
