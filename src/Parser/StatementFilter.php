@@ -79,7 +79,7 @@ class StatementFilter
                 if (!isset($class->name)) {
                     continue;
                 }
-                $names[] = ($namespace->name ?? '') . '\\' . $class->name;
+                $names[] = ($namespace->name !== null ? (string) $namespace->name : '') . '\\' . (string) $class->name;
             }
         }
 

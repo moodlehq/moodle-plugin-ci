@@ -30,6 +30,26 @@
         <RedundantPropertyInitializationCheck errorLevel="suppress"/>
         <MissingConstructor errorLevel="info"/>
 
+        <!-- Stylistic checks introduced in Psalm 6 that we don't enforce. #[Override] needs PHP 8.3. -->
+        <MissingOverrideAttribute errorLevel="suppress"/>
+        <ClassMustBeFinal errorLevel="suppress"/>
+        <RiskyTruthyFalsyComparison errorLevel="suppress"/>
+
+        <!-- Psalm 6 flags every possibly false/null return from builtins (realpath,
+            file_get_contents, preg_replace...). We don't enforce these checks. -->
+        <PossiblyFalseArgument errorLevel="suppress"/>
+        <PossiblyFalseOperand errorLevel="suppress"/>
+        <PossiblyFalseReference errorLevel="suppress"/>
+        <PossiblyFalseIterator errorLevel="suppress"/>
+        <PossiblyFalsePropertyAssignmentValue errorLevel="suppress"/>
+        <InvalidFalsableReturnType errorLevel="suppress"/>
+        <FalsableReturnStatement errorLevel="suppress"/>
+        <PossiblyNullArgument>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </PossiblyNullArgument>
+
         <!-- There are some include statements in tests that psalm cannot resolve,
         but they are correct, part of the mocked Moodle environment. -->
         <UnresolvableInclude>
