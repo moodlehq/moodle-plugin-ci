@@ -16,7 +16,6 @@ use MoodlePluginCI\Bridge\MessDetectorRenderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
-use PHPMD\Writer\StreamWriter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -44,18 +43,18 @@ class MessDetectorCommand extends AbstractMoodleCommand
         if (count($files) === 0) {
             return $this->outputSkip($output);
         }
-        $rules = $input->getOption('rules') ?: __DIR__ . '/../../res/config/phpmd.xml';
+        $rules = (string) ($input->getOption('rules') ?: __DIR__ . '/../../res/config/phpmd.xml');
 
         $renderer = new MessDetectorRenderer($output, $this->moodle->directory);
-        $renderer->setWriter(new StreamWriter(STDOUT));
+        $renderer->setWriter($output);
 
         $ruleSetFactory = new RuleSetFactory();
         $ruleSetFactory->setMinimumPriority(5);
-        $ruleSets = $ruleSetFactory->createRuleSets($rules);
+        $ruleSets = $ruleSetFactory->createRuleSets(explode(',', $rules));
 
         $messDetector = new PHPMD();
         $messDetector->processFiles(
-            implode(',', $files),
+            array_values($files),
             [], // Ignored paths and files are managed by the plugin, so they are not needed here.
             [$renderer],
             $ruleSets,

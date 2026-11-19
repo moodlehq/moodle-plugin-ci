@@ -31,7 +31,7 @@ class StandardResolver
     {
         $defaultStandards = [
             'moodle' => [
-                __DIR__ . '/../vendor/moodlehq/moodle-cs/moodle',
+                __DIR__ . '/../vendor/moodlehq/moodle-cs/Standards/moodle',
             ],
         ];
 
