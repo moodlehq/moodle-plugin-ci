@@ -199,6 +199,7 @@ class TestSuiteInstaller extends AbstractInstaller
         }
 
         $filesystem = new Filesystem();
+        /** @psalm-suppress PossiblyNullArgument $count === 1 guarantees preg_replace succeeded */
         $filesystem->dumpFile($config, $contents);
     }
 

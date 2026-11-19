@@ -1,7 +1,7 @@
 COMPOSER := composer
 PHPUNIT  := vendor/bin/phpunit
 FIXER    := vendor/bin/php-cs-fixer
-PSALM    := php build/psalm.phar
+PSALM    := vendor/bin/psalm
 CMDS     = $(wildcard src/Command/*.php)
 
 .PHONY:test
@@ -33,11 +33,11 @@ validate-version:
 	bin/validate-version
 
 .PHONY:psalm
-psalm: check-init build/psalm.phar
+psalm: check-init
 	$(PSALM) --show-info=true
 
 .PHONY:psalm-update-baseline
-psalm-update-baseline: check-init build/psalm.phar
+psalm-update-baseline: check-init
 	$(PSALM) --update-baseline
 
 .PHONY:check-docs
@@ -78,9 +78,6 @@ build/moodle-plugin-ci.phar: build/box.phar
 	$(COMPOSER) install --no-dev --prefer-dist --classmap-authoritative --quiet
 	php -d memory_limit=-1 -d phar.readonly=false build/box.phar compile
 	$(COMPOSER) install --prefer-dist --quiet
-
-build/psalm.phar:
-	curl -LSs https://github.com/vimeo/psalm/releases/download/5.19.1/psalm.phar -o build/psalm.phar
 
 docs/CLI.md: $(CMDS)
 	@rm -f $@
