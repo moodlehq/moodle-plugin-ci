@@ -9,6 +9,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+### Changed
+- Updated project dependencies to [moodle-cs v3.9.1](https://github.com/moodlehq/moodle-cs), [PHPMD 3](https://github.com/phpmd/phpmd/releases/tag/3.0.0) and psr/log 3.
+  - moodle-cs v3.9.1 brings PHP_CodeSniffer 4 and moves the coding standards to a new `Standards` directory.
+  - PHPMD 3 now reports threshold rules only when the measured value exceeds the configured maximum (previously also when equal).
+- Psalm is installed again via composer, now that Psalm 6 supports nikic/php-parser 5.
+
 ### Added
 - New `--colourmode` option added to the `behat` command, to run Behat in a given colour mode (e.g. `--colourmode=dark`) for themes which support colour modes, like Boost from Moodle 5.3 onwards.
 

@@ -42,13 +42,13 @@ class MessDetectorRenderer extends AbstractRenderer
         $this->output->writeln('');
 
         $groupByFile = [];
-        foreach ($report->getRuleViolations() as $violation) {
+        foreach ($report->getRuleViolations()->getArrayCopy() as $violation) {
             if ($filename = $violation->getFileName()) {
                 $groupByFile[$filename][] = $violation;
             }
         }
 
-        foreach ($report->getErrors() as $error) {
+        foreach ($report->getErrors()->getArrayCopy() as $error) {
             $groupByFile[$error->getFile()][] = $error;
         }
         foreach ($groupByFile as $file => $problems) {
@@ -69,7 +69,7 @@ class MessDetectorRenderer extends AbstractRenderer
             }
 
             $this->output->writeln([
-                sprintf('<fg=white;options=bold>FILE: %s</>', str_replace($this->basePath . '/', '', (string) $file)),
+                sprintf('<fg=white;options=bold>FILE: %s</>', str_replace($this->basePath . '/', '', $file)),
                 sprintf('<fg=white;options=bold>FOUND %d ERRORS AND %d VIOLATIONS</>', $errorCount, $violationCount),
             ]);
             $table->render();
