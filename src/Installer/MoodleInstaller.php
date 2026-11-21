@@ -66,7 +66,10 @@ class MoodleInstaller extends AbstractInstaller
             $this->moodle->directory,
         ];
 
-        $this->execute->mustRun(new Process($cmd, null, null, null, null));
+        // Only run git clone if it does not already exist
+        if (!is_dir($this->moodle->directory)) {
+            $this->execute->mustRun(new Process($cmd, null, null, null, null));
+        }
 
         // Expand the path to Moodle so all other installers use absolute path.
         $this->moodle->directory = $this->expandPath($this->moodle->directory);
