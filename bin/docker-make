@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Run a make target inside a PHP container (uses the already installed ./vendor), e.g.:
+#   bin/docker-make validate
+#   PHP_VERSION=8.3 bin/docker-make test-phpunit
+set -euo pipefail
+
+PHP_VERSION="${PHP_VERSION:-8.1}"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+IMAGE="moodle-plugin-ci-php${PHP_VERSION}"
+
+# Cached image with the tools the test suite needs (git, unzip, pcov for coverage, composer).
+docker build -q -t "$IMAGE" - <<EOF >/dev/null
+FROM php:${PHP_VERSION}-cli
+RUN apt-get update && apt-get install -y --no-install-recommends git unzip make nodejs npm \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+RUN pecl install pcov && docker-php-ext-enable pcov
+RUN git config --global --add safe.directory /app
+EOF
+
+docker run --rm -t \
+    -u "$(id -u):$(id -g)" \
+    -e HOME=/tmp -e COMPOSER_HOME=/tmp/composer -e NVM_DIR=/tmp/nvm \
+    -v "$ROOT":/app -w /app \
+    "$IMAGE" \
+    bash -c 'exec make "$@"' _ "${@:-validate}"
