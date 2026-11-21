@@ -32,7 +32,7 @@ jobs:
     # DB services you need for testing.
     services:
       postgres:
-        image: postgres:13
+        image: postgres:17
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -41,7 +41,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
 
       mariadb:
-        image: mariadb:10
+        image: mariadb:11
         env:
           MYSQL_USER: 'root'
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
@@ -53,14 +53,14 @@ jobs:
 
     # Determines build matrix. This is a list of PHP versions, databases and
     # branches to test our project against. For each combination a separate
-    # build will be created. For example below 6 builds will be created in
-    # total (7.4-pgsql, 7.4-mariadb, 8.0-pgsql, 8.0-mariadb, etc.). If we add
-    # another branch, total number of builds will become 12.
+    # build will be created. For example below 4 builds will be created in
+    # total (8.3-pgsql, 8.3-mariadb, 8.4-pgsql, 8.4-mariadb). If we add
+    # another branch, total number of builds will become 8.
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.4', '8.0', '8.1']
-        moodle-branch: ['MOODLE_401_STABLE']
+        php: ['8.3', '8.4']
+        moodle-branch: ['MOODLE_503_STABLE']
         database: [pgsql, mariadb]
 
     # There is an alternative way allowing to define explicitly define which php, moodle-branch
