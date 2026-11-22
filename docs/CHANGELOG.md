@@ -9,9 +9,10 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 The format of this change log follows the advice given at [Keep a CHANGELOG](https://keepachangelog.com).
 
 ## [Unreleased]
+
+## [4.5.12] - 2026-11-22
 ### Changed
 - Updated project dependencies to [moodle-cs v3.9.2](https://github.com/moodlehq/moodle-cs).
-  - moodle-cs v3.9.2 brings PHP_CodeSniffer 4 and moves the coding standards to a new `Standards` directory.
 
 ### Added
 - New `--colourmode` option added to the `behat` command, to run Behat in a given colour mode (e.g. `--colourmode=dark`) for themes which support colour modes, like Boost from Moodle 5.3 onwards.
@@ -812,7 +813,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.11...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.12...main
+[4.5.12]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.11...4.5.12
 [4.5.11]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.10...4.5.11
 [4.5.10]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.9...4.5.10
 [4.5.9]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.8...4.5.9
