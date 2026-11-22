@@ -55,7 +55,7 @@
   ],
   "require": {
     "php": ">=7.4",
-    "moodlehq/moodle-cs": "^3.7.0",
+    "moodlehq/moodle-cs": "^3.9.2",
     "moodlehq/moodle-local_ci": "^1.1.4",
     "moodlehq/moodle-local_moodlecheck": "^1.3.2",
     "sebastian/phpcpd": "^6.0.3",
