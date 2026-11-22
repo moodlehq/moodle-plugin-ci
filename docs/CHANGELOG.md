@@ -22,7 +22,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ### Removed
 - The use of `phpdbg` to calculate PHPUnit's code-coverage, deprecated in 4.5.0, has been removed. This includes both the implicit fallback when no alternative (`pcov` or `xdebug`) is available, and the explicit `--coverage-phpdbg` option. If no coverage driver is available, code coverage is disabled.
-- Code paths only needed by Moodle versions older than the new minimum (4.1), like the injection of coverage filters into the plugin `phpunit.xml` file (Moodle < 3.9).
+- Code paths only needed by Moodle versions older than the new minimum (4.1), like the injection of coverage filters into the plugin `phpunit.xml` file (Moodle < 3.9) or the legacy Node.js version used when Moodle has no `.nvmrc` file (Moodle < 3.5).
+- Travis CI specific code: the `TRAVIS_BUILD_DIR` environment variable (use `CI_BUILD_DIR` instead) and the PostgreSQL `travis` user and socket defaults applied when the `PGVER` environment variable was set.
 
 ## [4.5.11] - 2026-08-07
 ### Changed

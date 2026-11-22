@@ -72,9 +72,8 @@ class MustacheCommand extends AbstractMoodleCommand
             $cmd = [
                 'env',
                 '-u',
-                // _JAVA_OPTIONS is something Travis CI started to set in Trusty.  This breaks Mustache because
-                // the output from vnu.jar needs to be captured and JSON decoded.  When _JAVA_OPTIONS is present,
-                // then a message like "Picked up _JAVA_OPTIONS..." is printed which breaks JSON decoding.
+                // When _JAVA_OPTIONS is set, a message like "Picked up _JAVA_OPTIONS..." is printed, breaking
+                // the JSON decoding of the vnu.jar output. So we unset it.
                 '_JAVA_OPTIONS',
                 'php',
                 $wrapper,
@@ -82,9 +81,6 @@ class MustacheCommand extends AbstractMoodleCommand
                 '--validator=' . $jarTmpFile,
                 '--basename=' . $this->moodle->getPublicDirectory(),
             ];
-            // _JAVA_OPTIONS is something Travis CI started to set in Trusty.  This breaks Mustache because
-            // the output from vnu.jar needs to be captured and JSON decoded.  When _JAVA_OPTIONS is present,
-            // then a message like "Picked up _JAVA_OPTIONS..." is printed which breaks JSON decoding.
             $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->directory, null, null, null));
 
             if (!$process->isSuccessful()) {

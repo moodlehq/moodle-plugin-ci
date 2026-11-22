@@ -52,20 +52,15 @@ class InstallCommand extends Command
 
     protected function configure(): void
     {
-        // Travis CI configures some things by environment variables, default to those if available.
+        // Some options can be configured by environment variables, default to those if available.
         $type   = getenv('DB') !== false ? getenv('DB') : null;
         $repo   = getenv('MOODLE_REPO') !== false ? getenv('MOODLE_REPO') : 'https://github.com/moodle/moodle.git';
         $branch = getenv('MOODLE_BRANCH') !== false ? getenv('MOODLE_BRANCH') : null;
-        $plugin = getenv('TRAVIS_BUILD_DIR') !== false ? getenv('TRAVIS_BUILD_DIR') : null;
+        $plugin = getenv('CI_BUILD_DIR') !== false ? getenv('CI_BUILD_DIR') : null;
         $paths  = getenv('IGNORE_PATHS') !== false ? getenv('IGNORE_PATHS') : null;
         $names  = getenv('IGNORE_NAMES') !== false ? getenv('IGNORE_NAMES') : null;
         $extra  = getenv('EXTRA_PLUGINS_DIR') !== false ? getenv('EXTRA_PLUGINS_DIR') : null;
         $node   = getenv('NODE_VERSION') !== false ? getenv('NODE_VERSION') : null;
-
-        // As there is not only Travis CI, it can also be passed a generic environment variable.
-        if (null === $plugin) {
-            $plugin = getenv('CI_BUILD_DIR') !== false ? getenv('CI_BUILD_DIR') : null;
-        }
 
         // Add more options mapped to environment variables.
         $dbUser = getenv('DB_USER') !== false ? getenv('DB_USER') : null;

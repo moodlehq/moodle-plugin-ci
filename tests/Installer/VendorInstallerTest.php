@@ -34,25 +34,6 @@ class VendorInstallerTest extends MoodleTestCase
         $this->assertSame($installer->stepCount(), $installer->getOutput()->getStepCount());
     }
 
-    public function testInstallNodeNoNvmrc(): void
-    {
-        $installer = new VendorInstaller(
-            new DummyMoodle($this->moodleDir),
-            new MoodlePlugin($this->pluginDir),
-            new DummyExecute(),
-            false,
-            null
-        );
-
-        // Remove .nvmrc
-        $this->fs->remove($this->moodleDir . '/.nvmrc');
-
-        // Expect .nvmrc containing legacy version of Node.
-        $installer->installNode();
-        $this->assertTrue(is_file($this->moodleDir . '/.nvmrc'));
-        $this->assertSame('lts/carbon', file_get_contents($this->moodleDir . '/.nvmrc'));
-    }
-
     public function testInstallNodeUserVersion(): void
     {
         $userVersion = '8.9';
