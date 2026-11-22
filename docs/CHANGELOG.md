@@ -10,8 +10,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 ### Changed
-- Updated project dependencies to [moodle-cs v3.9.1](https://github.com/moodlehq/moodle-cs), [PHPMD 3](https://github.com/phpmd/phpmd/releases/tag/3.0.0) and psr/log 3.
-  - moodle-cs v3.9.1 brings PHP_CodeSniffer 4 and moves the coding standards to a new `Standards` directory.
+- Updated project dependencies to [moodle-cs v3.9.2](https://github.com/moodlehq/moodle-cs), [PHPMD 3](https://github.com/phpmd/phpmd/releases/tag/3.0.0) and psr/log 3.
+  - moodle-cs v3.9.2 brings PHP_CodeSniffer 4 and moves the coding standards to a new `Standards` directory.
   - PHPMD 3 now reports threshold rules only when the measured value exceeds the configured maximum (previously also when equal).
 - Psalm is installed again via composer, now that Psalm 6 supports nikic/php-parser 5.
 

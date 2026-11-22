@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad342dd61f6607f6548d94f5538ceccb",
+    "content-hash": "385ea4821536928824d1627e3ede27fb",
     "packages": [
         {
             "name": "composer/pcre",
@@ -485,22 +485,22 @@
         },
         {
             "name": "moodlehq/moodle-cs",
-            "version": "v3.9.1",
+            "version": "v3.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moodlehq/moodle-cs.git",
-                "reference": "1af198a091a03f21f1520c466ad75bf8325afc28"
+                "reference": "09b467fed4c6c834fa5c68909837012f0580ea1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/1af198a091a03f21f1520c466ad75bf8325afc28",
-                "reference": "1af198a091a03f21f1520c466ad75bf8325afc28",
+                "url": "https://api.github.com/repos/moodlehq/moodle-cs/zipball/09b467fed4c6c834fa5c68909837012f0580ea1c",
+                "reference": "09b467fed4c6c834fa5c68909837012f0580ea1c",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^1.2.1",
                 "ext-json": "*",
-                "php": ">=8.0",
+                "php": ">=7.4",
                 "phpcsstandards/phpcsextra": "^1.5.0",
                 "squizlabs/php_codesniffer": "^3.13.6 || ^4.0.4"
             },
@@ -549,8 +549,8 @@
                 "source": "https://github.com/moodlehq/moodle-cs",
                 "wiki": "https://github.com/moodlehq/moodle-cs/wiki"
             },
-            "time": "2026-11-19T15:24:07+00:00",
-            "published-time": "2026-11-19T15:28:52+00:00"
+            "time": "2026-11-20T01:16:14+00:00",
+            "published-time": "2026-11-20T01:16:32+00:00"
         },
         {
             "name": "moodlehq/moodle-local_ci",
@@ -7908,16 +7908,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.20.13",
+            "version": "6.21.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "9dd07528c4f058df1572d40ab2db5c1566a728f2"
+                "reference": "7c854e9a39b14e49552cb949829abc36c16c866f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/9dd07528c4f058df1572d40ab2db5c1566a728f2",
-                "reference": "9dd07528c4f058df1572d40ab2db5c1566a728f2",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/7c854e9a39b14e49552cb949829abc36c16c866f",
+                "reference": "7c854e9a39b14e49552cb949829abc36c16c866f",
                 "shasum": ""
             },
             "require": {
@@ -8022,8 +8022,8 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-11-18T12:17:11+00:00",
-            "published-time": "2026-11-18T12:31:30+00:00"
+            "time": "2026-11-21T08:25:52+00:00",
+            "published-time": "2026-11-22T00:46:41+00:00"
         },
         {
             "name": "webmozart/assert",
