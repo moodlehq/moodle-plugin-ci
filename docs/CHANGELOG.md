@@ -10,10 +10,13 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 ### Changed
+- `moodle-plugin-ci` now requires **PHP 8.1** or later and **Moodle 4.1** or later. See the [upgrade guide](UPGRADE-5.0.md) for detailed instructions.
+- ACTION REQUIRED: Update your workflows to use `moodle-plugin-ci` version 5 (`^5`).
+- Updated project dependencies to Symfony 6.4, PHPUnit 10, phpunit/php-timer 6 and sebastian/version 4.
 - Updated project dependencies to [moodle-cs v3.9.2](https://github.com/moodlehq/moodle-cs), [PHPMD 3](https://github.com/phpmd/phpmd/releases/tag/3.0.0) and psr/log 3.
-  - moodle-cs v3.9.2 brings PHP_CodeSniffer 4 and moves the coding standards to a new `Standards` directory.
-  - PHPMD 3 now reports threshold rules only when the measured value exceeds the configured maximum (previously also when equal).
-- Psalm is installed again via composer, now that Psalm 6 supports nikic/php-parser 5.
+- PHPMD 3 now reports threshold rules only when the measured value exceeds the configured maximum (previously also when equal).
+- ACTION SUGGESTED: If your workflows or custom rulesets reference the moodle-cs standard by path (e.g. `vendor/moodlehq/moodle-cs/moodle`), update it to the new location (`vendor/moodlehq/moodle-cs/Standards/moodle`). Using the standard by name (`moodle`) keeps working unchanged.
+- Psalm 6 is installed again via composer, as it now supports nikic/php-parser 5.
 
 ### Added
 - New `--colourmode` option added to the `behat` command, to run Behat in a given colour mode (e.g. `--colourmode=dark`) for themes which support colour modes, like Boost from Moodle 5.3 onwards.
@@ -21,9 +24,13 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - New `--log-junit` option added to `phpunit` command to create a JUnit XML test report (`junit.xml`).
 
 ### Removed
+- The `phpcpd` command, deprecated in 4.4.0, has been removed. No replacement is planned.
+- ACTION REQUIRED: Remove any use of the `phpcpd` command from your workflows.
+- Travis CI support, deprecated in 4.5.8, has been removed. This includes the `.travis.dist.yml` template, `TRAVIS_BUILD_DIR` environment variable and all the related documentation.
+- ACTION SUGGESTED: If you are still using Travis CI, migrate to [GitHub Actions](GHAFileExplained.md).
+- ACTION REQUIRED: If you relied on the `TRAVIS_BUILD_DIR` environment variable to locate the plugin directory, use the `CI_BUILD_DIR` environment variable or the `--plugin` option of the `install` command instead.
 - The use of `phpdbg` to calculate PHPUnit's code-coverage, deprecated in 4.5.0, has been removed. This includes both the implicit fallback when no alternative (`pcov` or `xdebug`) is available, and the explicit `--coverage-phpdbg` option. If no coverage driver is available, code coverage is disabled.
-- Code paths only needed by Moodle versions older than the new minimum (4.1), like the injection of coverage filters into the plugin `phpunit.xml` file (Moodle < 3.9) or the legacy Node.js version used when Moodle has no `.nvmrc` file (Moodle < 3.5).
-- Travis CI specific code: the `TRAVIS_BUILD_DIR` environment variable (use `CI_BUILD_DIR` instead) and the PostgreSQL `travis` user and socket defaults applied when the `PGVER` environment variable was set.
+- ACTION REQUIRED: Remove any use of the `--coverage-phpdbg` option from your workflows. If you generate code coverage, ensure that either `pcov` or `xdebug` is available.
 
 ## [4.5.11] - 2026-08-07
 ### Changed
