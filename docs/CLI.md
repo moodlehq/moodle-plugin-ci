@@ -1961,7 +1961,7 @@ Run PHPUnit on a plugin
 
 ### Usage
 
-* `phpunit [-m|--moodle MOODLE] [-c|--configuration CONFIGURATION] [--testsuite TESTSUITE] [--filter FILTER] [--testdox] [--coverage-text] [--coverage-clover] [--coverage-cobertura] [--log-junit] [--coverage-pcov] [--coverage-xdebug] [--coverage-phpdbg] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
+* `phpunit [-m|--moodle MOODLE] [-c|--configuration CONFIGURATION] [--testsuite TESTSUITE] [--filter FILTER] [--testdox] [--coverage-text] [--coverage-clover] [--coverage-cobertura] [--log-junit] [--coverage-pcov] [--coverage-xdebug] [--fail-on-incomplete] [--fail-on-risky] [--fail-on-skipped] [--fail-on-warning] [--] <plugin>`
 
 Run PHPUnit on a plugin
 
@@ -2080,16 +2080,6 @@ Use the pcov extension to calculate code coverage
 #### `--coverage-xdebug`
 
 Use the xdebug extension to calculate code coverage
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Is negatable: no
-* Default: `false`
-
-#### `--coverage-phpdbg`
-
-(**DEPRECATED**) Use the phpdbg binary to calculate code coverage
 
 * Accept value: no
 * Is value required: no

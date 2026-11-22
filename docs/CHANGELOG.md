@@ -20,6 +20,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - New `--coverage-cobertura` option added to `phpunit` command to create a Cobertura code coverage XML file (`cobertura.xml`).
 - New `--log-junit` option added to `phpunit` command to create a JUnit XML test report (`junit.xml`).
 
+### Removed
+- The use of `phpdbg` to calculate PHPUnit's code-coverage, deprecated in 4.5.0, has been removed. This includes both the implicit fallback when no alternative (`pcov` or `xdebug`) is available, and the explicit `--coverage-phpdbg` option. If no coverage driver is available, code coverage is disabled.
+
 ## [4.5.11] - 2026-08-07
 ### Changed
 - ACTION SUGGESTED: bump workflows to postgres 17, which is a requirement for Moodle 5.3

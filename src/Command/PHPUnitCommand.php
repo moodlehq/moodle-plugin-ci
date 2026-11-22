@@ -49,7 +49,6 @@ class PHPUnitCommand extends AbstractMoodleCommand
             ->addOption('log-junit', null, InputOption::VALUE_NONE, 'Log test execution in JUnit XML format (junit.xml in the current working directory)')
             ->addOption('coverage-pcov', null, InputOption::VALUE_NONE, 'Use the pcov extension to calculate code coverage')
             ->addOption('coverage-xdebug', null, InputOption::VALUE_NONE, 'Use the xdebug extension to calculate code coverage')
-            ->addOption('coverage-phpdbg', null, InputOption::VALUE_NONE, '(**DEPRECATED**) Use the phpdbg binary to calculate code coverage')
             ->addOption('fail-on-incomplete', null, InputOption::VALUE_NONE, 'Treat incomplete tests as failures')
             ->addOption('fail-on-risky', null, InputOption::VALUE_NONE, 'Treat risky tests as failures')
             ->addOption('fail-on-skipped', null, InputOption::VALUE_NONE, 'Treat skipped tests as failures')
@@ -193,7 +192,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
     }
 
     /**
-     * Use phpdbg if we are generating code coverage.
+     * Resolve the PHP binary and settings to use if we are generating code coverage.
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
@@ -223,22 +222,6 @@ class PHPUnitCommand extends AbstractMoodleCommand
                     'php',
                     '-dpcov.enabled=0',
                     '-dxdebug.mode=coverage',
-                ];
-            case 'phpdbg':
-                // @codeCoverageIgnoreStart
-                if (!defined('PHPUNIT_TEST')) { // Only show deprecation warnings in non-test environments.
-                    if (getenv('GITHUB_ACTIONS')) { // Only show deprecation annotations in GitHub Actions.
-                        echo '::warning title=Deprecated phpdbg option::The use of phpdbg for phpunit code coverage ' .
-                            'is deprecated and will be removed in 5.0.0. Please, switch to pcov or xdebug instead.' . PHP_EOL;
-                    }
-                }
-                // @codeCoverageIgnoreEnd
-
-                return [
-                    'phpdbg',
-                    '-d',
-                    'memory_limit=-1',
-                    '-qrr',
                 ];
         }
         // No suitable coverage driver found, disabling all candidates.
@@ -301,7 +284,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return string one of pcov, xdebug, phpdbg
+     * @return string one of pcov, xdebug or empty string if none is available
      */
     private function resolveCoverageDriver(InputInterface $input, OutputInterface $output): string
     {
@@ -329,11 +312,9 @@ class PHPUnitCommand extends AbstractMoodleCommand
             }
 
             return 'xdebug';
-        } elseif ($input->getOption('coverage-phpdbg')) {
-            return 'phpdbg';
         }
 
-        // Arrived here, let's find the best (pcov => xdebug => phpdbg) available driver.
+        // Arrived here, let's find the best (pcov => xdebug) available driver.
 
         if (extension_loaded('pcov') && $this->moodle->getBranch() >= 310) {
             // If pcov is available and we are using Moodle 3.10 (PHPUnit 8.5) and up, let's use it.
@@ -345,6 +326,6 @@ class PHPUnitCommand extends AbstractMoodleCommand
             return 'xdebug';
         }
 
-        return 'phpdbg'; // Fallback to phpdbg (bundled with php 7.0 and up) if none of the above are available.
+        return ''; // No suitable driver available.
     }
 }

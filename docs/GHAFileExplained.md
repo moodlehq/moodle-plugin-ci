@@ -88,7 +88,6 @@ jobs:
           extensions: ${{ matrix.extensions }}
           ini-values: max_input_vars=5000, opcache.enable_cli=1, opcache.jit=disable
           # If you are not using code coverage, keep "none". Otherwise, use "pcov" (Moodle 3.10 and up; note we must disable JIT if enabling Opcache) or "xdebug".
-          # If you try to use code coverage with "none", it will fallback to phpdbg (which has known problems).
           coverage: none
 
       # Install this project into a directory called "ci", updating PATH and
