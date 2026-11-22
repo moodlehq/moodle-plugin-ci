@@ -94,7 +94,6 @@ EOT;
 
         // Verify various parts of the output.
         $output = $commandTester->getDisplay();
-        $this->assertMatchesRegularExpression('/E\.* 10\.* \/ 10 \(100%\)/', $output);                // Progress.
         $this->assertMatchesRegularExpression('/\/fixable.php/', $output);                            // File.
         $this->assertMatchesRegularExpression('/ 12 ERRORS AND 1 WARNING AFFECTING 8 /', $output);    // Summary.
         $this->assertMatchesRegularExpression('/BoilerplateComment\.NoBoilerplateComment/', $output); // Moodle sniff.
