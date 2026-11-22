@@ -37,7 +37,7 @@ class InstallCommandTest extends MoodleTestCase
             '--moodle'        => $this->tempDir . '/moodle',
             '--plugin'        => $this->pluginDir,
             '--data'          => $this->tempDir . '/moodledata',
-            '--branch'        => 'MOODLE_29_STABLE',
+            '--branch'        => 'MOODLE_503_STABLE',
             '--db-type'       => 'mysqli',
             '--extra-plugins' => $this->tempDir, // Not accurate, but tests more code.
         ]);

@@ -117,16 +117,6 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame('', $task->buildDirectory);
         $this->assertSame($this->moodleDir, $task->workingDirectory);
 
-        /** @var DummyMoodle $moodle */
-        $moodle         = $command->moodle;
-        $moodle->branch = 30;
-
-        $this->assertNull($command->toGruntTask('gherkinlint'));
-
-        $moodle->branch = 33;
-
-        $this->assertInstanceOf(GruntTaskModel::class, $command->toGruntTask('gherkinlint'), 'Should work again');
-
         $this->fs->remove($this->pluginDir . '/tests/behat');
 
         $this->assertNull($command->toGruntTask('gherkinlint'));

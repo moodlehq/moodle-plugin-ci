@@ -72,7 +72,7 @@ class PHPUnitCommand extends AbstractMoodleCommand
         $binary    = $this->resolveBinary($input, $output);
         $directory = [$this->moodle->directory . '/vendor/bin/phpunit'];
         $colors    = $output->isDecorated() ? ['--colors=always'] : [];
-        $options   = $this->resolveOptions($input, $output);
+        $options   = $this->resolveOptions($input);
         $cmd       = array_merge(
             $binary,
             $directory,
@@ -87,12 +87,11 @@ class PHPUnitCommand extends AbstractMoodleCommand
     /**
      * Resolve options for PHPUnit command.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * @param InputInterface $input
      *
      * @return string[]
      */
-    private function resolveOptions(InputInterface $input, OutputInterface $output): array
+    private function resolveOptions(InputInterface $input): array
     {
         $options = [];
 
@@ -117,26 +116,22 @@ class PHPUnitCommand extends AbstractMoodleCommand
             ];
         }
 
-        if ($this->supportsCoverage() && $input->getOption('coverage-text')) {
+        if ($input->getOption('coverage-text')) {
             $options[] = [
                 '--coverage-text',
             ];
         }
-        if ($this->supportsCoverage() && $input->getOption('coverage-clover')) {
+        if ($input->getOption('coverage-clover')) {
             $options[] = [
                 '--coverage-clover',
                 getcwd() . '/coverage.xml',
             ];
         }
-        if ($this->supportsCoverage() && $input->getOption('coverage-cobertura')) {
-            if ($this->supportsCobertura()) {
-                $options[] = [
-                    '--coverage-cobertura',
-                    getcwd() . '/cobertura.xml',
-                ];
-            } else {
-                $output->writeln('<error>PHPUnit Cobertura coverage only can be used with Moodle 3.11 and up.</error>');
-            }
+        if ($input->getOption('coverage-cobertura')) {
+            $options[] = [
+                '--coverage-cobertura',
+                getcwd() . '/cobertura.xml',
+            ];
         }
         if ($input->getOption('log-junit')) {
             $options[] = [
@@ -201,9 +196,6 @@ class PHPUnitCommand extends AbstractMoodleCommand
      */
     private function resolveBinary(InputInterface $input, OutputInterface $output): array
     {
-        if (!$this->supportsCoverage()) {
-            return [];
-        }
         if (!$this->coverageRequested($input)) {
             return [];
         }
@@ -244,38 +236,12 @@ class PHPUnitCommand extends AbstractMoodleCommand
     private function coverageRequested(InputInterface $input): bool
     {
         foreach (['coverage-text', 'coverage-clover', 'coverage-cobertura'] as $option) {
-            if (!$input->getOption($option)) {
-                continue;
+            if ($input->getOption($option)) {
+                return true;
             }
-            // Cobertura is not available in all PHPUnit versions, so it doesn't need a driver if unsupported.
-            if ($option === 'coverage-cobertura' && !$this->supportsCobertura()) {
-                continue;
-            }
-
-            return true;
         }
 
         return false;
-    }
-
-    /**
-     * Cobertura reports are only available with PHPUnit 9.5 and up (Moodle 3.11 and up).
-     *
-     * @return bool
-     */
-    private function supportsCobertura(): bool
-    {
-        return $this->moodle->getBranch() >= 311;
-    }
-
-    /**
-     * Only allow coverage when using PHP7.
-     *
-     * @return bool
-     */
-    private function supportsCoverage(): bool
-    {
-        return version_compare(PHP_VERSION, '7.0.0', '>=');
     }
 
     /**
@@ -296,11 +262,6 @@ class PHPUnitCommand extends AbstractMoodleCommand
 
                 return '';
             }
-            if ($this->moodle->getBranch() < 310) {
-                $output->writeln('<error>PHP pcov coverage only can be used with Moodle 3.10 and up.</error>');
-
-                return '';
-            }
 
             return 'pcov';
         } elseif ($input->getOption('coverage-xdebug')) {
@@ -316,8 +277,8 @@ class PHPUnitCommand extends AbstractMoodleCommand
 
         // Arrived here, let's find the best (pcov => xdebug) available driver.
 
-        if (extension_loaded('pcov') && $this->moodle->getBranch() >= 310) {
-            // If pcov is available and we are using Moodle 3.10 (PHPUnit 8.5) and up, let's use it.
+        if (extension_loaded('pcov')) {
+            // If pcov is available, let's use it.
             return 'pcov';
         }
 

@@ -3,10 +3,7 @@ layout: page
 title: Generating code coverage
 ---
 
-Currently, code coverage is only generated for builds that are running on PHP7 or later.  Code coverage generation
-is significantly faster and easier to produce in PHP7.
-
-Code coverage will automatically fallback between `pcov` => `xdebug`, using the "best" one available in the system. If none of them is available, code coverage is disabled. Still, if needed to, any of them can be forced, given all their requirements are fulfilled, using the following options of the 'phpunit' command: `--coverage-pcov` or `--coverage-xdebug`.
+Code coverage requires a coverage driver (`pcov` or `xdebug`) to be available. Code coverage will automatically fallback between `pcov` => `xdebug`, using the "best" one available in the system. If none of them is available, code coverage is disabled. Still, if needed to, any of them can be forced, given all their requirements are fulfilled, using the following options of the 'phpunit' command: `--coverage-pcov` or `--coverage-xdebug`.
 
 The way you generate code coverage is to use one of the coverage options on the `phpunit` command.  The currently
 available options are `--coverage-text`, `--coverage-clover` and `--coverage-cobertura`.  The easiest way to start generating code coverage
@@ -32,13 +29,15 @@ You can use the `--coverage-clover` option to generate a `coverage.xml` in the c
 <!-- {% endraw %} -->
 
 You can use the `--coverage-cobertura` option to generate a `cobertura.xml` in the current working directory, which is
-the format expected by many CI tools (GitLab, Azure DevOps, Jenkins...).  It requires PHPUnit 9.5 or later (Moodle 3.11
-and up) and, like the other coverage options, a coverage driver.  Example:
+the format expected by many CI tools (GitLab, Azure DevOps, Jenkins...).  Like the other coverage options, it requires a
+coverage driver.  Example:
 
+<!-- {% raw %} -->
 ```yaml
-script:
-  - moodle-plugin-ci phpunit --coverage-cobertura
+      - name: PHPUnit tests
+        run: moodle-plugin-ci phpunit --coverage-cobertura
 ```
+<!-- {% endraw %} -->
 
 You can of course use several of these options at the same time if you like.  Sometimes it is nice to exclude files from code
 coverage stats, for example, CLI scripts that would never be executed by PHPUnit.  You can exclude files by using
@@ -51,10 +50,12 @@ Not related to code coverage (and not needing any coverage driver), the `--log-j
 results in JUnit XML format to a `junit.xml` file in the current working directory, so CI tools can display test
 reports.  It can be combined with the coverage options:
 
+<!-- {% raw %} -->
 ```yaml
-script:
-  - moodle-plugin-ci phpunit --log-junit --coverage-cobertura
+      - name: PHPUnit tests
+        run: moodle-plugin-ci phpunit --log-junit --coverage-cobertura
 ```
+<!-- {% endraw %} -->
 
 ## Coveralls integration
 
@@ -87,5 +88,4 @@ Now commit those changes to your plugin and push the results up to GitHub.  Afte
 will be updated with a new coverage report.
 
 **Tips on troubleshooting:** if you are having problems with sending coverage to Coveralls, do not forget that you
-can expand the `coveralls-upload` line in the CI logs where there might be some details as to why.  Also don't
-forget that coverage is only generated for PHP7 or later and this applies to the Coveralls integration as well.
+can expand the `coveralls-upload` line in the CI logs where there might be some details as to why.

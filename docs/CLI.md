@@ -916,7 +916,7 @@ Moodle repository to clone, can be local path to repo
 
 #### `--branch`
 
-Moodle git branch to clone, EG: MOODLE_29_STABLE
+Moodle git branch to clone, EG: MOODLE_503_STABLE
 
 * Accept value: yes
 * Is value required: yes
