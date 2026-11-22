@@ -12,20 +12,24 @@ The way you generate code coverage is to use one of the coverage options on the 
 available options are `--coverage-text`, `--coverage-clover` and `--coverage-cobertura`.  The easiest way to start generating code coverage
 is to use the text option as that gets printed in the CI logs.  Example:
 
+<!-- {% raw %} -->
 ```yaml
-script:
-  - moodle-plugin-ci phpunit --coverage-text
+      - name: PHPUnit tests
+        run: moodle-plugin-ci phpunit --coverage-text
 ```
+<!-- {% endraw %} -->
 
 You can use the `--coverage-clover` option to generate a `coverage.xml` in the current working directory.  Example:
 
+<!-- {% raw %} -->
 ```yaml
-script:
-  - moodle-plugin-ci phpunit --coverage-clover
-
-  # Then you can view it or do whatever you like with it.
-  - cat coverage.xml
+      - name: PHPUnit tests
+        run: |
+          moodle-plugin-ci phpunit --coverage-clover
+          # Then you can view it or do whatever you like with it.
+          cat coverage.xml
 ```
+<!-- {% endraw %} -->
 
 You can use the `--coverage-cobertura` option to generate a `cobertura.xml` in the current working directory, which is
 the format expected by many CI tools (GitLab, Azure DevOps, Jenkins...).  It requires PHPUnit 9.5 or later (Moodle 3.11
@@ -64,14 +68,11 @@ need to authorize access to your public repositories.  Once you have done that, 
 
 Then, you need to instruct to your favourite CI tool, so the `phpunit` command generates the clover coverage file and, then, use the `coveralls-upload` command to actually upload the coverage.
 
-Some examples follow:
-
-#### GitHub Actions
+For example:
 
 <!-- {% raw %} -->
 ```yaml
       - name: PHPUnit tests
-        if: ${{ !cancelled() }}
         run: |
           moodle-plugin-ci phpunit --coverage-clover
           moodle-plugin-ci coveralls-upload
@@ -82,21 +83,9 @@ Some examples follow:
 
 Note that, instead of the automatically generated for every run `${{ secrets.GITHUB_TOKEN }}` token you can use any other GitHub token (PAT...) with the correct perms or, also, the token that Coveralls offers to you for every repository. Just it's easier to use the automatic GitHub one, because that way you don't need to create tokens or secrets manually and maintain them.
 
-#### Travis
-
-```yaml
-script:
-  # ...snip
-  - moodle-plugin-ci phpunit --coverage-clover
-  # ...snip
-
-after_success:
-  - moodle-plugin-ci coveralls-upload
-```
-
-Now commit those changes to your plugin and push the results up to GitHub.  After Travis CI runs, then Coveralls
+Now commit those changes to your plugin and push the results up to GitHub.  After the CI workflow runs, then Coveralls
 will be updated with a new coverage report.
 
 **Tips on troubleshooting:** if you are having problems with sending coverage to Coveralls, do not forget that you
-can expand the `coveralls-upload` line in the Travis CI logs where there might be some details as to why.  Also don't
+can expand the `coveralls-upload` line in the CI logs where there might be some details as to why.  Also don't
 forget that coverage is only generated for PHP7 or later and this applies to the Coveralls integration as well.

@@ -1,18 +1,13 @@
 [![Latest Stable Version](https://poser.pugx.org/moodlehq/moodle-plugin-ci/v)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 [![Moodle Plugin CI](https://github.com/moodlehq/moodle-plugin-ci/actions/workflows/test.yml/badge.svg)](https://github.com/moodlehq/moodle-plugin-ci/actions/workflows/test.yml)
-[![Build Status](https://app.travis-ci.com/moodlehq/moodle-plugin-ci.svg?branch=main)](https://app.travis-ci.com/github/moodlehq/moodle-plugin-ci)
 [![codecov](https://codecov.io/gh/moodlehq/moodle-plugin-ci/graph/badge.svg?token=I3PPJ383G7)](https://codecov.io/gh/moodlehq/moodle-plugin-ci)
 [![Total Downloads](https://poser.pugx.org/moodlehq/moodle-plugin-ci/downloads)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 [![License](https://poser.pugx.org/moodlehq/moodle-plugin-ci/license)](//packagist.org/packages/moodlehq/moodle-plugin-ci)
 
 The goal of this project is to facilitate the running of tests and code
 analysis against a Moodle plugin using CI environments, such as [GitHub
-Actions](https://docs.github.com/en/actions) or [Travis
-CI](https://travis-ci.com).  All of these tests and tools
+Actions](https://docs.github.com/en/actions).  All of these tests and tools
 are run everytime a change is pushed to a GitHub branch or pull request.
-
-> [!WARNING]
-> Travis CI support has been deprecated in 4.5.8 and will be removed in 5.0.0.
 
 * [Getting started](https://moodlehq.github.io/moodle-plugin-ci/)
 * [Help topics](https://moodlehq.github.io/moodle-plugin-ci/Help.html)

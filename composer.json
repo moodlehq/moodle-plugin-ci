@@ -1,7 +1,7 @@
 {
   "name": "moodlehq/moodle-plugin-ci",
   "description": "Helps running Moodle plugins analysis checks and tests under various CI environments.",
-  "keywords": ["moodle", "travis", "ci", "testing", "github", "actions"],
+  "keywords": ["moodle", "ci", "testing", "github", "actions"],
   "type": "project",
   "license": "GPL-3.0-or-later",
   "authors": [

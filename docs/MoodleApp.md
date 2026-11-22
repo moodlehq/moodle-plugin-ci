@@ -17,6 +17,6 @@ In practice, you only need to set the `MOODLE_APP` env variable to `true`, and a
 
 Finally, keep in mind that mobile tests only run on Chrome, so make sure that you're using the correct browser. If you're setting the `MOODLE_APP` variable, the default browser should already be Chrome; but you can set it explicitly using the `--profile` flag otherwise.
 
-For specific examples, look at the [gha.dist.yml](GHAFileExplained.md) or [.travis.dist.yml](TravisFileExplained.md) files, and uncomment the lines mentioning the app.
+For specific examples, look at the [gha.dist.yml](GHAFileExplained.md) file, and uncomment the lines mentioning the app.
 
 **Important:** Please notice that `MOODLE_APP` only works starting with version 4.1 of the app. If you want to use this setup against older versions, you'll have to use `MOODLE_BEHAT_IONIC_WWWROOT` and configure the dependencies manually (installing the plugin, launching the docker image, etc.).

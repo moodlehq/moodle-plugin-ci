@@ -5,12 +5,16 @@ title: Adding extra plugins
 
 Sometimes the plugin that you are testing may depend on another plugin or even several other plugins.  This project
 provides a way to Git clone the extra plugins and add them to the Moodle test site. Here is an example of how to use
-it in your `.github/workflow/*` or `.travis.yml` files:
+it in your `.github/workflow/*` files:
 
+<!-- {% raw %} -->
 ```yaml
-  - moodle-plugin-ci add-plugin moodlehq/moodle-local_hub
-  - moodle-plugin-ci install
+      - name: Install moodle-plugin-ci
+        run: |
+          moodle-plugin-ci add-plugin moodlehq/moodle-local_hub
+          moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
 ```
+<!-- {% endraw %} -->
 
 You may add as many plugins as you like, by simply calling the `add-plugin` command for each plugin.  The `add-plugin`
 command takes a single argument and that is your GitHub account name and the project name.  So, in the example, it
@@ -20,17 +24,23 @@ If not specified, the default branch of the repository is used (normally `main`)
 this behavior.  If you use the same branch names as Moodle (EG: `MOODLE_XY_STABLE`), then a handy trick is to pass
 the `$MOODLE_BRANCH` build variable to the `add-plugin` command.  Here is an example:
 
+<!-- {% raw %} -->
 ```yaml
-install:
-  - moodle-plugin-ci add-plugin --branch $MOODLE_BRANCH username/project
-  - moodle-plugin-ci install
+      - name: Install moodle-plugin-ci
+        run: |
+          moodle-plugin-ci add-plugin --branch $MOODLE_BRANCH username/project
+          moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
 ```
+<!-- {% endraw %} -->
 
 If you are not using GitHub and want to provide your own Git clone URL, then you can use the `--clone` (`-c`) option.
 Here is an example (Note, you can use the `--branch` option together with the `--clone` option if you need to):
 
+<!-- {% raw %} -->
 ```yaml
-install:
-  - moodle-plugin-ci add-plugin --clone https://bitbucket.org/username/project.git
-  - moodle-plugin-ci install
+      - name: Install moodle-plugin-ci
+        run: |
+          moodle-plugin-ci add-plugin --clone https://bitbucket.org/username/project.git
+          moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
 ```
+<!-- {% endraw %} -->

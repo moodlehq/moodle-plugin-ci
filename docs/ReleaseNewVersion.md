@@ -23,7 +23,7 @@ When all the changes above have been performed, push them straight upstream to
 `main` or create a standard PR to get them reviewed and incorporated
 upstream. In the latter case, use your repo clone for PR - this way Packagist
 will not capture new branch in the list of tags and you will not end up having
-double CI build on Travis, also when merging PR, please **avoid merge commit**
+double CI build, also when merging PR, please **avoid merge commit**
 (use "Rebase and merge" option).
 
 Once all code and commits are in place and verified, you need to tag a

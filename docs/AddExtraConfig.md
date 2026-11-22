@@ -5,13 +5,17 @@ title: Adding extra configs to Moodle's configuration file
 
 Sometimes a plugin may require extra config in the Moodle `config.php` file because, for example, it interacts with a
 non-standard service.  This project provides a way to update the `config.php` file with the `add-config` command.  Here
-is an example of how to use it in your `.github/workflow/*` or `.travis.yml` files:
+is an example of how to use it in your `.github/workflow/*` files:
 
+<!-- {% raw %} -->
 ```yaml
-  - moodle-plugin-ci install
-  - moodle-plugin-ci add-config '$CFG->foo = "bar";'
-  - moodle-plugin-ci add-config 'define("BAT", "baz");'
+      - name: Install moodle-plugin-ci
+        run: |
+          moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1
+          moodle-plugin-ci add-config '$CFG->foo = "bar";'
+          moodle-plugin-ci add-config 'define("BAT", "baz");'
 ```
+<!-- {% endraw %} -->
 
 As you may have noticed, the `add-config` command takes a single argument which is a valid line of PHP code.
 The first `add-config` call will add `$CFG->foo = "bar";` to the config file and the second will add

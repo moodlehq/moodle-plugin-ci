@@ -8,11 +8,6 @@ Below is the
 file with comments added to explain what each section is doing. For additional
 information please refer to [workflow syntax reference](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions).
 
-If you are familiar with Travis, it should be straightforward to understand
-the new syntax, also you may find this [migration
-manual](https://docs.github.com/en/actions/learn-github-actions/migrating-from-travis-ci-to-github-actions)
-useful.
-
 <!-- {% raw %} -->
 ```yaml
 # Title of the workflow
@@ -27,7 +22,7 @@ jobs:
   # when a job name is not provided
   test:
     # Virtual environment to use.
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     # DB services you need for testing.
     services:
@@ -68,20 +63,20 @@ jobs:
     #
     # matrix:
     #   include:
-    #     - php: '8.0'
-    #       moodle-branch: 'MOODLE_401_STABLE'
+    #     - php: '8.4'
+    #       moodle-branch: 'MOODLE_503_STABLE'
     #       database: pgsql
-    #     - php: '8.0'
-    #       moodle-branch: 'MOODLE_400_STABLE'
+    #     - php: '8.3'
+    #       moodle-branch: 'MOODLE_502_STABLE'
     #       database: mariadb
-    #     - php: '7.4'
-    #       moodle-branch: 'MOODLE_311_STABLE'
+    #     - php: '8.2'
+    #       moodle-branch: 'MOODLE_501_STABLE'
     #       database: pgsql
 
     steps:
       # Check out this repository code in ./plugin directory
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: plugin
 

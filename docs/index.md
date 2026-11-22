@@ -9,13 +9,9 @@ and tools are run everytime a change is pushed to a GitHub branch or pull
 request.
 
 We currently provide user manual how to use it with [GitHub
-Actions](https://docs.github.com/en/actions) and [Travis
-CI](https://travis-ci.com), if you are using
+Actions](https://docs.github.com/en/actions), if you are using
 `moodle-plugin-ci` with other CI services please do share your setup examples
 by creating a ticket.
-
-> [!WARNING]
-> Travis CI support has been deprecated in 4.5.8 and will be removed in 5.0.0.
 
 Why would you want to do this?  It saves you from having to remember to setup and run PHPUnit, Behat, code checker, etc
 every single time you make a change.  If you have enough test coverage, it also makes accepting pull requests painless
@@ -66,23 +62,6 @@ name, click Actions tab and see your build status.  You may find this [Quick
 Start manual](https://docs.github.com/en/actions/quickstart#viewing-your-workflow-results)
 useful. Now whenever you push commits to your plugin repo or it gets a new
 pull request, GitHub will run a build to make sure nothing broke.
-
-### Travis CI
-
-#### Step 1
-
-Sign into [Travis CI](https://travis-ci.com) with your GitHub account. Once you’re signed in, and Travis CI will have
-synchronized your repositories from GitHub.  Go to your [profile](https://travis-ci.com/profile) page and enable Travis CI
-for the plugin you want to build.  Now whenever your plugin receives an update or gets a new pull request, Travis CI will
-run a build to make sure nothing broke.
-
-#### Step 2
-
-Copy the [.travis.dist.yml](https://github.com/moodlehq/moodle-plugin-ci/blob/main/.travis.dist.yml) file into the
-root of your plugin and rename it to `.travis.yml`. Now might be a good time to review the `.travis.yml` contents and
-remove anything that is not needed.  See this [help document](TravisFileExplained.md) for an explanation about the
-contents of the this file. Once you have added the `.travis.yml` file, commit and push up to GitHub, to trigger a
-Travis CI build. Navigate back to [Travis CI](https://travis-ci.com) to see if your build passes or fails.
 
 ### Using in a Local Dev Environment
 
@@ -176,7 +155,7 @@ Next steps on your continuous build journey may include:
 
 ## Upgrading
 
-Guides to updating your plugin's `.travis.yml` file to use the latest versions of this tool.
+Guides to updating your plugin's CI workflow file to use the latest versions of this tool.
 
 * [Upgrade to 4.0](UPGRADE-4.0.md)
 * [Upgrade to 3.0](UPGRADE-3.0.md)
