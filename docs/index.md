@@ -31,15 +31,15 @@ This project supports the following testing frameworks and code analysis tools:
 
 ## Requirements
 
-The requirements for **Version 4** are **PHP 7.4** or later and **Moodle 3.8.3** or later.
+The requirements for **Version 5** are **PHP 8.1** or later and **Moodle 4.1** or later.
 
 In addition, the plugin being tested must have a [version.php](https://docs.moodle.org/dev/version.php) file
 and `$plugin->component` must be defined within it.
 
 If you need to run your plugin in earlier versions of Moodle, then please use previous versions of this tool.  Documentation
-and more [information about Version 3 can be found here](https://github.com/moodlehq/moodle-plugin-ci/tree/3.x/docs/index.md).
+and more [information about Version 4 can be found here](https://github.com/moodlehq/moodle-plugin-ci/tree/4.x/docs/index.md).
 
-Please know older versions (1, 2 and 3) are no longer getting new features and may not receive additional updates.
+Please know older versions (1, 2, 3 and 4) are no longer getting new features and may not receive additional updates.
 
 ## Getting started
 
@@ -69,7 +69,7 @@ It is possible to use `moodle-plugin-ci` locally. It needs to be installed outsi
 Moodle directory, so if you are within Moodle repo, execute:
 
 ```
-$ php composer.phar create-project moodlehq/moodle-plugin-ci ../moodle-plugin-ci ^4
+$ php composer.phar create-project moodlehq/moodle-plugin-ci ../moodle-plugin-ci ^5
 ```
 
 Once installed, you can run most of its commands to validate your code, e.g.
@@ -157,6 +157,7 @@ Next steps on your continuous build journey may include:
 
 Guides to updating your plugin's CI workflow file to use the latest versions of this tool.
 
+* [Upgrade to 5.0](UPGRADE-5.0.md)
 * [Upgrade to 4.0](UPGRADE-4.0.md)
 * [Upgrade to 3.0](UPGRADE-3.0.md)
 * [Upgrade to 2.0](UPGRADE-2.0.md)

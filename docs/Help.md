@@ -91,6 +91,7 @@ There are few important options that you may want to use:
 
 ## Upgrade guides
 
+* [Upgrading to Version 5](UPGRADE-5.0.md)
 * [Upgrading to Version 4](UPGRADE-4.0.md)
 * [Upgrading to Version 3](UPGRADE-3.0.md)
 * [Upgrading to Version 2](UPGRADE-2.0.md)
