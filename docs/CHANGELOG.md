@@ -10,6 +10,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 
+## [4.5.13] - 2026-11-23
+### Fixed
+- Fixed `grunt` command failing to restore the plugin when it contains read-only files, such as `.git` objects.
+
 ## [4.5.12] - 2026-11-22
 ### Changed
 - Updated project dependencies to [moodle-cs v3.9.2](https://github.com/moodlehq/moodle-cs).
@@ -813,7 +817,8 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - `moodle-plugin-ci shifter` command.  Run YUI Shifter on plugin YUI modules.
 - `moodle-plugin-ci csslint` command.  Lints the CSS files in the plugin.
 
-[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.12...main
+[Unreleased]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.13...main
+[4.5.13]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.12...4.5.13
 [4.5.12]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.11...4.5.12
 [4.5.11]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.10...4.5.11
 [4.5.10]: https://github.com/moodlehq/moodle-plugin-ci/compare/4.5.9...4.5.10
