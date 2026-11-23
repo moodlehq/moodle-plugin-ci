@@ -253,4 +253,20 @@ class GruntCommandTest extends MoodleTestCase
         $this->assertSame(1, $command->validatePluginFiles($output));
         $this->assertSame("File is newly generated and needs to be added: amd/build/new.min.js.map\n", $output->fetch());
     }
+
+    public function testRestorePluginWithReadOnlyFiles(): void
+    {
+        $file = $this->pluginDir . '/.git/objects/ab/cdef';
+        $this->fs->dumpFile($file, 'original');
+        chmod($file, 0444);
+
+        $command = $this->newCommand();
+        $command->backupPlugin();
+
+        $this->assertFileExists($command->backupDir . '/.git/objects/ab/cdef');
+
+        $command->restorePlugin();
+
+        $this->assertSame('original', file_get_contents($file));
+    }
 }

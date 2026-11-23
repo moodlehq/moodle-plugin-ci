@@ -112,7 +112,10 @@ class GruntCommand extends AbstractMoodleCommand
      */
     public function restorePlugin(): void
     {
-        (new Filesystem())->mirror($this->backupDir, $this->plugin->directory, null, ['delete' => true, 'override' => true]);
+        // Remove first rather than overriding, as copied read-only files (e.g. in .git) cannot be opened for writing.
+        $filesystem = new Filesystem();
+        $filesystem->remove($this->plugin->directory);
+        $filesystem->mirror($this->backupDir, $this->plugin->directory);
     }
 
     /**
