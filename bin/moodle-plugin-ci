@@ -29,6 +29,7 @@ use MoodlePluginCI\Command\PHPUnitCommand;
 use MoodlePluginCI\Command\SavePointsCommand;
 use MoodlePluginCI\Command\SelfUpdateCommand;
 use MoodlePluginCI\Command\ValidateCommand;
+use MoodlePluginCI\Command\VersionCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
 
@@ -96,6 +97,7 @@ $application->add(new PHPLintCommand());
 $application->add(new PHPUnitCommand());
 $application->add(new SavePointsCommand());
 $application->add(new ValidateCommand());
+$application->add(new VersionCommand());
 
 // Only add the self update command if we are boxed as a phar.
 if (MOODLE_PLUGIN_CI_BOXED === 'BOXED') {
