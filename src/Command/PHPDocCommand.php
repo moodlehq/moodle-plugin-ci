@@ -24,6 +24,14 @@ class PHPDocCommand extends AbstractMoodleCommand
 {
     use ExecuteTrait;
 
+    /**
+     * Maximum length of the joined file list passed to moodlecheck.php in one run.
+     *
+     * Kept well below the smallest OS limit in play (Linux caps a single execve()
+     * argument at 128 KiB), leaving room for the rest of the command line.
+     */
+    private const FILES_CHUNK_LENGTH = 65536;
+
     private Finder $finder;
 
     protected function configure(): void
@@ -62,14 +70,22 @@ class PHPDocCommand extends AbstractMoodleCommand
             return $this->outputSkip($output);
         }
 
-        $cmd = [
-            'php',
-            'local/moodlecheck/cli/moodlecheck.php',
-            '-p=' . implode(',', $files),
-            '-f=text',
-        ];
+        // moodlecheck.php only accepts the file list as one single -p= option and,
+        // with big plugins, that can exceed OS command-line length limits (Linux
+        // caps a single execve() argument at 128 KiB). Hence, split the list into
+        // chunks and run the checker once per chunk, accumulating the results.
+        $results = '';
+        foreach ($this->chunkFiles($files) as $chunkOfFiles) {
+            $cmd = [
+                'php',
+                'local/moodlecheck/cli/moodlecheck.php',
+                '-p=' . implode(',', $chunkOfFiles),
+                '-f=text',
+            ];
 
-        $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->getPublicDirectory(), null, null, null));
+            $process = $this->execute->passThroughProcess(new Process($cmd, $this->moodle->getPublicDirectory(), null, null, null));
+            $results .= $process->getOutput();
+        }
 
         if (isset($filesystem)) {
             // Remove plugin if we added it, so we leave things clean.
@@ -78,7 +94,6 @@ class PHPDocCommand extends AbstractMoodleCommand
 
         // moodlecheck.php does not return valid exit status,
         // We have to parse output to see if there are errors and/or warnings.
-        $results        = $process->getOutput();
         $totalProblems  = (int) preg_match_all('~^\\s+Line~m', $results);
         $totalWarnings  = (int) preg_match_all('~\(warning\)$~m', $results);
         $totalErrors    = $totalProblems - $totalWarnings;
@@ -91,5 +106,32 @@ class PHPDocCommand extends AbstractMoodleCommand
 
         // With errors or warnings over the max-warnings threshold, fail the command.
         return ($totalErrors > 0 || ($totalWarnings > $input->getOption('max-warnings'))) ? 1 : 0;
+    }
+
+    /**
+     * Split the file list into chunks that keep every command line within OS limits.
+     *
+     * @param string[] $files the files to split
+     *
+     * @return string[][] the files, split into chunks
+     */
+    private function chunkFiles(array $files): array
+    {
+        $chunks = [];
+        $chunk  = [];
+        $length = 0;
+        foreach ($files as $file) {
+            $itemLength = strlen($file) + 1; // Account for the comma separator.
+            if ($chunk !== [] && $length + $itemLength > self::FILES_CHUNK_LENGTH) {
+                $chunks[] = $chunk;
+                $chunk    = [];
+                $length   = 0;
+            }
+            $chunk[]   = $file;
+            $length += $itemLength;
+        }
+        $chunks[] = $chunk;
+
+        return $chunks;
     }
 }

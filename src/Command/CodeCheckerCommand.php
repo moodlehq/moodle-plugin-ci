@@ -155,12 +155,16 @@ class CodeCheckerCommand extends AbstractPluginCommand
         $licenseRegex = $input->getOption('license-regex');
         array_push($cmd, '--runtime-set', 'moodleLicenseRegex', $licenseRegex);
 
-        // Add the files to process.
-        foreach ($files as $file) {
-            $cmd[] = $file;
-        }
+        // Add the files to process. They are passed via a file list instead of as
+        // arguments, because with big plugins the resulting command line can exceed
+        // OS limits (Linux caps a single execve() argument at 128 KiB).
+        $fileListPath = $this->tempFile . '-file-list';
+        $filesystem->dumpFile($fileListPath, implode(PHP_EOL, $files));
+        $cmd[] = '--file-list=' . $fileListPath;
 
         $process = $this->execute->passThroughProcess(new Process($cmd, $this->plugin->directory, null, null, null));
+
+        $filesystem->remove($fileListPath); // Remove the temporal file list.
 
         // If we are running phpcs within a PHAR, we need to remove the previously copied conf file.
         // @codeCoverageIgnoreStart
