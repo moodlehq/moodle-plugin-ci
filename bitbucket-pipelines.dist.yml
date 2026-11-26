@@ -1,0 +1,82 @@
+
+definitions:
+  setupdeps: &setupDeps
+    export DEBIAN_FRONTEND='noninteractive' ;
+    export COMPOSER_ALLOW_SUPERUSER=1 ;
+    export COMPOSER_CACHE_DIR=~/.composer/cache ;
+    export MOODLE_START_BEHAT_SERVERS='NO' ;
+    export CI_BUILD_DIR='/tmp/plugin' ;
+    export MOODLE_BEHAT_WWWROOT="http://$BITBUCKET_DOCKER_HOST_INTERNAL:8000" ;
+    export MOODLE_BEHAT_WDHOST="http://$BITBUCKET_DOCKER_HOST_INTERNAL:4444/wd/hub" ;
+    export MOODLE_REPO='https://bitbucket.org/moodle/moodle.git' ;
+    export MOODLE_BRANCH='MOODLE_311_STABLE' ;
+    export DB='mariadb' ;           
+    mkdir -pv "$CI_BUILD_DIR" && cp -ru "$BITBUCKET_CLONE_DIR/"* "$CI_BUILD_DIR" &&
+    mkdir -p /usr/share/man/man1 /usr/share/man/man3 /usr/share/man/man7 &&           
+    apt-get -q update && apt-get -yq install default-jre-headless mariadb-client &&
+    curl -sS https://raw.githubusercontent.com/creationix/nvm/v0.39.3/install.sh | bash &&
+    . ~/.bashrc && nvm install --default --latest-npm lts/gallium &&
+    curl -sS https://getcomposer.org/installer | php -- --install-dir='/usr/local/bin' --filename='composer' &&
+    composer create-project -n --no-dev --no-progress --no-ansi moodlehq/moodle-plugin-ci /opt/mci ^3 &&
+    export PATH="/opt/mci/bin:/opt/mci/vendor/bin:$PATH"
+  startbehat: &startBehat
+    export MPATH="$BITBUCKET_CLONE_DIR/moodle" ;
+    docker run -d -p 4444:4444 --shm-size=1g -v "$MPATH:$MPATH" 'selenium/standalone-firefox:3' &&
+    { php -S 0.0.0.0:8000 -t "$MPATH" >/dev/null 2>&1 & } &&
+    sleep 10s
+  services:
+    mariadb:
+      image: mariadb:10
+      variables:
+        MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+  caches:
+    npm: $HOME/.npm
+
+pipelines:
+  default:
+    - step:
+        name: 'Moodle 3.11, PHP 7.4 and MariaDB 10'
+        image: moodlehq/moodle-php-apache:7.4
+        services:
+          - mariadb
+        caches:
+          - npm
+          - composer
+        script:
+          - *setupDeps
+          - moodle-plugin-ci install --db-host='127.0.0.1'
+          - moodle-plugin-ci phplint
+          - moodle-plugin-ci phpcpd
+          - moodle-plugin-ci phpmd
+          - moodle-plugin-ci codechecker
+          - moodle-plugin-ci validate
+          - moodle-plugin-ci savepoints
+          - moodle-plugin-ci mustache
+          - moodle-plugin-ci grunt
+          - moodle-plugin-ci phpdoc
+          - moodle-plugin-ci phpunit
+    - step:
+        name: 'Moodle 4.0, PHP 8.0 and MariaDB 10'
+        image: moodlehq/moodle-php-apache:8.0
+        services:
+          - mariadb
+          - docker
+        caches:
+          - npm
+          - composer
+          - docker
+        script:
+          - *setupDeps
+          - moodle-plugin-ci install --db-host='127.0.0.1' --branch='MOODLE_400_STABLE'
+          - *startBehat
+          - moodle-plugin-ci phplint
+          - moodle-plugin-ci phpcpd
+          - moodle-plugin-ci phpmd
+          - moodle-plugin-ci codechecker
+          - moodle-plugin-ci validate
+          - moodle-plugin-ci savepoints
+          - moodle-plugin-ci mustache
+          - moodle-plugin-ci grunt
+          - moodle-plugin-ci phpdoc
+          - moodle-plugin-ci phpunit
+          - moodle-plugin-ci behat
