@@ -60,6 +60,7 @@ class ModuleRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($functions);
         foreach ($functions as $function) {
             $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $function);
+            $this->assertTrue($function->hasHint());
         }
     }
 
@@ -68,6 +69,7 @@ class ModuleRequirementsTest extends \PHPUnit\Framework\TestCase
         $fileToken = $this->requirements->getRequiredStrings();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('lang/en/forum.php', $fileToken->file);
+        $this->assertTrue($fileToken->hasHint());
     }
 
     public function testGetRequiredCapabilities(): void
@@ -75,5 +77,6 @@ class ModuleRequirementsTest extends \PHPUnit\Framework\TestCase
         $fileToken = $this->requirements->getRequiredCapabilities();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('db/access.php', $fileToken->file);
+        $this->assertTrue($fileToken->hasHint());
     }
 }

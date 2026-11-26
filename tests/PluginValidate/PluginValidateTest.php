@@ -38,4 +38,22 @@ class PluginValidateTest extends \PHPUnit\Framework\TestCase
 
         $this->assertFalse($validate->isValid);
     }
+
+    public function testVerifyRequirementsFailHint(): void
+    {
+        $plugin       = new Plugin('local_ci', 'local', 'travis', __DIR__ . '/../Fixture/moodle-local_ci');
+        $requirements = new ModuleRequirements($plugin, 29);
+        $validate     = new PluginValidate($plugin, $requirements);
+        $validate->verifyRequirements();
+
+        $this->assertFalse($validate->isValid);
+
+        // Each failed token is followed by the hint of its file tokens.
+        $error = array_search('<fg=red>X In lib.php, failed to find function travis_add_instance</>', $validate->messages, true);
+        $this->assertIsInt($error);
+        $this->assertSame(
+            '<fg=red>X Hint: https://moodledev.io/docs/apis/plugintypes/mod#libphp---library-functions</>',
+            $validate->messages[$error + 1]
+        );
+    }
 }

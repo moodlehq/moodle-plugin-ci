@@ -60,6 +60,7 @@ class BlockRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($functions);
         foreach ($functions as $function) {
             $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $function);
+            $this->assertTrue($function->hasHint());
         }
     }
 
@@ -70,6 +71,7 @@ class BlockRequirementsTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($classes);
         foreach ($classes as $class) {
             $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $class);
+            $this->assertTrue($class->hasHint());
         }
     }
 
@@ -78,6 +80,7 @@ class BlockRequirementsTest extends \PHPUnit\Framework\TestCase
         $fileToken = $this->requirements->getRequiredStrings();
         $this->assertInstanceOf('MoodlePluginCI\PluginValidate\Finder\FileTokens', $fileToken);
         $this->assertSame('lang/en/block_html.php', $fileToken->file);
+        $this->assertTrue($fileToken->hasHint());
     }
 
     public function testGetRequiredCapabilities(): void

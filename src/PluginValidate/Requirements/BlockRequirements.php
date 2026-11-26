@@ -30,7 +30,8 @@ class BlockRequirements extends GenericRequirements
     public function getRequiredClasses(): array
     {
         return [
-            FileTokens::create($this->plugin->component . '.php')->mustHave($this->plugin->component),
+            FileTokens::create($this->plugin->component . '.php')->mustHave($this->plugin->component)
+                ->notFoundHint('https://moodledev.io/docs/apis/plugintypes/blocks#block_pluginnamephp'),
         ];
     }
 }
